@@ -1,0 +1,942 @@
+{
+  "version": "2026.09.05-etapa1",
+  "atribucion": "Incluye datos derivados de la taxonomía de ingredientes de Open Food Facts, disponible bajo licencia ODbL. Membresía de alérgenos según el Art. 235 séptimo del Código Alimentario Argentino. Números INS según Codex STAN 192.",
+  "_advertencia_revision": "Dataset de Etapa 1 para validar el OCR. NO es la base de conocimiento validada del proyecto. Ninguna entrada fue revisada por una persona todavía (regla 1.6). No usar para decisiones reales hasta completar la revisión humana del Flujo A.",
+  "grupos_alergenos": [
+    { "id": "trigo", "nombre": "cereales con gluten", "caa_obligatorio": true, "texto_etiqueta": "trigo, avena, cebada y/o centeno" },
+    { "id": "crustaceos", "nombre": "crustáceos", "caa_obligatorio": true, "texto_etiqueta": "crustáceos" },
+    { "id": "huevo", "nombre": "huevo", "caa_obligatorio": true, "texto_etiqueta": "huevo" },
+    { "id": "pescado", "nombre": "pescado", "caa_obligatorio": true, "texto_etiqueta": "pescado" },
+    { "id": "mani", "nombre": "maní", "caa_obligatorio": true, "texto_etiqueta": "maní" },
+    { "id": "soja", "nombre": "soja", "caa_obligatorio": true, "texto_etiqueta": "soja" },
+    { "id": "leche", "nombre": "leche", "caa_obligatorio": true, "texto_etiqueta": "leche" },
+    { "id": "frutos_secos", "nombre": "frutas secas de árbol", "caa_obligatorio": true, "texto_etiqueta": "almendras, avellanas, castañas de cajú, nueces, nueces pecán, castañas de Pará, pistachos, piñones y/o nueces de macadamia" },
+    { "id": "sulfitos", "nombre": "sulfitos", "caa_obligatorio": true, "texto_etiqueta": "sulfitos" }
+  ],
+  "ingredientes": [
+    {
+      "nombre_canonico": "trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "El trigo es uno de los cereales con gluten de declaración obligatoria en Argentina. Aparece en la etiqueta dentro de la fórmula \"trigo, avena, cebada y/o centeno\".",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "triticum", "tipo": "technical" },
+        { "texto": "trigo pan", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "harina de trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La harina de trigo es trigo molido; conserva el gluten. En etiquetas argentinas puede figurar como \"harina 000\", \"harina 0000\" o \"harina de trigo enriquecida\" (Ley 25.630).",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "harina 000", "tipo": "commercial" },
+        { "texto": "harina 0000", "tipo": "commercial" },
+        { "texto": "harina de trigo enriquecida", "tipo": "commercial" },
+        { "texto": "harina de trigo 000", "tipo": "commercial" },
+        { "texto": "wheat flour", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "sémola de trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La sémola es trigo molido grueso, habitual en pastas secas y cuscús. Contiene gluten.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "semola", "tipo": "ocr_variant" },
+        { "texto": "semolin", "tipo": "commercial" },
+        { "texto": "semolina", "tipo": "technical" },
+        { "texto": "trigo candeal", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "salvado de trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "El salvado es la cáscara del grano de trigo. Deriva de trigo y contiene gluten.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "germen de trigo", "tipo": "commercial" },
+        { "texto": "fibra de trigo", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "gluten de trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "El gluten de trigo aislado se agrega como agente de textura en panificados y productos cárnicos. Es la proteína que se debe evitar en la enfermedad celíaca.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "gluten", "tipo": "technical" },
+        { "texto": "seitan", "tipo": "commercial" },
+        { "texto": "proteina de trigo", "tipo": "technical" },
+        { "texto": "gluten vital", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "almidón de trigo",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "possible",
+      "explicacion": "El almidón de trigo deriva de trigo. Puede contener trazas de gluten salvo que se declare específicamente como \"almidón de trigo sin gluten\". El CAA no lo exime de la declaración de cereales.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "almidon de trigo modificado", "tipo": "technical" },
+        { "texto": "wheat starch", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "espelta",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La espelta es una variedad de trigo. Contiene gluten y se declara como trigo.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "trigo espelta", "tipo": "commercial" },
+        { "texto": "escanda", "tipo": "commercial" },
+        { "texto": "kamut", "tipo": "commercial" },
+        { "texto": "trigo khorasan", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "cuscús",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "El cuscús se elabora con sémola de trigo. Contiene gluten.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "couscous", "tipo": "technical" },
+        { "texto": "cuscus", "tipo": "ocr_variant" },
+        { "texto": "bulgur", "tipo": "commercial" },
+        { "texto": "trigo burgol", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "cebada",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La cebada es un cereal con gluten de declaración obligatoria. Aparece en la fórmula \"trigo, avena, cebada y/o centeno\".",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "harina de cebada", "tipo": "commercial" },
+        { "texto": "hordeum", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "malta",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La malta se obtiene germinando cebada (a veces trigo). El extracto y el jarabe de malta conservan gluten. Común en cereales de desayuno, galletitas y cervezas.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "extracto de malta", "tipo": "commercial" },
+        { "texto": "jarabe de malta", "tipo": "commercial" },
+        { "texto": "malta de cebada", "tipo": "commercial" },
+        { "texto": "harina de malta", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "centeno",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "El centeno es un cereal con gluten de declaración obligatoria. Aparece en la fórmula \"trigo, avena, cebada y/o centeno\".",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "harina de centeno", "tipo": "commercial" },
+        { "texto": "secale", "tipo": "technical" },
+        { "texto": "triticale", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "avena",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "certain",
+      "explicacion": "La avena está en la lista argentina de cereales de declaración obligatoria. Aunque su proteína difiere del gluten de trigo, suele contaminarse con trigo o cebada durante el cultivo y la molienda.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "harina de avena", "tipo": "commercial" },
+        { "texto": "salvado de avena", "tipo": "commercial" },
+        { "texto": "hojuelas de avena", "tipo": "commercial" },
+        { "texto": "avena arrollada", "tipo": "commercial" },
+        { "texto": "avena instantanea", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "cerveza",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "possible",
+      "explicacion": "La cerveza se elabora con malta de cebada (o trigo). Puede contener gluten salvo que se declare \"cerveza sin gluten\".",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "cerveza de malta", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "camarón",
+      "grupo_alergeno_id": "crustaceos",
+      "certeza": "certain",
+      "explicacion": "El camarón es un crustáceo, grupo de declaración obligatoria en Argentina.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "camaron", "tipo": "ocr_variant" },
+        { "texto": "langostino", "tipo": "commercial" },
+        { "texto": "gamba", "tipo": "commercial" },
+        { "texto": "shrimp", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "cangrejo",
+      "grupo_alergeno_id": "crustaceos",
+      "certeza": "certain",
+      "explicacion": "El cangrejo es un crustáceo de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "centolla", "tipo": "commercial" },
+        { "texto": "jaiba", "tipo": "commercial" },
+        { "texto": "cangrejo de rio", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "langosta",
+      "grupo_alergeno_id": "crustaceos",
+      "certeza": "certain",
+      "explicacion": "La langosta y el bogavante son crustáceos de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "bogavante", "tipo": "commercial" },
+        { "texto": "kril", "tipo": "commercial" },
+        { "texto": "krill", "tipo": "technical" },
+        { "texto": "cigala", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "extracto de crustáceos",
+      "grupo_alergeno_id": "crustaceos",
+      "certeza": "certain",
+      "explicacion": "Los extractos y saborizantes de crustáceos se usan en caldos, snacks y productos de mar. Derivan de crustáceos.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "saborizante de camaron", "tipo": "commercial" },
+        { "texto": "harina de crustaceos", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "huevo",
+      "grupo_alergeno_id": "huevo",
+      "certeza": "certain",
+      "explicacion": "El huevo y sus derivados son de declaración obligatoria en Argentina.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "huevo en polvo", "tipo": "commercial" },
+        { "texto": "huevo entero", "tipo": "commercial" },
+        { "texto": "huevo pasteurizado", "tipo": "commercial" },
+        { "texto": "huevo deshidratado", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "clara de huevo",
+      "grupo_alergeno_id": "huevo",
+      "certeza": "certain",
+      "explicacion": "La clara de huevo (albúmina) se usa como agente espumante y ligante. Deriva de huevo.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "albumina", "tipo": "technical" },
+        { "texto": "ovoalbumina", "tipo": "technical" },
+        { "texto": "albumina de huevo", "tipo": "technical" },
+        { "texto": "clara de huevo deshidratada", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "yema de huevo",
+      "grupo_alergeno_id": "huevo",
+      "certeza": "certain",
+      "explicacion": "La yema de huevo aporta emulsión en mayonesas, salsas y masas. Deriva de huevo.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "yema deshidratada", "tipo": "commercial" },
+        { "texto": "lecitina de huevo", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "lisozima",
+      "grupo_alergeno_id": "huevo",
+      "certeza": "certain",
+      "explicacion": "La lisozima (INS 1105) es una enzima que se extrae de la clara de huevo. Se usa como conservante, sobre todo en quesos. Deriva de huevo.",
+      "fuente": "Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "INS 1105", "tipo": "technical" },
+        { "texto": "lisozima de huevo", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "pescado",
+      "grupo_alergeno_id": "pescado",
+      "certeza": "certain",
+      "explicacion": "El pescado y sus derivados son de declaración obligatoria en Argentina.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "atun", "tipo": "commercial" },
+        { "texto": "merluza", "tipo": "commercial" },
+        { "texto": "salmon", "tipo": "commercial" },
+        { "texto": "caballa", "tipo": "commercial" },
+        { "texto": "anchoa", "tipo": "commercial" },
+        { "texto": "sardina", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "aceite de pescado",
+      "grupo_alergeno_id": "pescado",
+      "certeza": "certain",
+      "explicacion": "El aceite de pescado aporta omega-3 en suplementos y alimentos fortificados. Deriva de pescado.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "omega 3 de pescado", "tipo": "commercial" },
+        { "texto": "aceite de higado de bacalao", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "gelatina de pescado",
+      "grupo_alergeno_id": "pescado",
+      "certeza": "certain",
+      "explicacion": "La gelatina y el colágeno de pescado se usan como gelificantes y clarificantes. Derivan de pescado. La cola de pescado (ictiocola) clarifica vinos y cervezas.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "colageno de pescado", "tipo": "technical" },
+        { "texto": "ictiocola", "tipo": "technical" },
+        { "texto": "cola de pescado", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "surimi",
+      "grupo_alergeno_id": "pescado",
+      "certeza": "certain",
+      "explicacion": "El surimi es pasta de pescado blanco procesada, base del \"kanikama\". Deriva de pescado y suele llevar además trigo como aglutinante.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "kanikama", "tipo": "commercial" },
+        { "texto": "salsa de pescado", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "maní",
+      "grupo_alergeno_id": "mani",
+      "certeza": "certain",
+      "explicacion": "El maní es de declaración obligatoria en Argentina y una de las causas más frecuentes de anafilaxia alimentaria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "mani", "tipo": "ocr_variant" },
+        { "texto": "cacahuete", "tipo": "commercial" },
+        { "texto": "cacahuate", "tipo": "commercial" },
+        { "texto": "arachis hypogaea", "tipo": "technical" },
+        { "texto": "peanut", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "pasta de maní",
+      "grupo_alergeno_id": "mani",
+      "certeza": "certain",
+      "explicacion": "La pasta y la manteca de maní derivan de maní. Común en golosinas, rellenos y salsas.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "manteca de mani", "tipo": "commercial" },
+        { "texto": "mantequilla de mani", "tipo": "commercial" },
+        { "texto": "harina de mani", "tipo": "commercial" },
+        { "texto": "peanut butter", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "aceite de maní",
+      "grupo_alergeno_id": "mani",
+      "certeza": "possible",
+      "explicacion": "El aceite de maní prensado en frío o no refinado conserva proteína y puede provocar reacción. El aceite muy refinado tiene mucha menos proteína, pero el CAA lo mantiene en la declaración.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "aceite de cacahuete", "tipo": "commercial" },
+        { "texto": "proteina de mani", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "soja",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "La soja es de declaración obligatoria en Argentina y muy frecuente como proteína o aditivo en alimentos procesados.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "poroto de soja", "tipo": "commercial" },
+        { "texto": "soya", "tipo": "commercial" },
+        { "texto": "glycine max", "tipo": "technical" },
+        { "texto": "edamame", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "harina de soja",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "La harina de soja se agrega a panificados y productos cárnicos. Deriva de soja.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "harina de soya", "tipo": "commercial" },
+        { "texto": "soja desgrasada", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "proteína de soja",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "El aislado, el concentrado y la proteína texturizada de soja son proteína de soja purificada. Muy usados en hamburguesas, embutidos y productos \"plant based\".",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "aislado de soja", "tipo": "technical" },
+        { "texto": "concentrado de soja", "tipo": "technical" },
+        { "texto": "proteina vegetal texturizada", "tipo": "commercial" },
+        { "texto": "proteina de soja aislada", "tipo": "technical" },
+        { "texto": "soja texturizada", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "lecitina de soja",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "La lecitina de soja (INS 322) es un emulsionante presente en chocolates, galletitas, margarinas y panificados. Deriva de soja y se declara como alérgeno.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "lecitina", "tipo": "technical" },
+        { "texto": "INS 322", "tipo": "technical" },
+        { "texto": "emulsionante lecitina de soja", "tipo": "commercial" },
+        { "texto": "lecitina de soya", "tipo": "commercial" },
+        { "texto": "fosfatidos de soja", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "salsa de soja",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "La salsa de soja deriva de soja fermentada y, en la mayoría de las marcas, también lleva trigo.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "salsa de soya", "tipo": "commercial" },
+        { "texto": "shoyu", "tipo": "commercial" },
+        { "texto": "tamari", "tipo": "commercial" },
+        { "texto": "miso", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "tofu",
+      "grupo_alergeno_id": "soja",
+      "certeza": "certain",
+      "explicacion": "El tofu es cuajada de bebida de soja. Deriva de soja.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "queso de soja", "tipo": "commercial" },
+        { "texto": "tempeh", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "leche",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La leche y todos sus derivados son de declaración obligatoria en Argentina. Incluye la lactosa.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "leche en polvo", "tipo": "commercial" },
+        { "texto": "leche entera", "tipo": "commercial" },
+        { "texto": "leche descremada", "tipo": "commercial" },
+        { "texto": "leche parcialmente descremada", "tipo": "commercial" },
+        { "texto": "solidos lacteos", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "suero de leche",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "El suero (lactosuero) es la fracción líquida de la leche que queda al hacer queso. Se usa en polvo en panificados, chocolates y fórmulas. Deriva de leche.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "lactosuero", "tipo": "technical" },
+        { "texto": "suero lacteo", "tipo": "technical" },
+        { "texto": "suero de leche en polvo", "tipo": "commercial" },
+        { "texto": "permeado de suero", "tipo": "technical" },
+        { "texto": "whey", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "proteína de suero",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "El concentrado y el aislado de proteína de suero (WPC, WPI) son proteína láctea purificada, base de los suplementos deportivos. Derivan de leche.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "concentrado de proteina de suero", "tipo": "technical" },
+        { "texto": "aislado de proteina de suero", "tipo": "technical" },
+        { "texto": "proteina de suero lacteo", "tipo": "technical" },
+        { "texto": "whey protein", "tipo": "technical" },
+        { "texto": "lactoalbumina", "tipo": "technical" },
+        { "texto": "lactoglobulina", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "caseína",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La caseína es la principal proteína de la leche. Aparece como \"caseína\", \"caseinato de sodio\", \"caseinato de calcio\" o \"caseinato de potasio\" en fiambres, quesos untables, cremas para café y postres. Deriva de leche.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "caseinato de sodio", "tipo": "technical" },
+        { "texto": "caseinato de calcio", "tipo": "technical" },
+        { "texto": "caseinato de potasio", "tipo": "technical" },
+        { "texto": "caseinato sodico", "tipo": "technical" },
+        { "texto": "caseinato", "tipo": "technical" },
+        { "texto": "sodium caseinate", "tipo": "technical" },
+        { "texto": "caseina lactica", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "manteca",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La manteca es grasa de leche. Deriva de leche. El aceite butírico (grasa butírica) y el ghee también.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "mantequilla", "tipo": "commercial" },
+        { "texto": "grasa butirica", "tipo": "technical" },
+        { "texto": "aceite butirico", "tipo": "technical" },
+        { "texto": "materia grasa lactea", "tipo": "technical" },
+        { "texto": "ghee", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "crema de leche",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La crema de leche deriva de leche. También la crema en polvo y las cremas vegetales que la incluyen.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "crema", "tipo": "commercial" },
+        { "texto": "nata", "tipo": "commercial" },
+        { "texto": "crema de leche en polvo", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "queso",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "El queso, la cuajada y el saborizante de queso derivan de leche. Común como \"queso en polvo\" en snacks y salsas.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "queso en polvo", "tipo": "commercial" },
+        { "texto": "cuajada", "tipo": "technical" },
+        { "texto": "saborizante de queso", "tipo": "commercial" },
+        { "texto": "queso rallado", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "dulce de leche",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "El dulce de leche deriva de leche. Muy frecuente en rellenos, helados y galletitas.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "dulce de leche repostero", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "yogur",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "El yogur y el kéfir derivan de leche fermentada. La ricota también deriva de leche.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "yogurt", "tipo": "commercial" },
+        { "texto": "kefir", "tipo": "commercial" },
+        { "texto": "ricota", "tipo": "commercial" },
+        { "texto": "yogur en polvo", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "lactosa",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La lactosa es el azúcar de la leche. Se usa como vehículo de aromas y edulcorantes y como excipiente. Deriva de leche y arrastra trazas de proteína láctea.",
+      "fuente": "CAA art. 235 séptimo; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "azucar de leche", "tipo": "technical" },
+        { "texto": "lactosa monohidrato", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "lactoferrina",
+      "grupo_alergeno_id": "leche",
+      "certeza": "certain",
+      "explicacion": "La lactoferrina es una proteína de la leche que se agrega en fórmulas infantiles y suplementos. Deriva de leche.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "proteina lactea", "tipo": "technical" },
+        { "texto": "proteinas de la leche", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "almendra",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La almendra es una fruta seca de árbol de declaración obligatoria. Aparece también como harina de almendras, leche de almendras, pasta de almendras y mazapán.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "almendras", "tipo": "commercial" },
+        { "texto": "harina de almendras", "tipo": "commercial" },
+        { "texto": "leche de almendras", "tipo": "commercial" },
+        { "texto": "pasta de almendras", "tipo": "commercial" },
+        { "texto": "mazapan", "tipo": "commercial" },
+        { "texto": "prunus dulcis", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "avellana",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La avellana es una fruta seca de árbol de declaración obligatoria. Frecuente en rellenos tipo praliné y en cremas de avellana con cacao.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "avellanas", "tipo": "commercial" },
+        { "texto": "pasta de avellana", "tipo": "commercial" },
+        { "texto": "praline", "tipo": "commercial" },
+        { "texto": "corylus avellana", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "nuez",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La nuez común (de nogal) es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "nueces", "tipo": "commercial" },
+        { "texto": "nuez de nogal", "tipo": "commercial" },
+        { "texto": "juglans regia", "tipo": "technical" },
+        { "texto": "aceite de nuez", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "castaña de cajú",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La castaña de cajú (anacardo) es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "castana de caju", "tipo": "ocr_variant" },
+        { "texto": "anacardo", "tipo": "commercial" },
+        { "texto": "cashew", "tipo": "technical" },
+        { "texto": "nuez de la india", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "pistacho",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "El pistacho es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "pistachos", "tipo": "commercial" },
+        { "texto": "pistache", "tipo": "commercial" },
+        { "texto": "pasta de pistacho", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "nuez pecán",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La nuez pecán es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "nuez pecan", "tipo": "ocr_variant" },
+        { "texto": "pecan", "tipo": "technical" },
+        { "texto": "nuez de pacana", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "castaña de Pará",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La castaña de Pará (nuez de Brasil) es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "castana de para", "tipo": "ocr_variant" },
+        { "texto": "nuez de brasil", "tipo": "commercial" },
+        { "texto": "coquito de brasil", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "nuez de macadamia",
+      "grupo_alergeno_id": "frutos_secos",
+      "certeza": "certain",
+      "explicacion": "La macadamia es una fruta seca de árbol de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo",
+      "sinonimos": [
+        { "texto": "macadamia", "tipo": "commercial" },
+        { "texto": "pinon", "tipo": "commercial" },
+        { "texto": "piñones", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "dióxido de azufre",
+      "grupo_alergeno_id": "sulfitos",
+      "certeza": "certain",
+      "explicacion": "El dióxido de azufre (anhídrido sulfuroso, INS 220) es un conservante y antioxidante. Se declara como alérgeno cuando el producto terminado tiene 10 mg/kg o más, expresado como SO2. Frecuente en vinos, frutas desecadas, jugos y fiambres.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192",
+      "sinonimos": [
+        { "texto": "anhidrido sulfuroso", "tipo": "technical" },
+        { "texto": "INS 220", "tipo": "technical" },
+        { "texto": "so2", "tipo": "technical" },
+        { "texto": "sulfuroso", "tipo": "ocr_variant" }
+      ]
+    },
+    {
+      "nombre_canonico": "metabisulfito de sodio",
+      "grupo_alergeno_id": "sulfitos",
+      "certeza": "certain",
+      "explicacion": "El metabisulfito de sodio (INS 223) es un sulfito conservante muy usado en camarones, papas prefritas, panificados y vinos. Se declara como sulfitos a partir de 10 mg/kg de SO2.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192",
+      "sinonimos": [
+        { "texto": "metabisulfito de sodio", "tipo": "technical" },
+        { "texto": "INS 223", "tipo": "technical" },
+        { "texto": "pirosulfito de sodio", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "metabisulfito de potasio",
+      "grupo_alergeno_id": "sulfitos",
+      "certeza": "certain",
+      "explicacion": "El metabisulfito de potasio (INS 224) es un sulfito conservante habitual en vino y mostos. Se declara como sulfitos a partir de 10 mg/kg de SO2.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192",
+      "sinonimos": [
+        { "texto": "INS 224", "tipo": "technical" },
+        { "texto": "pirosulfito de potasio", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "sulfito de sodio",
+      "grupo_alergeno_id": "sulfitos",
+      "certeza": "certain",
+      "explicacion": "El sulfito de sodio (INS 221) y el bisulfito de sodio (INS 222) son sulfitos conservantes. Se declaran como sulfitos a partir de 10 mg/kg de SO2.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192",
+      "sinonimos": [
+        { "texto": "INS 221", "tipo": "technical" },
+        { "texto": "bisulfito de sodio", "tipo": "technical" },
+        { "texto": "sulfito acido de sodio", "tipo": "technical" },
+        { "texto": "INS 222", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "sulfito de calcio",
+      "grupo_alergeno_id": "sulfitos",
+      "certeza": "certain",
+      "explicacion": "El sulfito de calcio (INS 226) y el bisulfito de calcio (INS 227), y el bisulfito de potasio (INS 228), son sulfitos conservantes. Se declaran como sulfitos a partir de 10 mg/kg de SO2.",
+      "fuente": "CAA art. 235 séptimo; Codex STAN 192",
+      "sinonimos": [
+        { "texto": "INS 226", "tipo": "technical" },
+        { "texto": "bisulfito de calcio", "tipo": "technical" },
+        { "texto": "INS 227", "tipo": "technical" },
+        { "texto": "bisulfito de potasio", "tipo": "technical" },
+        { "texto": "INS 228", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "aroma",
+      "grupo_alergeno_id": "leche",
+      "certeza": "depends_on_source",
+      "explicacion": "Los aromas, aromatizantes y saborizantes pueden llevar como soporte lactosa, caseinato u otros derivados de leche, y a veces derivados de otros alérgenos. Si la etiqueta no aclara el origen, conviene sacar otra foto de la lista completa y revisar la línea CONTIENE.",
+      "fuente": "Curado manual — Etapa 1, pendiente de revisión (regla 1.6)",
+      "sinonimos": [
+        { "texto": "aromatizante", "tipo": "commercial" },
+        { "texto": "saborizante", "tipo": "commercial" },
+        { "texto": "aroma identico al natural", "tipo": "commercial" },
+        { "texto": "sabor", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "proteína vegetal hidrolizada",
+      "grupo_alergeno_id": "soja",
+      "certeza": "depends_on_source",
+      "explicacion": "La proteína vegetal hidrolizada suele obtenerse de soja o de trigo. Si la etiqueta no especifica el origen, puede aportar soja o gluten. Verificar la línea CONTIENE.",
+      "fuente": "Open Food Facts (ODbL); pendiente de revisión (regla 1.6)",
+      "sinonimos": [
+        { "texto": "proteina vegetal hidrolizada", "tipo": "technical" },
+        { "texto": "pvh", "tipo": "technical" },
+        { "texto": "proteina hidrolizada de soja", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "maltodextrina",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "depends_on_source",
+      "explicacion": "La maltodextrina puede obtenerse de maíz, mandioca, papa, trigo o cebada. En Argentina se usa mayormente maltodextrina de maíz. Cuando deriva de trigo o cebada, el CAA la exime de declarar cereales con gluten (ver excepción).",
+      "fuente": "CAA art. 235 séptimo (excepción); Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "maltodextrina de maiz", "tipo": "commercial" },
+        { "texto": "maltodextrina de trigo", "tipo": "technical" },
+        { "texto": "dextrina", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "jarabe de glucosa",
+      "grupo_alergeno_id": "trigo",
+      "certeza": "depends_on_source",
+      "explicacion": "El jarabe de glucosa puede derivar de maíz o de trigo. Cuando deriva de trigo o cebada, incluida la dextrosa obtenida de él, el CAA lo exime de declarar cereales con gluten (ver excepción).",
+      "fuente": "CAA art. 235 séptimo (excepción); Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "jarabe de glucosa de trigo", "tipo": "technical" },
+        { "texto": "glucosa", "tipo": "commercial" },
+        { "texto": "dextrosa", "tipo": "technical" },
+        { "texto": "jarabe de maiz de alta fructosa", "tipo": "commercial" },
+        { "texto": "jmaf", "tipo": "technical" }
+      ]
+    },
+
+    {
+      "nombre_canonico": "sal",
+      "certeza": "certain",
+      "explicacion": "El cloruro de sodio no está asociado a ninguno de los alérgenos de declaración obligatoria del Art. 235 séptimo. Se lista para poder contar los ingredientes analizados; no es un juicio de aptitud.",
+      "fuente": "CAA art. 235 séptimo (por exclusión); Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "sal fina", "tipo": "commercial" },
+        { "texto": "cloruro de sodio", "tipo": "technical" },
+        { "texto": "sal marina", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "azúcar",
+      "certeza": "certain",
+      "explicacion": "La sacarosa no está asociada a ninguno de los alérgenos de declaración obligatoria del Art. 235 séptimo.",
+      "fuente": "CAA art. 235 séptimo (por exclusión); Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "azucar", "tipo": "ocr_variant" },
+        { "texto": "sacarosa", "tipo": "technical" },
+        { "texto": "azucar blanca", "tipo": "commercial" },
+        { "texto": "azucar rubia", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "agua",
+      "certeza": "certain",
+      "explicacion": "El agua no está asociada a ningún alérgeno de declaración obligatoria.",
+      "fuente": "CAA art. 235 séptimo (por exclusión)",
+      "sinonimos": [
+        { "texto": "agua potable", "tipo": "commercial" },
+        { "texto": "agua purificada", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "bicarbonato de sodio",
+      "certeza": "certain",
+      "explicacion": "El bicarbonato de sodio (INS 500ii) es un leudante y regulador de acidez. No está asociado a ningún alérgeno de declaración obligatoria.",
+      "fuente": "Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "bicarbonato sodico", "tipo": "technical" },
+        { "texto": "INS 500", "tipo": "technical" },
+        { "texto": "leudante quimico", "tipo": "commercial" },
+        { "texto": "polvo de hornear", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "ácido cítrico",
+      "certeza": "certain",
+      "explicacion": "El ácido cítrico (INS 330) es un regulador de acidez y antioxidante. Se produce por fermentación y no está asociado a ningún alérgeno de declaración obligatoria.",
+      "fuente": "Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "acido citrico", "tipo": "ocr_variant" },
+        { "texto": "INS 330", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "ácido ascórbico",
+      "certeza": "certain",
+      "explicacion": "El ácido ascórbico (vitamina C, INS 300) es un antioxidante. No está asociado a ningún alérgeno de declaración obligatoria.",
+      "fuente": "Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "acido ascorbico", "tipo": "ocr_variant" },
+        { "texto": "vitamina c", "tipo": "commercial" },
+        { "texto": "INS 300", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "goma xántica",
+      "certeza": "certain",
+      "explicacion": "La goma xántica (INS 415) es un espesante obtenido por fermentación bacteriana de azúcares. No está asociada a ningún alérgeno de declaración obligatoria.",
+      "fuente": "Codex STAN 192; Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "goma xantica", "tipo": "ocr_variant" },
+        { "texto": "goma xantan", "tipo": "commercial" },
+        { "texto": "xantana", "tipo": "technical" },
+        { "texto": "INS 415", "tipo": "technical" }
+      ]
+    },
+    {
+      "nombre_canonico": "almidón de maíz",
+      "certeza": "certain",
+      "explicacion": "El almidón (o fécula) de maíz no está asociado a ningún alérgeno de declaración obligatoria. Ojo: no confundir con el almidón de trigo.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "almidon de maiz", "tipo": "ocr_variant" },
+        { "texto": "fecula de maiz", "tipo": "commercial" },
+        { "texto": "maicena", "tipo": "commercial" },
+        { "texto": "almidon de mandioca", "tipo": "commercial" },
+        { "texto": "fecula de mandioca", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "aceite de girasol",
+      "certeza": "certain",
+      "explicacion": "El aceite de girasol no está asociado a ningún alérgeno de declaración obligatoria. Distinto del aceite \"vegetal\" sin especificar, que puede ser de soja.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "aceite de girasol alto oleico", "tipo": "commercial" },
+        { "texto": "aceite de maiz", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "vainillina",
+      "certeza": "certain",
+      "explicacion": "La vainillina y la esencia de vainilla, como saborizantes puros, no están asociadas a ningún alérgeno de declaración obligatoria. Si figura como \"aroma\" genérico, ver esa entrada.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "esencia de vainilla", "tipo": "commercial" },
+        { "texto": "extracto de vainilla", "tipo": "commercial" },
+        { "texto": "vainilla", "tipo": "commercial" },
+        { "texto": "aroma vainilla", "tipo": "commercial" }
+      ]
+    },
+    {
+      "nombre_canonico": "cacao",
+      "certeza": "certain",
+      "explicacion": "El cacao y la manteca de cacao, en sí mismos, no están asociados a ningún alérgeno de declaración obligatoria. En la práctica el chocolate suele llevar leche; eso se detecta por los demás ingredientes y por la línea CONTIENE.",
+      "fuente": "Open Food Facts (ODbL)",
+      "sinonimos": [
+        { "texto": "cacao en polvo", "tipo": "commercial" },
+        { "texto": "pasta de cacao", "tipo": "technical" },
+        { "texto": "manteca de cacao", "tipo": "technical" },
+        { "texto": "cocoa", "tipo": "commercial" }
+      ]
+    }
+  ],
+  "excepciones": [
+    {
+      "nombre_ingrediente": "maltodextrina",
+      "grupo_alergeno_id": "trigo",
+      "regla": "Las maltodextrinas derivadas de trigo o cebada están exentas de la declaración de cereales con gluten, según el Art. 235 séptimo del CAA. La app no las trata como hallazgo de gluten, pero las muestra como nota informativa.",
+      "fuente": "CAA art. 235 séptimo"
+    },
+    {
+      "nombre_ingrediente": "jarabe de glucosa",
+      "grupo_alergeno_id": "trigo",
+      "regla": "Los jarabes de glucosa derivados de trigo o cebada, incluida la dextrosa obtenida a partir de ellos, están exentos de la declaración de cereales con gluten según el Art. 235 séptimo del CAA.",
+      "fuente": "CAA art. 235 séptimo"
+    },
+    {
+      "nombre_ingrediente": "dextrosa",
+      "grupo_alergeno_id": "trigo",
+      "regla": "La dextrosa derivada de jarabes de glucosa de trigo o cebada está exenta de la declaración de cereales con gluten según el Art. 235 séptimo del CAA.",
+      "fuente": "CAA art. 235 séptimo"
+    }
+  ]
+}
