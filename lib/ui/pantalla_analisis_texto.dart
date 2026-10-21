@@ -4,6 +4,7 @@ import '../datos/base_conocimiento.dart';
 import '../modelo/perfil.dart';
 import '../ocr/servicio_ocr.dart';
 import '../pipeline/analizador.dart';
+import '../sugerencias/gestor_reemplazos.dart';
 import 'pantalla_resultado.dart';
 
 /// Camino sin cámara: se pega el texto de la etiqueta (por ejemplo el texto
@@ -47,7 +48,13 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
       );
       if (!mounted) return;
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PantallaResultado(resultado: resultado),
+        builder: (_) => PantallaResultado(
+          resultado: resultado,
+          gestorReemplazos: GestorReemplazos.desdeConfiguracion(
+            widget.base,
+            widget.perfilesActivos,
+          ),
+        ),
       ));
     });
   }

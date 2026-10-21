@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "safelabel-web",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "build/web"],
+      "port": 8765
+    },
+    {
+      "name": "tp-pasaje-de-datos",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "C:/Users/fdbar/source/repos/tp-pasaje-de-datos/tp-pasaje-de-datos.csproj", "--launch-profile", "http"],
+      "port": 5278
+    }
+  ]
+}

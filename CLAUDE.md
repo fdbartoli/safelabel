@@ -13,6 +13,8 @@ Estas reglas existen porque un falso negativo en esta aplicación puede provocar
 **1.1. El LLM nunca decide si un ingrediente es un alérgeno.**
 La determinación sale siempre de la base de conocimiento local. El LLM solo redacta explicaciones en lenguaje natural a partir de datos ya determinados, y puede proponer candidatos para ingredientes desconocidos marcados explícitamente como tentativos.
 
+*Excepción (requisito del proyecto, 2026-10-09): sugerencias de reemplazo.* Cuando el análisis encuentra coincidencias con un perfil activo, un LLM puede sugerir alimentos de reemplazo. Condiciones, ver sección 5.6.
+
 **1.2. El LLM nunca recibe la imagen de la etiqueta.**
 Quien lee la imagen es el OCR en el dispositivo. El LLM solo recibe texto.
 
@@ -21,6 +23,8 @@ Si un ingrediente no está en la base, se muestra como no reconocido. Jamás se 
 
 **1.4. La aplicación no emite veredicto de aptitud.**
 Prohibido: "apto", "seguro", "podés consumirlo", semáforos verdes, tildes de aprobación. La app muestra hallazgos y deja la decisión en la persona.
+
+Las sugerencias de reemplazo (sección 5.6) están permitidas, presentadas como ideas para buscar, nunca como alimentos aptos. Se disparan por "hay coincidencias con el perfil", no por "el alimento no es válido".
 
 **1.5. Toda lectura parcial se declara.**
 Si el OCR no leyó una porción de la etiqueta con confianza suficiente, el resultado lo informa e indica qué parte falló.
@@ -44,16 +48,21 @@ Fuentes abiertas
   · taxonomía de ingredientes de Open Food Facts (~80k líneas, multilingüe, ODbL)
   · Art. 235 séptimo del Código Alimentario Argentino + directrices de ANMAT
   · tabla INS de aditivos (Codex)
-      ↓ importación
+      ↓ importación (scripts Python)
 lista cruda de términos
       ↓ el LLM propone: término → origen → explicación
       ↓ revisión humana (obligatoria)
-base de conocimiento validada y versionada
-      ↓ export comprimido
+base de conocimiento validada y versionada — JSON/CSV curado, versionado en git
+      ↓ script de compilación
 se empaqueta con la app (SQLite)
 ```
 
-Aquí el LLM es una herramienta de autoría, no de runtime. Se ejecuta en scripts, no en la app.
+Aquí el LLM es una herramienta de autoría, no de runtime. Se ejecuta en scripts, no en la app. Única excepción: las sugerencias de reemplazo de la sección 5.6, que sí llaman a un LLM desde la app.
+
+**Sin backend.** No hay servidor propio ni Postgres ni Supabase: la base validada vive
+como archivo curado en el repositorio (el mismo git es el "versionado"), y un script la
+compila directo a SQLite para embeber en la app. Decisión explícita para simplificar el
+proyecto — no hace falta una base maestra con auditoría server-side (2026-09-16).
 
 ### Flujo B — análisis de una etiqueta (en el dispositivo, cada escaneo)
 
@@ -69,10 +78,13 @@ Aquí el LLM es una herramienta de autoría, no de runtime. Se ejecuta en script
 7. Cruce con los perfiles activos
 8. Resultado en tres bloques
 9. Explicación en lenguaje claro (texto pregenerado o cacheado)
-10. Registro local de desconocidos y correcciones → sincronización
+10. Registro local de desconocidos y correcciones — queda en el dispositivo; sin
+    backend no hay sincronización automática entre usuarios, se revisa a mano y se
+    incorpora a la base en un próximo release de la app
+11. Si hay coincidencias: botón "Sugerir sustitutos"; al tocarlo, sugerencias por LLM (sección 5.6)
 ```
 
-Debe funcionar completo sin conexión. El supermercado es el lugar de uso y el lugar con peor señal.
+Debe funcionar completo sin conexión. El supermercado es el lugar de uso y el lugar con peor señal. El paso 11 es la única parte que necesita internet: sin conexión no aparece, y nada de los pasos 1–10 depende de él.
 
 ---
 
@@ -83,13 +95,16 @@ Debe funcionar completo sin conexión. El supermercado es el lugar de uso y el l
 | App | Flutter | La app oficial de Open Food Facts es Flutter y publican SDK en Dart |
 | OCR | `google_mlkit_text_recognition` | Apple Vision en iOS, ML Kit en Android, todo en dispositivo |
 | Código de barras | `mobile_scanner` | Solo como atajo, nunca como única vía |
-| Base local | SQLite (`drift`) | Mirror versionado de la base de conocimiento |
-| Base servidor | PostgreSQL | `pg_trgm` para similitud, `unaccent`, CTEs recursivas para la taxonomía |
-| Backend / auth | Supabase | Row Level Security resuelve los perfiles compartidos en solo lectura |
-| Scripts de Flujo A | Python | Importación, normalización, llamadas al LLM en batch |
+| Base local | SQLite (`drift`) | Única base de conocimiento; se compila desde el archivo curado y se empaqueta con la app |
+| Sugerencias de reemplazo | Google Gemini (plan gratuito) vía API | Solo texto, solo con conexión (sección 5.6) |
+| Scripts de Flujo A | Python | Importación, normalización (`unidecode`), similitud difusa (`rapidfuzz`) para dedupe, llamadas al LLM en batch, compilación a SQLite |
+
+Sin backend: no hay servidor propio, ni Postgres, ni Supabase. Perfiles y base de
+conocimiento son enteramente locales (ver sección 2). `rapidfuzz` + `unidecode` en los
+scripts de Flujo A cumplen en Python el rol que `pg_trgm`/`unaccent` cumplían en Postgres.
 
 No usar Tesseract: rinde mal con tipografías estilizadas, que abundan en etiquetas.
-No usar Neo4j: la taxonomía es un DAG y Postgres la resuelve con CTEs recursivas.
+No usar Neo4j: la taxonomía es un DAG y SQLite la resuelve con CTEs recursivas (`WITH RECURSIVE`).
 
 ---
 
@@ -132,16 +147,20 @@ exemption
   source_ref
 ```
 
-### Perfiles y compartición
+### Perfiles
+
+Enteramente locales: sin cuentas, sin servidor. Viven en el SQLite del dispositivo.
 
 ```
-user
-profile                   -- id, owner_user_id, display_name
+profile                   -- id, display_name
 profile_restriction       -- profile_id, allergen_group_id, severity
-profile_share             -- profile_id, share_code, permission='read_only', expires_at
 ```
 
 `severity` importa: un perfil con anafilaxia debe recibir advertencias más firmes ante ingredientes desconocidos que un perfil de intolerancia leve.
+
+Sin compartir entre dispositivos por ahora (decisión 2026-09-16: se prioriza simplicidad
+sobre ese diferencial). El "modo anfitrión" de la Etapa 3 es varios perfiles activos **en
+el mismo dispositivo** a la vez, no sincronización entre celulares.
 
 ### Cola de desconocidos
 
@@ -212,6 +231,19 @@ Tres bloques, siempre, en este orden:
 
 Sin bloque de "apto". Sin resumen verde.
 
+### 5.6. Sugerencias de reemplazo por LLM (requisito agregado 2026-10-09)
+
+Cuando el bloque 1 tiene coincidencias, dentro de ese bloque, debajo de las coincidencias, aparece el botón "Sugerir sustitutos" (en el verde pastel de la marca: es una acción, no un hallazgo). El LLM se llama recién cuando la persona lo toca. Es la excepción a las reglas 1.1 y 1.4 y a la sección 2, con estas condiciones:
+
+- Al LLM se le manda solo texto: los grupos de alérgenos de los perfiles activos, los ingredientes que chocaron y la lista de ingredientes leída (para que infiera el tipo de producto). Nunca la imagen (la regla 1.2 sigue igual).
+- Implementación: `lib/sugerencias/` (servicio, filtro, gestor) y `lib/ui/seccion_reemplazos.dart`. Proveedor: Google Gemini, plan gratuito (decisión 2026-10-10), modelo `gemini-3.8-flash` vía `generateContent` por HTTP directo, salida JSON con esquema. La clave se inyecta en la compilación con `--dart-define=GEMINI_API_KEY` (lo hace `dev.ps1` desde la variable de entorno; el modelo se puede cambiar con `GEMINI_MODEL`). Se puede extraer de un APK: aceptable para la demo, no para producción. En el plan gratuito Google puede usar lo enviado para mejorar sus productos: solo viajan ingredientes y grupos de alérgenos, nunca datos personales ni la foto.
+- La respuesta son categorías genéricas ("bebida de avena"), no marcas: la base no puede verificar los ingredientes de una marca.
+- Filtro determinista: cada sugerencia pasa por el matcher local y se descarta si choca con alguna restricción de un perfil activo.
+- Se muestran en el bloque 1, debajo de las coincidencias, como sustitutos para buscar, con el aviso "escaneá la etiqueta del sustituto antes de consumirlo". Nunca como apto. Las tarjetas de hallazgos no llevan verde.
+- Sin conexión o si la llamada falla, se avisa y se puede reintentar; si la conexión con el LLM no está configurada, el botón lo avisa. El resultado en tres bloques nunca espera al LLM.
+- Las sugerencias no entran a la base de conocimiento (regla 1.6 sigue igual).
+- La clave de la API no se commitea al repositorio.
+
 ---
 
 ## 6. Guía de captura (paso 1)
@@ -229,20 +261,22 @@ La calidad de la foto determina todo lo demás. Implementar guía activa, en pos
 
 **Etapa 1 — validar el OCR.** Tabla de ~200 ingredientes en un JSON local, sin backend ni base de datos. Cámara, OCR, normalización, match exacto y difuso, resultado en tres bloques. Objetivo: comprobar que el OCR sirve sobre etiquetas argentinas reales.
 
-**Etapa 2 — la base de conocimiento.** Scripts de Flujo A: importación de Open Food Facts, codificación del Art. 235 séptimo, tabla INS, generación asistida por LLM, revisión. Postgres con `pg_trgm`. Export a SQLite.
+**Etapa 2 — la base de conocimiento.** Scripts de Flujo A en Python: importación de Open Food Facts, codificación del Art. 235 séptimo, tabla INS, generación asistida por LLM, revisión humana sobre el archivo curado en el repo (sin Postgres). Script de compilación a SQLite (`drift`) para reemplazar el JSON de la Etapa 1.
 
-**Etapa 3 — perfiles y compartición.** Supabase, auth, RLS, códigos de compartición, modo anfitrión con múltiples perfiles simultáneos.
+**Etapa 3 — perfiles locales.** Múltiples perfiles en el mismo dispositivo (SQLite), modo anfitrión para elegir cuáles están activos en un escaneo. Sin cuentas ni backend; sin compartir entre dispositivos por ahora.
 
-**Etapa 4 — el bucle de mejora.** Cola de desconocidos, sincronización, correcciones de usuario, priorización por frecuencia.
+**Etapa 4 — el bucle de mejora.** Cola de desconocidos y correcciones de usuario, local en el dispositivo. Sin sincronización automática entre usuarios (no hay backend): se revisan a mano y se incorporan a la base curada para el próximo release. Priorización por frecuencia de aparición.
 
 **Etapa 5 — pulido.** Código de barras como atajo, historial, alertas por reformulación, versión para nutricionistas.
+
+**Requisito agregado (2026-10-09) — sugerencias de reemplazo por LLM.** Fuera del orden de etapas; condiciones en la sección 5.6.
 
 ---
 
 ## 8. Antipatrones — no hacer esto
 
 - Mandar la foto a un LLM multimodal y pedirle el análisis completo. Rápido de programar, imposible de testear, sin producto propio.
-- Consultar una API externa en cada escaneo. Rompe el uso offline, que es el caso principal.
+- Consultar una API externa en cada escaneo. Rompe el uso offline, que es el caso principal. (Excepción: la llamada de reemplazos de la sección 5.6, solo con coincidencias y conexión, y sin bloquear el resultado.)
 - Colapsar `UNREADABLE` y `UNKNOWN` en un solo caso vacío.
 - Buscar la palabra "gluten" en etiquetas argentinas.
 - Match exacto por igualdad de strings. El OCR devuelve "caselnato de sodlo".
@@ -261,7 +295,7 @@ Diferenciales del proyecto, útiles para resolver dudas de diseño:
 - **Yuka** — código de barras únicamente, sin OCR (su centro de ayuda confirma que un producto sin código no puede escanearse), catálogo de origen europeo, orientada a calidad nutricional más que a restricciones.
 - **Spoonful** — nicho FODMAP y sin gluten, un perfil, código de barras.
 
-Ante una decisión ambigua, priorizar lo que ellos no pueden hacer: leer la etiqueta física, funcionar con productos regionales, y compartir el perfil sin ceder la cuenta.
+Ante una decisión ambigua, priorizar lo que ellos no pueden hacer: leer la etiqueta física, funcionar con productos regionales, y varios perfiles en un mismo dispositivo sin necesidad de crear una cuenta. (Compartir un perfil entre dispositivos quedó fuera de alcance — sección 7, Etapa 3 — a cambio de no depender de ningún backend.)
 
 ---
 

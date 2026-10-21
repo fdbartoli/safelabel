@@ -198,6 +198,7 @@ class Analizador {
       totalItems: items.length,
       itemsAnalizados: itemsAnalizados < 0 ? 0 : itemsAnalizados,
       severidadMaxima: severidadMaxima,
+      ingredientesLeidos: [for (final i in items) i.textoNormalizado],
     );
   }
 

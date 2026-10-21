@@ -8,6 +8,7 @@ import '../ocr/servicio_ocr.dart';
 import '../ocr/servicio_ocr_mlkit.dart';
 import '../ocr/triage_confianza.dart';
 import '../pipeline/analizador.dart';
+import '../sugerencias/gestor_reemplazos.dart';
 import 'pantalla_resultado.dart';
 
 /// Paso 1 del Flujo B: cámara con guía activa de captura.
@@ -100,17 +101,21 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
 
       if (!mounted) return;
 
-      // Si la lectura fue muy pobre y no hubo nada útil, guiar antes de mostrar
-      // un resultado casi vacío.
-      final lecturaInutil = resultado.itemsAnalizados == 0 &&
-          resultado.coincidencias.isEmpty;
-      if (sugerencias.isNotEmpty && lecturaInutil) {
-        setState(() => _sugerencias = sugerencias);
-        return;
-      }
+      // El resultado se muestra SIEMPRE (reglas 1.3 y 5.5): los "no reconocidos"
+      // y las líneas no legibles son parte del resultado, no motivo para
+      // ocultarlo. Los consejos de captura viajan al resultado como aviso no
+      // bloqueante, y quedan también en el overlay para una eventual recaptura.
+      setState(() => _sugerencias = sugerencias);
 
       await Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PantallaResultado(resultado: resultado),
+        builder: (_) => PantallaResultado(
+          resultado: resultado,
+          sugerenciasCaptura: sugerencias,
+          gestorReemplazos: GestorReemplazos.desdeConfiguracion(
+            widget.base,
+            widget.perfilesActivos,
+          ),
+        ),
       ));
     } catch (e) {
       if (mounted) setState(() => _error = 'Error al procesar la foto: $e');

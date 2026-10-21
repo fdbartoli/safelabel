@@ -3,18 +3,42 @@ import 'package:flutter/material.dart';
 import '../modelo/ingrediente.dart';
 import '../modelo/perfil.dart';
 import '../modelo/resultado_analisis.dart';
+import '../ocr/guia_captura.dart';
+import '../sugerencias/gestor_reemplazos.dart';
 import 'aviso_informativo.dart';
+import 'seccion_reemplazos.dart';
+import 'tema.dart';
 
 /// Resultado del análisis en tres bloques, siempre en este orden (sección 5.5):
 /// 1) coincidencias con el perfil, 2) no reconocidos, 3) no legibles.
 /// Sin bloque de "apto", sin resumen verde (regla 1.4).
 class PantallaResultado extends StatelessWidget {
-  const PantallaResultado({super.key, required this.resultado});
+  const PantallaResultado({
+    super.key,
+    required this.resultado,
+    this.sugerenciasCaptura = const [],
+    this.gestorReemplazos,
+  });
 
   final ResultadoAnalisis resultado;
 
+  /// Sugerencias de reemplazo por LLM (sección 5.6). `null` = no se muestran.
+  final GestorReemplazos? gestorReemplazos;
+
+  /// Consejos de captura (sección 6). Se muestran como aviso no bloqueante: el
+  /// resultado se ve igual, con una foto mejor puede completarse.
+  final List<SugerenciaCaptura> sugerenciasCaptura;
+
   @override
   Widget build(BuildContext context) {
+    // Tema neutro propio, sin importar qué tema tenga el resto de la app
+    // (regla 1.4): acá nunca puede aparecer el verde pastel de la marca. El
+    // Builder es necesario para que _construirScaffold reciba un contexto
+    // posicionado POR DEBAJO de este Theme (el de `build` está por arriba).
+    return Theme(data: temaResultado, child: Builder(builder: _construirScaffold));
+  }
+
+  Widget _construirScaffold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Hallazgos')),
       body: ListView(
@@ -32,6 +56,13 @@ class PantallaResultado extends StatelessWidget {
                   '"No legibles" más abajo y sacá otra foto de esa parte.',
             ),
 
+          if (sugerenciasCaptura.isNotEmpty)
+            _Callout(
+              icon: Icons.photo_camera_outlined,
+              titulo: 'Para una lectura más completa',
+              texto: sugerenciasCaptura.map((s) => '• ${s.mensaje}').join('\n'),
+            ),
+
           _Bloque(
             numero: 1,
             titulo: 'Coincidencias con el perfil',
@@ -41,6 +72,10 @@ class PantallaResultado extends StatelessWidget {
                 'otros dos bloques y la etiqueta oficial.',
             hijos: [
               for (final h in resultado.coincidencias) _TarjetaHallazgo(h),
+              // Paso 11 (sección 5.6): junto a las coincidencias que hay que
+              // sustituir. Solo existe si hay coincidencias.
+              if (gestorReemplazos != null && gestorReemplazos!.aplica(resultado))
+                SeccionReemplazos(gestor: gestorReemplazos!, resultado: resultado),
             ],
           ),
 

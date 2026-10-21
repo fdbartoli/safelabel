@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'datos/base_conocimiento.dart';
 import 'ui/pantalla_inicio.dart';
+import 'ui/tema.dart';
 
 void main() {
   runApp(const SafeLabelApp());
@@ -15,17 +16,9 @@ class SafeLabelApp extends StatelessWidget {
     return MaterialApp(
       title: 'SafeLabel',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          // Azul neutro, a propósito: nada de verde de "aprobación" (regla 1.4).
-          seedColor: const Color(0xFF1B4965),
-          brightness: Brightness.light,
-        ),
-        snackBarTheme: const SnackBarThemeData(
-          behavior: SnackBarBehavior.floating,
-        ),
-      ),
+      // Verde pastel para el chrome general. La pantalla de resultado usa su
+      // propio tema neutro — ver lib/ui/tema.dart (regla 1.4).
+      theme: temaApp,
       home: FutureBuilder<BaseConocimiento>(
         future: BaseConocimiento.cargarDesdeAssets(),
         builder: (context, snapshot) {

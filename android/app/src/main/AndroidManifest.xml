@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solo para las sugerencias de reemplazo por LLM (CLAUDE.md, sección 5.6). -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="safelabel"
         android:name="${applicationName}"

@@ -149,7 +149,12 @@ class ResultadoAnalisis {
     required this.totalItems,
     required this.itemsAnalizados,
     required this.severidadMaxima,
+    this.ingredientesLeidos = const [],
   });
+
+  /// Todos los ingredientes leídos, normalizados y en orden. Es el texto que
+  /// se manda al LLM para las sugerencias de reemplazo (sección 5.6).
+  final List<String> ingredientesLeidos;
 
   /// Versión de la base usada. Se registra por trazabilidad (sección 10).
   final String versionBase;

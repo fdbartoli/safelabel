@@ -22,6 +22,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
   @override
   Widget build(BuildContext context) {
     final perfiles = _activos.toList();
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('SafeLabel')),
       body: ListView(
@@ -35,24 +36,55 @@ class _PantallaInicioState extends State<PantallaInicio> {
             'El análisis se cruza con estos perfiles.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           ...perfilesDemo.map((p) {
-            return CheckboxListTile(
-              value: _activos.contains(p),
-              onChanged: (v) => setState(() {
-                if (v ?? false) {
-                  _activos.add(p);
-                } else {
-                  _activos.remove(p);
-                }
-              }),
-              title: Text(p.nombre),
-              subtitle: Text(_descripcionRestricciones(p)),
-              controlAffinity: ListTileControlAffinity.leading,
-              dense: true,
+            final activo = _activos.contains(p);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Material(
+                color: activo ? scheme.primaryContainer : scheme.surfaceContainerHigh,
+                borderRadius: BorderRadius.circular(16),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () => setState(() {
+                    if (activo) {
+                      _activos.remove(p);
+                    } else {
+                      _activos.add(p);
+                    }
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    child: Row(
+                      children: [
+                        Icon(
+                          activo ? Icons.check_circle_rounded : Icons.circle_outlined,
+                          color: activo ? scheme.primary : scheme.outline,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(p.nombre,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 2),
+                              Text(_descripcionRestricciones(p),
+                                  style: Theme.of(context).textTheme.bodySmall),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             );
           }),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: perfiles.isEmpty
                 ? null
@@ -84,15 +116,27 @@ class _PantallaInicioState extends State<PantallaInicio> {
               child: Text('Elegí al menos un perfil para empezar.'),
             ),
           const SizedBox(height: 24),
-          Text(
-            'Base de conocimiento ${widget.base.version} · '
-            '${widget.base.cantidadIngredientes} ingredientes',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            widget.base.atribucion,
-            style: Theme.of(context).textTheme.bodySmall,
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: scheme.surfaceContainerHigh,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Base de conocimiento ${widget.base.version} · '
+                  '${widget.base.cantidadIngredientes} ingredientes',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  widget.base.atribucion,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
         ],
       ),

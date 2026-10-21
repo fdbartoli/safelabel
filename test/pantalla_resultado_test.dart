@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:safelabel/modelo/perfil.dart';
+import 'package:safelabel/ocr/guia_captura.dart';
 import 'package:safelabel/ocr/linea_ocr.dart';
 import 'package:safelabel/pipeline/analizador.dart';
 import 'package:safelabel/ui/pantalla_resultado.dart';
+import 'package:safelabel/ui/tema.dart';
 
 import 'ayuda_base.dart';
 
@@ -64,6 +66,61 @@ void main() {
     expect(find.byIcon(Icons.check_circle), findsNothing);
     expect(find.byIcon(Icons.check_circle_outline), findsNothing);
     expect(find.byIcon(Icons.verified), findsNothing);
+  });
+
+  testWidgets(
+      'muestra los tres bloques aunque no haya coincidencias ni línea CONTIENE '
+      '(reglas 1.3 y 5.5)', (tester) async {
+    tester.view.physicalSize = const Size(1200, 3200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    // Etiqueta sin línea CONTIENE y con ingredientes que no están en la base:
+    // 0 analizados, 0 coincidencias. El resultado se muestra igual.
+    final resultado = analizador.analizar(
+      ocr([('Ingredientes: agua, colorante caramelo, aroma xyz.', 0.95)]),
+      perfilesActivos: const [
+        Perfil(nombre: 'APLV', restricciones: [
+          RestriccionPerfil(
+              grupoAlergenoId: 'leche', severidad: Severidad.anafilaxia),
+        ]),
+      ],
+    );
+    expect(resultado.coincidencias, isEmpty);
+
+    await tester.pumpWidget(MaterialApp(
+      home: PantallaResultado(
+        resultado: resultado,
+        sugerenciasCaptura: const [SugerenciaCaptura.buscarLineaContiene],
+      ),
+    ));
+
+    expect(find.text('Coincidencias con el perfil'), findsOneWidget);
+    expect(find.text('No reconocidos'), findsOneWidget);
+    expect(find.text('No legibles'), findsOneWidget);
+    // El consejo de captura aparece como aviso, no bloquea.
+    expect(find.textContaining('Para una lectura más completa'), findsOneWidget);
+  });
+
+  testWidgets(
+      'nunca hereda el verde pastel del resto de la app, use el tema que use '
+      '(regla 1.4)', (tester) async {
+    final resultado = analizador.analizar(
+      ocr([('Ingredientes: sal.', 0.95)]),
+      perfilesActivos: const [],
+    );
+
+    // Se monta bajo el tema general de la app (verde), como pasaría al
+    // navegar desde pantalla_captura o pantalla_analisis_texto.
+    await tester.pumpWidget(MaterialApp(
+      theme: temaApp,
+      home: PantallaResultado(resultado: resultado),
+    ));
+
+    final scheme = Theme.of(tester.element(find.byType(Scaffold))).colorScheme;
+    expect(scheme.primary, temaResultado.colorScheme.primary);
+    expect(scheme.primary, isNot(temaApp.colorScheme.primary));
   });
 
   testWidgets('el aviso informativo aparece siempre', (tester) async {
