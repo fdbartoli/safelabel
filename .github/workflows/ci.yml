@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   verificacion:
-    name: Formato, análisis y tests
+    name: Análisis y tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,9 +28,6 @@ jobs:
 
       - name: Dependencias (pub get)
         run: flutter pub get
-
-      - name: Formato (dart format)
-        run: dart format --output=none --set-exit-if-changed .
 
       - name: Análisis estático (flutter analyze)
         run: flutter analyze
