@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verificacion:
+    name: Formato, análisis y tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: flutter --version
+        run: flutter --version
+
+      - name: Dependencias (pub get)
+        run: flutter pub get
+
+      - name: Formato (dart format)
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Análisis estático (flutter analyze)
+        run: flutter analyze
+
+      - name: Tests (flutter test)
+        run: flutter test
