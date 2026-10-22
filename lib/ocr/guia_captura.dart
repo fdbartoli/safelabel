@@ -61,10 +61,14 @@ class EvaluadorCaptura {
       sugerencias.add(SugerenciaCaptura.girarEnvase);
     }
 
-    final tieneEncabezado =
-        RegExp(r'ingredientes?\s*:', caseSensitive: false).hasMatch(texto);
-    final tieneContiene =
-        RegExp(r'\bcontiene\b', caseSensitive: false).hasMatch(texto);
+    final tieneEncabezado = RegExp(
+      r'ingredientes?\s*:',
+      caseSensitive: false,
+    ).hasMatch(texto);
+    final tieneContiene = RegExp(
+      r'\bcontiene\b',
+      caseSensitive: false,
+    ).hasMatch(texto);
     if (tieneEncabezado && !tieneContiene) {
       sugerencias.add(SugerenciaCaptura.buscarLineaContiene);
     }

@@ -38,10 +38,7 @@ const perfilesDemo = <Perfil>[
   Perfil(
     nombre: 'Intolerancia a sulfitos',
     restricciones: [
-      RestriccionPerfil(
-        grupoAlergenoId: 'sulfitos',
-        severidad: Severidad.leve,
-      ),
+      RestriccionPerfil(grupoAlergenoId: 'sulfitos', severidad: Severidad.leve),
     ],
   ),
 ];

@@ -12,20 +12,26 @@ void main() {
   const perfilLeche = Perfil(
     nombre: 'Leche grave',
     restricciones: [
-      RestriccionPerfil(grupoAlergenoId: 'leche', severidad: Severidad.anafilaxia),
+      RestriccionPerfil(
+        grupoAlergenoId: 'leche',
+        severidad: Severidad.anafilaxia,
+      ),
     ],
   );
   const perfilTrigo = Perfil(
     nombre: 'Celíaco',
     restricciones: [
-      RestriccionPerfil(grupoAlergenoId: 'trigo', severidad: Severidad.moderada),
+      RestriccionPerfil(
+        grupoAlergenoId: 'trigo',
+        severidad: Severidad.moderada,
+      ),
     ],
   );
 
   LecturaOcr ocr(List<(String, double)> lineas) => LecturaOcr([
-        for (var i = 0; i < lineas.length; i++)
-          LineaOcr(texto: lineas[i].$1, confianza: lineas[i].$2, indice: i),
-      ]);
+    for (var i = 0; i < lineas.length; i++)
+      LineaOcr(texto: lineas[i].$1, confianza: lineas[i].$2, indice: i),
+  ]);
 
   test('bloque 1: coincidencia de ingrediente con el perfil', () {
     final r = analizador.analizar(
@@ -62,13 +68,16 @@ void main() {
     expect(r.conteoAnalizados, '2 de 3 ingredientes analizados');
   });
 
-  test('bloque 2: perfil con anafilaxia refuerza el aviso por desconocidos', () {
-    final r = analizador.analizar(
-      ocr([('Ingredientes: xyzcosa rara.', 0.95)]),
-      perfilesActivos: [perfilLeche],
-    );
-    expect(r.noReconocidos.single.advertenciaReforzada, isTrue);
-  });
+  test(
+    'bloque 2: perfil con anafilaxia refuerza el aviso por desconocidos',
+    () {
+      final r = analizador.analizar(
+        ocr([('Ingredientes: xyzcosa rara.', 0.95)]),
+        perfilesActivos: [perfilLeche],
+      );
+      expect(r.noReconocidos.single.advertenciaReforzada, isTrue);
+    },
+  );
 
   test('bloque 3: línea de baja confianza es no legible y se declara', () {
     final r = analizador.analizar(
@@ -97,32 +106,41 @@ void main() {
     expect(r.avisosCruce.any((a) => a.prioridad == PrioridadCola.alta), isTrue);
   });
 
-  test('sección 5.3 fila 3: ingrediente marca alérgeno que CONTIENE no declara', () {
-    final r = analizador.analizar(
-      ocr([
-        ('Ingredientes: caseinato de sodio, harina de trigo.', 0.95),
-        ('CONTIENE: trigo.', 0.95),
-      ]),
-      perfilesActivos: [perfilLeche, perfilTrigo],
-    );
-    final hLeche = r.coincidencias.firstWhere((h) => h.grupoAlergeno == 'leche');
-    expect(hLeche.aclaracionCruce, isNotNull);
-    final hTrigo = r.coincidencias
-        .firstWhere((h) => h.grupoAlergeno == 'cereales con gluten');
-    expect(hTrigo.origen, OrigenHallazgo.ambos);
-    expect(hTrigo.aclaracionCruce, isNull);
-  });
+  test(
+    'sección 5.3 fila 3: ingrediente marca alérgeno que CONTIENE no declara',
+    () {
+      final r = analizador.analizar(
+        ocr([
+          ('Ingredientes: caseinato de sodio, harina de trigo.', 0.95),
+          ('CONTIENE: trigo.', 0.95),
+        ]),
+        perfilesActivos: [perfilLeche, perfilTrigo],
+      );
+      final hLeche = r.coincidencias.firstWhere(
+        (h) => h.grupoAlergeno == 'leche',
+      );
+      expect(hLeche.aclaracionCruce, isNotNull);
+      final hTrigo = r.coincidencias.firstWhere(
+        (h) => h.grupoAlergeno == 'cereales con gluten',
+      );
+      expect(hTrigo.origen, OrigenHallazgo.ambos);
+      expect(hTrigo.aclaracionCruce, isNull);
+    },
+  );
 
-  test('sección 5.4: la excepción del CAA saca a la maltodextrina del bloque 1', () {
-    final r = analizador.analizar(
-      ocr([('Ingredientes: maltodextrina, sal.', 0.95)]),
-      perfilesActivos: [perfilTrigo],
-    );
-    expect(r.coincidencias, isEmpty);
-    expect(r.notasExcepciones, hasLength(1));
-    expect(r.notasExcepciones.single.grupoAlergeno, 'cereales con gluten');
-    expect(r.notasExcepciones.single.fuente, contains('235'));
-  });
+  test(
+    'sección 5.4: la excepción del CAA saca a la maltodextrina del bloque 1',
+    () {
+      final r = analizador.analizar(
+        ocr([('Ingredientes: maltodextrina, sal.', 0.95)]),
+        perfilesActivos: [perfilTrigo],
+      );
+      expect(r.coincidencias, isEmpty);
+      expect(r.notasExcepciones, hasLength(1));
+      expect(r.notasExcepciones.single.grupoAlergeno, 'cereales con gluten');
+      expect(r.notasExcepciones.single.fuente, contains('235'));
+    },
+  );
 
   test('trazabilidad: el resultado registra la versión de la base', () {
     final r = analizador.analizar(

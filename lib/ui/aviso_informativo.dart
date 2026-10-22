@@ -27,13 +27,13 @@ class AvisoInformativo extends StatelessWidget {
             child: Text(
               compacto
                   ? 'Herramienta informativa. No dice si un producto es apto: '
-                      'muestra hallazgos para que decidas vos. Siempre revisá la '
-                      'etiqueta oficial.'
+                        'muestra hallazgos para que decidas vos. Siempre revisá la '
+                        'etiqueta oficial.'
                   : 'SafeLabel es una herramienta informativa. No reemplaza la '
-                      'etiqueta oficial del producto ni la indicación de un '
-                      'profesional de la salud, y no dice si un alimento es apto '
-                      'o seguro: te muestra los hallazgos y la decisión es tuya. '
-                      'Un ingrediente que no aparece no significa que esté ausente.',
+                        'etiqueta oficial del producto ni la indicación de un '
+                        'profesional de la salud, y no dice si un alimento es apto '
+                        'o seguro: te muestra los hallazgos y la decisión es tuya. '
+                        'Un ingrediente que no aparece no significa que esté ausente.',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

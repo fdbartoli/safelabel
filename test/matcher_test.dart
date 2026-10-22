@@ -23,7 +23,10 @@ void main() {
   test('match exacto por sinónimo', () {
     final r = matcher.match(item('caseinato sodico'));
     expect(r, isA<Coincidencia>());
-    expect((r as Coincidencia).ingrediente.nombreCanonico, 'caseinato de sodio');
+    expect(
+      (r as Coincidencia).ingrediente.nombreCanonico,
+      'caseinato de sodio',
+    );
   });
 
   test('match exacto por número INS', () {
@@ -43,10 +46,14 @@ void main() {
 
   test('desconocido que se parece a algo: probable error de OCR', () {
     final r = matcher.match(item('harian de trlgo'));
-    final tratadoComoErrorOcr = (r is Coincidencia) ||
+    final tratadoComoErrorOcr =
+        (r is Coincidencia) ||
         (r is SinCoincidencia && r.probableErrorOcr && r.candidato != null);
-    expect(tratadoComoErrorOcr, isTrue,
-        reason: 'debería resolverse como match difuso o como probable typo');
+    expect(
+      tratadoComoErrorOcr,
+      isTrue,
+      reason: 'debería resolverse como match difuso o como probable typo',
+    );
   });
 
   test('desconocido genuino: no se parece a nada de la base', () {

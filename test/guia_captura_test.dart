@@ -8,9 +8,9 @@ void main() {
   const triage = TriageConfianza();
 
   LecturaOcr ocr(List<(String, double)> l) => LecturaOcr([
-        for (var i = 0; i < l.length; i++)
-          LineaOcr(texto: l[i].$1, confianza: l[i].$2, indice: i),
-      ]);
+    for (var i = 0; i < l.length; i++)
+      LineaOcr(texto: l[i].$1, confianza: l[i].$2, indice: i),
+  ]);
 
   test('lectura muy corta: sugiere acercarse y encuadrar', () {
     final lectura = ocr([('sal', 0.9)]);
@@ -40,8 +40,11 @@ void main() {
 
   test('hay lista pero falta la línea CONTIENE: sugiere incluirla', () {
     final lectura = ocr([
-      ('Ingredientes: harina de trigo enriquecida, azucar, sal, '
-          'jarabe de glucosa, lecitina de soja', 0.95),
+      (
+        'Ingredientes: harina de trigo enriquecida, azucar, sal, '
+            'jarabe de glucosa, lecitina de soja',
+        0.95,
+      ),
     ]);
     final s = evaluador.evaluar(lectura, triage.clasificar(lectura));
     expect(s, contains(SugerenciaCaptura.buscarLineaContiene));
@@ -49,8 +52,11 @@ void main() {
 
   test('lectura completa y nítida: sin sugerencias', () {
     final lectura = ocr([
-      ('Ingredientes: harina de trigo enriquecida, azucar, sal, '
-          'jarabe de glucosa, lecitina de soja.', 0.95),
+      (
+        'Ingredientes: harina de trigo enriquecida, azucar, sal, '
+            'jarabe de glucosa, lecitina de soja.',
+        0.95,
+      ),
       ('CONTIENE: trigo y soja.', 0.95),
     ]);
     final s = evaluador.evaluar(lectura, triage.clasificar(lectura));

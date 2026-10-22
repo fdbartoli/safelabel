@@ -16,14 +16,18 @@ void main() {
 
   test('coeficienteDice tolera palabras de más', () {
     expect(coeficienteDice('lecitina de soja', 'lecitina de soja'), 1.0);
-    expect(coeficienteDice('lecitina soja', 'lecitina de soja'),
-        greaterThan(0.8));
+    expect(
+      coeficienteDice('lecitina soja', 'lecitina de soja'),
+      greaterThan(0.8),
+    );
   });
 
   test('similitud combinada: typo de OCR queda alto', () {
     // "caselnato de sodlo" es la lectura errónea típica de "caseinato de sodio".
-    expect(similitud('caselnato de sodlo', 'caseinato de sodio'),
-        greaterThan(0.84));
+    expect(
+      similitud('caselnato de sodlo', 'caseinato de sodio'),
+      greaterThan(0.84),
+    );
   });
 
   test('similitud combinada: términos distintos quedan bajo', () {

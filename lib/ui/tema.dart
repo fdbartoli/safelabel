@@ -84,9 +84,7 @@ ThemeData _construir(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       tileColor: scheme.surfaceContainerHigh,
     ),
-    snackBarTheme: const SnackBarThemeData(
-      behavior: SnackBarBehavior.floating,
-    ),
+    snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
     dividerTheme: DividerThemeData(color: scheme.outlineVariant),
   );
 }

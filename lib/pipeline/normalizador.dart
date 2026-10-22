@@ -43,12 +43,30 @@ class Normalizador {
   const Normalizador();
 
   static const Map<String, String> _acentos = {
-    'á': 'a', 'à': 'a', 'ä': 'a', 'â': 'a', 'ã': 'a',
-    'é': 'e', 'è': 'e', 'ë': 'e', 'ê': 'e',
-    'í': 'i', 'ì': 'i', 'ï': 'i', 'î': 'i',
-    'ó': 'o', 'ò': 'o', 'ö': 'o', 'ô': 'o', 'õ': 'o',
-    'ú': 'u', 'ù': 'u', 'ü': 'u', 'û': 'u',
-    'ñ': 'n', 'ç': 'c',
+    'á': 'a',
+    'à': 'a',
+    'ä': 'a',
+    'â': 'a',
+    'ã': 'a',
+    'é': 'e',
+    'è': 'e',
+    'ë': 'e',
+    'ê': 'e',
+    'í': 'i',
+    'ì': 'i',
+    'ï': 'i',
+    'î': 'i',
+    'ó': 'o',
+    'ò': 'o',
+    'ö': 'o',
+    'ô': 'o',
+    'õ': 'o',
+    'ú': 'u',
+    'ù': 'u',
+    'ü': 'u',
+    'û': 'u',
+    'ñ': 'n',
+    'ç': 'c',
   };
 
   /// Frases que marcan el comienzo del bloque de tabla nutricional. A partir de
@@ -70,8 +88,9 @@ class Normalizador {
   );
 
   /// INS o número E: `ins 471`, `ins471`, `e 471`, `e471`, `471`, `160a`.
-  static final RegExp _regexIns =
-      RegExp(r'^(?:ins|e)?\s*([0-9]{3,4}[a-z]?(?:\([a-z0-9]+\))?)$');
+  static final RegExp _regexIns = RegExp(
+    r'^(?:ins|e)?\s*([0-9]{3,4}[a-z]?(?:\([a-z0-9]+\))?)$',
+  );
 
   /// minúsculas + sin acentos + espacios colapsados. Para nombres sueltos.
   String normalizarTexto(String entrada) {
@@ -80,10 +99,7 @@ class Normalizador {
       final ch = String.fromCharCode(rune);
       buffer.write(_acentos[ch] ?? ch);
     }
-    return buffer
-        .toString()
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
+    return buffer.toString().replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 
   /// Pipeline completo: de texto crudo del OCR a lista de [ItemNormalizado].
@@ -167,9 +183,7 @@ class Normalizador {
       if (nombre.isNotEmpty) {
         _emitir(nombre, padre, acc);
       }
-      final nombreNorm = nombre.isNotEmpty
-          ? _limpiar(nombre)
-          : padre;
+      final nombreNorm = nombre.isNotEmpty ? _limpiar(nombre) : padre;
       if (contenido.isNotEmpty) {
         _parsear(contenido, nombreNorm, acc);
       }
@@ -183,12 +197,14 @@ class Normalizador {
     final limpio = _limpiar(bruto);
     if (limpio.isEmpty) return;
     final ins = _detectarIns(limpio);
-    acc.add(ItemNormalizado(
-      textoOriginal: bruto.replaceAll(RegExp(r'\s+'), ' ').trim(),
-      textoNormalizado: ins ?? limpio,
-      padre: padre,
-      ins: ins,
-    ));
+    acc.add(
+      ItemNormalizado(
+        textoOriginal: bruto.replaceAll(RegExp(r'\s+'), ' ').trim(),
+        textoNormalizado: ins ?? limpio,
+        padre: padre,
+        ins: ins,
+      ),
+    );
   }
 
   /// Colapsa espacios, quita signos de puntuación de borde y descarta un
@@ -214,8 +230,8 @@ class Normalizador {
     final entero = _regexIns.firstMatch(texto);
     if (entero != null) return 'ins ${entero.group(1)}';
 
-    final embebido =
-        RegExp(r'\b(?:ins|e)\s*[- ]?\s*([0-9]{3,4}[a-z]?)\b').firstMatch(texto);
+    final embebido = RegExp(r'\b(?:ins|e)\s*[- ]?\s*([0-9]{3,4}[a-z]?)\b')
+        .firstMatch(texto);
     if (embebido != null) return 'ins ${embebido.group(1)}';
 
     return null;

@@ -79,8 +79,10 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
 
   /// Modelo del plan gratuito. Se puede cambiar sin tocar código con
   /// `--dart-define=GEMINI_MODEL=...`.
-  static const modeloDeCompilacion =
-      String.fromEnvironment('GEMINI_MODEL', defaultValue: 'gemini-3.8-flash');
+  static const modeloDeCompilacion = String.fromEnvironment(
+    'GEMINI_MODEL',
+    defaultValue: 'gemini-3.8-flash',
+  );
 
   final String apiKey;
   final String modelo;
@@ -88,7 +90,8 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
   final Duration timeout;
 
   Uri get _url => Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/$modelo:generateContent');
+    'https://generativelanguage.googleapis.com/v1beta/models/$modelo:generateContent',
+  );
 
   static const _system =
       'Sos un asistente que sugiere alimentos sustitutos para una app '
@@ -136,9 +139,12 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
     final prompt = StringBuffer()
       ..writeln('Grupos restringidos: ${s.gruposRestringidos.join(', ')}')
       ..writeln(
-          'Ingredientes que chocan: ${s.ingredientesConflictivos.join(', ')}')
-      ..writeln('Lista completa de ingredientes: '
-          '${s.ingredientesLeidos.join(', ')}');
+        'Ingredientes que chocan: ${s.ingredientesConflictivos.join(', ')}',
+      )
+      ..writeln(
+        'Lista completa de ingredientes: '
+        '${s.ingredientesLeidos.join(', ')}',
+      );
     return {
       'systemInstruction': {
         'parts': [
@@ -162,9 +168,9 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
 
   @visibleForTesting
   static Map<String, String> construirHeaders(String apiKey) => {
-        'content-type': 'application/json',
-        'x-goog-api-key': apiKey,
-      };
+    'content-type': 'application/json',
+    'x-goog-api-key': apiKey,
+  };
 
   @visibleForTesting
   static RespuestaReemplazos parsearRespuesta(Map<String, dynamic> json) {

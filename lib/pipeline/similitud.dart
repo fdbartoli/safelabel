@@ -61,7 +61,9 @@ double coeficienteDice(String a, String b) {
 
 List<String> _bigramas(String s) {
   final limpio = s.replaceAll(' ', '');
-  return [for (var i = 0; i < limpio.length - 1; i++) limpio.substring(i, i + 2)];
+  return [
+    for (var i = 0; i < limpio.length - 1; i++) limpio.substring(i, i + 2),
+  ];
 }
 
 /// Similitud combinada usada por el matcher: el mayor entre Dice y Levenshtein.

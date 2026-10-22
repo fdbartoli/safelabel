@@ -14,8 +14,8 @@ import 'verificacion_cruzada.dart';
 /// cruzada → cruce con perfiles, y cada determinación sale de la base local.
 class Analizador {
   Analizador(this.base, {this.triage = const TriageConfianza()})
-      : _matcher = Emparejador(base),
-        _verificacion = VerificacionCruzada(base);
+    : _matcher = Emparejador(base),
+      _verificacion = VerificacionCruzada(base);
 
   final BaseConocimiento base;
   final TriageConfianza triage;
@@ -61,17 +61,16 @@ class Analizador {
           final nombreGrupo = grupo?.nombre ?? grupoId;
 
           // Sección 5.4: excepción del CAA modelada como regla.
-          final excepcion = base.excepcionPara(
-            ing.nombreNormalizado,
-            grupoId,
-          );
+          final excepcion = base.excepcionPara(ing.nombreNormalizado, grupoId);
           if (excepcion != null) {
-            notasExcepciones.add(NotaExcepcion(
-              textoLeido: m.item.textoOriginal,
-              grupoAlergeno: nombreGrupo,
-              regla: excepcion.regla,
-              fuente: excepcion.fuente,
-            ));
+            notasExcepciones.add(
+              NotaExcepcion(
+                textoLeido: m.item.textoOriginal,
+                grupoAlergeno: nombreGrupo,
+                regla: excepcion.regla,
+                fuente: excepcion.fuente,
+              ),
+            );
             continue;
           }
 
@@ -83,10 +82,7 @@ class Analizador {
           ];
           if (perfilesAfectados.isEmpty) continue;
 
-          final sevHallazgo = _severidadMaximaGrupo(
-            perfilesActivos,
-            grupoId,
-          )!;
+          final sevHallazgo = _severidadMaximaGrupo(perfilesActivos, grupoId)!;
 
           // Sección 5.3, fila 3: el ingrediente marca alérgeno pero la línea
           // CONTIENE no lo declara.
@@ -99,32 +95,36 @@ class Analizador {
                 'incumplimiento de la etiqueta.';
           }
 
-          coincidencias.add(HallazgoPerfil(
-            textoLeido: m.item.textoOriginal,
-            nombreEnBase: ing.nombreCanonico,
-            grupoAlergeno: nombreGrupo,
-            porQue: ing.explicacion,
-            certeza: ing.certeza,
-            difuso: !m.exacta,
-            similitud: m.similitud,
-            perfilesAfectados: perfilesAfectados,
-            severidadMaxima: sevHallazgo,
-            fuente: ing.fuente,
-            origen: declaracion.contiene.contains(grupoId)
-                ? OrigenHallazgo.ambos
-                : OrigenHallazgo.ingrediente,
-            padre: m.item.padre,
-            aclaracionCruce: aclaracion,
-          ));
+          coincidencias.add(
+            HallazgoPerfil(
+              textoLeido: m.item.textoOriginal,
+              nombreEnBase: ing.nombreCanonico,
+              grupoAlergeno: nombreGrupo,
+              porQue: ing.explicacion,
+              certeza: ing.certeza,
+              difuso: !m.exacta,
+              similitud: m.similitud,
+              perfilesAfectados: perfilesAfectados,
+              severidadMaxima: sevHallazgo,
+              fuente: ing.fuente,
+              origen: declaracion.contiene.contains(grupoId)
+                  ? OrigenHallazgo.ambos
+                  : OrigenHallazgo.ingrediente,
+              padre: m.item.padre,
+              aclaracionCruce: aclaracion,
+            ),
+          );
 
         case SinCoincidencia():
-          noReconocidos.add(ItemNoReconocido(
-            texto: m.item.textoOriginal,
-            probableErrorOcr: m.probableErrorOcr,
-            advertenciaReforzada: severidadMaxima == Severidad.anafilaxia,
-            candidato: m.candidato,
-            padre: m.item.padre,
-          ));
+          noReconocidos.add(
+            ItemNoReconocido(
+              texto: m.item.textoOriginal,
+              probableErrorOcr: m.probableErrorOcr,
+              advertenciaReforzada: severidadMaxima == Severidad.anafilaxia,
+              candidato: m.candidato,
+              padre: m.item.padre,
+            ),
+          );
       }
     }
 
@@ -144,34 +144,38 @@ class Analizador {
       if (perfilesAfectados.isNotEmpty) {
         // Fila 1: se usa la declaración de la etiqueta; el hueco de la base
         // queda cubierto para este análisis.
-        coincidencias.add(HallazgoPerfil(
-          textoLeido: 'línea "CONTIENE $nombreGrupo"',
-          nombreEnBase: nombreGrupo,
-          grupoAlergeno: nombreGrupo,
-          porQue:
-              'La etiqueta declara expresamente que el producto contiene '
-              '$nombreGrupo, según la fórmula del Art. 235 séptimo del CAA. '
-              'Ningún ingrediente de la lista analizada se corresponde con este '
-              'grupo en la base, así que el dato proviene de la propia etiqueta.',
-          certeza: Certeza.seguro,
-          difuso: false,
-          similitud: 1,
-          perfilesAfectados: perfilesAfectados,
-          severidadMaxima: _severidadMaximaGrupo(perfilesActivos, grupoId)!,
-          fuente: 'Etiqueta (línea CONTIENE) · CAA art. 235 séptimo',
-          origen: OrigenHallazgo.lineaContiene,
-        ));
+        coincidencias.add(
+          HallazgoPerfil(
+            textoLeido: 'línea "CONTIENE $nombreGrupo"',
+            nombreEnBase: nombreGrupo,
+            grupoAlergeno: nombreGrupo,
+            porQue:
+                'La etiqueta declara expresamente que el producto contiene '
+                '$nombreGrupo, según la fórmula del Art. 235 séptimo del CAA. '
+                'Ningún ingrediente de la lista analizada se corresponde con este '
+                'grupo en la base, así que el dato proviene de la propia etiqueta.',
+            certeza: Certeza.seguro,
+            difuso: false,
+            similitud: 1,
+            perfilesAfectados: perfilesAfectados,
+            severidadMaxima: _severidadMaximaGrupo(perfilesActivos, grupoId)!,
+            fuente: 'Etiqueta (línea CONTIENE) · CAA art. 235 séptimo',
+            origen: OrigenHallazgo.lineaContiene,
+          ),
+        );
       }
 
       // Fila 2: hueco de la base. Prioridad alta en la cola de desconocidos.
-      avisos.add(AvisoCruzado(
-        grupoAlergeno: nombreGrupo,
-        prioridad: PrioridadCola.alta,
-        mensaje:
-            'La etiqueta declara "CONTIENE $nombreGrupo" pero ningún ingrediente '
-            'de la lista lo explica. Falta cobertura en la base para este '
-            'producto: queda registrado con prioridad alta.',
-      ));
+      avisos.add(
+        AvisoCruzado(
+          grupoAlergeno: nombreGrupo,
+          prioridad: PrioridadCola.alta,
+          mensaje:
+              'La etiqueta declara "CONTIENE $nombreGrupo" pero ningún ingrediente '
+              'de la lista lo explica. Falta cobertura en la base para este '
+              'producto: queda registrado con prioridad alta.',
+        ),
+      );
     }
 
     // Bloque 3.

@@ -153,13 +153,24 @@ class VerificacionCruzada {
     );
   }
 
-  void _mapearTokens(String cola, Set<String> destino, List<String> noMapeados) {
+  void _mapearTokens(
+    String cola,
+    Set<String> destino,
+    List<String> noMapeados,
+  ) {
     for (final tokenCrudo in _partirEnumeracion(cola)) {
-      final token = tokenCrudo.replaceAll(RegExp(r'^[\s.,;:*·-]+|[\s.,;:*·-]+$'), '');
+      final token = tokenCrudo.replaceAll(
+        RegExp(r'^[\s.,;:*·-]+|[\s.,;:*·-]+$'),
+        '',
+      );
       final n = _normalizador.normalizarTexto(token);
       if (n.isEmpty) continue;
-      final grupoId = _tokenAGrupo[n] ??
-          _tokenAGrupo[n.replaceFirst(RegExp(r'^(?:de|del|la|el|los|las)\s+'), '')];
+      final grupoId =
+          _tokenAGrupo[n] ??
+          _tokenAGrupo[n.replaceFirst(
+            RegExp(r'^(?:de|del|la|el|los|las)\s+'),
+            '',
+          )];
       if (grupoId != null) {
         destino.add(grupoId);
       } else if (n.length > 2) {

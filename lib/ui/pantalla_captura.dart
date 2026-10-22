@@ -94,10 +94,10 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
       final triage = _triage.clasificar(lectura);
       final sugerencias = _evaluador.evaluar(lectura, triage);
 
-      final resultado = Analizador(widget.base, triage: _triage).analizar(
-        lectura,
-        perfilesActivos: widget.perfilesActivos,
-      );
+      final resultado = Analizador(
+        widget.base,
+        triage: _triage,
+      ).analizar(lectura, perfilesActivos: widget.perfilesActivos);
 
       if (!mounted) return;
 
@@ -107,16 +107,18 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
       // bloqueante, y quedan también en el overlay para una eventual recaptura.
       setState(() => _sugerencias = sugerencias);
 
-      await Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PantallaResultado(
-          resultado: resultado,
-          sugerenciasCaptura: sugerencias,
-          gestorReemplazos: GestorReemplazos.desdeConfiguracion(
-            widget.base,
-            widget.perfilesActivos,
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => PantallaResultado(
+            resultado: resultado,
+            sugerenciasCaptura: sugerencias,
+            gestorReemplazos: GestorReemplazos.desdeConfiguracion(
+              widget.base,
+              widget.perfilesActivos,
+            ),
           ),
         ),
-      ));
+      );
     } catch (e) {
       if (mounted) setState(() => _error = 'Error al procesar la foto: $e');
     } finally {
@@ -131,13 +133,13 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
       body: _error != null
           ? _VistaError(mensaje: _error!)
           : _camara == null
-              ? const Center(child: CircularProgressIndicator())
-              : _VistaCamara(
-                  controller: _camara!,
-                  procesando: _procesando,
-                  sugerencias: _sugerencias,
-                  onCapturar: _capturarYAnalizar,
-                ),
+          ? const Center(child: CircularProgressIndicator())
+          : _VistaCamara(
+              controller: _camara!,
+              procesando: _procesando,
+              sugerencias: _sugerencias,
+              onCapturar: _capturarYAnalizar,
+            ),
     );
   }
 }
@@ -182,8 +184,8 @@ class _VistaCamara extends StatelessWidget {
             child: Text(
               sugerencias.isEmpty
                   ? 'Encuadrá la lista de ingredientes y la línea "CONTIENE" '
-                      'dentro del recuadro. Buena luz, sin reflejo, envase lo '
-                      'más plano posible.'
+                        'dentro del recuadro. Buena luz, sin reflejo, envase lo '
+                        'más plano posible.'
                   : sugerencias.map((s) => '• ${s.mensaje}').join('\n'),
             ),
           ),

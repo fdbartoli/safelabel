@@ -13,19 +13,26 @@ void main() {
     expect(d.lineasContiene, isNotEmpty);
   });
 
-  test('mapea la enumeración de cereales al grupo trigo, sin buscar "gluten"', () {
-    final d = v.analizar('CONTIENE trigo, avena, cebada y/o centeno.');
-    expect(d.contiene, {'trigo'});
-  });
+  test(
+    'mapea la enumeración de cereales al grupo trigo, sin buscar "gluten"',
+    () {
+      final d = v.analizar('CONTIENE trigo, avena, cebada y/o centeno.');
+      expect(d.contiene, {'trigo'});
+    },
+  );
 
-  test('acepta "contiene gluten" como el grupo de cereales (puente explícito)', () {
-    final d = v.analizar('Contiene gluten.');
-    expect(d.contiene, {'trigo'});
-  });
+  test(
+    'acepta "contiene gluten" como el grupo de cereales (puente explícito)',
+    () {
+      final d = v.analizar('Contiene gluten.');
+      expect(d.contiene, {'trigo'});
+    },
+  );
 
   test('"PUEDE CONTENER" va a trazas, separado de CONTIENE (regla 1.7)', () {
     final d = v.analizar(
-        'CONTIENE: soja.\nPUEDE CONTENER leche y frutas secas.');
+      'CONTIENE: soja.\nPUEDE CONTENER leche y frutas secas.',
+    );
     expect(d.contiene, {'soja'});
     expect(d.puedeContener, contains('leche'));
     expect(d.lineasPuedeContener, isNotEmpty);
@@ -33,7 +40,8 @@ void main() {
 
   test('"elaborado en una línea que también procesa maní" es traza', () {
     final d = v.analizar(
-        'Elaborado en una línea que también procesa maní y leche.');
+      'Elaborado en una línea que también procesa maní y leche.',
+    );
     expect(d.lineasPuedeContener, isNotEmpty);
     expect(d.contiene, isEmpty);
   });

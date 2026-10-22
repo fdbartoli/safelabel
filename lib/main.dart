@@ -27,7 +27,9 @@ class SafeLabelApp extends StatelessWidget {
               body: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(24),
-                  child: Text('No se pudo cargar la base local.\n\n${snapshot.error}'),
+                  child: Text(
+                    'No se pudo cargar la base local.\n\n${snapshot.error}',
+                  ),
                 ),
               ),
             );
