@@ -85,8 +85,10 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Text('Buscando sustitutos…',
-                    style: tema.textTheme.bodyMedium),
+                child: Text(
+                  'Buscando sustitutos…',
+                  style: tema.textTheme.bodyMedium,
+                ),
               ),
             ],
           ),
@@ -128,8 +130,10 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
                   const Icon(Icons.lightbulb_outline, size: 20),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text('Sustitutos para buscar',
-                        style: tema.textTheme.titleMedium),
+                    child: Text(
+                      'Sustitutos para buscar',
+                      style: tema.textTheme.titleMedium,
+                    ),
                   ),
                 ],
               ),
@@ -137,8 +141,9 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
               Text(
                 'Sugeridos por IA. No están verificados: escaneá la etiqueta '
                 'del sustituto antes de consumirlo.',
-                style: tema.textTheme.bodySmall
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: tema.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 10),
               if (r.sugerencias.isEmpty)
@@ -153,14 +158,19 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('• ${s.nombre}',
-                            style: tema.textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.w600)),
+                        Text(
+                          '• ${s.nombre}',
+                          style: tema.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         if (s.motivo.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(left: 12, top: 2),
-                            child:
-                                Text(s.motivo, style: tema.textTheme.bodySmall),
+                            child: Text(
+                              s.motivo,
+                              style: tema.textTheme.bodySmall,
+                            ),
                           ),
                       ],
                     ),
@@ -171,8 +181,9 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
                   'Se descartaron ${r.descartadas.length} sugerencia(s) que '
                   'chocaban con tus perfiles: '
                   '${r.descartadas.map((d) => '${d.nombre} (${d.grupoAlergeno})').join(', ')}.',
-                  style: tema.textTheme.bodySmall
-                      ?.copyWith(fontStyle: FontStyle.italic),
+                  style: tema.textTheme.bodySmall?.copyWith(
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ],
             ],

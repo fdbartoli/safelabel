@@ -52,7 +52,8 @@ class GestorReemplazos {
   bool get configurado => servicio != null;
 
   /// Solo se piden reemplazos si hay coincidencias con algún perfil.
-  bool aplica(ResultadoAnalisis resultado) => resultado.coincidencias.isNotEmpty;
+  bool aplica(ResultadoAnalisis resultado) =>
+      resultado.coincidencias.isNotEmpty;
 
   SolicitudReemplazo construirSolicitud(ResultadoAnalisis resultado) {
     final gruposRestringidos = <String>{
@@ -63,7 +64,8 @@ class GestorReemplazos {
     return SolicitudReemplazo(
       gruposRestringidos: gruposRestringidos,
       ingredientesConflictivos: [
-        for (final h in resultado.coincidencias) '${h.textoLeido} (${h.grupoAlergeno})',
+        for (final h in resultado.coincidencias)
+          '${h.textoLeido} (${h.grupoAlergeno})',
       ],
       ingredientesLeidos: resultado.ingredientesLeidos,
     );

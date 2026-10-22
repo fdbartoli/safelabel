@@ -35,7 +35,10 @@ class PantallaResultado extends StatelessWidget {
     // (regla 1.4): acá nunca puede aparecer el verde pastel de la marca. El
     // Builder es necesario para que _construirScaffold reciba un contexto
     // posicionado POR DEBAJO de este Theme (el de `build` está por arriba).
-    return Theme(data: temaResultado, child: Builder(builder: _construirScaffold));
+    return Theme(
+      data: temaResultado,
+      child: Builder(builder: _construirScaffold),
+    );
   }
 
   Widget _construirScaffold(BuildContext context) {
@@ -74,8 +77,12 @@ class PantallaResultado extends StatelessWidget {
               for (final h in resultado.coincidencias) _TarjetaHallazgo(h),
               // Paso 11 (sección 5.6): junto a las coincidencias que hay que
               // sustituir. Solo existe si hay coincidencias.
-              if (gestorReemplazos != null && gestorReemplazos!.aplica(resultado))
-                SeccionReemplazos(gestor: gestorReemplazos!, resultado: resultado),
+              if (gestorReemplazos != null &&
+                  gestorReemplazos!.aplica(resultado))
+                SeccionReemplazos(
+                  gestor: gestorReemplazos!,
+                  resultado: resultado,
+                ),
             ],
           ),
 
@@ -93,15 +100,15 @@ class PantallaResultado extends StatelessWidget {
             numero: 3,
             titulo: 'No legibles',
             vacioTexto: 'No quedaron líneas sin leer.',
-            hijos: [
-              for (final l in resultado.noLegibles) _TarjetaNoLegible(l),
-            ],
+            hijos: [for (final l in resultado.noLegibles) _TarjetaNoLegible(l)],
           ),
 
           if (resultado.notasExcepciones.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text('Notas (excepciones del CAA)',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              'Notas (excepciones del CAA)',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             for (final n in resultado.notasExcepciones)
               _Callout(
                 icon: Icons.rule_outlined,
@@ -112,8 +119,10 @@ class PantallaResultado extends StatelessWidget {
 
           if (resultado.avisosCruce.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text('Verificación cruzada con la línea "CONTIENE"',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              'Verificación cruzada con la línea "CONTIENE"',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             for (final a in resultado.avisosCruce)
               _Callout(
                 icon: a.prioridad == PrioridadCola.alta
@@ -167,23 +176,29 @@ class _Bloque extends StatelessWidget {
             CircleAvatar(radius: 13, child: Text('$numero')),
             const SizedBox(width: 8),
             Expanded(
-              child: Text(titulo,
-                  style: Theme.of(context).textTheme.titleMedium),
+              child: Text(
+                titulo,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ],
         ),
         if (subtitulo != null)
           Padding(
             padding: const EdgeInsets.only(left: 34, top: 2),
-            child: Text(subtitulo!,
-                style: Theme.of(context).textTheme.bodySmall),
+            child: Text(
+              subtitulo!,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
         const SizedBox(height: 8),
         if (hijos.isEmpty)
           Padding(
             padding: const EdgeInsets.only(left: 34),
-            child: Text(vacioTexto,
-                style: Theme.of(context).textTheme.bodyMedium),
+            child: Text(
+              vacioTexto,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           )
         else
           ...hijos,
@@ -210,15 +225,15 @@ class _TarjetaHallazgo extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(fuerte ? Icons.warning_amber_rounded : Icons.error_outline,
-                    size: 20),
+                Icon(
+                  fuerte ? Icons.warning_amber_rounded : Icons.error_outline,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     '${h.textoLeido}  →  ${h.grupoAlergeno}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
+                    style: Theme.of(context).textTheme.titleSmall
                         ?.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -234,23 +249,27 @@ class _TarjetaHallazgo extends StatelessWidget {
                 _Chip('Afecta: ${h.perfilesAfectados.join(", ")}'),
                 _Chip(_textoCerteza(h.certeza)),
                 if (h.difuso)
-                  _Chip('lectura aproximada '
-                      '(${(h.similitud * 100).round()}%)'),
+                  _Chip(
+                    'lectura aproximada '
+                    '(${(h.similitud * 100).round()}%)',
+                  ),
                 if (h.padre != null) _Chip('dentro de: ${h.padre}'),
                 _Chip(_textoOrigen(h.origen)),
               ],
             ),
             if (h.aclaracionCruce != null) ...[
               const SizedBox(height: 8),
-              Text(h.aclaracionCruce!,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(fontStyle: FontStyle.italic)),
+              Text(
+                h.aclaracionCruce!,
+                style: Theme.of(context).textTheme.bodySmall
+                    ?.copyWith(fontStyle: FontStyle.italic),
+              ),
             ],
             const SizedBox(height: 6),
-            Text('Fuente: ${h.fuente}',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              'Fuente: ${h.fuente}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ],
         ),
       ),
@@ -293,11 +312,11 @@ class _TarjetaNoReconocido extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('"${n.texto}"',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              '"${n.texto}"',
+              style: Theme.of(context).textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
             const SizedBox(height: 4),
             if (n.probableErrorOcr && n.candidato != null)
               Text(
@@ -309,17 +328,19 @@ class _TarjetaNoReconocido extends StatelessWidget {
               Text(
                 n.advertenciaReforzada
                     ? 'No está en la base. Con un perfil de alergia grave, tratá '
-                        'este ingrediente como no resuelto hasta confirmarlo por '
-                        'otra vía. Otra foto no lo cambia.'
+                          'este ingrediente como no resuelto hasta confirmarlo por '
+                          'otra vía. Otra foto no lo cambia.'
                     : 'No está en la base. No se puede afirmar ni descartar que '
-                        'implique un alérgeno. Otra foto no lo cambia.',
+                          'implique un alérgeno. Otra foto no lo cambia.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             if (n.padre != null)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text('dentro de: ${n.padre}',
-                    style: Theme.of(context).textTheme.bodySmall),
+                child: Text(
+                  'dentro de: ${n.padre}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
           ],
         ),
@@ -341,15 +362,21 @@ class _TarjetaNoLegible extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Línea ${l.lineaIndice + 1} · confianza '
-                '${(l.confianza * 100).round()}%'),
+            Text(
+              'Línea ${l.lineaIndice + 1} · confianza '
+              '${(l.confianza * 100).round()}%',
+            ),
             const SizedBox(height: 4),
-            Text('Se leyó como: "${l.textoParcial}"',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              'Se leyó como: "${l.textoParcial}"',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
             const SizedBox(height: 4),
-            Text('Sacá otra foto enfocando esta línea, sin reflejo y acercando '
-                'un poco el envase.',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              'Sacá otra foto enfocando esta línea, sin reflejo y acercando '
+              'un poco el envase.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ],
         ),
       ),
@@ -365,14 +392,18 @@ class _DeclaracionTextual extends StatelessWidget {
   Widget build(BuildContext context) {
     final d = resultado.declaracion;
     if (!d.hayDeclaracion) {
-      return Text('No se leyó una línea "CONTIENE / PUEDE CONTENER".',
-          style: Theme.of(context).textTheme.bodySmall);
+      return Text(
+        'No se leyó una línea "CONTIENE / PUEDE CONTENER".',
+        style: Theme.of(context).textTheme.bodySmall,
+      );
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Lo que dice la etiqueta, textual',
-            style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Lo que dice la etiqueta, textual',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 6),
         for (final l in d.lineasContiene)
           Text('· $l', style: Theme.of(context).textTheme.bodyMedium),
@@ -441,11 +472,11 @@ class _Callout extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(titulo,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  titulo,
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
                 const SizedBox(height: 4),
                 Text(texto, style: Theme.of(context).textTheme.bodySmall),
               ],

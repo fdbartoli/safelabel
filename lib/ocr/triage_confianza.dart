@@ -6,10 +6,7 @@ import 'linea_ocr.dart';
 /// no se descartan en silencio: se informan como no legibles, indicando cuál
 /// falló, para pedir una nueva foto de esa parte.
 class ResultadoTriage {
-  const ResultadoTriage({
-    required this.legibles,
-    required this.noLegibles,
-  });
+  const ResultadoTriage({required this.legibles, required this.noLegibles});
 
   /// Líneas con confianza suficiente para analizar.
   final List<LineaOcr> legibles;

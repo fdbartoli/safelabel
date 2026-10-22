@@ -30,7 +30,10 @@ class _PantallaInicioState extends State<PantallaInicio> {
         children: [
           const AvisoInformativo(),
           const SizedBox(height: 20),
-          Text('Perfiles activos', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Perfiles activos',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 4),
           Text(
             'El análisis se cruza con estos perfiles.',
@@ -42,7 +45,9 @@ class _PantallaInicioState extends State<PantallaInicio> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Material(
-                color: activo ? scheme.primaryContainer : scheme.surfaceContainerHigh,
+                color: activo
+                    ? scheme.primaryContainer
+                    : scheme.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
@@ -54,11 +59,16 @@ class _PantallaInicioState extends State<PantallaInicio> {
                     }
                   }),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
                     child: Row(
                       children: [
                         Icon(
-                          activo ? Icons.check_circle_rounded : Icons.circle_outlined,
+                          activo
+                              ? Icons.check_circle_rounded
+                              : Icons.circle_outlined,
                           color: activo ? scheme.primary : scheme.outline,
                         ),
                         const SizedBox(width: 12),
@@ -66,14 +76,16 @@ class _PantallaInicioState extends State<PantallaInicio> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(p.nombre,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(fontWeight: FontWeight.w600)),
+                              Text(
+                                p.nombre,
+                                style: Theme.of(context).textTheme.titleSmall
+                                    ?.copyWith(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 2),
-                              Text(_descripcionRestricciones(p),
-                                  style: Theme.of(context).textTheme.bodySmall),
+                              Text(
+                                _descripcionRestricciones(p),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                             ],
                           ),
                         ),
@@ -88,12 +100,14 @@ class _PantallaInicioState extends State<PantallaInicio> {
           FilledButton.icon(
             onPressed: perfiles.isEmpty
                 ? null
-                : () => Navigator.of(context).push(MaterialPageRoute(
+                : () => Navigator.of(context).push(
+                    MaterialPageRoute(
                       builder: (_) => PantallaCaptura(
                         base: widget.base,
                         perfilesActivos: perfiles,
                       ),
-                    )),
+                    ),
+                  ),
             icon: const Icon(Icons.photo_camera_outlined),
             label: const Text('Escanear etiqueta'),
           ),
@@ -101,12 +115,14 @@ class _PantallaInicioState extends State<PantallaInicio> {
           OutlinedButton.icon(
             onPressed: perfiles.isEmpty
                 ? null
-                : () => Navigator.of(context).push(MaterialPageRoute(
+                : () => Navigator.of(context).push(
+                    MaterialPageRoute(
                       builder: (_) => PantallaAnalisisTexto(
                         base: widget.base,
                         perfilesActivos: perfiles,
                       ),
-                    )),
+                    ),
+                  ),
             icon: const Icon(Icons.text_fields_outlined),
             label: const Text('Analizar texto pegado (sin cámara)'),
           ),

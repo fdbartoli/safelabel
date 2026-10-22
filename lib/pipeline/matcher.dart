@@ -76,18 +76,24 @@ class Emparejador {
   ResultadoMatch match(ItemNormalizado item) {
     final texto = item.textoNormalizado;
     if (texto.isEmpty) {
-      return SinCoincidencia(item,
-          mejorSimilitud: 0, candidato: null, probableErrorOcr: false);
+      return SinCoincidencia(
+        item,
+        mejorSimilitud: 0,
+        candidato: null,
+        probableErrorOcr: false,
+      );
     }
 
     // 1. Exacto.
     final exacto = base.matchExacto(texto);
     if (exacto != null) {
-      return Coincidencia(item,
-          ingrediente: exacto,
-          exacta: true,
-          similitud: 1,
-          terminoBase: base.etiquetaDe(texto));
+      return Coincidencia(
+        item,
+        ingrediente: exacto,
+        exacta: true,
+        similitud: 1,
+        terminoBase: base.etiquetaDe(texto),
+      );
     }
 
     // 2. Difuso: mejor término de la base.
@@ -103,22 +109,27 @@ class Emparejador {
     }
 
     if (mejor >= umbralDifuso && mejorTermino != null) {
-      return Coincidencia(item,
-          ingrediente: base.matchExacto(mejorTermino)!,
-          exacta: false,
-          similitud: mejor,
-          terminoBase: base.etiquetaDe(mejorTermino));
+      return Coincidencia(
+        item,
+        ingrediente: base.matchExacto(mejorTermino)!,
+        exacta: false,
+        similitud: mejor,
+        terminoBase: base.etiquetaDe(mejorTermino),
+      );
     }
 
     // 3. Desconocido. La similitud decide si parece typo de OCR o término nuevo.
-    return SinCoincidencia(item,
-        mejorSimilitud: mejor,
-        candidato: mejor >= umbralSospechaOcr && mejorTermino != null
-            ? base.etiquetaDe(mejorTermino)
-            : null,
-        probableErrorOcr: mejor >= umbralSospechaOcr);
+    return SinCoincidencia(
+      item,
+      mejorSimilitud: mejor,
+      candidato: mejor >= umbralSospechaOcr && mejorTermino != null
+          ? base.etiquetaDe(mejorTermino)
+          : null,
+      probableErrorOcr: mejor >= umbralSospechaOcr,
+    );
   }
 
-  List<ResultadoMatch> matchTodos(Iterable<ItemNormalizado> items) =>
-      [for (final i in items) match(i)];
+  List<ResultadoMatch> matchTodos(Iterable<ItemNormalizado> items) => [
+    for (final i in items) match(i),
+  ];
 }

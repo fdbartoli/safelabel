@@ -10,7 +10,7 @@ import 'servicio_ocr.dart';
 /// similitud difusa del matcher para detectar lecturas dudosas (sección 5.1).
 class ServicioOcrMlKit implements ServicioOcr {
   ServicioOcrMlKit()
-      : _recognizer = TextRecognizer(script: TextRecognitionScript.latin);
+    : _recognizer = TextRecognizer(script: TextRecognitionScript.latin);
 
   final TextRecognizer _recognizer;
 
@@ -23,11 +23,13 @@ class ServicioOcrMlKit implements ServicioOcr {
     var indice = 0;
     for (final bloque in resultado.blocks) {
       for (final linea in bloque.lines) {
-        lineas.add(LineaOcr(
-          texto: linea.text,
-          confianza: _confianzaDe(linea),
-          indice: indice++,
-        ));
+        lineas.add(
+          LineaOcr(
+            texto: linea.text,
+            confianza: _confianzaDe(linea),
+            indice: indice++,
+          ),
+        );
       }
     }
     return LecturaOcr(lineas);

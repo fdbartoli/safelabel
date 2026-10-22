@@ -42,20 +42,20 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
   void _analizar() {
     final ocr = ServicioOcrFalso.desdeTexto(_controller.text);
     ocr.reconocer('').then((lectura) {
-      final resultado = Analizador(widget.base).analizar(
-        lectura,
-        perfilesActivos: widget.perfilesActivos,
-      );
+      final resultado = Analizador(widget.base)
+          .analizar(lectura, perfilesActivos: widget.perfilesActivos);
       if (!mounted) return;
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PantallaResultado(
-          resultado: resultado,
-          gestorReemplazos: GestorReemplazos.desdeConfiguracion(
-            widget.base,
-            widget.perfilesActivos,
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => PantallaResultado(
+            resultado: resultado,
+            gestorReemplazos: GestorReemplazos.desdeConfiguracion(
+              widget.base,
+              widget.perfilesActivos,
+            ),
           ),
         ),
-      ));
+      );
     });
   }
 
@@ -87,10 +87,7 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
               ),
             ),
             const SizedBox(height: 12),
-            FilledButton(
-              onPressed: _analizar,
-              child: const Text('Analizar'),
-            ),
+            FilledButton(onPressed: _analizar, child: const Text('Analizar')),
           ],
         ),
       ),

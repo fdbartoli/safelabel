@@ -34,7 +34,7 @@ class ResultadoFiltro {
 /// uno de menos puede ser una reacción alérgica.
 class FiltroReemplazos {
   FiltroReemplazos(this.base, List<Perfil> perfilesActivos)
-      : _emparejador = Emparejador(base) {
+    : _emparejador = Emparejador(base) {
     final restringidos = {
       for (final p in perfilesActivos)
         for (final r in p.restricciones) r.grupoAlergenoId,
@@ -49,7 +49,9 @@ class FiltroReemplazos {
 
       agregar(grupo.id);
       agregar(grupo.nombre);
-      for (final t in grupo.textoEtiqueta.split(RegExp(r',|;|/|\by/o\b|\by\b|\bo\b'))) {
+      for (final t in grupo.textoEtiqueta.split(
+        RegExp(r',|;|/|\by/o\b|\by\b|\bo\b'),
+      )) {
         agregar(t.trim());
       }
       if (grupoId == 'trigo') agregar('gluten');
@@ -77,19 +79,22 @@ class FiltroReemplazos {
       if (choque == null) {
         aceptadas.add(s);
       } else {
-        descartadas.add(SugerenciaDescartada(
-          nombre: s.nombre,
-          terminoEncontrado: base.etiquetaDe(choque.key),
-          grupoAlergeno: base.grupo(choque.value)?.nombre ?? choque.value,
-        ));
+        descartadas.add(
+          SugerenciaDescartada(
+            nombre: s.nombre,
+            terminoEncontrado: base.etiquetaDe(choque.key),
+            grupoAlergeno: base.grupo(choque.value)?.nombre ?? choque.value,
+          ),
+        );
       }
     }
     return ResultadoFiltro(aceptadas: aceptadas, descartadas: descartadas);
   }
 
   MapEntry<String, String>? _buscarChoque(String nombre) {
-    final texto = ' ${_normalizador.normalizarTexto(nombre).replaceAll(RegExp(r'[^a-z0-9 ]'), ' ')} '
-        .replaceAll(RegExp(r'\s+'), ' ');
+    final texto =
+        ' ${_normalizador.normalizarTexto(nombre).replaceAll(RegExp(r'[^a-z0-9 ]'), ' ')} '
+            .replaceAll(RegExp(r'\s+'), ' ');
 
     // 1. Algún término restringido aparece como palabra (con plural tolerado).
     for (final e in _terminos.entries) {

@@ -29,7 +29,8 @@ class GrupoAlergeno {
       id: json['id'] as String,
       nombre: json['nombre'] as String,
       caaObligatorio: json['caa_obligatorio'] as bool? ?? false,
-      textoEtiqueta: json['texto_etiqueta'] as String? ?? json['nombre'] as String,
+      textoEtiqueta:
+          json['texto_etiqueta'] as String? ?? json['nombre'] as String,
     );
   }
 

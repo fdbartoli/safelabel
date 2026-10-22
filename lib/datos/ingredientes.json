@@ -1,6 +1,6 @@
 {
   "version": "2026.09.05-etapa1",
-  "atribucion": "Incluye datos derivados de la taxonomía de ingredientes. Según el Art. 235 séptimo del Código Alimentario Argentino.",
+  "atribucion": "Incluye datos derivados de la taxonomía de ingredientes de Open Food Facts, disponible bajo licencia ODbL. Membresía de alérgenos según el Art. 235 séptimo del Código Alimentario Argentino. Números INS según Codex STAN 192.",
   "_advertencia_revision": "Dataset de Etapa 1 para validar el OCR. NO es la base de conocimiento validada del proyecto. Ninguna entrada fue revisada por una persona todavía (regla 1.6). No usar para decisiones reales hasta completar la revisión humana del Flujo A.",
   "grupos_alergenos": [
     { "id": "trigo", "nombre": "cereales con gluten", "caa_obligatorio": true, "texto_etiqueta": "trigo, avena, cebada y/o centeno" },

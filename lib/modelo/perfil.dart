@@ -45,5 +45,6 @@ class Perfil {
     return null;
   }
 
-  bool restringe(String grupoAlergenoId) => severidadPara(grupoAlergenoId) != null;
+  bool restringe(String grupoAlergenoId) =>
+      severidadPara(grupoAlergenoId) != null;
 }
