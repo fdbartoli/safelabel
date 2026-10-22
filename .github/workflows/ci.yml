@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   verificacion:
-    name: Análisis y tests
+    name: Formato, análisis y tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,6 +21,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.47.7
           cache: true
 
       - name: flutter --version
@@ -28,6 +29,9 @@ jobs:
 
       - name: Dependencias (pub get)
         run: flutter pub get
+
+      - name: Formato (dart format)
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Análisis estático (flutter analyze)
         run: flutter analyze
