@@ -1,0 +1,38 @@
+[
+  {
+    "id": "SRC-ANMAT-ALERGENOS",
+    "organization": "ANMAT",
+    "title": "Directrices para el rotulado de alérgenos",
+    "url": "data/manual/anmat-alergenos.pdf",
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+    "language": "es-AR",
+    "format": "pdf"
+  },
+{
+  "id": "SRC-ANMAT-GESTION-ALERGENOS",
+  "organization": "ANMAT",
+  "title": "Guía para la Gestión de Alérgenos en la Industria",
+  "url": "data/manual/anmat-gestion-alergenos.pdf",
+  "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+  "language": "es-AR",
+  "format": "pdf"
+},
+{
+  "id": "SRC-FDA-LABEL",
+  "organization": "FDA",
+  "title": "Have Food Allergies Read the Label",
+  "url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+  "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+  "language": "en-US",
+  "format": "html"
+},
+{
+  "id": "SRC-HC-MILK",
+  "organization": "Health Canada",
+  "title": "Milk a priority food allergen",
+  "url": "data/manual/health-canada-milk.html",
+  "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
+  "language": "en-CA",
+  "format": "html"
+}
+]
