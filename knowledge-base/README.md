@@ -88,6 +88,7 @@ Leche:
 ```bash
 python3 scripts/30_prepare_review.py \
   --candidates data/candidates/milk/candidates.json \
+  --previous-reviewed data/reviewed/milk/reviewed.json \
   --output data/reviewed/milk/review.json
 ```
 
@@ -96,8 +97,14 @@ Celiaquía:
 ```bash
 python3 scripts/30_prepare_review.py \
   --candidates data/candidates/celiac/candidates.json \
+  --previous-reviewed data/reviewed/celiac/reviewed.json \
   --output data/reviewed/celiac/review.json
 ```
+
+En la primera ejecución de una restricción se omite `--previous-reviewed`.
+Cuando existe una revisión anterior, el script conserva las decisiones cuya
+restricción, concepto, fuente y evidencia no cambiaron. Las vinculaciones
+nuevas o modificadas quedan pendientes.
 
 ## 5. Revisar las vinculaciones
 
@@ -126,9 +133,9 @@ Opciones:
 - `d`: diferir.
 - `s`: guardar y salir.
 
-Si `reviewed.json` existe, el script continúa esa revisión. Actualmente no incorpora automáticamente cambios provenientes de un nuevo `review.json`.
-
-Para rehacer una revisión después de modificar fuentes, conceptos o relaciones, primero debe conservarse mediante control de versiones la revisión existente y retirarse el `reviewed.json` anterior. En la siguiente ejecución, el script creará uno nuevo a partir de `review.json`.
+Si `reviewed.json` existe, el script incorpora el nuevo `review.json` y conserva
+las decisiones en curso que correspondan exactamente a evidencias sin cambios.
+Solo solicita las vinculaciones pendientes.
 
 ## 6. Construir el conocimiento de cada restricción
 

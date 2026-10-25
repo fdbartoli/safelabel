@@ -56,6 +56,27 @@ for index in range(1, len(sys.argv), 2):
 PY
 
 for restriction in milk celiac; do
+  python3 scripts/30_prepare_review.py \
+    --candidates "$smoke_dir/candidates/${restriction}.json" \
+    --previous-reviewed "$smoke_dir/reviewed/${restriction}-reviewed.json" \
+    --output "$smoke_dir/reviewed/${restriction}-incremental.json"
+
+  python3 - "$smoke_dir/reviewed/${restriction}-incremental.json" <<'PY'
+import json
+import pathlib
+import sys
+
+payload = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+statuses = [
+    source["review_status"]
+    for review in payload["reviews"]
+    for source in review["sources"]
+]
+assert statuses and all(status == "approved" for status in statuses), statuses
+PY
+done
+
+for restriction in milk celiac; do
   python3 scripts/60_build_knowledge.py \
     --compounds config/compounds.json \
     --restriction "fixtures/${restriction}_restriction.json" \

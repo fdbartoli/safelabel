@@ -2,7 +2,6 @@
 import argparse
 import json
 import pathlib
-import shutil
 
 
 DECISIONS = {
@@ -17,6 +16,48 @@ def save(path: pathlib.Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def source_key(payload, review, source):
+    restriction_id = review.get(
+        "restriction_id", payload.get("restriction", {}).get("id")
+    )
+    return restriction_id, review["concept_id"], source["source_id"]
+
+
+def source_fingerprint(source):
+    denominations = []
+    for denomination in source.get("denominations", []):
+        denominations.append((
+            denomination.get("term"),
+            denomination.get("language"),
+            denomination.get("representative_evidence"),
+        ))
+    return source.get("source_sha256"), tuple(sorted(denominations))
+
+
+def merge_existing_decisions(current: dict, existing: dict) -> int:
+    decisions = {}
+    for review in existing.get("reviews", []):
+        for source in review.get("sources", []):
+            decisions[source_key(existing, review, source)] = source
+
+    preserved = 0
+    for review in current.get("reviews", []):
+        for source in review.get("sources", []):
+            if source.get("review_status") != "pending":
+                continue
+            old_source = decisions.get(source_key(current, review, source))
+            if (
+                old_source
+                and old_source.get("review_status") != "pending"
+                and source_fingerprint(old_source) == source_fingerprint(source)
+            ):
+                source["review_status"] = old_source["review_status"]
+                source["reviewed_by"] = old_source.get("reviewed_by")
+                source["review_notes"] = old_source.get("review_notes")
+                preserved += 1
+    return preserved
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True)
@@ -27,13 +68,17 @@ def main():
     input_path = pathlib.Path(args.input)
     output_path = pathlib.Path(args.output)
 
+    payload = json.loads(input_path.read_text(encoding="utf-8"))
     if output_path.exists():
-        payload = json.loads(output_path.read_text(encoding="utf-8"))
-        print(f"Continuando revisión existente: {output_path}")
+        existing = json.loads(output_path.read_text(encoding="utf-8"))
+        preserved = merge_existing_decisions(payload, existing)
+        print(
+            f"Revisión actualizada desde {input_path}; "
+            f"decisiones en curso conservadas: {preserved}"
+        )
     else:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(input_path, output_path)
-        payload = json.loads(output_path.read_text(encoding="utf-8"))
+    save(output_path, payload)
 
     pending = [
         (review, source)

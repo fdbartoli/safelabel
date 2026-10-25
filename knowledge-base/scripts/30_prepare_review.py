@@ -5,9 +5,40 @@ import pathlib
 from collections import defaultdict
 
 
+def source_key(restriction_id, concept_id, source):
+    return restriction_id, concept_id, source["source_id"]
+
+
+def source_fingerprint(source):
+    denominations = []
+    for denomination in source.get("denominations", []):
+        denominations.append((
+            denomination.get("term"),
+            denomination.get("language"),
+            denomination.get("representative_evidence"),
+        ))
+    return source.get("source_sha256"), tuple(sorted(denominations))
+
+
+def previous_decisions(path):
+    if not path:
+        return {}
+
+    payload = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    decisions = {}
+    for review in payload.get("reviews", []):
+        restriction_id = review.get(
+            "restriction_id", payload.get("restriction", {}).get("id")
+        )
+        for source in review.get("sources", []):
+            decisions[source_key(restriction_id, review["concept_id"], source)] = source
+    return decisions
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidates", required=True)
+    parser.add_argument("--previous-reviewed")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
@@ -31,6 +62,9 @@ def main():
     for candidate in payload["candidates"]:
         grouped[candidate["concept_id"]].append(candidate)
 
+    prior = previous_decisions(args.previous_reviewed)
+    preserved = 0
+    pending = 0
     reviews = []
     for number, (concept_id, items) in enumerate(sorted(grouped.items()), start=1):
         first = items[0]
@@ -63,7 +97,7 @@ def main():
                     "representative_location": representative["evidence_location"]
                 })
 
-            sources.append({
+            source = {
                 "source_id": source_id,
                 "source_title": source_first["source_title"],
                 "source_url": source_first["source_url"],
@@ -73,7 +107,20 @@ def main():
                 "review_status": "pending",
                 "reviewed_by": None,
                 "review_notes": None
-            })
+            }
+            old_source = prior.get(source_key(restriction["id"], concept_id, source))
+            if (
+                old_source
+                and old_source.get("review_status") != "pending"
+                and source_fingerprint(old_source) == source_fingerprint(source)
+            ):
+                source["review_status"] = old_source["review_status"]
+                source["reviewed_by"] = old_source.get("reviewed_by")
+                source["review_notes"] = old_source.get("review_notes")
+                preserved += 1
+            else:
+                pending += 1
+            sources.append(source)
 
         reviews.append({
             "id": f"REV-{number:04d}",
@@ -103,6 +150,8 @@ def main():
         f"Generados {len(reviews)} concepto(s) con "
         f"{source_links} vinculación(es) a fuentes"
     )
+    if args.previous_reviewed:
+        print(f"Decisiones conservadas: {preserved}; pendientes: {pending}")
 
 
 if __name__ == "__main__":
