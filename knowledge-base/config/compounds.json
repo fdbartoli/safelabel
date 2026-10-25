@@ -216,7 +216,8 @@
     "aliases": [
       {"term": "gluten", "language": "es"},
       {"term": "gluten", "language": "en"},
-      {"term": "gluten", "language": "fr"}
+      {"term": "gluten", "language": "fr"},
+      {"term": "glúten", "language": "pt"}
     ]
   },
   {
@@ -226,7 +227,8 @@
     "aliases": [
       {"term": "trigo", "language": "es"},
       {"term": "wheat", "language": "en"},
-      {"term": "blé", "language": "fr"}
+      {"term": "blé", "language": "fr"},
+      {"term": "trigo", "language": "pt"}
     ]
   },
   {
@@ -236,7 +238,8 @@
     "aliases": [
       {"term": "avena", "language": "es"},
       {"term": "oats", "language": "en"},
-      {"term": "avoine", "language": "fr"}
+      {"term": "avoine", "language": "fr"},
+      {"term": "aveia", "language": "pt"}
     ]
   },
   {
@@ -246,7 +249,8 @@
     "aliases": [
       {"term": "cebada", "language": "es"},
       {"term": "barley", "language": "en"},
-      {"term": "orge", "language": "fr"}
+      {"term": "orge", "language": "fr"},
+      {"term": "cevada", "language": "pt"}
     ]
   },
   {
@@ -256,7 +260,8 @@
     "aliases": [
       {"term": "centeno", "language": "es"},
       {"term": "rye", "language": "en"},
-      {"term": "seigle", "language": "fr"}
+      {"term": "seigle", "language": "fr"},
+      {"term": "centeio", "language": "pt"}
     ]
   },
   {
@@ -271,7 +276,8 @@
       {"term": "farro", "language": "en"},
       {"term": "épeautre", "language": "fr"},
       {"term": "dinkel", "language": "fr"},
-      {"term": "farro", "language": "fr"}
+      {"term": "farro", "language": "fr"},
+      {"term": "espelta", "language": "pt"}
     ]
   },
   {
@@ -281,7 +287,8 @@
     "aliases": [
       {"term": "kamut", "language": "es"},
       {"term": "kamut", "language": "en"},
-      {"term": "kamut", "language": "fr"}
+      {"term": "kamut", "language": "fr"},
+      {"term": "kamut", "language": "pt"}
     ]
   },
   {
@@ -292,7 +299,8 @@
       {"term": "trigo duro", "language": "es"},
       {"term": "durum", "language": "en"},
       {"term": "durum wheat", "language": "en"},
-      {"term": "blé dur", "language": "fr"}
+      {"term": "blé dur", "language": "fr"},
+      {"term": "trigo duro", "language": "pt"}
     ]
   },
   {
@@ -302,7 +310,8 @@
     "aliases": [
       {"term": "triticale", "language": "es"},
       {"term": "triticale", "language": "en"},
-      {"term": "triticale", "language": "fr"}
+      {"term": "triticale", "language": "fr"},
+      {"term": "triticale", "language": "pt"}
     ]
   }
 ]

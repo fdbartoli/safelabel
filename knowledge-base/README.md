@@ -195,7 +195,7 @@ Para construir una versión parcial, indicar solamente los archivos que deban in
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.8.0
+  --version 0.8.1
 ```
 
 ## 9. Validar SQLite
