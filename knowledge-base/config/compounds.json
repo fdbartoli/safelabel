@@ -1,0 +1,317 @@
+[
+  {
+    "id": "CMP-MILK",
+    "canonical_name": "leche",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "leche", "language": "es"},
+      {"term": "milk", "language": "en"},
+      {"term": "leite", "language": "pt"},
+      {"term": "lait", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-CASEIN",
+    "canonical_name": "caseína",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "caseína", "language": "es"},
+      {"term": "casein", "language": "en"},
+      {"term": "caseína", "language": "pt"},
+      {"term": "caséine", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-CASEINATE",
+    "canonical_name": "caseinato",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "caseinato", "language": "es"},
+      {"term": "caseinate", "language": "en"},
+      {"term": "caseinato", "language": "pt"},
+      {"term": "caséinate", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-SODIUM-CASEINATE",
+    "canonical_name": "caseinato de sodio",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "caseinato de sodio", "language": "es"},
+      {"term": "sodium caseinate", "language": "en"},
+      {"term": "caseinato de sódio", "language": "pt"},
+      {"term": "caséinate de sodium", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-RENNET-CASEIN",
+    "canonical_name": "rennet casein",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "rennet casein", "language": "en"},
+      {"term": "caseína de cuajo", "language": "es"},
+      {"term": "caseína de coalho", "language": "pt"},
+      {"term": "caséine présure", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-HYDROLYZED-CASEIN",
+    "canonical_name": "hydrolyzed casein",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "hydrolyzed casein", "language": "en"},
+      {"term": "caseína hidrolizada", "language": "es"},
+      {"term": "caseína hidrolisada", "language": "pt"},
+      {"term": "caséine hydrolysée", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-AMMONIUM-CASEINATE",
+    "canonical_name": "ammonium caseinate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ammonium caseinate", "language": "en"},
+      {"term": "caseinato de amonio", "language": "es"},
+      {"term": "caseinato de amônio", "language": "pt"},
+      {"term": "caséinate d'ammonium", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-CALCIUM-CASEINATE",
+    "canonical_name": "calcium caseinate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "calcium caseinate", "language": "en"},
+      {"term": "caseinato de calcio", "language": "es"},
+      {"term": "caseinato de cálcio", "language": "pt"},
+      {"term": "caséinate de calcium", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-MAGNESIUM-CASEINATE",
+    "canonical_name": "magnesium caseinate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "magnesium caseinate", "language": "en"},
+      {"term": "caseinato de magnesio", "language": "es"},
+      {"term": "caseinato de magnésio", "language": "pt"},
+      {"term": "caséinate de magnésium", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-POTASSIUM-CASEINATE",
+    "canonical_name": "potassium caseinate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "potassium caseinate", "language": "en"},
+      {"term": "caseinato de potasio", "language": "es"},
+      {"term": "caseinato de potássio", "language": "pt"},
+      {"term": "caséinate de potassium", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-BETA-LACTOGLOBULIN",
+    "canonical_name": "beta-lactoglobulina",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "beta-lactoglobulina", "language": "es"},
+      {"term": "beta-lactoglobulin", "language": "en"},
+      {"term": "beta-lactoglobulina", "language": "pt"},
+      {"term": "bêta-lactoglobuline", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-LACTALBUMIN",
+    "canonical_name": "lactoalbúmina",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactoalbúmina", "language": "es"},
+      {"term": "lactalbumin", "language": "en"},
+      {"term": "lactoalbumina", "language": "pt"},
+      {"term": "lactalbumine", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-LACTALBUMIN-PHOSPHATE",
+    "canonical_name": "lactalbumin phosphate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactalbumin phosphate", "language": "en"},
+      {"term": "fosfato de lactoalbúmina", "language": "es"},
+      {"term": "fosfato de lactoalbumina", "language": "pt"},
+      {"term": "phosphate de lactalbumine", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-LACTOFERRIN",
+    "canonical_name": "lactoferrin",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactoferrin", "language": "en"},
+      {"term": "lactoferrina", "language": "es"},
+      {"term": "lactoferrina", "language": "pt"},
+      {"term": "lactoferrine", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-LACTOGLOBULIN",
+    "canonical_name": "lactoglobulin",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactoglobulin", "language": "en"},
+      {"term": "lactoglobulina", "language": "es"},
+      {"term": "lactoglobulina", "language": "pt"},
+      {"term": "lactoglobuline", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-WHEY",
+    "canonical_name": "lactosuero",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactosuero", "language": "es"},
+      {"term": "suero de leche", "language": "es"},
+      {"term": "whey", "language": "en"},
+      {"term": "soro de leite", "language": "pt"},
+      {"term": "lactosérum", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-WHEY-PROTEIN-CONCENTRATE",
+    "canonical_name": "whey protein concentrate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "whey protein concentrate", "language": "en"},
+      {"term": "concentrado de proteína de suero", "language": "es"},
+      {"term": "concentrado de proteína do soro do leite", "language": "pt"},
+      {"term": "concentré de protéines de lactosérum", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-DEMINERALIZED-WHEY",
+    "canonical_name": "demineralized whey",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "demineralized whey", "language": "en"},
+      {"term": "suero desmineralizado", "language": "es"},
+      {"term": "soro de leite desmineralizado", "language": "pt"},
+      {"term": "lactosérum déminéralisé", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-DELACTOSED-WHEY",
+    "canonical_name": "delactosed whey",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "delactosed whey", "language": "en"},
+      {"term": "suero deslactosado", "language": "es"},
+      {"term": "soro de leite deslactosado", "language": "pt"},
+      {"term": "lactosérum délactosé", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-GLUTEN",
+    "canonical_name": "gluten",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "gluten", "language": "es"},
+      {"term": "gluten", "language": "en"},
+      {"term": "gluten", "language": "fr"},
+      {"term": "glúten", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-WHEAT",
+    "canonical_name": "trigo",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "trigo", "language": "es"},
+      {"term": "wheat", "language": "en"},
+      {"term": "blé", "language": "fr"},
+      {"term": "trigo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-OATS",
+    "canonical_name": "avena",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "avena", "language": "es"},
+      {"term": "oats", "language": "en"},
+      {"term": "avoine", "language": "fr"},
+      {"term": "aveia", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-BARLEY",
+    "canonical_name": "cebada",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "cebada", "language": "es"},
+      {"term": "barley", "language": "en"},
+      {"term": "orge", "language": "fr"},
+      {"term": "cevada", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-RYE",
+    "canonical_name": "centeno",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "centeno", "language": "es"},
+      {"term": "rye", "language": "en"},
+      {"term": "seigle", "language": "fr"},
+      {"term": "centeio", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SPELT",
+    "canonical_name": "espelta",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "espelta", "language": "es"},
+      {"term": "escaña común", "language": "es"},
+      {"term": "spelt", "language": "en"},
+      {"term": "dinkel", "language": "en"},
+      {"term": "farro", "language": "en"},
+      {"term": "épeautre", "language": "fr"},
+      {"term": "dinkel", "language": "fr"},
+      {"term": "farro", "language": "fr"},
+      {"term": "espelta", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-KAMUT",
+    "canonical_name": "kamut",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "kamut", "language": "es"},
+      {"term": "kamut", "language": "en"},
+      {"term": "kamut", "language": "fr"},
+      {"term": "kamut", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-DURUM-WHEAT",
+    "canonical_name": "trigo duro",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "trigo duro", "language": "es"},
+      {"term": "durum", "language": "en"},
+      {"term": "durum wheat", "language": "en"},
+      {"term": "blé dur", "language": "fr"},
+      {"term": "trigo duro", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-TRITICALE",
+    "canonical_name": "triticale",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "triticale", "language": "es"},
+      {"term": "triticale", "language": "en"},
+      {"term": "triticale", "language": "fr"},
+      {"term": "triticale", "language": "pt"}
+    ]
+  }
+]

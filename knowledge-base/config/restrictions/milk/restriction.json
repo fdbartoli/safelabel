@@ -1,0 +1,34 @@
+{
+  "id": "RES-MILK",
+  "name": "Leche",
+  "display_name": "Leche y derivados",
+  "jurisdiction": "AR",
+  "target_concept_id": "CMP-MILK",
+  "source_ids": [
+    "SRC-ANMAT-ALERGENOS",
+    "SRC-ANMAT-GESTION-ALERGENOS",
+    "SRC-FDA-LABEL",
+    "SRC-HC-MILK"
+  ],
+  "relations": [
+    {"concept_id": "CMP-MILK", "match_type": "DIRECT"},
+    {"concept_id": "CMP-CASEIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-SODIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-RENNET-CASEIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-HYDROLYZED-CASEIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-AMMONIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-CALCIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-MAGNESIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-POTASSIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-BETA-LACTOGLOBULIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-LACTALBUMIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-LACTALBUMIN-PHOSPHATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-LACTOFERRIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-LACTOGLOBULIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-WHEY", "match_type": "RELATED"},
+    {"concept_id": "CMP-WHEY-PROTEIN-CONCENTRATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-DEMINERALIZED-WHEY", "match_type": "RELATED"},
+    {"concept_id": "CMP-DELACTOSED-WHEY", "match_type": "RELATED"}
+  ]
+}
