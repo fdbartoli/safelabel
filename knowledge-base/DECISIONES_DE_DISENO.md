@@ -12,7 +12,7 @@ Las siguientes decisiones establecen cómo se obtiene, controla y utiliza esa in
 
 La información debe obtenerse preferentemente de organismos gubernamentales, agencias regulatorias y organismos internacionales especializados en alimentos y salud.
 
-En la primera versión se utilizaron fuentes de ANMAT, FDA y Health Canada.
+Se utilizaron fuentes de ANMAT, normativa argentina, FDA y Health Canada.
 
 **Justificación:** la información puede influir en decisiones sensibles. Las fuentes oficiales ofrecen mayor autoridad y estabilidad que contenidos comerciales o publicaciones informales.
 
@@ -112,9 +112,11 @@ La base distribuida contiene conocimiento común sobre ingredientes y restriccio
 
 ## 12. Avanzar de manera incremental
 
-La primera versión se limita a leche y sus derivados. Su objetivo es validar el proceso completo antes de incorporar nuevas restricciones.
+La primera iteración se limitó a leche y sus derivados. Una segunda iteración incorpora enfermedad celíaca para validar que el proceso pueda trabajar con varias restricciones sin mezclar sus conceptos ni sus revisiones.
 
-**Justificación:** trabajar inicialmente sobre una única restricción permite comprobar la disponibilidad de fuentes, la calidad de la extracción, el esfuerzo de revisión y la utilidad de la base resultante sin ampliar prematuramente el alcance.
+Cada restricción declara explícitamente el subconjunto de conceptos y fuentes que debe analizarse. Luego, las relaciones aprobadas se consolidan en una única base para la aplicación.
+
+**Justificación:** comenzar con un alcance reducido permitió comprobar la disponibilidad de fuentes, la calidad de la extracción y el esfuerzo de revisión. Separar los subconjuntos evita combinaciones sin sentido y permite ampliar la base de manera controlada.
 
 ## Flujo resultante
 

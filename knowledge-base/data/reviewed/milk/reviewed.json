@@ -1,5 +1,5 @@
 {
-  "grouping": "concept_id",
+  "grouping": "restriction_id + concept_id + source_id",
   "reviews": [
     {
       "id": "REV-0001",
@@ -36,7 +36,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0002",
@@ -73,7 +75,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0003",
@@ -110,7 +114,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0004",
@@ -195,7 +201,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0005",
@@ -258,7 +266,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0006",
@@ -295,7 +305,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0007",
@@ -332,7 +344,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0008",
@@ -395,7 +409,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0009",
@@ -432,7 +448,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0010",
@@ -469,7 +487,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0011",
@@ -532,7 +552,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0012",
@@ -569,7 +591,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0013",
@@ -739,7 +763,9 @@
           "reviewed_by": "lucio",
           "review_notes": "Aprobado considerando el contexto completo del documento sobre leche y sus derivados."
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "DIRECT"
     },
     {
       "id": "REV-0014",
@@ -776,7 +802,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0015",
@@ -813,7 +841,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0016",
@@ -898,7 +928,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0017",
@@ -987,7 +1019,9 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     },
     {
       "id": "REV-0018",
@@ -1024,7 +1058,13 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ]
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED"
     }
-  ]
+  ],
+  "restriction": {
+    "id": "RES-MILK",
+    "name": "Leche"
+  }
 }

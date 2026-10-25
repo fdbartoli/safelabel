@@ -14,6 +14,20 @@ def main():
     payload = json.loads(pathlib.Path(args.candidates).read_text(encoding="utf-8"))
     grouped = defaultdict(list)
 
+    if not payload["candidates"]:
+        raise ValueError("No hay candidatos para preparar la revisión")
+
+    restriction_ids = {
+        candidate["restriction_id"] for candidate in payload["candidates"]
+    }
+    if len(restriction_ids) != 1:
+        raise ValueError("El archivo debe contener una única restricción")
+    first_candidate = payload["candidates"][0]
+    restriction = {
+        "id": first_candidate["restriction_id"],
+        "name": first_candidate["restriction_name"]
+    }
+
     for candidate in payload["candidates"]:
         grouped[candidate["concept_id"]].append(candidate)
 
@@ -63,9 +77,11 @@ def main():
 
         reviews.append({
             "id": f"REV-{number:04d}",
+            "restriction_id": restriction["id"],
             "concept_id": concept_id,
             "canonical_concept": first["canonical_concept"],
             "concept_type": first["concept_type"],
+            "match_type": first["match_type"],
             "occurrence_count": len(items),
             "aliases": [
                 {"term": term, "language": language}
@@ -75,7 +91,8 @@ def main():
         })
 
     output = {
-        "grouping": "concept_id",
+        "restriction": restriction,
+        "grouping": "restriction_id + concept_id + source_id",
         "reviews": reviews
     }
     target = pathlib.Path(args.output)

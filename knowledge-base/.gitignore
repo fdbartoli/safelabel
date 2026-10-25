@@ -7,12 +7,12 @@ data/raw/*
 !data/raw/.gitkeep
 
 # Resultados de extracción
-data/candidates/*
-!data/candidates/.gitkeep
+data/candidates/**/*.json
 
 # Resultados regenerables
-data/reviewed/review.json
-data/reviewed/knowledge.json
+data/reviewed/*/review.json
+data/knowledge/*.json
+!data/knowledge/.gitkeep
 
 # Base SQLite generada
 data/output/*

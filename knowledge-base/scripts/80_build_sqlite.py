@@ -23,6 +23,8 @@ CREATE TABLE concept (
 CREATE TABLE restriction (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  jurisdiction TEXT NOT NULL,
   target_concept_id TEXT NOT NULL REFERENCES concept(id)
 );
 
@@ -99,8 +101,16 @@ def main():
     if output.exists():
         output.unlink()
 
-    restriction = payload["restriction"]
+    restrictions = payload["restrictions"]
     concepts = payload["concepts"]
+    relations = payload["relations"]
+    concept_ids = {concept["id"] for concept in concepts}
+    for restriction in restrictions:
+        if restriction["target_concept_id"] not in concept_ids:
+            raise ValueError(
+                f"Concepto objetivo ausente para {restriction['id']}: "
+                f"{restriction['target_concept_id']}"
+            )
 
     with sqlite3.connect(output) as conn:
         conn.executescript(SCHEMA)
@@ -114,39 +124,55 @@ def main():
                 "INSERT INTO concept(id, canonical_name, type) VALUES (?, ?, ?)",
                 (concept["id"], concept["canonical_name"], concept["type"])
             )
-
-        conn.execute(
-            "INSERT INTO restriction(id, name, target_concept_id) VALUES (?, ?, ?)",
-            (restriction["id"], restriction["name"], restriction["target_concept_id"])
-        )
-
-        for concept in concepts:
             for alias in concept["aliases"]:
                 conn.execute(
                     "INSERT OR IGNORE INTO denomination(name, language, concept_id) VALUES (?, ?, ?)",
                     (alias["term"], alias["language"], concept["id"])
                 )
 
-            concept_restriction = concept["restriction"]
+        for restriction in restrictions:
             conn.execute(
-                "INSERT INTO concept_restriction(concept_id, restriction_id, match_type) VALUES (?, ?, ?)",
+                """
+                INSERT INTO restriction(
+                  id, name, display_name, jurisdiction, target_concept_id
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
                 (
-                    concept["id"],
-                    concept_restriction["restriction_id"],
-                    concept_restriction["match_type"]
+                    restriction["id"],
+                    restriction["name"],
+                    restriction["display_name"],
+                    restriction["jurisdiction"],
+                    restriction["target_concept_id"]
                 )
             )
 
-            for source_evidence in concept["evidence"]:
-                conn.execute(
-                    "INSERT OR IGNORE INTO source(id, title, url, sha256) VALUES (?, ?, ?, ?)",
-                    (
-                        source_evidence["source_id"],
-                        source_evidence["source_title"],
-                        source_evidence["source_url"],
-                        source_evidence["source_sha256"]
-                    )
+        known_sources = {}
+        for relation in relations:
+            conn.execute(
+                "INSERT INTO concept_restriction(concept_id, restriction_id, match_type) VALUES (?, ?, ?)",
+                (
+                    relation["concept_id"],
+                    relation["restriction_id"],
+                    relation["match_type"]
                 )
+            )
+
+            for source_evidence in relation["evidence"]:
+                source_id = source_evidence["source_id"]
+                source_definition = (
+                    source_evidence["source_title"],
+                    source_evidence["source_url"],
+                    source_evidence["source_sha256"]
+                )
+                if source_id in known_sources and known_sources[source_id] != source_definition:
+                    raise ValueError(f"Definición conflictiva para la fuente {source_id}")
+                if source_id not in known_sources:
+                    known_sources[source_id] = source_definition
+                    conn.execute(
+                        "INSERT INTO source(id, title, url, sha256) VALUES (?, ?, ?, ?)",
+                        (source_id, *source_definition)
+                    )
+
                 for denomination in source_evidence["denominations"]:
                     conn.execute(
                         """
@@ -157,9 +183,9 @@ def main():
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
-                            concept["id"],
-                            concept_restriction["restriction_id"],
-                            source_evidence["source_id"],
+                            relation["concept_id"],
+                            relation["restriction_id"],
+                            source_id,
                             denomination["term"],
                             denomination["language"],
                             denomination["representative_evidence"],
@@ -173,11 +199,11 @@ def main():
         evidence_count = conn.execute("SELECT COUNT(*) FROM evidence").fetchone()[0]
 
     print(
-        f"SQLite generada: {len(concepts)} concepto(s), "
+        f"SQLite generada: {len(restrictions)} restricción(es), "
+        f"{len(concepts)} concepto(s), {len(relations)} relación(es), "
         f"{alias_count} denominación(es), {evidence_count} evidencia(s): {output}"
     )
 
 
 if __name__ == "__main__":
     main()
-

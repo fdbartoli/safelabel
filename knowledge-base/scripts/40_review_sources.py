@@ -49,6 +49,9 @@ def main():
     total = len(pending)
     for index, (review, source) in enumerate(pending, start=1):
         print("\n" + "=" * 72)
+        restriction = payload.get("restriction", {})
+        restriction_label = restriction.get("name", review.get("restriction_id", ""))
+        print(f"Restricción: {restriction_label}")
         print(f"[{index}/{total}] {review['concept_id']} — {review['canonical_concept']}")
         aliases = ", ".join(
             f"{alias['term']} [{alias['language']}]"

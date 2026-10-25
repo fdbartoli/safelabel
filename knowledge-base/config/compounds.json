@@ -208,5 +208,78 @@
       {"term": "soro de leite deslactosado", "language": "pt"},
       {"term": "lactosérum délactosé", "language": "fr"}
     ]
+  },
+  {
+    "id": "CMP-GLUTEN",
+    "canonical_name": "gluten",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "gluten", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-WHEAT",
+    "canonical_name": "trigo",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "trigo", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-OATS",
+    "canonical_name": "avena",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "avena", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-BARLEY",
+    "canonical_name": "cebada",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "cebada", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-RYE",
+    "canonical_name": "centeno",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "centeno", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-SPELT",
+    "canonical_name": "espelta",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "espelta", "language": "es"},
+      {"term": "escaña común", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-KAMUT",
+    "canonical_name": "kamut",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "kamut", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-DURUM-WHEAT",
+    "canonical_name": "trigo duro",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "trigo duro", "language": "es"}
+    ]
+  },
+  {
+    "id": "CMP-TRITICALE",
+    "canonical_name": "triticale",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "triticale", "language": "es"}
+    ]
   }
 ]

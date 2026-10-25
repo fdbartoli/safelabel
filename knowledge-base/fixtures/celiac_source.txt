@@ -1,0 +1,2 @@
+El gluten está presente en cereales como trigo, avena, cebada y centeno.
+Este texto es exclusivamente una fuente local para probar el pipeline y no constituye evidencia oficial.

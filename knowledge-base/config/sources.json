@@ -34,5 +34,23 @@
   "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
   "language": "en-CA",
   "format": "html"
+},
+{
+  "id": "SRC-ARG-CAA-1383",
+  "organization": "Argentina.gob.ar",
+  "title": "Código Alimentario Argentino - Artículo 1383 actualizado",
+  "url": "data/manual/arg-caa-1383.html",
+  "source_url": "https://www.argentina.gob.ar/normativa/nacional/norma-394181/texto",
+  "language": "es-AR",
+  "format": "html"
+},
+{
+  "id": "SRC-ANMAT-BPM-ALG",
+  "organization": "ANMAT",
+  "title": "Guía de Buenas Prácticas de Manufactura para Establecimientos Elaboradores de Alimentos Libres de Gluten",
+  "url": "data/manual/anmat-bpm-alg.pdf",
+  "source_url": "https://www.anmat.gob.ar/Alimentos/Guia_BPM_ALG_formato_Web.pdf",
+  "language": "es-AR",
+  "format": "pdf"
 }
 ]

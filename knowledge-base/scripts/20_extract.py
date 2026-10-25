@@ -31,6 +31,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--compounds", required=True)
+    parser.add_argument("--restriction", required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
@@ -38,6 +39,31 @@ def main():
     raw_dir = manifest_path.parent
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     compounds = json.loads(pathlib.Path(args.compounds).read_text(encoding="utf-8"))
+    restriction = json.loads(
+        pathlib.Path(args.restriction).read_text(encoding="utf-8")
+    )
+    compound_by_id = {compound["id"]: compound for compound in compounds}
+    relation_by_concept = {
+        relation["concept_id"]: relation
+        for relation in restriction["relations"]
+    }
+    missing_concepts = sorted(set(relation_by_concept) - set(compound_by_id))
+    if missing_concepts:
+        raise ValueError(
+            "Conceptos inexistentes en compounds.json: "
+            + ", ".join(missing_concepts)
+        )
+
+    selected_sources = set(restriction["source_ids"])
+    manifest = [source for source in manifest if source["id"] in selected_sources]
+    available_sources = {source["id"] for source in manifest}
+    missing_sources = sorted(selected_sources - available_sources)
+    if missing_sources:
+        raise ValueError(
+            "Fuentes de la restricción ausentes en el manifiesto: "
+            + ", ".join(missing_sources)
+        )
+
     terms = [
         {
             "term": alias["term"],
@@ -46,7 +72,8 @@ def main():
             "canonical_name": compound["canonical_name"],
             "concept_type": compound.get("type", "ingredient"),
         }
-        for compound in compounds
+        for concept_id in relation_by_concept
+        for compound in [compound_by_id[concept_id]]
         for alias in compound["aliases"]
     ]
     candidates = []
@@ -85,6 +112,9 @@ def main():
                 "concept_id": term["concept_id"],
                 "canonical_concept": term["canonical_name"],
                 "concept_type": term["concept_type"],
+                "restriction_id": restriction["id"],
+                "restriction_name": restriction["name"],
+                "match_type": relation_by_concept[term["concept_id"]]["match_type"],
                 "source_id": source["id"],
                 "source_title": source["title"],
                 "source_url": source.get("source_url", source["url"]),

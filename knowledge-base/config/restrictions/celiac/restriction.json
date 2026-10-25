@@ -1,0 +1,23 @@
+{
+  "id": "RES-CELIAC",
+  "name": "Enfermedad celíaca",
+  "display_name": "Celiaquía (gluten)",
+  "jurisdiction": "AR",
+  "target_concept_id": "CMP-GLUTEN",
+  "source_ids": [
+    "SRC-ANMAT-ALERGENOS",
+    "SRC-ARG-CAA-1383",
+    "SRC-ANMAT-BPM-ALG"
+  ],
+  "relations": [
+    {"concept_id": "CMP-GLUTEN", "match_type": "DIRECT"},
+    {"concept_id": "CMP-WHEAT", "match_type": "RELATED"},
+    {"concept_id": "CMP-OATS", "match_type": "RELATED"},
+    {"concept_id": "CMP-BARLEY", "match_type": "RELATED"},
+    {"concept_id": "CMP-RYE", "match_type": "RELATED"},
+    {"concept_id": "CMP-SPELT", "match_type": "RELATED"},
+    {"concept_id": "CMP-KAMUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-DURUM-WHEAT", "match_type": "RELATED"},
+    {"concept_id": "CMP-TRITICALE", "match_type": "RELATED"}
+  ]
+}
