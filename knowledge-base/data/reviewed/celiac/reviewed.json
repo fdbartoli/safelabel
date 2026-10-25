@@ -12,11 +12,19 @@
       "canonical_concept": "cebada",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 14,
+      "occurrence_count": 46,
       "aliases": [
+        {
+          "term": "barley",
+          "language": "en"
+        },
         {
           "term": "cebada",
           "language": "es"
+        },
+        {
+          "term": "orge",
+          "language": "fr"
         }
       ],
       "sources": [
@@ -96,6 +104,80 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 16,
+          "denominations": [
+            {
+              "term": "barley",
+              "language": "en",
+              "occurrence_count": 16,
+              "candidate_ids": [
+                "CAND-0287",
+                "CAND-0296",
+                "CAND-0302",
+                "CAND-0332",
+                "CAND-0342",
+                "CAND-0349",
+                "CAND-0355",
+                "CAND-0374",
+                "CAND-0383",
+                "CAND-0412",
+                "CAND-0431",
+                "CAND-0432",
+                "CAND-0433",
+                "CAND-0434",
+                "CAND-0435",
+                "CAND-0439"
+              ],
+              "representative_evidence": "at. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat allergy, as well as",
+              "representative_location": "character:1119"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 16,
+          "denominations": [
+            {
+              "term": "orge",
+              "language": "fr",
+              "occurrence_count": 16,
+              "candidate_ids": [
+                "CAND-0459",
+                "CAND-0468",
+                "CAND-0474",
+                "CAND-0503",
+                "CAND-0513",
+                "CAND-0519",
+                "CAND-0526",
+                "CAND-0544",
+                "CAND-0553",
+                "CAND-0579",
+                "CAND-0599",
+                "CAND-0600",
+                "CAND-0601",
+                "CAND-0602",
+                "CAND-0603",
+                "CAND-0607"
+              ],
+              "representative_evidence": "mment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie cœliaque, l’allergie",
+              "representative_location": "character:1335"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -106,8 +188,16 @@
       "canonical_concept": "trigo duro",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 3,
+      "occurrence_count": 5,
       "aliases": [
+        {
+          "term": "blé dur",
+          "language": "fr"
+        },
+        {
+          "term": "durum",
+          "language": "en"
+        },
         {
           "term": "trigo duro",
           "language": "es"
@@ -179,6 +269,50 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "durum",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0418"
+              ],
+              "representative_evidence": "nd added sulphites; however, if you have a wheat allergy or celiac disease and see one of the following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be fou",
+              "representative_location": "character:8986"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "blé dur",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0586"
+              ],
+              "representative_evidence": "ique au blé ou que vous souffrez de la maladie cœliaque et que vous voyez l’un des termes suivants dans la liste des ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’",
+              "representative_location": "character:10972"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -189,11 +323,19 @@
       "canonical_concept": "gluten",
       "concept_type": "ingredient",
       "match_type": "DIRECT",
-      "occurrence_count": 213,
+      "occurrence_count": 362,
       "aliases": [
         {
           "term": "gluten",
+          "language": "en"
+        },
+        {
+          "term": "gluten",
           "language": "es"
+        },
+        {
+          "term": "gluten",
+          "language": "fr"
         }
       ],
       "sources": [
@@ -472,6 +614,197 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 76,
+          "denominations": [
+            {
+              "term": "gluten",
+              "language": "en",
+              "occurrence_count": 76,
+              "candidate_ids": [
+                "CAND-0280",
+                "CAND-0281",
+                "CAND-0282",
+                "CAND-0283",
+                "CAND-0284",
+                "CAND-0288",
+                "CAND-0289",
+                "CAND-0290",
+                "CAND-0292",
+                "CAND-0293",
+                "CAND-0298",
+                "CAND-0300",
+                "CAND-0304",
+                "CAND-0305",
+                "CAND-0306",
+                "CAND-0307",
+                "CAND-0308",
+                "CAND-0309",
+                "CAND-0315",
+                "CAND-0317",
+                "CAND-0318",
+                "CAND-0319",
+                "CAND-0321",
+                "CAND-0323",
+                "CAND-0326",
+                "CAND-0327",
+                "CAND-0328",
+                "CAND-0329",
+                "CAND-0333",
+                "CAND-0334",
+                "CAND-0337",
+                "CAND-0343",
+                "CAND-0344",
+                "CAND-0345",
+                "CAND-0346",
+                "CAND-0347",
+                "CAND-0348",
+                "CAND-0354",
+                "CAND-0360",
+                "CAND-0361",
+                "CAND-0362",
+                "CAND-0363",
+                "CAND-0364",
+                "CAND-0365",
+                "CAND-0366",
+                "CAND-0367",
+                "CAND-0370",
+                "CAND-0371",
+                "CAND-0376",
+                "CAND-0378",
+                "CAND-0380",
+                "CAND-0385",
+                "CAND-0389",
+                "CAND-0391",
+                "CAND-0392",
+                "CAND-0393",
+                "CAND-0394",
+                "CAND-0395",
+                "CAND-0396",
+                "CAND-0397",
+                "CAND-0398",
+                "CAND-0399",
+                "CAND-0400",
+                "CAND-0401",
+                "CAND-0402",
+                "CAND-0409",
+                "CAND-0416",
+                "CAND-0419",
+                "CAND-0442",
+                "CAND-0444",
+                "CAND-0445",
+                "CAND-0447",
+                "CAND-0448",
+                "CAND-0449",
+                "CAND-0450",
+                "CAND-0451"
+              ],
+              "representative_evidence": "Gluten – A group of proteins that people with gluten-related disorders should avoid - Canada.ca Skip to main content Skip to \"About government\" Language selection Français fr / Gouvernem",
+              "representative_location": "character:0"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 73,
+          "denominations": [
+            {
+              "term": "gluten",
+              "language": "fr",
+              "occurrence_count": 73,
+              "candidate_ids": [
+                "CAND-0452",
+                "CAND-0453",
+                "CAND-0454",
+                "CAND-0455",
+                "CAND-0456",
+                "CAND-0460",
+                "CAND-0461",
+                "CAND-0462",
+                "CAND-0464",
+                "CAND-0465",
+                "CAND-0470",
+                "CAND-0472",
+                "CAND-0475",
+                "CAND-0477",
+                "CAND-0478",
+                "CAND-0479",
+                "CAND-0480",
+                "CAND-0481",
+                "CAND-0486",
+                "CAND-0488",
+                "CAND-0489",
+                "CAND-0490",
+                "CAND-0492",
+                "CAND-0494",
+                "CAND-0497",
+                "CAND-0498",
+                "CAND-0499",
+                "CAND-0500",
+                "CAND-0504",
+                "CAND-0505",
+                "CAND-0509",
+                "CAND-0514",
+                "CAND-0515",
+                "CAND-0516",
+                "CAND-0517",
+                "CAND-0518",
+                "CAND-0525",
+                "CAND-0530",
+                "CAND-0531",
+                "CAND-0532",
+                "CAND-0533",
+                "CAND-0534",
+                "CAND-0535",
+                "CAND-0536",
+                "CAND-0537",
+                "CAND-0540",
+                "CAND-0541",
+                "CAND-0546",
+                "CAND-0548",
+                "CAND-0550",
+                "CAND-0555",
+                "CAND-0560",
+                "CAND-0561",
+                "CAND-0562",
+                "CAND-0563",
+                "CAND-0564",
+                "CAND-0565",
+                "CAND-0566",
+                "CAND-0567",
+                "CAND-0568",
+                "CAND-0569",
+                "CAND-0576",
+                "CAND-0583",
+                "CAND-0588",
+                "CAND-0611",
+                "CAND-0612",
+                "CAND-0613",
+                "CAND-0615",
+                "CAND-0616",
+                "CAND-0617",
+                "CAND-0618",
+                "CAND-0619",
+                "CAND-0620"
+              ],
+              "representative_evidence": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter - Canada.ca Passer au contenu principal Passer à « Au sujet du gouvernement » Séle",
+              "representative_location": "character:0"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -482,11 +815,19 @@
       "canonical_concept": "kamut",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 3,
+      "occurrence_count": 5,
       "aliases": [
         {
           "term": "kamut",
+          "language": "en"
+        },
+        {
+          "term": "kamut",
           "language": "es"
+        },
+        {
+          "term": "kamut",
+          "language": "fr"
         }
       ],
       "sources": [
@@ -555,6 +896,50 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "kamut",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0420"
+              ],
+              "representative_evidence": "se and see one of the following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and pr",
+              "representative_location": "character:9058"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "kamut",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0589"
+              ],
+              "representative_evidence": "ts dans la liste des ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritair",
+              "representative_location": "character:11068"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -565,11 +950,19 @@
       "canonical_concept": "avena",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 12,
+      "occurrence_count": 43,
       "aliases": [
         {
           "term": "avena",
           "language": "es"
+        },
+        {
+          "term": "avoine",
+          "language": "fr"
+        },
+        {
+          "term": "oats",
+          "language": "en"
         }
       ],
       "sources": [
@@ -647,6 +1040,79 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 15,
+          "denominations": [
+            {
+              "term": "oats",
+              "language": "en",
+              "occurrence_count": 15,
+              "candidate_ids": [
+                "CAND-0353",
+                "CAND-0356",
+                "CAND-0368",
+                "CAND-0369",
+                "CAND-0375",
+                "CAND-0377",
+                "CAND-0379",
+                "CAND-0384",
+                "CAND-0386",
+                "CAND-0387",
+                "CAND-0388",
+                "CAND-0390",
+                "CAND-0440",
+                "CAND-0441",
+                "CAND-0443"
+              ],
+              "representative_evidence": ". Gluten sources need to be declared when a prepackaged food contains gluten protein, modified gluten protein, or gluten protein fractions from barley, rye, wheat or triticale and oats. The Canadian Food and Drug Regulations require gluten sources to be declared by the grain name, such as barley, oats, rye, triticale or wheat. The declaration of the source of gl",
+              "representative_location": "character:5175"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 16,
+          "denominations": [
+            {
+              "term": "avoine",
+              "language": "fr",
+              "occurrence_count": 16,
+              "candidate_ids": [
+                "CAND-0520",
+                "CAND-0524",
+                "CAND-0527",
+                "CAND-0538",
+                "CAND-0539",
+                "CAND-0545",
+                "CAND-0547",
+                "CAND-0549",
+                "CAND-0554",
+                "CAND-0556",
+                "CAND-0557",
+                "CAND-0558",
+                "CAND-0559",
+                "CAND-0608",
+                "CAND-0609",
+                "CAND-0610"
+              ],
+              "representative_evidence": "nt faire l’objet d’une déclaration lorsqu’un aliment préemballé contient une protéine de gluten, une protéine de gluten modifiée ou des fractions protéiques issues de l’orge, de l’avoine, du seigle, du blé ou du triticale et de l’avoine. Le Règlement sur les aliments et drogues canadien exige que l’on déclare les sources de gluten en utilisant le nom de la céréale",
+              "representative_location": "character:6415"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -657,11 +1123,19 @@
       "canonical_concept": "centeno",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 12,
+      "occurrence_count": 43,
       "aliases": [
         {
           "term": "centeno",
           "language": "es"
+        },
+        {
+          "term": "rye",
+          "language": "en"
+        },
+        {
+          "term": "seigle",
+          "language": "fr"
         }
       ],
       "sources": [
@@ -739,6 +1213,79 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 16,
+          "denominations": [
+            {
+              "term": "rye",
+              "language": "en",
+              "occurrence_count": 16,
+              "candidate_ids": [
+                "CAND-0286",
+                "CAND-0295",
+                "CAND-0301",
+                "CAND-0331",
+                "CAND-0341",
+                "CAND-0350",
+                "CAND-0357",
+                "CAND-0373",
+                "CAND-0382",
+                "CAND-0406",
+                "CAND-0411",
+                "CAND-0426",
+                "CAND-0427",
+                "CAND-0428",
+                "CAND-0429",
+                "CAND-0438"
+              ],
+              "representative_evidence": "0 2020 Cat. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat allergy,",
+              "representative_location": "character:1111"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 15,
+          "denominations": [
+            {
+              "term": "seigle",
+              "language": "fr",
+              "occurrence_count": 15,
+              "candidate_ids": [
+                "CAND-0458",
+                "CAND-0467",
+                "CAND-0473",
+                "CAND-0502",
+                "CAND-0512",
+                "CAND-0521",
+                "CAND-0543",
+                "CAND-0552",
+                "CAND-0573",
+                "CAND-0578",
+                "CAND-0594",
+                "CAND-0595",
+                "CAND-0596",
+                "CAND-0597",
+                "CAND-0606"
+              ],
+              "representative_evidence": "» est couramment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie cœliaque,",
+              "representative_location": "character:1323"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
@@ -749,11 +1296,35 @@
       "canonical_concept": "espelta",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 3,
+      "occurrence_count": 9,
       "aliases": [
+        {
+          "term": "dinkel",
+          "language": "en"
+        },
+        {
+          "term": "dinkel",
+          "language": "fr"
+        },
         {
           "term": "escaña común",
           "language": "es"
+        },
+        {
+          "term": "farro",
+          "language": "en"
+        },
+        {
+          "term": "farro",
+          "language": "fr"
+        },
+        {
+          "term": "spelt",
+          "language": "en"
+        },
+        {
+          "term": "épeautre",
+          "language": "fr"
         }
       ],
       "sources": [
@@ -822,21 +1393,190 @@
           "review_status": "approved",
           "reviewed_by": "lucio",
           "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "dinkel",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0422"
+              ],
+              "representative_evidence": "ng ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or often c",
+              "representative_location": "character:9087"
+            },
+            {
+              "term": "farro",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0423"
+              ],
+              "representative_evidence": "dients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or often contain",
+              "representative_location": "character:9095"
+            },
+            {
+              "term": "spelt",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0421"
+              ],
+              "representative_evidence": "following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or",
+              "representative_location": "character:9080"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "dinkel",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0591"
+              ],
+              "representative_evidence": "s, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'aliments e",
+              "representative_location": "character:11099"
+            },
+            {
+              "term": "farro",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0592"
+              ],
+              "representative_evidence": "consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'aliments et de pr",
+              "representative_location": "character:11107"
+            },
+            {
+              "term": "épeautre",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0590"
+              ],
+              "representative_evidence": "ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'al",
+              "representative_location": "character:11089"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
         }
       ]
     },
     {
       "id": "REV-0008",
       "restriction_id": "RES-CELIAC",
+      "concept_id": "CMP-TRITICALE",
+      "canonical_concept": "triticale",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 14,
+      "aliases": [
+        {
+          "term": "triticale",
+          "language": "en"
+        },
+        {
+          "term": "triticale",
+          "language": "fr"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 7,
+          "denominations": [
+            {
+              "term": "triticale",
+              "language": "en",
+              "occurrence_count": 7,
+              "candidate_ids": [
+                "CAND-0352",
+                "CAND-0358",
+                "CAND-0403",
+                "CAND-0404",
+                "CAND-0408",
+                "CAND-0430",
+                "CAND-0437"
+              ],
+              "representative_evidence": "ad food labels. Gluten sources need to be declared when a prepackaged food contains gluten protein, modified gluten protein, or gluten protein fractions from barley, rye, wheat or triticale and oats. The Canadian Food and Drug Regulations require gluten sources to be declared by the grain name, such as barley, oats, rye, triticale or wheat. The declaration of the sou",
+              "representative_location": "character:5161"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 7,
+          "denominations": [
+            {
+              "term": "triticale",
+              "language": "fr",
+              "occurrence_count": 7,
+              "candidate_ids": [
+                "CAND-0523",
+                "CAND-0528",
+                "CAND-0570",
+                "CAND-0571",
+                "CAND-0575",
+                "CAND-0598",
+                "CAND-0605"
+              ],
+              "representative_evidence": "on lorsqu’un aliment préemballé contient une protéine de gluten, une protéine de gluten modifiée ou des fractions protéiques issues de l’orge, de l’avoine, du seigle, du blé ou du triticale et de l’avoine. Le Règlement sur les aliments et drogues canadien exige que l’on déclare les sources de gluten en utilisant le nom de la céréale, par exemple orge, avoine, tritica",
+              "representative_location": "character:6447"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0009",
+      "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-WHEAT",
       "canonical_concept": "trigo",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 19,
+      "occurrence_count": 93,
       "aliases": [
+        {
+          "term": "blé",
+          "language": "fr"
+        },
         {
           "term": "trigo",
           "language": "es"
+        },
+        {
+          "term": "wheat",
+          "language": "en"
         }
       ],
       "sources": [
@@ -916,6 +1656,122 @@
               ],
               "representative_evidence": "mente demuestre que remueve el gluten y la aplicación de buenas prácticas de manufactura -que impidan la contaminación cruzada- no contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas.",
               "representative_location": "character:5478"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 37,
+          "denominations": [
+            {
+              "term": "wheat",
+              "language": "en",
+              "occurrence_count": 37,
+              "candidate_ids": [
+                "CAND-0285",
+                "CAND-0291",
+                "CAND-0294",
+                "CAND-0297",
+                "CAND-0299",
+                "CAND-0303",
+                "CAND-0310",
+                "CAND-0311",
+                "CAND-0312",
+                "CAND-0313",
+                "CAND-0314",
+                "CAND-0316",
+                "CAND-0320",
+                "CAND-0322",
+                "CAND-0324",
+                "CAND-0325",
+                "CAND-0330",
+                "CAND-0335",
+                "CAND-0336",
+                "CAND-0338",
+                "CAND-0339",
+                "CAND-0340",
+                "CAND-0351",
+                "CAND-0359",
+                "CAND-0372",
+                "CAND-0381",
+                "CAND-0405",
+                "CAND-0407",
+                "CAND-0410",
+                "CAND-0413",
+                "CAND-0414",
+                "CAND-0415",
+                "CAND-0417",
+                "CAND-0424",
+                "CAND-0425",
+                "CAND-0436",
+                "CAND-0446"
+              ],
+              "representative_evidence": "ust 2020 2020 Cat. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat alle",
+              "representative_location": "character:1104"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 37,
+          "denominations": [
+            {
+              "term": "blé",
+              "language": "fr",
+              "occurrence_count": 37,
+              "candidate_ids": [
+                "CAND-0457",
+                "CAND-0463",
+                "CAND-0466",
+                "CAND-0469",
+                "CAND-0471",
+                "CAND-0476",
+                "CAND-0482",
+                "CAND-0483",
+                "CAND-0484",
+                "CAND-0485",
+                "CAND-0487",
+                "CAND-0491",
+                "CAND-0493",
+                "CAND-0495",
+                "CAND-0496",
+                "CAND-0501",
+                "CAND-0506",
+                "CAND-0507",
+                "CAND-0508",
+                "CAND-0510",
+                "CAND-0511",
+                "CAND-0522",
+                "CAND-0529",
+                "CAND-0542",
+                "CAND-0551",
+                "CAND-0572",
+                "CAND-0574",
+                "CAND-0577",
+                "CAND-0580",
+                "CAND-0581",
+                "CAND-0582",
+                "CAND-0584",
+                "CAND-0585",
+                "CAND-0587",
+                "CAND-0593",
+                "CAND-0604",
+                "CAND-0614"
+              ],
+              "representative_evidence": "« gluten » est couramment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie",
+              "representative_location": "character:1315"
             }
           ],
           "review_status": "approved",

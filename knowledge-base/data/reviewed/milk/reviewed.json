@@ -1,11 +1,17 @@
 {
+  "restriction": {
+    "id": "RES-MILK",
+    "name": "Leche"
+  },
   "grouping": "restriction_id + concept_id + source_id",
   "reviews": [
     {
       "id": "REV-0001",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-AMMONIUM-CASEINATE",
       "canonical_concept": "ammonium caseinate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -36,15 +42,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0002",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-BETA-LACTOGLOBULIN",
       "canonical_concept": "beta-lactoglobulina",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -75,15 +81,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0003",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-CALCIUM-CASEINATE",
       "canonical_concept": "calcium caseinate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -114,15 +120,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0004",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-CASEIN",
       "canonical_concept": "caseína",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 3,
       "aliases": [
         {
@@ -161,7 +167,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "a2953ec41855ba4f4a514e7f1a859723a14c48fafa5e1b3bbce6236b651aa0e6",
+          "source_sha256": "70ad6a84a6e8b432467046abd9bda9801ff23737deb36cc7e5b7ca7a4c2342bf",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -201,15 +207,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0005",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-CASEINATE",
       "canonical_concept": "caseinato",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 2,
       "aliases": [
         {
@@ -266,15 +272,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0006",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-DEMINERALIZED-WHEY",
       "canonical_concept": "demineralized whey",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -305,15 +311,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0007",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-HYDROLYZED-CASEIN",
       "canonical_concept": "hydrolyzed casein",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -344,15 +350,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0008",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTALBUMIN",
       "canonical_concept": "lactoalbúmina",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 2,
       "aliases": [
         {
@@ -409,15 +415,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0009",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTALBUMIN-PHOSPHATE",
       "canonical_concept": "lactalbumin phosphate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -448,15 +454,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0010",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTOFERRIN",
       "canonical_concept": "lactoferrin",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -487,15 +493,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0011",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTOGLOBULIN",
       "canonical_concept": "lactoglobulin",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 2,
       "aliases": [
         {
@@ -552,15 +558,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0012",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-MAGNESIUM-CASEINATE",
       "canonical_concept": "magnesium caseinate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -591,15 +597,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0013",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-MILK",
       "canonical_concept": "leche",
       "concept_type": "food_origin",
+      "match_type": "DIRECT",
       "occurrence_count": 67,
       "aliases": [
         {
@@ -673,7 +679,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "a2953ec41855ba4f4a514e7f1a859723a14c48fafa5e1b3bbce6236b651aa0e6",
+          "source_sha256": "70ad6a84a6e8b432467046abd9bda9801ff23737deb36cc7e5b7ca7a4c2342bf",
           "occurrence_count": 6,
           "denominations": [
             {
@@ -763,15 +769,15 @@
           "reviewed_by": "lucio",
           "review_notes": "Aprobado considerando el contexto completo del documento sobre leche y sus derivados."
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "DIRECT"
+      ]
     },
     {
       "id": "REV-0014",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-POTASSIUM-CASEINATE",
       "canonical_concept": "potassium caseinate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -802,15 +808,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0015",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-RENNET-CASEIN",
       "canonical_concept": "rennet casein",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -841,15 +847,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0016",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-SODIUM-CASEINATE",
       "canonical_concept": "caseinato de sodio",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 3,
       "aliases": [
         {
@@ -888,7 +894,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "a2953ec41855ba4f4a514e7f1a859723a14c48fafa5e1b3bbce6236b651aa0e6",
+          "source_sha256": "70ad6a84a6e8b432467046abd9bda9801ff23737deb36cc7e5b7ca7a4c2342bf",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -928,15 +934,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0017",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-WHEY",
       "canonical_concept": "lactosuero",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 7,
       "aliases": [
         {
@@ -977,7 +983,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "a2953ec41855ba4f4a514e7f1a859723a14c48fafa5e1b3bbce6236b651aa0e6",
+          "source_sha256": "70ad6a84a6e8b432467046abd9bda9801ff23737deb36cc7e5b7ca7a4c2342bf",
           "occurrence_count": 3,
           "denominations": [
             {
@@ -1019,15 +1025,15 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     },
     {
       "id": "REV-0018",
+      "restriction_id": "RES-MILK",
       "concept_id": "CMP-WHEY-PROTEIN-CONCENTRATE",
       "canonical_concept": "whey protein concentrate",
       "concept_type": "ingredient",
+      "match_type": "RELATED",
       "occurrence_count": 1,
       "aliases": [
         {
@@ -1058,13 +1064,7 @@
           "reviewed_by": "lucio",
           "review_notes": null
         }
-      ],
-      "restriction_id": "RES-MILK",
-      "match_type": "RELATED"
+      ]
     }
-  ],
-  "restriction": {
-    "id": "RES-MILK",
-    "name": "Leche"
-  }
+  ]
 }

@@ -47,6 +47,22 @@ Descargar desde el navegador y guardar con el nombre indicado:
    data/manual/anmat-bpm-alg.pdf
    ```
 
+6. [Gluten — Health Canada, versión inglesa](https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html)
+
+   Guardar la página como HTML:
+
+   ```text
+   data/manual/health-canada-gluten-en.html
+   ```
+
+7. [Gluten — Santé Canada, versión francesa](https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html)
+
+   Guardar la página como HTML:
+
+   ```text
+   data/manual/health-canada-gluten-fr.html
+   ```
+
 La definición completa se encuentra en `config/sources.json`. La fuente de FDA se descarga automáticamente.
 
 ## 2. Preparar las fuentes
@@ -179,7 +195,7 @@ Para construir una versión parcial, indicar solamente los archivos que deban in
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.7.0
+  --version 0.8.0
 ```
 
 ## 9. Validar SQLite

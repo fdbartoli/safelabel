@@ -7,7 +7,9 @@
   "source_ids": [
     "SRC-ANMAT-ALERGENOS",
     "SRC-ARG-CAA-1383",
-    "SRC-ANMAT-BPM-ALG"
+    "SRC-ANMAT-BPM-ALG",
+    "SRC-HC-GLUTEN-EN",
+    "SRC-HC-GLUTEN-FR"
   ],
   "relations": [
     {"concept_id": "CMP-GLUTEN", "match_type": "DIRECT"},

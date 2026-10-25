@@ -214,7 +214,9 @@
     "canonical_name": "gluten",
     "type": "ingredient",
     "aliases": [
-      {"term": "gluten", "language": "es"}
+      {"term": "gluten", "language": "es"},
+      {"term": "gluten", "language": "en"},
+      {"term": "gluten", "language": "fr"}
     ]
   },
   {
@@ -222,7 +224,9 @@
     "canonical_name": "trigo",
     "type": "food_origin",
     "aliases": [
-      {"term": "trigo", "language": "es"}
+      {"term": "trigo", "language": "es"},
+      {"term": "wheat", "language": "en"},
+      {"term": "blé", "language": "fr"}
     ]
   },
   {
@@ -230,7 +234,9 @@
     "canonical_name": "avena",
     "type": "food_origin",
     "aliases": [
-      {"term": "avena", "language": "es"}
+      {"term": "avena", "language": "es"},
+      {"term": "oats", "language": "en"},
+      {"term": "avoine", "language": "fr"}
     ]
   },
   {
@@ -238,7 +244,9 @@
     "canonical_name": "cebada",
     "type": "food_origin",
     "aliases": [
-      {"term": "cebada", "language": "es"}
+      {"term": "cebada", "language": "es"},
+      {"term": "barley", "language": "en"},
+      {"term": "orge", "language": "fr"}
     ]
   },
   {
@@ -246,7 +254,9 @@
     "canonical_name": "centeno",
     "type": "food_origin",
     "aliases": [
-      {"term": "centeno", "language": "es"}
+      {"term": "centeno", "language": "es"},
+      {"term": "rye", "language": "en"},
+      {"term": "seigle", "language": "fr"}
     ]
   },
   {
@@ -255,7 +265,13 @@
     "type": "food_origin",
     "aliases": [
       {"term": "espelta", "language": "es"},
-      {"term": "escaña común", "language": "es"}
+      {"term": "escaña común", "language": "es"},
+      {"term": "spelt", "language": "en"},
+      {"term": "dinkel", "language": "en"},
+      {"term": "farro", "language": "en"},
+      {"term": "épeautre", "language": "fr"},
+      {"term": "dinkel", "language": "fr"},
+      {"term": "farro", "language": "fr"}
     ]
   },
   {
@@ -263,7 +279,9 @@
     "canonical_name": "kamut",
     "type": "food_origin",
     "aliases": [
-      {"term": "kamut", "language": "es"}
+      {"term": "kamut", "language": "es"},
+      {"term": "kamut", "language": "en"},
+      {"term": "kamut", "language": "fr"}
     ]
   },
   {
@@ -271,7 +289,10 @@
     "canonical_name": "trigo duro",
     "type": "food_origin",
     "aliases": [
-      {"term": "trigo duro", "language": "es"}
+      {"term": "trigo duro", "language": "es"},
+      {"term": "durum", "language": "en"},
+      {"term": "durum wheat", "language": "en"},
+      {"term": "blé dur", "language": "fr"}
     ]
   },
   {
@@ -279,7 +300,9 @@
     "canonical_name": "triticale",
     "type": "food_origin",
     "aliases": [
-      {"term": "triticale", "language": "es"}
+      {"term": "triticale", "language": "es"},
+      {"term": "triticale", "language": "en"},
+      {"term": "triticale", "language": "fr"}
     ]
   }
 ]
