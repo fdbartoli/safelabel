@@ -26,10 +26,15 @@ const largoMaximoNombre = 60;
 /// Reglas comunes a todas las implementaciones. Devuelve el perfil con el
 /// nombre recortado; lanza [ErrorValidacionPerfil] si algo no cumple.
 ///
+/// [gruposValidos] son los ids de grupo de la base de conocimiento
+/// (`BaseConocimiento.grupos.keys`). Una restricción con un id que no está ahí
+/// no cruza con nada en el análisis, y lo haría en silencio: "lactosa" en vez
+/// de "leche" dejaría al perfil sin protección.
+///
 /// Vive fuera de las implementaciones a propósito: si cada una validara por su
 /// cuenta, la de memoria (la que usan los tests) podría aceptar algo que la de
 /// SQLite (la de la app) rechaza, o al revés.
-Perfil validarPerfil(Perfil perfil) {
+Perfil validarPerfil(Perfil perfil, Set<String> gruposValidos) {
   final nombre = perfil.nombre.trim();
   if (nombre.isEmpty) {
     throw const ErrorValidacionPerfil('El perfil necesita un nombre.');
@@ -43,6 +48,11 @@ Perfil validarPerfil(Perfil perfil) {
   }
   final vistos = <String>{};
   for (final r in perfil.restricciones) {
+    if (!gruposValidos.contains(r.grupoAlergenoId)) {
+      throw ErrorValidacionPerfil(
+        'El grupo "${r.grupoAlergenoId}" no existe en la base de conocimiento.',
+      );
+    }
     if (!vistos.add(r.grupoAlergenoId)) {
       throw ErrorValidacionPerfil(
         'El grupo "${r.grupoAlergenoId}" está repetido en el perfil.',
@@ -83,6 +93,11 @@ abstract class RepositorioPerfiles {
 /// Implementación en memoria: sin I/O, para tests. No sobrevive al cierre de
 /// la app.
 class RepositorioPerfilesMemoria implements RepositorioPerfiles {
+  RepositorioPerfilesMemoria({required this.gruposValidos});
+
+  /// Ver [validarPerfil].
+  final Set<String> gruposValidos;
+
   // Map literal = LinkedHashMap: conserva el orden de inserción.
   final _perfiles = <String, Perfil>{};
   final _activos = <String>{};
@@ -95,7 +110,7 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
   @override
   Future<Perfil> crear(Perfil perfil) async {
     _exigirSinId(perfil);
-    final valido = validarPerfil(perfil);
+    final valido = validarPerfil(perfil, gruposValidos);
     final guardado = _congelar(valido.copiarCon(id: '${++_ultimoId}'));
     _perfiles[guardado.id] = guardado;
     return guardado;
@@ -103,7 +118,7 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
 
   @override
   Future<Perfil> actualizar(Perfil perfil) async {
-    final valido = validarPerfil(perfil);
+    final valido = validarPerfil(perfil, gruposValidos);
     _exigirExistente(perfil.id);
     final guardado = _congelar(valido);
     _perfiles[guardado.id] = guardado;
@@ -144,9 +159,12 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
 ///
 /// No cierra la base: la abre y la cierra quien la creó.
 class RepositorioPerfilesSqlite implements RepositorioPerfiles {
-  RepositorioPerfilesSqlite(this._db);
+  RepositorioPerfilesSqlite(this._db, {required this.gruposValidos});
 
   final Database _db;
+
+  /// Ver [validarPerfil].
+  final Set<String> gruposValidos;
 
   @override
   Future<List<Perfil>> obtenerTodos() => _leerPerfiles(soloActivos: false);
@@ -154,7 +172,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
   @override
   Future<Perfil> crear(Perfil perfil) async {
     _exigirSinId(perfil);
-    final valido = validarPerfil(perfil);
+    final valido = validarPerfil(perfil, gruposValidos);
     return _db.transaction((txn) async {
       final id = await txn.insert('perfil', {'nombre': valido.nombre});
       await _insertarRestricciones(txn, id, valido.restricciones);
@@ -167,7 +185,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
 
   @override
   Future<Perfil> actualizar(Perfil perfil) async {
-    final valido = validarPerfil(perfil);
+    final valido = validarPerfil(perfil, gruposValidos);
     final id = _idNumerico(perfil.id);
     return _db.transaction((txn) async {
       final filas = await txn.update(
