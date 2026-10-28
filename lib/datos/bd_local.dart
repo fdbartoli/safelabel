@@ -18,9 +18,15 @@ class BdLocal {
   /// [fabrica] y [ruta] existen para los tests: ahí se pasa la fábrica de
   /// `sqflite_common_ffi` y una ruta en memoria o temporal, así corren sin
   /// dispositivo. En la app se usan los valores por defecto de sqflite.
+  ///
+  /// [alCrear] se llama solo si la base se creó en esta apertura (la primera
+  /// vez en la vida de la app). Sirve para sembrar datos iniciales: no alcanza
+  /// con "si no hay perfiles", porque alguien puede haberlos borrado todos a
+  /// propósito y no querría verlos reaparecer.
   static Future<Database> abrir({
     DatabaseFactory? fabrica,
     String? ruta,
+    void Function()? alCrear,
   }) async {
     final f = fabrica ?? databaseFactory;
     final destino = ruta ?? p.join(await f.getDatabasesPath(), nombreArchivo);
@@ -29,7 +35,10 @@ class BdLocal {
       options: OpenDatabaseOptions(
         version: version,
         onConfigure: _configurar,
-        onCreate: _crear,
+        onCreate: (db, version) async {
+          await _crear(db, version);
+          alCrear?.call();
+        },
       ),
     );
   }

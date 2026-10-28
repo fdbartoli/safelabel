@@ -1,27 +1,84 @@
 import 'package:flutter/material.dart';
 
 import '../datos/base_conocimiento.dart';
+import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
 import 'aviso_informativo.dart';
+import 'editor_perfil.dart';
 import 'pantalla_analisis_texto.dart';
 import 'pantalla_captura.dart';
-import 'perfiles_demo.dart';
+import 'pantalla_perfiles.dart';
 
 class PantallaInicio extends StatefulWidget {
-  const PantallaInicio({super.key, required this.base});
+  const PantallaInicio({
+    super.key,
+    required this.base,
+    required this.repositorio,
+  });
 
   final BaseConocimiento base;
+  final RepositorioPerfiles repositorio;
 
   @override
   State<PantallaInicio> createState() => _PantallaInicioState();
 }
 
 class _PantallaInicioState extends State<PantallaInicio> {
-  final Set<Perfil> _activos = {perfilesDemo.first};
+  List<Perfil> _todos = const [];
+
+  /// La selección se guarda por id, no por identidad de objeto: cada lectura
+  /// del repositorio devuelve objetos nuevos, y un `Set<Perfil>` dejaría de
+  /// reconocerlos después de recargar.
+  Set<String> _idsActivos = {};
+  bool _cargando = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _cargar();
+  }
+
+  Future<void> _cargar() async {
+    final todos = await widget.repositorio.obtenerTodos();
+    final activos = await widget.repositorio.obtenerActivos();
+    if (!mounted) return;
+    setState(() {
+      _todos = todos;
+      _idsActivos = {for (final p in activos) p.id};
+      _cargando = false;
+    });
+  }
+
+  Future<void> _alternar(Perfil p) async {
+    setState(() {
+      if (!_idsActivos.remove(p.id)) _idsActivos.add(p.id);
+    });
+    try {
+      await widget.repositorio.marcarActivos(Set.of(_idsActivos));
+    } on PerfilNoEncontrado {
+      // El perfil se borró en otra pantalla: se recarga lo que hay de verdad.
+      await _cargar();
+    }
+  }
+
+  Future<void> _administrarPerfiles() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PantallaPerfiles(
+          repositorio: widget.repositorio,
+          base: widget.base,
+        ),
+      ),
+    );
+    await _cargar();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final perfiles = _activos.toList();
+    final perfiles = [
+      for (final p in _todos)
+        if (_idsActivos.contains(p.id)) p,
+    ];
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('SafeLabel')),
@@ -30,18 +87,40 @@ class _PantallaInicioState extends State<PantallaInicio> {
         children: [
           const AvisoInformativo(),
           const SizedBox(height: 20),
-          Text(
-            'Perfiles activos',
-            style: Theme.of(context).textTheme.titleMedium,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Perfiles activos',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              TextButton.icon(
+                onPressed: _administrarPerfiles,
+                icon: const Icon(Icons.manage_accounts_outlined),
+                label: const Text('Administrar'),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
           Text(
             'El análisis se cruza con estos perfiles.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 10),
-          ...perfilesDemo.map((p) {
-            final activo = _activos.contains(p);
+          if (_cargando)
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (_todos.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'No hay perfiles guardados. Tocá "Administrar" para crear uno.',
+              ),
+            ),
+          ..._todos.map((p) {
+            final activo = _idsActivos.contains(p.id);
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Material(
@@ -51,13 +130,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
-                  onTap: () => setState(() {
-                    if (activo) {
-                      _activos.remove(p);
-                    } else {
-                      _activos.add(p);
-                    }
-                  }),
+                  onTap: () => _alternar(p),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -83,7 +156,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                _descripcionRestricciones(p),
+                                describirRestricciones(p, widget.base),
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
@@ -126,7 +199,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
             icon: const Icon(Icons.text_fields_outlined),
             label: const Text('Analizar texto pegado (sin cámara)'),
           ),
-          if (perfiles.isEmpty)
+          if (perfiles.isEmpty && !_cargando)
             const Padding(
               padding: EdgeInsets.only(top: 12),
               child: Text('Elegí al menos un perfil para empezar.'),
@@ -157,11 +230,5 @@ class _PantallaInicioState extends State<PantallaInicio> {
         ],
       ),
     );
-  }
-
-  String _descripcionRestricciones(Perfil p) {
-    return p.restricciones
-        .map((r) => '${r.grupoAlergenoId} (${r.severidad.name})')
-        .join(' · ');
   }
 }
