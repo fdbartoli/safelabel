@@ -30,13 +30,34 @@ class RestriccionPerfil {
   final Severidad severidad;
 }
 
-/// Un perfil alimentario activo. En la Etapa 1 se arma en memoria; la
-/// persistencia y la compartición llegan en la Etapa 3.
+/// Un perfil alimentario. Se persiste en el SQLite del dispositivo a través de
+/// `RepositorioPerfiles` (Etapa 3); sin cuentas ni servidor.
 class Perfil {
-  const Perfil({required this.nombre, required this.restricciones});
+  const Perfil({
+    this.id = '',
+    required this.nombre,
+    required this.restricciones,
+  });
+
+  /// Identificador que asigna el repositorio al guardar. Vacío mientras el
+  /// perfil no fue guardado (los perfiles armados en memoria, como en los
+  /// tests del análisis, no lo necesitan).
+  final String id;
 
   final String nombre;
   final List<RestriccionPerfil> restricciones;
+
+  Perfil copiarCon({
+    String? id,
+    String? nombre,
+    List<RestriccionPerfil>? restricciones,
+  }) {
+    return Perfil(
+      id: id ?? this.id,
+      nombre: nombre ?? this.nombre,
+      restricciones: restricciones ?? this.restricciones,
+    );
+  }
 
   Severidad? severidadPara(String grupoAlergenoId) {
     for (final r in restricciones) {
