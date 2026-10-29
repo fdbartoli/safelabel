@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'datos/base_conocimiento.dart';
 import 'datos/bd_local.dart';
+import 'datos/fabrica_bd.dart';
 import 'datos/perfiles_iniciales.dart';
 import 'datos/repositorio_perfiles.dart';
 import 'ui/pantalla_inicio.dart';
@@ -21,7 +22,10 @@ class _Arranque {
 Future<_Arranque> _arrancar() async {
   final base = await BaseConocimiento.cargarDesdeAssets();
   var recienCreada = false;
-  final bd = await BdLocal.abrir(alCrear: () => recienCreada = true);
+  final bd = await BdLocal.abrir(
+    fabrica: fabricaBdPlataforma(),
+    alCrear: () => recienCreada = true,
+  );
   final repositorio = RepositorioPerfilesSqlite(
     bd,
     gruposValidos: base.grupos.keys.toSet(),
