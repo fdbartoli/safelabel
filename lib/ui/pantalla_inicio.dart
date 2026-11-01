@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../cuenta/servicio_cuenta.dart';
 import '../datos/base_conocimiento.dart';
 import '../modelo/perfil.dart';
 import 'aviso_informativo.dart';
 import 'pantalla_analisis_texto.dart';
 import 'pantalla_captura.dart';
+import 'pantalla_mi_cuenta.dart';
 import 'perfiles_demo.dart';
 
 class PantallaInicio extends StatefulWidget {
-  const PantallaInicio({super.key, required this.base});
+  const PantallaInicio({super.key, required this.base, this.servicioCuenta});
 
   final BaseConocimiento base;
+
+  /// Si está, la barra superior muestra el acceso a "Mi cuenta" (HU03 a HU05).
+  final ServicioCuenta? servicioCuenta;
 
   @override
   State<PantallaInicio> createState() => _PantallaInicioState();
@@ -24,7 +29,21 @@ class _PantallaInicioState extends State<PantallaInicio> {
     final perfiles = _activos.toList();
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('SafeLabel')),
+      appBar: AppBar(
+        title: const Text('SafeLabel'),
+        actions: [
+          if (widget.servicioCuenta case final servicio?)
+            IconButton(
+              tooltip: 'Mi cuenta',
+              icon: const Icon(Icons.account_circle_outlined),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => PantallaMiCuenta(servicio: servicio),
+                ),
+              ),
+            ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [
