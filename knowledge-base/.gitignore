@@ -1,0 +1,29 @@
+# Fuentes incorporadas manualmente
+data/manual/*
+!data/manual/.gitkeep
+
+# Fuentes preparadas y manifiesto
+data/raw/*
+!data/raw/.gitkeep
+
+# Resultados de extracción
+data/candidates/**/*.json
+
+# Resultados regenerables
+data/reviewed/*/review.json
+data/knowledge/*.json
+!data/knowledge/.gitkeep
+
+# Base SQLite generada
+data/output/*
+!data/output/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Archivos temporales
+*.tmp
+*.bak

@@ -1,0 +1,16 @@
+{
+  "id": "RES-MILK",
+  "name": "Leche",
+  "display_name": "Leche y derivados",
+  "jurisdiction": "AR",
+  "target_concept_id": "CMP-MILK",
+  "source_ids": [
+    "SRC-FIXTURE-001"
+  ],
+  "relations": [
+    {"concept_id": "CMP-MILK", "match_type": "DIRECT"},
+    {"concept_id": "CMP-CASEIN", "match_type": "RELATED"},
+    {"concept_id": "CMP-SODIUM-CASEINATE", "match_type": "RELATED"},
+    {"concept_id": "CMP-WHEY", "match_type": "RELATED"}
+  ]
+}
