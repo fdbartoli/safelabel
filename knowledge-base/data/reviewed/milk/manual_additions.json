@@ -1,0 +1,32 @@
+{
+  "additions": [
+    {
+      "concept_id": "CMP-DELACTOSED-WHEY",
+      "aliases": [
+        {"term": "delactosed whey", "language": "en"}
+      ],
+      "restriction_id": "RES-MILK",
+      "match_type": "RELATED",
+      "evidence": [
+        {
+          "source_id": "SRC-HC-MILK",
+          "source_title": "Milk a priority food allergen",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
+          "source_sha256": "96029500f78d074223284999318e23960696343a7e4aa227e69b58a7a3c3213a",
+          "reviewed_by": "lucio",
+          "review_notes": "Incorporación manual porque la enumeración 'Delactosed or demineralized whey' no fue reconocida como frase exacta por el extractor.",
+          "denominations": [
+            {
+              "term": "delactosed whey",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [],
+              "representative_evidence": "Delactosed or demineralized whey",
+              "representative_location": "incorporación manual"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

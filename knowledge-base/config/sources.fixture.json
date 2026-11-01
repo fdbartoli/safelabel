@@ -1,0 +1,18 @@
+[
+  {
+    "id": "SRC-FIXTURE-001",
+    "organization": "SafeLabel",
+    "title": "Fuente de prueba local",
+    "url": "fixtures/milk_source.txt",
+    "language": "es-AR",
+    "format": "txt"
+  },
+  {
+    "id": "SRC-FIXTURE-CELIAC",
+    "organization": "SafeLabel",
+    "title": "Fuente de prueba local para celiaquía",
+    "url": "fixtures/celiac_source.txt",
+    "language": "es-AR",
+    "format": "txt"
+  }
+]

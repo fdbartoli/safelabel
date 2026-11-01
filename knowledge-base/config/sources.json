@@ -1,0 +1,74 @@
+[
+  {
+    "id": "SRC-ANMAT-ALERGENOS",
+    "organization": "ANMAT",
+    "title": "Directrices para el rotulado de alérgenos",
+    "url": "data/manual/anmat-alergenos.pdf",
+    "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+    "language": "es-AR",
+    "format": "pdf"
+  },
+{
+  "id": "SRC-ANMAT-GESTION-ALERGENOS",
+  "organization": "ANMAT",
+  "title": "Guía para la Gestión de Alérgenos en la Industria",
+  "url": "data/manual/anmat-gestion-alergenos.pdf",
+  "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+  "language": "es-AR",
+  "format": "pdf"
+},
+{
+  "id": "SRC-FDA-LABEL",
+  "organization": "FDA",
+  "title": "Have Food Allergies Read the Label",
+  "url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+  "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+  "language": "en-US",
+  "format": "html"
+},
+{
+  "id": "SRC-HC-MILK",
+  "organization": "Health Canada",
+  "title": "Milk a priority food allergen",
+  "url": "data/manual/health-canada-milk.html",
+  "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
+  "language": "en-CA",
+  "format": "html"
+},
+{
+  "id": "SRC-ARG-CAA-1383",
+  "organization": "Argentina.gob.ar",
+  "title": "Código Alimentario Argentino - Artículo 1383 actualizado",
+  "url": "data/manual/arg-caa-1383.html",
+  "source_url": "https://www.argentina.gob.ar/normativa/nacional/norma-394181/texto",
+  "language": "es-AR",
+  "format": "html"
+},
+{
+  "id": "SRC-ANMAT-BPM-ALG",
+  "organization": "ANMAT",
+  "title": "Guía de Buenas Prácticas de Manufactura para Establecimientos Elaboradores de Alimentos Libres de Gluten",
+  "url": "data/manual/anmat-bpm-alg.pdf",
+  "source_url": "https://www.anmat.gob.ar/Alimentos/Guia_BPM_ALG_formato_Web.pdf",
+  "language": "es-AR",
+  "format": "pdf"
+},
+{
+  "id": "SRC-HC-GLUTEN-EN",
+  "organization": "Health Canada",
+  "title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+  "url": "data/manual/health-canada-gluten-en.html",
+  "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+  "language": "en-CA",
+  "format": "html"
+},
+{
+  "id": "SRC-HC-GLUTEN-FR",
+  "organization": "Health Canada",
+  "title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+  "url": "data/manual/health-canada-gluten-fr.html",
+  "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+  "language": "fr-CA",
+  "format": "html"
+}
+]
