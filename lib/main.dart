@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'cuenta/servicio_cuenta.dart';
 import 'datos/almacen_local.dart';
 import 'datos/base_conocimiento.dart';
+import 'datos/bd_local.dart';
+import 'datos/fabrica_bd.dart';
+import 'datos/perfiles_iniciales.dart';
+import 'datos/repositorio_perfiles.dart';
 import 'datos/repositorio_usuarios.dart';
 import 'ui/pantalla_inicio.dart';
 import 'ui/puerta_de_sesion.dart';
@@ -14,6 +18,28 @@ Future<void> main() async {
   final almacen = await AlmacenLocal.abrir();
   final servicioCuenta = ServicioCuenta(RepositorioUsuarios(almacen));
   runApp(SafeLabelApp(servicioCuenta: servicioCuenta));
+}
+
+/// Lo que la app necesita cargado antes de mostrar la pantalla de inicio.
+class _Arranque {
+  const _Arranque(this.base, this.repositorio);
+  final BaseConocimiento base;
+  final RepositorioPerfiles repositorio;
+}
+
+Future<_Arranque> _arrancar() async {
+  final base = await BaseConocimiento.cargarDesdeAssets();
+  var recienCreada = false;
+  final bd = await BdLocal.abrir(
+    fabrica: fabricaBdPlataforma(),
+    alCrear: () => recienCreada = true,
+  );
+  final repositorio = RepositorioPerfilesSqlite(
+    bd,
+    gruposValidos: base.grupos.keys.toSet(),
+  );
+  if (recienCreada) await sembrarPerfilesIniciales(repositorio);
+  return _Arranque(base, repositorio);
 }
 
 class SafeLabelApp extends StatelessWidget {
@@ -39,7 +65,7 @@ class SafeLabelApp extends StatelessWidget {
   }
 }
 
-/// Carga la base de conocimiento local y abre la pantalla de inicio.
+/// Carga la base de conocimiento y los perfiles, y abre la pantalla de inicio.
 class _CargaDeBase extends StatefulWidget {
   const _CargaDeBase({required this.servicioCuenta});
 
@@ -50,13 +76,14 @@ class _CargaDeBase extends StatefulWidget {
 }
 
 class _CargaDeBaseState extends State<_CargaDeBase> {
-  late final Future<BaseConocimiento> _base =
-      BaseConocimiento.cargarDesdeAssets();
+  // En el State y no en build(): cada reconstrucción volvería a cargar la base
+  // y a abrir SQLite.
+  late final Future<_Arranque> _arranque = _arrancar();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<BaseConocimiento>(
-      future: _base,
+    return FutureBuilder<_Arranque>(
+      future: _arranque,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Scaffold(
@@ -75,8 +102,10 @@ class _CargaDeBaseState extends State<_CargaDeBase> {
             body: Center(child: CircularProgressIndicator()),
           );
         }
+        final arranque = snapshot.data!;
         return PantallaInicio(
-          base: snapshot.data!,
+          base: arranque.base,
+          repositorio: arranque.repositorio,
           servicioCuenta: widget.servicioCuenta,
         );
       },
