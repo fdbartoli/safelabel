@@ -38,3 +38,50 @@ jobs:
 
       - name: Tests (flutter test)
         run: flutter test
+
+  compilacion-android:
+    name: Compilación Android (APK debug)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # android/app/build.gradle.kts compila con Java 17.
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.7
+          cache: true
+
+      - name: Dependencias (pub get)
+        run: flutter pub get
+
+      # Sin GEMINI_API_KEY: las sugerencias quedan sin configurar, que alcanza
+      # para comprobar que la app compila.
+      - name: Compilar APK (flutter build apk --debug)
+        run: flutter build apk --debug
+
+  base-conocimiento:
+    name: Base de conocimiento (smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Los scripts usan solo la biblioteca estándar; el smoke test corre con
+      # los fixtures .txt, sin red ni pdftotext.
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Smoke test (knowledge-base/tests/run_smoke.sh)
+        run: bash knowledge-base/tests/run_smoke.sh
