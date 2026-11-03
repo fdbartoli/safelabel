@@ -21,13 +21,16 @@ class ServicioOcrMlKit implements ServicioOcr {
 
     final lineas = <LineaOcr>[];
     var indice = 0;
-    for (final bloque in resultado.blocks) {
-      for (final linea in bloque.lines) {
+    for (var b = 0; b < resultado.blocks.length; b++) {
+      for (final linea in resultado.blocks[b].lines) {
+        final confianza = _confianzaDe(linea);
         lineas.add(
           LineaOcr(
             texto: linea.text,
-            confianza: _confianzaDe(linea),
+            confianza: confianza ?? 1.0,
+            confianzaInformada: confianza != null,
             indice: indice++,
+            bloque: b,
           ),
         );
       }
@@ -35,7 +38,8 @@ class ServicioOcrMlKit implements ServicioOcr {
     return LecturaOcr(lineas);
   }
 
-  double _confianzaDe(TextLine linea) {
+  /// `null` si el motor no informó ninguna confianza para la línea.
+  double? _confianzaDe(TextLine linea) {
     final propia = linea.confidence;
     if (propia != null) return propia.clamp(0.0, 1.0);
 
@@ -44,7 +48,7 @@ class ServicioOcrMlKit implements ServicioOcr {
       for (final e in linea.elements)
         if (e.confidence != null) e.confidence!.clamp(0.0, 1.0),
     ];
-    if (valores.isEmpty) return 1.0;
+    if (valores.isEmpty) return null;
     return valores.reduce((a, b) => a + b) / valores.length;
   }
 

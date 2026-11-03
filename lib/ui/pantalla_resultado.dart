@@ -6,6 +6,7 @@ import '../modelo/resultado_analisis.dart';
 import '../ocr/guia_captura.dart';
 import '../sugerencias/gestor_reemplazos.dart';
 import 'aviso_informativo.dart';
+import 'pantalla_diagnostico.dart';
 import 'seccion_reemplazos.dart';
 import 'tema.dart';
 
@@ -43,7 +44,22 @@ class PantallaResultado extends StatelessWidget {
 
   Widget _construirScaffold(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Hallazgos')),
+      appBar: AppBar(
+        title: const Text('Hallazgos'),
+        actions: [
+          if (resultado.diagnostico != null)
+            TextButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      PantallaDiagnostico(diagnostico: resultado.diagnostico!),
+                ),
+              ),
+              icon: const Icon(Icons.text_snippet_outlined),
+              label: const Text('Ver texto leído'),
+            ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [

@@ -8,6 +8,8 @@ class LineaOcr {
     required this.texto,
     required this.confianza,
     this.indice = 0,
+    this.bloque = 0,
+    this.confianzaInformada = true,
   });
 
   final String texto;
@@ -17,6 +19,15 @@ class LineaOcr {
 
   /// Posición de la línea dentro de la captura (para señalar cuál falló).
   final int indice;
+
+  /// Bloque de texto del OCR al que pertenece la línea. Sirve para ver si el
+  /// motor partió la lista de ingredientes en columnas o pedazos.
+  final int bloque;
+
+  /// `false` si el motor no informó confianza y se asumió alta (pasa casi
+  /// siempre con ML Kit en Android). En ese caso el triage no puede marcar
+  /// la línea como no legible.
+  final bool confianzaInformada;
 
   @override
   String toString() =>

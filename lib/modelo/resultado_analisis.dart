@@ -1,4 +1,5 @@
 import '../pipeline/verificacion_cruzada.dart';
+import 'diagnostico_ocr.dart';
 import 'ingrediente.dart';
 import 'perfil.dart';
 
@@ -150,7 +151,12 @@ class ResultadoAnalisis {
     required this.itemsAnalizados,
     required this.severidadMaxima,
     this.ingredientesLeidos = const [],
+    this.diagnostico,
   });
+
+  /// Texto del OCR y cómo lo procesó el pipeline, para el panel "Ver texto
+  /// leído". `null` si el resultado no vino de un análisis.
+  final DiagnosticoOcr? diagnostico;
 
   /// Todos los ingredientes leídos, normalizados y en orden. Es el texto que
   /// se manda al LLM para las sugerencias de reemplazo (sección 5.6).

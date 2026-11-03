@@ -1,4 +1,5 @@
 import '../datos/base_conocimiento.dart';
+import '../modelo/diagnostico_ocr.dart';
 import '../modelo/ingrediente.dart';
 import '../modelo/perfil.dart';
 import '../modelo/resultado_analisis.dart';
@@ -203,7 +204,46 @@ class Analizador {
       itemsAnalizados: itemsAnalizados < 0 ? 0 : itemsAnalizados,
       severidadMaxima: severidadMaxima,
       ingredientesLeidos: [for (final i in items) i.textoNormalizado],
+      diagnostico: DiagnosticoOcr(
+        lineas: lectura.lineas,
+        umbralConfianza: triage.umbral,
+        items: [for (final m in matches) _diagnosticar(m)],
+        lineasContiene: declaracion.lineasContiene,
+        lineasPuedeContener: declaracion.lineasPuedeContener,
+        versionBase: base.version,
+      ),
     );
+  }
+
+  ItemDiagnostico _diagnosticar(ResultadoMatch m) {
+    switch (m) {
+      case Coincidencia():
+        final grupoId = m.ingrediente.grupoAlergenoId;
+        return ItemDiagnostico(
+          textoOriginal: m.item.textoOriginal,
+          textoNormalizado: m.item.textoNormalizado,
+          padre: m.item.padre,
+          ins: m.item.ins,
+          estado: m.exacta ? EstadoItem.exacto : EstadoItem.difuso,
+          terminoBase: m.terminoBase,
+          grupoAlergeno: grupoId == null
+              ? null
+              : (base.grupo(grupoId)?.nombre ?? grupoId),
+          similitud: m.exacta ? null : m.similitud,
+        );
+      case SinCoincidencia():
+        return ItemDiagnostico(
+          textoOriginal: m.item.textoOriginal,
+          textoNormalizado: m.item.textoNormalizado,
+          padre: m.item.padre,
+          ins: m.item.ins,
+          estado: m.probableErrorOcr
+              ? EstadoItem.desconocidoParecido
+              : EstadoItem.desconocido,
+          terminoBase: m.candidato,
+          similitud: m.probableErrorOcr ? m.mejorSimilitud : null,
+        );
+    }
   }
 
   Severidad? _severidadMaxima(List<Perfil> perfiles) {
