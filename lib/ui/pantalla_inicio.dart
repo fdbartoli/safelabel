@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../cuenta/servicio_cuenta.dart';
 import '../datos/base_conocimiento.dart';
+import '../datos/repositorio_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
 import 'aviso_informativo.dart';
 import 'editor_perfil.dart';
 import 'pantalla_analisis_texto.dart';
 import 'pantalla_captura.dart';
+import 'pantalla_consulta_conocimiento.dart';
 import 'pantalla_mi_cuenta.dart';
 import 'pantalla_perfiles.dart';
 
@@ -16,11 +18,13 @@ class PantallaInicio extends StatefulWidget {
     super.key,
     required this.base,
     required this.repositorio,
+    required this.conocimiento,
     this.servicioCuenta,
   });
 
   final BaseConocimiento base;
   final RepositorioPerfiles repositorio;
+  final RepositorioConocimiento conocimiento;
 
   /// Si está, la barra superior muestra el acceso a "Mi cuenta" (HU03 a HU05).
   final ServicioCuenta? servicioCuenta;
@@ -218,6 +222,18 @@ class _PantallaInicioState extends State<PantallaInicio> {
                   ),
             icon: const Icon(Icons.text_fields_outlined),
             label: const Text('Analizar texto pegado (sin cámara)'),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => PantallaConsultaConocimiento(
+                  repositorio: widget.conocimiento,
+                ),
+              ),
+            ),
+            icon: const Icon(Icons.manage_search_outlined),
+            label: const Text('Consultar ingrediente'),
           ),
           if (perfiles.isEmpty && !_cargando)
             const Padding(
