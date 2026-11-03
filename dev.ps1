@@ -17,20 +17,31 @@
 
 $ErrorActionPreference = 'Stop'
 
-$JdkDir     = 'C:\Program Files\Java\jdk-21.0.11'
-$FlutterBin = 'C:\dev\flutter\bin'
+# Rutas: Flutter desde PATH o configurable
+$FlutterBin = ''
+if (Get-Command flutter -ErrorAction SilentlyContinue) {
+    $FlutterBin = (Get-Command flutter).CommandPath
+    $FlutterBin = Split-Path $FlutterBin -Parent
+}
+if (-not $FlutterBin) {
+    $FlutterBin = $env:FLUTTER_PATH
+}
+if (-not $FlutterBin) {
+    $FlutterBin = 'C:\dev\flutter\bin'
+}
+
 $SdkDir     = Join-Path $env:LOCALAPPDATA 'Android\Sdk'
 
-$env:JAVA_HOME        = $JdkDir
+# JAVA_HOME: solo si ya está configurado en el entorno (para compilaciones Android)
+if ($env:JAVA_HOME) {
+    $env:JAVA_HOME = $env:JAVA_HOME
+}
 $env:ANDROID_HOME     = $SdkDir
 $env:ANDROID_SDK_ROOT = $SdkDir
 $env:Path             = "$FlutterBin;$SdkDir\platform-tools;$env:Path"
 
 if (-not (Test-Path (Join-Path $FlutterBin 'flutter.bat'))) {
     throw "No encuentro flutter en $FlutterBin"
-}
-if (-not (Test-Path (Join-Path $JdkDir 'bin\java.exe'))) {
-    throw "No encuentro el JDK en $JdkDir"
 }
 
 if ($args.Count -ge 1 -and $args[0] -eq 'licenses') {
@@ -44,6 +55,18 @@ if ($args.Count -ge 1 -and $args[0] -eq 'licenses') {
 # Sustitutos por IA (CLAUDE.md, seccion 5.6): la clave de Gemini se toma de la
 # variable de entorno GEMINI_API_KEY y se inyecta en la compilacion. Nunca se
 # escribe en el repositorio. GEMINI_MODEL es opcional.
+# Intento cargar desde gemini.env si la variable no está seteada.
+if (-not $env:GEMINI_API_KEY -and (Test-Path 'gemini.env')) {
+    $env:GEMINI_API_KEY = ''
+    foreach ($line in (Get-Content 'gemini.env')) {
+        $trimmed = $line.Trim()
+        if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) { continue }
+        if ($trimmed -match 'GEMINI_API_KEY=(.*)') {
+            $env:GEMINI_API_KEY = $Matches[1].Trim()
+            break
+        }
+    }
+}
 $flutterArgs = @($args)
 if ($flutterArgs.Count -ge 1 -and ($flutterArgs[0] -eq 'run' -or $flutterArgs[0] -eq 'build')) {
     if ($env:GEMINI_API_KEY) { $flutterArgs += "--dart-define=GEMINI_API_KEY=$env:GEMINI_API_KEY" }
