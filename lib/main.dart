@@ -47,11 +47,7 @@ Future<_Arranque> _arrancar() async {
   );
   if (recienCreada) await sembrarPerfilesIniciales(repositorio);
   final bdConocimiento = await BdConocimiento.abrir(fabrica);
-  return _Arranque(
-    base,
-    repositorio,
-    RepositorioConocimiento(bdConocimiento),
-  );
+  return _Arranque(base, repositorio, RepositorioConocimiento(bdConocimiento));
 }
 
 class SafeLabelApp extends StatelessWidget {

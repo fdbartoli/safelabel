@@ -4,10 +4,7 @@ import '../datos/repositorio_conocimiento.dart';
 import '../modelo/consulta_conocimiento.dart';
 
 class PantallaConsultaConocimiento extends StatefulWidget {
-  const PantallaConsultaConocimiento({
-    super.key,
-    required this.repositorio,
-  });
+  const PantallaConsultaConocimiento({super.key, required this.repositorio});
 
   final RepositorioConocimiento repositorio;
 
@@ -64,7 +61,9 @@ class _PantallaConsultaConocimientoState
               future: consulta,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Text('No se pudo realizar la consulta.\n${snapshot.error}');
+                  return Text(
+                    'No se pudo realizar la consulta.\n${snapshot.error}',
+                  );
                 }
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
@@ -108,7 +107,9 @@ class _TarjetaCoincidencia extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            Text('Denominación: ${coincidencia.denominacion} (${coincidencia.idioma})'),
+            Text(
+              'Denominación: ${coincidencia.denominacion} (${coincidencia.idioma})',
+            ),
             Text('Restricción: ${coincidencia.restriccionVisible}'),
             Text(
               coincidencia.tipoCoincidencia == 'DIRECT'
@@ -127,7 +128,10 @@ class _TarjetaCoincidencia extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 Text(evidencia.fragmento),
-                Text(evidencia.url, style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  evidencia.url,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
           ],
         ),
