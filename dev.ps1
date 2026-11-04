@@ -10,7 +10,7 @@
 #
 # Sustitutos por IA (Gemini, plan gratuito): antes de run/build, en la misma
 # terminal:
-#   $env:GEMINI_API_KEY = 'AIza...'
+#   $env:GEMINI_API_KEY = 'ponetuclaveaqui'
 #
 # Si PowerShell bloquea el script:
 #   powershell -ExecutionPolicy Bypass -File .\dev.ps1 doctor
