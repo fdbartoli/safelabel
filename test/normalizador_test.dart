@@ -18,14 +18,47 @@ void main() {
   });
 
   group('separarIngredientes', () {
-    test('separa por comas, punto y coma y saltos de línea', () {
-      final items = n.separarIngredientes('Azúcar, sal; agua\nvinagre');
+    test('separa por comas, punto y coma y renglones de un ingrediente cada uno',
+        () {
+      final items = n.separarIngredientes('Azúcar, sal; agua\nVinagre');
       expect(items.map((e) => e.textoNormalizado), [
         'azucar',
         'sal',
         'agua',
         'vinagre',
       ]);
+    });
+
+    test('une renglones cortados a mitad de ingrediente (etiqueta real)', () {
+      final items = n.separarIngredientes(
+        'INGREDIENTES; Harina de trigo tipo 000 enriquecida Ley N°\n'
+        '25.630 (sulfato ferroso: 30 mg/kg -como hierro-, niacina: 13\n'
+        'mg/kg, vitamina B1: 6.3 mg/kg, ácido fólico: 2.2 mg/kg, vitamina\n'
+        'B2: 1.3 mg/kg).',
+      );
+      expect(items.map((e) => e.textoNormalizado), [
+        'harina de trigo tipo 000 enriquecida',
+        'sulfato ferroso',
+        'niacina',
+        'vitamina b1',
+        'acido folico',
+        'vitamina b2',
+      ]);
+      expect(items[1].padre, 'harina de trigo tipo 000 enriquecida');
+    });
+
+    test('une una palabra cortada con guion', () {
+      final items = n.separarIngredientes('azúcar, aceite vege-\ntal, sal');
+      expect(items.map((e) => e.textoNormalizado),
+          ['azucar', 'aceite vegetal', 'sal']);
+    });
+
+    test('descarta el texto anterior al encabezado de ingredientes', () {
+      final items = n.separarIngredientes(
+        'La pasta aporta nutrientes,\nde todos los grupos.\n'
+        'INGREDIENTES; harina, agua.',
+      );
+      expect(items.map((e) => e.textoNormalizado), ['harina', 'agua']);
     });
 
     test('quita el encabezado "Ingredientes:"', () {

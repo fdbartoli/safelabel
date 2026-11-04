@@ -111,13 +111,20 @@ class VerificacionCruzada {
     final lineasPuede = <String>[];
     final noMapeados = <String>[];
 
-    // El bloque "CONTIENE" suele venir en su propia linea, pero a veces sigue en
-    // la misma linea que el final de la lista de ingredientes. Se parte por
-    // saltos de linea y tambien antes de cada palabra clave.
+    // La declaración es un párrafo: puede seguir en el mismo renglón que la
+    // lista de ingredientes, o partirse entre renglones ("PUEDE" + salto +
+    // "CONTENER SOJA"). Se une todo en una línea y se corta antes de cada
+    // palabra clave y en cada punto seguido de espacio (fin de oración).
+    // "No contiene ..." no se corta, para que se ignore entero.
     final crudoConCortes = textoCrudo
-        .replaceAll(RegExp(r'(?=contiene)', caseSensitive: false), '\n')
-        .replaceAll(RegExp(r'(?=puede contener)', caseSensitive: false), '\n')
-        .replaceAll(RegExp(r'(?=elaborado en)', caseSensitive: false), '\n');
+        .replaceAll(RegExp(r'\s*\n\s*'), ' ')
+        .replaceAll(
+          RegExp(r'(?<!no\s)(?=\bcontiene\b)', caseSensitive: false),
+          '\n',
+        )
+        .replaceAll(RegExp(r'(?=\bpuede\s+contener\b)', caseSensitive: false), '\n')
+        .replaceAll(RegExp(r'(?=\belaborado\s+en\b)', caseSensitive: false), '\n')
+        .replaceAll(RegExp(r'\.\s+'), '.\n');
 
     final lineas = crudoConCortes
         .split('\n')

@@ -2,7 +2,10 @@
 ///
 /// Requisitos (sección 5.2 del CLAUDE.md):
 ///  - minúsculas, quitar acentos
-///  - separar por comas, punto y coma y saltos de línea
+///  - separar por comas y punto y coma; los saltos de línea separan solo si
+///    no son un corte de renglón a mitad de ingrediente ([unirRenglones])
+///  - descartar lo anterior al encabezado "ingredientes" y quitar cantidades
+///    ("30 mg/kg") y referencias legales ("Ley N° 25.630")
 ///  - resolver anidados: `chocolate (leche, lecitina de soja)` → tres ítems,
 ///    con el padre registrado
 ///  - detectar números INS y mapearlos
@@ -104,22 +107,91 @@ class Normalizador {
 
   /// Pipeline completo: de texto crudo del OCR a lista de [ItemNormalizado].
   List<ItemNormalizado> separarIngredientes(String textoCrudo) {
-    // 1. minúsculas + sin acentos, conservando saltos de línea.
-    final sinAcentos = _quitarAcentos(textoCrudo.toLowerCase());
+    // 1. unir los renglones que el envase cortó a mitad de un ingrediente.
+    final unido = unirRenglones(textoCrudo);
 
-    // 2. recortar tabla nutricional y bloque CONTIENE.
-    final soloIngredientes = _recortarBloques(sinAcentos);
+    // 2. minúsculas + sin acentos, conservando saltos de línea.
+    final sinAcentos = _quitarAcentos(unido.toLowerCase());
 
-    // 3. quitar un encabezado tipo "ingredientes:" si está.
-    final cuerpo = soloIngredientes.replaceFirst(
-      RegExp(r'^[\s\S]*?ingredientes?\s*:\s*', caseSensitive: false),
-      '',
-    );
+    // 3. descartar lo anterior al encabezado "ingredientes" (texto
+    //    publicitario, marca), si el encabezado está.
+    final desdeEncabezado = _desdeEncabezado(sinAcentos);
 
-    // 4. parsear respetando paréntesis.
+    // 4. recortar tabla nutricional y bloque CONTIENE.
+    final cuerpo = _recortarBloques(desdeEncabezado);
+
+    // 5. parsear respetando paréntesis.
     final items = <ItemNormalizado>[];
     _parsear(cuerpo, null, items);
     return items;
+  }
+
+  /// Une los renglones que el envase cortó por falta de espacio: la lista de
+  /// ingredientes es un párrafo, y un salto de línea casi nunca separa
+  /// ingredientes. Se une cuando:
+  ///  - el renglón anterior no termina en `,` ni `;` (que ya separan), y
+  ///  - el siguiente arranca en minúscula, dígito o paréntesis, o el corte
+  ///    cae dentro de un paréntesis abierto, o el anterior termina en guion.
+  /// Un renglón que arranca en mayúscula después de uno cerrado se respeta:
+  /// algunas etiquetas ponen un ingrediente por renglón.
+  String unirRenglones(String texto) {
+    final renglones = texto.split('\n');
+    if (renglones.length < 2) return texto;
+    final b = StringBuffer(renglones.first);
+    var profundidad = _balance(renglones.first);
+    for (var i = 1; i < renglones.length; i++) {
+      final anterior = b.toString().trimRight();
+      final siguiente = renglones[i].trimLeft();
+      final finAnterior = anterior.isEmpty ? '' : anterior[anterior.length - 1];
+      final inicio = siguiente.isEmpty ? '' : siguiente[0];
+      final unir = siguiente.isNotEmpty &&
+          finAnterior != ',' &&
+          finAnterior != ';' &&
+          (profundidad > 0 ||
+              finAnterior == '-' ||
+              RegExp(r'[a-zà-ÿ0-9(\[)\]]').hasMatch(inicio));
+      if (unir && finAnterior == '-') {
+        // palabra cortada con guion: "vege-" + "tal" → "vegetal"
+        final sinGuion = anterior.substring(0, anterior.length - 1);
+        b
+          ..clear()
+          ..write(sinGuion)
+          ..write(siguiente);
+      } else if (unir) {
+        b
+          ..clear()
+          ..write(anterior)
+          ..write(' ')
+          ..write(siguiente);
+      } else {
+        b
+          ..write('\n')
+          ..write(renglones[i]);
+      }
+      profundidad += _balance(renglones[i]);
+      if (profundidad < 0) profundidad = 0;
+    }
+    return b.toString();
+  }
+
+  int _balance(String s) {
+    var n = 0;
+    for (final c in s.split('')) {
+      if (c == '(' || c == '[') n++;
+      if (c == ')' || c == ']') n--;
+    }
+    return n;
+  }
+
+  /// Si aparece el encabezado de la lista ("ingredientes:", "ingredientes;",
+  /// o "ingredientes" al comienzo de un renglón), descarta todo lo anterior.
+  String _desdeEncabezado(String texto) {
+    final conSigno = RegExp(r'\bingredientes?\s*[:;]\s*').firstMatch(texto);
+    if (conSigno != null) return texto.substring(conSigno.end);
+    final alInicio =
+        RegExp(r'(?:^|\n)\s*ingredientes?\b\s*[.\-]?\s*').firstMatch(texto);
+    if (alInicio != null) return texto.substring(alInicio.end);
+    return texto;
   }
 
   String _quitarAcentos(String entrada) {
@@ -207,16 +279,41 @@ class Normalizador {
     );
   }
 
-  /// Colapsa espacios, quita signos de puntuación de borde y descarta un
-  /// prefijo de categoría tipo "colorante:", "estabilizante:".
+  /// Cantidades de fortificación y aditivos: "30 mg/kg", "2,2 mg/100 g", "5%".
+  static final RegExp _cantidad = RegExp(
+    r'\b\d+(?:[.,]\d+)?\s*(?:mg|mcg|µg|ug|g|kg|ml|l|ui|%)'
+    r'(?:\s*/\s*(?:kg|g|l|100\s*g|100\s*ml))?(?![a-z])',
+  );
+
+  /// Referencia legal pegada al nombre: "ley n° 25.630", "ley 25630".
+  static final RegExp _ley = RegExp(r'\bley\s*(?:n\s*[°º.]?\s*)?\d[\d.]*');
+
+  /// Aclaraciones del tipo "-como hierro-".
+  static final RegExp _comoAlgo = RegExp(r'-?\s*\bcomo\s+[a-z]+\s*-?');
+
+  /// Colapsa espacios, quita cantidades, referencias legales y puntuación de
+  /// borde, y descarta un prefijo de categoría tipo "colorante:".
   String _limpiar(String entrada) {
     var s = entrada.replaceAll(RegExp(r'\s+'), ' ').trim();
-    final m = RegExp(r'^([a-z ]{1,24}):\s*(.+)$').firstMatch(s);
-    if (m != null && m.group(2)!.trim().length >= 3) {
+    s = s.replaceAll(_cantidad, ' ');
+    s = s.replaceAll(_ley, ' ');
+    s = s.replaceAll(_comoAlgo, ' ');
+    s = s.replaceAll(RegExp(r'\s+'), ' ').trim();
+    // "colorante: caramelo" → "caramelo". Solo si lo que sigue es un nombre:
+    // en "niacina: 13" (sin la unidad) el nombre es lo de adelante.
+    final m = RegExp(r'^([a-z ]{1,24}):\s*([a-z].{2,}|\d{3,4}[a-z]?)$')
+        .firstMatch(s);
+    if (m != null) {
       s = m.group(2)!.trim();
     }
-    s = s.replaceAll(RegExp(r'^[\s.,;·*-]+'), '');
-    s = s.replaceAll(RegExp(r'[\s.,;·*-]+$'), '');
+    s = s.replaceAll(RegExp(r'^[\s.,;:·*-]+'), '');
+    s = s.replaceAll(RegExp(r'[\s.,;:·*-]+$'), '');
+    // Si solo quedó un número suelto ("13", "25.630") no es un ingrediente.
+    // Un código INS suelto ("322", "150d") sí lo es.
+    if (RegExp(r'^[\d.,\s]+$').hasMatch(s) &&
+        !RegExp(r'^\d{3,4}[a-z]?$').hasMatch(s)) {
+      return '';
+    }
     return s.trim();
   }
 

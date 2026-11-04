@@ -224,12 +224,16 @@ class Analizador {
           textoNormalizado: m.item.textoNormalizado,
           padre: m.item.padre,
           ins: m.item.ins,
-          estado: m.exacta ? EstadoItem.exacto : EstadoItem.difuso,
+          estado: m.exacta
+              ? EstadoItem.exacto
+              : m.porContencion
+              ? EstadoItem.contiene
+              : EstadoItem.difuso,
           terminoBase: m.terminoBase,
           grupoAlergeno: grupoId == null
               ? null
               : (base.grupo(grupoId)?.nombre ?? grupoId),
-          similitud: m.exacta ? null : m.similitud,
+          similitud: m.exacta || m.porContencion ? null : m.similitud,
         );
       case SinCoincidencia():
         return ItemDiagnostico(

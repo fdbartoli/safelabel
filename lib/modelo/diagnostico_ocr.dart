@@ -83,6 +83,9 @@ enum EstadoItem {
   /// Coincidencia por similitud (posible typo del OCR).
   difuso,
 
+  /// El ítem contiene un término con alérgeno ("harina de trigo tipo 000").
+  contiene,
+
   /// No está en la base, pero se parece a algo: probable error de OCR.
   desconocidoParecido,
 
@@ -124,6 +127,8 @@ class ItemDiagnostico {
         return 'exacto: "$terminoBase" ($grupo)';
       case EstadoItem.difuso:
         return 'parecido$pct a "$terminoBase" ($grupo)';
+      case EstadoItem.contiene:
+        return 'contiene "$terminoBase" ($grupo)';
       case EstadoItem.desconocidoParecido:
         return 'no reconocido; se parece$pct a "$terminoBase"';
       case EstadoItem.desconocido:

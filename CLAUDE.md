@@ -192,10 +192,14 @@ Nunca colapsar a dos. El código debe distinguir:
 
 Ambos primeros devuelven vacío desde la consulta, pero requieren respuestas opuestas al usuario. La similitud difusa ayuda a decidir: si el texto se parece mucho a algo de la base, probablemente sea error de OCR; si no se parece a nada, es un término desconocido real.
 
+Orden del match: exacto → **contención** de un término con alérgeno (palabras completas, plural tolerado, mínimo 4 letras: "harina de trigo tipo 000 enriquecida" contiene "harina de trigo") → difuso → desconocido. La contención va antes que el difuso para que "aceite de maní" no quede emparejado con "aceite de maíz". Un ítem que contiene términos de varios grupos genera una coincidencia por grupo. Un match exacto sin alérgeno manda sobre la contención ("manteca de cacao" es cacao, no manteca).
+
 ### 5.2. Normalización (paso 4)
 
 - minúsculas, quitar acentos
-- separar por comas, punto y coma, y saltos de línea
+- separar por comas y punto y coma. Los saltos de línea separan solo si no son un corte de renglón: la lista es un párrafo que el envase parte donde no entra ("Ley N°" + salto + "25.630"). Se une el renglón cuando el siguiente arranca en minúscula, dígito o paréntesis, o el corte cae dentro de un paréntesis, o el anterior termina en guion (descubierto en la primera prueba en celular, 2026-11-03)
+- descartar todo lo anterior al encabezado "INGREDIENTES" (con `:` o `;`): suele haber texto publicitario
+- quitar cantidades ("30 mg/kg") y referencias legales ("Ley N° 25.630") sin perder el nombre del ingrediente
 - resolver anidados: `chocolate (leche, lecitina de soja)` produce tres ítems, con el padre registrado
 - detectar números INS y mapearlos
 - descartar el bloque de tabla nutricional si aparece en la captura

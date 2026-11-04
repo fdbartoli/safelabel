@@ -195,8 +195,9 @@ class _FilaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
-    final conocido =
-        item.estado == EstadoItem.exacto || item.estado == EstadoItem.difuso;
+    final conocido = item.estado == EstadoItem.exacto ||
+        item.estado == EstadoItem.difuso ||
+        item.estado == EstadoItem.contiene;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
