@@ -16,26 +16,32 @@ class RepositorioConocimiento {
       );
     }
 
-    final filas = await _bd.rawQuery('''
+    final filas = await _bd.rawQuery(
+      '''
       SELECT denomination, language, concept_id, matched_concept,
              match_type, restriction_id, restriction_name
       FROM v_restriction_matches
       WHERE denomination = ? COLLATE NOCASE
       ORDER BY restriction_id, match_type
-    ''', [termino]);
+    ''',
+      [termino],
+    );
 
     final coincidencias = <CoincidenciaConocimiento>[];
     for (final fila in filas) {
       final conceptoId = fila['concept_id']! as String;
       final restriccionId = fila['restriction_id']! as String;
-      final evidenciasRaw = await _bd.rawQuery('''
+      final evidenciasRaw = await _bd.rawQuery(
+        '''
         SELECT evidence.fragment, source.id AS source_id,
                source.title, source.url
         FROM evidence
         JOIN source ON source.id = evidence.source_id
         WHERE evidence.concept_id = ? AND evidence.restriction_id = ?
         ORDER BY source.title
-      ''', [conceptoId, restriccionId]);
+      ''',
+        [conceptoId, restriccionId],
+      );
 
       final restriccion = await _bd.query(
         'restriction',
