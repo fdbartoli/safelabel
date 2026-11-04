@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:safelabel/modelo/perfil.dart';
 import 'package:safelabel/ocr/linea_ocr.dart';
 import 'package:safelabel/pipeline/analizador.dart';
@@ -95,6 +97,12 @@ void main() {
   });
 
   group('ServicioReemplazosGemini (sin red)', () {
+    const solicitud = SolicitudReemplazo(
+      gruposRestringidos: ['leche'],
+      ingredientesConflictivos: ['leche'],
+      ingredientesLeidos: ['leche', 'azucar'],
+    );
+
     Map<String, dynamic> respuestaOk(
       Map<String, dynamic> datos, {
       String fin = 'STOP',
@@ -112,6 +120,103 @@ void main() {
         },
       ],
     };
+
+    for (final estado in [200, 400, 401, 403, 404, 429, 500, 503]) {
+      test('HTTP $estado: respaldo solo ante 503', () async {
+        final pedidos = <http.Request>[];
+        final cliente = MockClient((pedido) async {
+          pedidos.add(pedido);
+          if (pedidos.length == 1 && estado != 200) {
+            return http.Response('{}', estado);
+          }
+          return http.Response(
+            jsonEncode(
+              respuestaOk({
+                'tipo_producto': 'bebida',
+                'sugerencias': [
+                  {'nombre': 'Bebida de arroz', 'motivo': 'Idea para buscar.'},
+                ],
+              }),
+            ),
+            200,
+          );
+        });
+        addTearDown(cliente.close);
+        final servicio = ServicioReemplazosGemini(
+          apiKey: 'clave-ficticia',
+          cliente: cliente,
+        );
+        if (estado == 200 || estado == 503) {
+          final resultado = await servicio.sugerir(solicitud);
+          expect(resultado.sugerencias.single.nombre, 'Bebida de arroz');
+        } else {
+          await expectLater(
+            servicio.sugerir(solicitud),
+            throwsA(isA<ErrorReemplazos>()),
+          );
+        }
+        expect(pedidos, hasLength(estado == 503 ? 2 : 1));
+        expect(
+          pedidos.first.url.path,
+          '/v1beta/models/gemini-3.8-flash:generateContent',
+        );
+        if (estado == 503) {
+          expect(
+            pedidos.last.url.path,
+            '/v1beta/models/gemini-3.5-flash-lite:generateContent',
+          );
+          expect(pedidos.last.body, pedidos.first.body);
+        }
+        for (final pedido in pedidos) {
+          expect(pedido.headers['x-goog-api-key'], 'clave-ficticia');
+        }
+      });
+    }
+
+    test(
+      'si el respaldo también devuelve 503, informa error sin bucle',
+      () async {
+        var llamadas = 0;
+        final cliente = MockClient((_) async {
+          llamadas++;
+          return http.Response('{}', 503);
+        });
+        addTearDown(cliente.close);
+        final servicio = ServicioReemplazosGemini(
+          apiKey: 'clave-ficticia',
+          cliente: cliente,
+        );
+        await expectLater(
+          servicio.sugerir(solicitud),
+          throwsA(
+            isA<ErrorReemplazos>().having(
+              (e) => e.motivo,
+              'motivo',
+              'HTTP 503',
+            ),
+          ),
+        );
+        expect(llamadas, 2);
+      },
+    );
+
+    test('un error de conexión no activa el respaldo', () async {
+      var llamadas = 0;
+      final cliente = MockClient((_) async {
+        llamadas++;
+        throw http.ClientException('sin conexión');
+      });
+      addTearDown(cliente.close);
+      final servicio = ServicioReemplazosGemini(
+        apiKey: 'clave-ficticia',
+        cliente: cliente,
+      );
+      await expectLater(
+        servicio.sugerir(solicitud),
+        throwsA(isA<ErrorReemplazos>()),
+      );
+      expect(llamadas, 1);
+    });
 
     test('el cuerpo manda solo texto y pide salida JSON con esquema', () {
       final cuerpo = ServicioReemplazosGemini.construirCuerpo(

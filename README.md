@@ -48,6 +48,14 @@ flutter run            # necesita toolchain de Android/iOS
 Sin cámara: en la app, "Analizar texto pegado" corre el mismo pipeline sobre
 texto escrito a mano (útil para las fixtures de la Etapa 1).
 
+### Sugerencias de sustitutos (Gemini)
+
+Las sugerencias por IA necesitan una API Key de Google Gemini. La guía paso a
+paso —cómo generarla, qué archivo crear y qué formato usar— está en
+[`GEMINI_API_KEY.md`](GEMINI_API_KEY.md). En resumen: creá `gemini.env` en la
+raíz con `GEMINI_API_KEY=ponetuclaveaqui` (tu clave real) y ejecutá
+`.\dev.ps1 run`.
+
 ## Pendiente en esta etapa
 
 - Fixtures de fotos reales (envase curvo, texto blanco sobre foto, letra chica,
