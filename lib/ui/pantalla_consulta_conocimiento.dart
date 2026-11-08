@@ -110,29 +110,38 @@ class _TarjetaCoincidencia extends StatelessWidget {
             Text(
               'Denominación: ${coincidencia.denominacion} (${coincidencia.idioma})',
             ),
-            Text('Restricción: ${coincidencia.restriccionVisible}'),
-            Text(
-              coincidencia.tipoCoincidencia == 'DIRECT'
-                  ? 'Relación: directa'
-                  : 'Relación: ingrediente relacionado',
-            ),
-            const SizedBox(height: 12),
-            Text('Fuentes', style: Theme.of(context).textTheme.titleSmall),
-            if (coincidencia.evidencias.isEmpty)
-              const Text('Sin evidencia disponible.')
-            else
-              for (final evidencia in coincidencia.evidencias) ...[
-                const SizedBox(height: 8),
-                Text(
-                  evidencia.tituloFuente,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                Text(evidencia.fragmento),
-                Text(
-                  evidencia.url,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+            if (!coincidencia.tieneRestriccion) ...[
+              const SizedBox(height: 8),
+              const Text(
+                'Ingrediente reconocido. La base actual no registra una '
+                'relación con las restricciones incorporadas. Esto no '
+                'significa que sea seguro para cualquier persona.',
+              ),
+            ] else ...[
+              Text('Restricción: ${coincidencia.restriccionVisible}'),
+              Text(
+                coincidencia.tipoCoincidencia == 'DIRECT'
+                    ? 'Relación: directa'
+                    : 'Relación: ingrediente relacionado',
+              ),
+              const SizedBox(height: 12),
+              Text('Fuentes', style: Theme.of(context).textTheme.titleSmall),
+              if (coincidencia.evidencias.isEmpty)
+                const Text('Sin evidencia disponible.')
+              else
+                for (final evidencia in coincidencia.evidencias) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    evidencia.tituloFuente,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Text(evidencia.fragmento),
+                  Text(
+                    evidencia.url,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+            ],
           ],
         ),
       ),

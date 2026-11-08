@@ -112,16 +112,20 @@ class RepositorioConocimiento {
     if (termino.isEmpty) {
       return const ResultadoConsultaConocimiento(
         entrada: '',
+        estado: EstadoConsultaConocimiento.unknown,
         coincidencias: [],
       );
     }
 
     final filas = await _bd.rawQuery(
       '''
-      SELECT denomination, language, concept_id, matched_concept,
-             match_type, restriction_id, restriction_name
-      FROM v_restriction_matches
+      SELECT denomination, MIN(language) AS language,
+             concept_id, matched_concept, match_type,
+             restriction_id, restriction_name, status
+      FROM v_concept_matches
       WHERE denomination = ? COLLATE NOCASE
+      GROUP BY denomination, concept_id, matched_concept, match_type,
+               restriction_id, restriction_name, status
       ORDER BY restriction_id, match_type
     ''',
       [termino],
@@ -130,9 +134,11 @@ class RepositorioConocimiento {
     final coincidencias = <CoincidenciaConocimiento>[];
     for (final fila in filas) {
       final conceptoId = fila['concept_id']! as String;
-      final restriccionId = fila['restriction_id']! as String;
-      final evidenciasRaw = await _bd.rawQuery(
-        '''
+      final restriccionId = fila['restriction_id'] as String?;
+      final evidenciasRaw = restriccionId == null
+          ? <Map<String, Object?>>[]
+          : await _bd.rawQuery(
+              '''
         SELECT evidence.fragment, source.id AS source_id,
                source.title, source.url
         FROM evidence
@@ -140,27 +146,34 @@ class RepositorioConocimiento {
         WHERE evidence.concept_id = ? AND evidence.restriction_id = ?
         ORDER BY source.title
       ''',
-        [conceptoId, restriccionId],
-      );
+              [conceptoId, restriccionId],
+            );
 
-      final restriccion = await _bd.query(
-        'restriction',
-        columns: ['display_name'],
-        where: 'id = ?',
-        whereArgs: [restriccionId],
-        limit: 1,
-      );
+      final restriccion = restriccionId == null
+          ? <Map<String, Object?>>[]
+          : await _bd.query(
+              'restriction',
+              columns: ['display_name'],
+              where: 'id = ?',
+              whereArgs: [restriccionId],
+              limit: 1,
+            );
+
+      String? restriccionVisible;
+      if (restriccionId != null) {
+        restriccionVisible = restriccion.isEmpty
+            ? fila['restriction_name']! as String
+            : restriccion.first['display_name']! as String;
+      }
 
       coincidencias.add(
         CoincidenciaConocimiento(
           denominacion: fila['denomination']! as String,
           idioma: fila['language']! as String,
           concepto: fila['matched_concept']! as String,
-          tipoCoincidencia: fila['match_type']! as String,
-          restriccion: fila['restriction_name']! as String,
-          restriccionVisible: restriccion.isEmpty
-              ? fila['restriction_name']! as String
-              : restriccion.first['display_name']! as String,
+          tipoCoincidencia: fila['match_type'] as String?,
+          restriccion: fila['restriction_name'] as String?,
+          restriccionVisible: restriccionVisible,
           evidencias: [
             for (final evidencia in evidenciasRaw)
               EvidenciaConocimiento(
@@ -174,8 +187,16 @@ class RepositorioConocimiento {
       );
     }
 
+    var estado = EstadoConsultaConocimiento.unknown;
+    if (filas.isNotEmpty) {
+      estado = filas.any((fila) => fila['restriction_id'] != null)
+          ? EstadoConsultaConocimiento.matched
+          : EstadoConsultaConocimiento.recognized;
+    }
+
     return ResultadoConsultaConocimiento(
       entrada: termino,
+      estado: estado,
       coincidencias: coincidencias,
     );
   }
