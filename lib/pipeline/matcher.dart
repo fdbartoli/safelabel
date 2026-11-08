@@ -1,5 +1,5 @@
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../datos/base_conocimiento.dart';
-import '../modelo/ingrediente.dart';
 import 'normalizador.dart';
 import 'similitud.dart';
 
@@ -20,13 +20,13 @@ sealed class ResultadoMatch {
 class Coincidencia extends ResultadoMatch {
   const Coincidencia(
     super.item, {
-    required this.ingrediente,
+    required this.concepto,
     required this.exacta,
     required this.similitud,
     required this.terminoBase,
   });
 
-  final Ingrediente ingrediente;
+  final ConceptoConocimiento concepto;
 
   /// `true` si fue match exacto; `false` si fue difuso.
   final bool exacta;
@@ -58,13 +58,19 @@ class SinCoincidencia extends ResultadoMatch {
 }
 
 class Emparejador {
-  const Emparejador(
-    this.base, {
+  Emparejador(
+    BaseConocimiento base, {
+    this.umbralDifuso = 0.84,
+    this.umbralSospechaOcr = 0.62,
+  }) : catalogo = CatalogoConocimiento.desdeBaseLegacy(base);
+
+  const Emparejador.desdeCatalogo(
+    this.catalogo, {
     this.umbralDifuso = 0.84,
     this.umbralSospechaOcr = 0.62,
   });
 
-  final BaseConocimiento base;
+  final CatalogoConocimiento catalogo;
 
   /// A partir de esta similitud se acepta como coincidencia difusa.
   final double umbralDifuso;
@@ -85,21 +91,21 @@ class Emparejador {
     }
 
     // 1. Exacto.
-    final exacto = base.matchExacto(texto);
+    final exacto = catalogo.matchExacto(texto);
     if (exacto != null) {
       return Coincidencia(
         item,
-        ingrediente: exacto,
+        concepto: exacto,
         exacta: true,
         similitud: 1,
-        terminoBase: base.etiquetaDe(texto),
+        terminoBase: catalogo.etiquetaDe(texto),
       );
     }
 
     // 2. Difuso: mejor término de la base.
     var mejor = 0.0;
     String? mejorTermino;
-    for (final termino in base.terminosIndexados) {
+    for (final termino in catalogo.terminosIndexados) {
       final s = similitud(texto, termino);
       if (s > mejor) {
         mejor = s;
@@ -111,10 +117,10 @@ class Emparejador {
     if (mejor >= umbralDifuso && mejorTermino != null) {
       return Coincidencia(
         item,
-        ingrediente: base.matchExacto(mejorTermino)!,
+        concepto: catalogo.matchExacto(mejorTermino)!,
         exacta: false,
         similitud: mejor,
-        terminoBase: base.etiquetaDe(mejorTermino),
+        terminoBase: catalogo.etiquetaDe(mejorTermino),
       );
     }
 
@@ -123,7 +129,7 @@ class Emparejador {
       item,
       mejorSimilitud: mejor,
       candidato: mejor >= umbralSospechaOcr && mejorTermino != null
-          ? base.etiquetaDe(mejorTermino)
+          ? catalogo.etiquetaDe(mejorTermino)
           : null,
       probableErrorOcr: mejor >= umbralSospechaOcr,
     );

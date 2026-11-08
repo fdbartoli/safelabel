@@ -17,21 +17,18 @@ void main() {
     r as Coincidencia;
     expect(r.exacta, isTrue);
     expect(r.similitud, 1.0);
-    expect(r.ingrediente.grupoAlergenoId, 'leche');
+    expect(r.concepto.relaciones.single.perfilId, 'leche');
   });
 
   test('match exacto por sinónimo', () {
     final r = matcher.match(item('caseinato sodico'));
     expect(r, isA<Coincidencia>());
-    expect(
-      (r as Coincidencia).ingrediente.nombreCanonico,
-      'caseinato de sodio',
-    );
+    expect((r as Coincidencia).concepto.nombreCanonico, 'caseinato de sodio');
   });
 
   test('match exacto por número INS', () {
     final r = matcher.match(item('INS 322'));
-    expect((r as Coincidencia).ingrediente.nombreCanonico, 'lecitina de soja');
+    expect((r as Coincidencia).concepto.nombreCanonico, 'lecitina de soja');
   });
 
   test('match difuso ante typo de OCR', () {
@@ -41,7 +38,7 @@ void main() {
     r as Coincidencia;
     expect(r.exacta, isFalse);
     expect(r.similitud, greaterThan(0.84));
-    expect(r.ingrediente.nombreCanonico, 'caseinato de sodio');
+    expect(r.concepto.nombreCanonico, 'caseinato de sodio');
   });
 
   test('desconocido que se parece a algo: probable error de OCR', () {

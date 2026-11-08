@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../datos/base_conocimiento.dart';
 import '../modelo/perfil.dart';
 import '../ocr/servicio_ocr.dart';
@@ -14,10 +15,12 @@ class PantallaAnalisisTexto extends StatefulWidget {
   const PantallaAnalisisTexto({
     super.key,
     required this.base,
+    required this.catalogo,
     required this.perfilesActivos,
   });
 
   final BaseConocimiento base;
+  final CatalogoConocimiento catalogo;
   final List<Perfil> perfilesActivos;
 
   @override
@@ -42,8 +45,10 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
   void _analizar() {
     final ocr = ServicioOcrFalso.desdeTexto(_controller.text);
     ocr.reconocer('').then((lectura) {
-      final resultado = Analizador(widget.base)
-          .analizar(lectura, perfilesActivos: widget.perfilesActivos);
+      final resultado = Analizador(
+        widget.base,
+        catalogo: widget.catalogo,
+      ).analizar(lectura, perfilesActivos: widget.perfilesActivos);
       if (!mounted) return;
       Navigator.of(context).push(
         MaterialPageRoute(
