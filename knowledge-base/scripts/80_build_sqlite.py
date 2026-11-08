@@ -68,7 +68,7 @@ CREATE INDEX idx_denomination_concept ON denomination(concept_id);
 CREATE INDEX idx_evidence_concept ON evidence(concept_id);
 CREATE INDEX idx_evidence_source ON evidence(source_id);
 
-CREATE VIEW v_restriction_matches AS
+CREATE VIEW v_concept_matches AS
 SELECT
   denomination.name AS denomination,
   denomination.language AS language,
@@ -79,12 +79,26 @@ SELECT
   target.canonical_name AS target_concept,
   restriction.id AS restriction_id,
   restriction.name AS restriction_name,
-  'certain' AS certainty
+  CASE
+    WHEN concept_restriction.restriction_id IS NULL THEN 'RECOGNIZED'
+    ELSE 'MATCHED'
+  END AS status,
+  CASE
+    WHEN concept_restriction.restriction_id IS NULL THEN NULL
+    ELSE 'certain'
+  END AS certainty
 FROM denomination
 JOIN concept ON concept.id = denomination.concept_id
-JOIN concept_restriction ON concept_restriction.concept_id = concept.id
-JOIN restriction ON restriction.id = concept_restriction.restriction_id
-JOIN concept target ON target.id = restriction.target_concept_id;
+LEFT JOIN concept_restriction ON concept_restriction.concept_id = concept.id
+LEFT JOIN restriction ON restriction.id = concept_restriction.restriction_id
+LEFT JOIN concept target ON target.id = restriction.target_concept_id;
+
+CREATE VIEW v_restriction_matches AS
+SELECT
+  denomination, language, concept_id, matched_concept, match_type,
+  relation_type, target_concept, restriction_id, restriction_name, certainty
+FROM v_concept_matches
+WHERE restriction_id IS NOT NULL;
 """
 
 

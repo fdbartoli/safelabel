@@ -15,8 +15,8 @@ REQUIRED_TABLES = {
 
 MATCH_QUERY = """
 SELECT denomination, language, concept_id, matched_concept,
-       match_type, target_concept, restriction_id, restriction_name
-FROM v_restriction_matches
+       status, match_type, target_concept, restriction_id, restriction_name
+FROM v_concept_matches
 ORDER BY matched_concept, language, denomination
 """
 
@@ -43,15 +43,22 @@ def main():
                 "Faltan tablas requeridas: " + ", ".join(sorted(missing))
             )
 
-        view = conn.execute(
+        views = {
+            row[0]
+            for row in conn.execute(
             """
             SELECT name
             FROM sqlite_master
-            WHERE type = 'view' AND name = 'v_restriction_matches'
+            WHERE type = 'view'
             """
-        ).fetchone()
-        if view is None:
-            raise SystemExit("Falta la vista v_restriction_matches")
+            )
+        }
+        required_views = {"v_concept_matches", "v_restriction_matches"}
+        missing_views = required_views - views
+        if missing_views:
+            raise SystemExit(
+                "Faltan vistas requeridas: " + ", ".join(sorted(missing_views))
+            )
 
         version = conn.execute(
             "SELECT version FROM release_metadata LIMIT 1"
@@ -71,6 +78,9 @@ def main():
             )
         }
         rows = conn.execute(MATCH_QUERY).fetchall()
+        recognized_count = conn.execute(
+            "SELECT COUNT(*) FROM v_concept_matches WHERE status = 'RECOGNIZED'"
+        ).fetchone()[0]
 
     if not rows:
         raise SystemExit("La base no contiene coincidencias")
@@ -81,6 +91,7 @@ def main():
         + ", ".join(f"{table}={count}" for table, count in counts.items())
     )
     print(f"Coincidencias disponibles: {len(rows)}")
+    print(f"Denominaciones reconocidas sin relación: {recognized_count}")
     for row in rows:
         print(" | ".join(str(value) for value in row))
 

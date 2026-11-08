@@ -6,13 +6,24 @@ import pathlib
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--catalog", required=True)
     parser.add_argument("--inputs", nargs="+", required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
-    restrictions = {}
+    catalog = json.loads(
+        pathlib.Path(args.catalog).read_text(encoding="utf-8")
+    )
     concepts = {}
+    for concept in catalog:
+        concept_id = concept["id"]
+        if concept_id in concepts:
+            raise ValueError(f"Concepto duplicado en el catálogo: {concept_id}")
+        concepts[concept_id] = concept
+
+    restrictions = {}
     relations = []
+    relation_keys = set()
 
     for input_name in args.inputs:
         payload = json.loads(pathlib.Path(input_name).read_text(encoding="utf-8"))
@@ -24,15 +35,24 @@ def main():
 
         for item in payload["concepts"]:
             concept_id = item["id"]
-            definition = {
-                "id": concept_id,
-                "canonical_name": item["canonical_name"],
-                "type": item["type"],
-                "aliases": item["aliases"]
-            }
-            if concept_id in concepts and concepts[concept_id] != definition:
-                raise ValueError(f"Definición conflictiva para {concept_id}")
-            concepts[concept_id] = definition
+            if concept_id not in concepts:
+                raise ValueError(
+                    f"Concepto de conocimiento ausente en el catálogo: {concept_id}"
+                )
+
+            catalog_definition = concepts[concept_id]
+            for field in ("canonical_name", "type"):
+                if item[field] != catalog_definition[field]:
+                    raise ValueError(
+                        f"Definición conflictiva para {concept_id}: {field}"
+                    )
+
+            relation_key = (concept_id, restriction_id)
+            if relation_key in relation_keys:
+                raise ValueError(
+                    "Relación duplicada: " + " / ".join(relation_key)
+                )
+            relation_keys.add(relation_key)
             relations.append({
                 "concept_id": concept_id,
                 "restriction_id": restriction_id,
@@ -53,7 +73,9 @@ def main():
     target.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
         f"Consolidadas {len(restrictions)} restricción(es), "
-        f"{len(concepts)} concepto(s) y {len(relations)} relación(es)"
+        f"{len(concepts)} concepto(s) y {len(relations)} relación(es); "
+        f"{len(set(concepts) - {item['concept_id'] for item in relations})} "
+        "concepto(s) sin relación"
     )
 
 

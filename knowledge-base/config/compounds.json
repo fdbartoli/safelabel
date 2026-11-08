@@ -313,5 +313,37 @@
       {"term": "triticale", "language": "fr"},
       {"term": "triticale", "language": "pt"}
     ]
+  },
+  {
+    "id": "CMP-SALT",
+    "canonical_name": "sal",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "sal", "language": "es"},
+      {"term": "salt", "language": "en"},
+      {"term": "sel", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-SUGAR",
+    "canonical_name": "azúcar",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "azúcar", "language": "es"},
+      {"term": "sugar", "language": "en"},
+      {"term": "sucre", "language": "fr"},
+      {"term": "açúcar", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-ALMOND",
+    "canonical_name": "almendra",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "almendra", "language": "es"},
+      {"term": "almond", "language": "en"},
+      {"term": "amande", "language": "fr"},
+      {"term": "amêndoa", "language": "pt"}
+    ]
   }
 ]

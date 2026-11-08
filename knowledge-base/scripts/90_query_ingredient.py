@@ -5,9 +5,9 @@ import sqlite3
 
 
 QUERY = """
-SELECT denomination, matched_concept, match_type, relation_type,
-       target_concept, restriction_id, restriction_name, certainty
-FROM v_restriction_matches
+SELECT DISTINCT denomination, matched_concept, match_type, relation_type,
+       target_concept, restriction_id, restriction_name, status, certainty
+FROM v_concept_matches
 WHERE denomination = ? COLLATE NOCASE
 ORDER BY restriction_id, relation_type
 """
@@ -25,7 +25,7 @@ def main():
 
     result = {
         "input": args.denomination,
-        "status": "MATCHED" if matches else "UNKNOWN",
+        "status": matches[0]["status"] if matches else "UNKNOWN",
         "matches": matches,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))

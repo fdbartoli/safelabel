@@ -85,6 +85,7 @@ for restriction in milk celiac; do
 done
 
 python3 scripts/70_consolidate_knowledge.py \
+  --catalog config/compounds.json \
   --inputs \
     "$smoke_dir/knowledge/milk.json" \
     "$smoke_dir/knowledge/celiac.json" \
@@ -112,6 +113,11 @@ python3 scripts/90_query_ingredient.py \
   "$smoke_dir/output/safelabel.sqlite" \
   "caseína" |
   grep -q '"status": "MATCHED"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "sal" |
+  grep -q '"status": "RECOGNIZED"'
 
 python3 scripts/90_query_ingredient.py \
   "$smoke_dir/output/safelabel.sqlite" \
