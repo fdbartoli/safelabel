@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart' show databaseFactory;
 
 import 'cuenta/servicio_cuenta.dart';
 import 'conocimiento/catalogo_conocimiento.dart';
@@ -39,10 +40,9 @@ class _Arranque {
 
 Future<_Arranque> _arrancar() async {
   final base = await BaseConocimiento.cargarDesdeAssets();
-  final fabrica = fabricaBdPlataforma();
-  if (fabrica == null) {
-    throw UnsupportedError('La persistencia SQLite no está disponible.');
-  }
+  // En Android, iOS y macOS no hay fábrica alternativa (null): ahí se usa la
+  // de sqflite, que va por el plugin nativo.
+  final fabrica = fabricaBdPlataforma() ?? databaseFactory;
   var recienCreada = false;
   final bd = await BdLocal.abrir(
     fabrica: fabrica,

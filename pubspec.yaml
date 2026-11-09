@@ -43,6 +43,7 @@ dependencies:
   sqflite_common_ffi: ^2.4.5
   shared_preferences: ^2.5.6
   crypto: ^3.0.8
+  sqflite_common_ffi_web: ^1.2.0
 
 dev_dependencies:
   flutter_test:

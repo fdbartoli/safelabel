@@ -20,7 +20,7 @@ $ErrorActionPreference = 'Stop'
 # Rutas: Flutter desde PATH o configurable
 $FlutterBin = ''
 if (Get-Command flutter -ErrorAction SilentlyContinue) {
-    $FlutterBin = (Get-Command flutter).CommandPath
+    $FlutterBin = (Get-Command flutter).Source
     $FlutterBin = Split-Path $FlutterBin -Parent
 }
 if (-not $FlutterBin) {
