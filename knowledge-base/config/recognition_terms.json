@@ -1,0 +1,34 @@
+[
+  {
+    "term": "leche entera",
+    "language": "es",
+    "concept_id": "CMP-MILK",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación explícita de leche."
+  },
+  {
+    "term": "harina de trigo",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen trigo."
+  },
+  {
+    "term": "harina enriquecida de trigo",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante explícita de harina de trigo."
+  },
+  {
+    "term": "leche de almendras",
+    "language": "es",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  }
+]

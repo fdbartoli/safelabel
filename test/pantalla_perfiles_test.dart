@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
+import 'package:safelabel/conocimiento/catalogo_conocimiento.dart';
 import 'package:safelabel/datos/bd_local.dart';
 import 'package:safelabel/datos/perfiles_iniciales.dart';
 import 'package:safelabel/datos/repositorio_perfiles.dart';
@@ -12,15 +13,33 @@ import 'package:safelabel/ui/pantalla_inicio.dart';
 import 'package:safelabel/ui/pantalla_perfiles.dart';
 import 'package:safelabel/ui/tema.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:safelabel/datos/repositorio_conocimiento.dart';
 
 import 'ayuda_base.dart';
 
 void main() {
   final base = cargarBaseReal();
   final gruposValidos = base.grupos.keys.toSet();
+  final catalogo = CatalogoConocimiento.desdeBaseLegacy(base);
 
   late RepositorioPerfilesMemoria repo;
-  setUp(() => repo = RepositorioPerfilesMemoria(gruposValidos: gruposValidos));
+  late Database bdConocimiento;
+  late RepositorioConocimiento conocimiento;
+
+  setUp(() async {
+    sqfliteFfiInit();
+
+    repo = RepositorioPerfilesMemoria(gruposValidos: gruposValidos);
+
+    bdConocimiento = await databaseFactoryFfi.openDatabase(
+      inMemoryDatabasePath,
+    );
+    conocimiento = RepositorioConocimiento(bdConocimiento);
+  });
+
+  tearDown(() async {
+    await bdConocimiento.close();
+  });
 
   Future<void> montar(WidgetTester tester, Widget pantalla) async {
     tester.view.physicalSize = const Size(1200, 3200);
@@ -257,7 +276,15 @@ void main() {
       tester,
     ) async {
       await sembrarPerfilesIniciales(repo);
-      await montar(tester, PantallaInicio(base: base, repositorio: repo));
+      await montar(
+        tester,
+        PantallaInicio(
+          base: base,
+          repositorio: repo,
+          conocimiento: conocimiento,
+          catalogo: catalogo,
+        ),
+      );
 
       for (final p in perfilesIniciales) {
         expect(find.text(p.nombre), findsOneWidget);
@@ -283,7 +310,15 @@ void main() {
 
       // Objetos nuevos en cada lectura: la selección tiene que reconocerse por
       // id, no por identidad.
-      await montar(tester, PantallaInicio(base: base, repositorio: repo));
+      await montar(
+        tester,
+        PantallaInicio(
+          base: base,
+          repositorio: repo,
+          conocimiento: conocimiento,
+          catalogo: catalogo,
+        ),
+      );
       await tester.tap(find.text(todos[3].nombre));
       await tester.pumpAndSettle();
 
@@ -294,7 +329,15 @@ void main() {
     });
 
     testWidgets('sin perfiles invita a crear uno', (tester) async {
-      await montar(tester, PantallaInicio(base: base, repositorio: repo));
+      await montar(
+        tester,
+        PantallaInicio(
+          base: base,
+          repositorio: repo,
+          conocimiento: conocimiento,
+          catalogo: catalogo,
+        ),
+      );
       expect(find.textContaining('No hay perfiles guardados'), findsOneWidget);
     });
   });

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'cuenta/servicio_cuenta.dart';
+import 'conocimiento/catalogo_conocimiento.dart';
 import 'datos/almacen_local.dart';
 import 'datos/base_conocimiento.dart';
+import 'datos/bd_conocimiento.dart';
 import 'datos/bd_local.dart';
 import 'datos/fabrica_bd.dart';
 import 'datos/perfiles_iniciales.dart';
+import 'datos/repositorio_conocimiento.dart';
 import 'datos/repositorio_perfiles.dart';
 import 'datos/repositorio_usuarios.dart';
 import 'ui/pantalla_inicio.dart';
@@ -22,16 +25,27 @@ Future<void> main() async {
 
 /// Lo que la app necesita cargado antes de mostrar la pantalla de inicio.
 class _Arranque {
-  const _Arranque(this.base, this.repositorio);
+  const _Arranque(
+    this.base,
+    this.repositorio,
+    this.conocimiento,
+    this.catalogo,
+  );
   final BaseConocimiento base;
   final RepositorioPerfiles repositorio;
+  final RepositorioConocimiento conocimiento;
+  final CatalogoConocimiento catalogo;
 }
 
 Future<_Arranque> _arrancar() async {
   final base = await BaseConocimiento.cargarDesdeAssets();
+  final fabrica = fabricaBdPlataforma();
+  if (fabrica == null) {
+    throw UnsupportedError('La persistencia SQLite no está disponible.');
+  }
   var recienCreada = false;
   final bd = await BdLocal.abrir(
-    fabrica: fabricaBdPlataforma(),
+    fabrica: fabrica,
     alCrear: () => recienCreada = true,
   );
   final repositorio = RepositorioPerfilesSqlite(
@@ -39,7 +53,10 @@ Future<_Arranque> _arrancar() async {
     gruposValidos: base.grupos.keys.toSet(),
   );
   if (recienCreada) await sembrarPerfilesIniciales(repositorio);
-  return _Arranque(base, repositorio);
+  final bdConocimiento = await BdConocimiento.abrir(fabrica);
+  final conocimiento = RepositorioConocimiento(bdConocimiento);
+  final catalogo = await conocimiento.cargarCatalogo();
+  return _Arranque(base, repositorio, conocimiento, catalogo);
 }
 
 class SafeLabelApp extends StatelessWidget {
@@ -106,6 +123,8 @@ class _CargaDeBaseState extends State<_CargaDeBase> {
         return PantallaInicio(
           base: arranque.base,
           repositorio: arranque.repositorio,
+          conocimiento: arranque.conocimiento,
+          catalogo: arranque.catalogo,
           servicioCuenta: widget.servicioCuenta,
         );
       },

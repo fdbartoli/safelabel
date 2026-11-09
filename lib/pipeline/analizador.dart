@@ -1,4 +1,5 @@
 import '../datos/base_conocimiento.dart';
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../modelo/diagnostico_ocr.dart';
 import '../modelo/ingrediente.dart';
 import '../modelo/perfil.dart';
@@ -14,11 +15,18 @@ import 'verificacion_cruzada.dart';
 /// No decide alérgenos: encadena triage → normalización → match → verificación
 /// cruzada → cruce con perfiles, y cada determinación sale de la base local.
 class Analizador {
-  Analizador(this.base, {this.triage = const TriageConfianza()})
-    : _matcher = Emparejador(base),
-      _verificacion = VerificacionCruzada(base);
+  Analizador(
+    this.base, {
+    CatalogoConocimiento? catalogo,
+    this.triage = const TriageConfianza(),
+  }) : catalogo = catalogo ?? CatalogoConocimiento.desdeBaseLegacy(base),
+       _matcher = catalogo == null
+           ? Emparejador(base)
+           : Emparejador.desdeCatalogo(catalogo),
+       _verificacion = VerificacionCruzada(base);
 
   final BaseConocimiento base;
+  final CatalogoConocimiento catalogo;
   final TriageConfianza triage;
   final Emparejador _matcher;
   final VerificacionCruzada _verificacion;
@@ -51,70 +59,74 @@ class Analizador {
     for (final m in matches) {
       switch (m) {
         case Coincidencia():
-          final ing = m.ingrediente;
+          final concepto = m.concepto;
 
-          // Término conocido y sin alérgeno asociado: cuenta como analizado y no
-          // genera hallazgo. No es un veredicto de aptitud (regla 1.4).
-          final grupoId = ing.grupoAlergenoId;
-          if (grupoId == null) continue;
+          // Un concepto puede estar relacionado con más de una restricción.
+          for (final relacion in concepto.relaciones) {
+            final grupoId = relacion.perfilId;
+            final grupo = base.grupo(grupoId);
+            final nombreGrupo = grupo?.nombre ?? relacion.nombreVisible;
 
-          final grupo = base.grupo(grupoId);
-          final nombreGrupo = grupo?.nombre ?? grupoId;
+            // Las excepciones siguen en el JSON auxiliar hasta incorporarlas a
+            // la base consolidada.
+            final nombreNormalizado = _normalizador.normalizarTexto(
+              concepto.nombreCanonico,
+            );
+            final excepcion = base.excepcionPara(nombreNormalizado, grupoId);
+            if (excepcion != null) {
+              notasExcepciones.add(
+                NotaExcepcion(
+                  textoLeido: m.item.textoOriginal,
+                  grupoAlergeno: nombreGrupo,
+                  regla: excepcion.regla,
+                  fuente: excepcion.fuente,
+                ),
+              );
+              continue;
+            }
 
-          // Sección 5.4: excepción del CAA modelada como regla.
-          final excepcion = base.excepcionPara(ing.nombreNormalizado, grupoId);
-          if (excepcion != null) {
-            notasExcepciones.add(
-              NotaExcepcion(
+            gruposDetectadosEnIngredientes.add(grupoId);
+            final perfilesAfectados = [
+              for (final p in perfilesActivos)
+                if (p.restringe(grupoId)) p.nombre,
+            ];
+            if (perfilesAfectados.isEmpty) continue;
+
+            final sevHallazgo = _severidadMaximaGrupo(
+              perfilesActivos,
+              grupoId,
+            )!;
+            String? aclaracion;
+            if (declaracion.hayDeclaracion &&
+                !declaracion.contiene.contains(grupoId)) {
+              aclaracion =
+                  'La línea "CONTIENE" no menciona $nombreGrupo. Puede ser un '
+                  'error de lectura de esa línea, una excepción del CAA o un '
+                  'incumplimiento de la etiqueta.';
+            }
+
+            coincidencias.add(
+              HallazgoPerfil(
                 textoLeido: m.item.textoOriginal,
+                nombreEnBase: concepto.nombreCanonico,
                 grupoAlergeno: nombreGrupo,
-                regla: excepcion.regla,
-                fuente: excepcion.fuente,
+                porQue:
+                    '${concepto.nombreCanonico} está relacionado con '
+                    '${relacion.nombreVisible} según la base de conocimiento.',
+                certeza: relacion.certeza,
+                difuso: !m.exacta,
+                similitud: m.similitud,
+                perfilesAfectados: perfilesAfectados,
+                severidadMaxima: sevHallazgo,
+                fuente: relacion.fuentes,
+                origen: declaracion.contiene.contains(grupoId)
+                    ? OrigenHallazgo.ambos
+                    : OrigenHallazgo.ingrediente,
+                padre: m.item.padre,
+                aclaracionCruce: aclaracion,
               ),
             );
-            continue;
           }
-
-          gruposDetectadosEnIngredientes.add(grupoId);
-
-          final perfilesAfectados = [
-            for (final p in perfilesActivos)
-              if (p.restringe(grupoId)) p.nombre,
-          ];
-          if (perfilesAfectados.isEmpty) continue;
-
-          final sevHallazgo = _severidadMaximaGrupo(perfilesActivos, grupoId)!;
-
-          // Sección 5.3, fila 3: el ingrediente marca alérgeno pero la línea
-          // CONTIENE no lo declara.
-          String? aclaracion;
-          if (declaracion.hayDeclaracion &&
-              !declaracion.contiene.contains(grupoId)) {
-            aclaracion =
-                'La línea "CONTIENE" no menciona $nombreGrupo. Puede ser un '
-                'error de lectura de esa línea, una excepción del CAA o un '
-                'incumplimiento de la etiqueta.';
-          }
-
-          coincidencias.add(
-            HallazgoPerfil(
-              textoLeido: m.item.textoOriginal,
-              nombreEnBase: ing.nombreCanonico,
-              grupoAlergeno: nombreGrupo,
-              porQue: ing.explicacion,
-              certeza: ing.certeza,
-              difuso: !m.exacta,
-              similitud: m.similitud,
-              perfilesAfectados: perfilesAfectados,
-              severidadMaxima: sevHallazgo,
-              fuente: ing.fuente,
-              origen: declaracion.contiene.contains(grupoId)
-                  ? OrigenHallazgo.ambos
-                  : OrigenHallazgo.ingrediente,
-              padre: m.item.padre,
-              aclaracionCruce: aclaracion,
-            ),
-          );
 
         case SinCoincidencia():
           noReconocidos.add(
@@ -192,7 +204,7 @@ class Analizador {
     final itemsAnalizados = items.length - noReconocidos.length;
 
     return ResultadoAnalisis(
-      versionBase: base.version,
+      versionBase: catalogo.version,
       perfilesActivos: [for (final p in perfilesActivos) p.nombre],
       coincidencias: coincidencias,
       noReconocidos: noReconocidos,
@@ -210,7 +222,7 @@ class Analizador {
         items: [for (final m in matches) _diagnosticar(m)],
         lineasContiene: declaracion.lineasContiene,
         lineasPuedeContener: declaracion.lineasPuedeContener,
-        versionBase: base.version,
+        versionBase: catalogo.version,
       ),
     );
   }
@@ -218,7 +230,10 @@ class Analizador {
   ItemDiagnostico _diagnosticar(ResultadoMatch m) {
     switch (m) {
       case Coincidencia():
-        final grupoId = m.ingrediente.grupoAlergenoId;
+        final grupos = [
+          for (final r in m.concepto.relaciones)
+            base.grupo(r.perfilId)?.nombre ?? r.nombreVisible,
+        ];
         return ItemDiagnostico(
           textoOriginal: m.item.textoOriginal,
           textoNormalizado: m.item.textoNormalizado,
@@ -230,9 +245,7 @@ class Analizador {
               ? EstadoItem.contiene
               : EstadoItem.difuso,
           terminoBase: m.terminoBase,
-          grupoAlergeno: grupoId == null
-              ? null
-              : (base.grupo(grupoId)?.nombre ?? grupoId),
+          grupoAlergeno: grupos.isEmpty ? null : grupos.join(', '),
           similitud: m.exacta || m.porContencion ? null : m.similitud,
         );
       case SinCoincidencia():

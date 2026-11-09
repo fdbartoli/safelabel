@@ -14,17 +14,23 @@ void main() {
   List<ResultadoMatch> analizar(String texto) =>
       emparejador.matchTodos(n.separarIngredientes(texto));
 
+  /// Restricciones de cada coincidencia; `null` si coincidió con un concepto
+  /// sin restricción ("manteca de cacao").
   Set<String?> grupos(String texto) => {
-        for (final m in analizar(texto))
-          if (m is Coincidencia) m.ingrediente.grupoAlergenoId,
-      };
+    for (final m in analizar(texto))
+      if (m is Coincidencia)
+        if (m.concepto.relaciones.isEmpty)
+          null
+        else
+          for (final r in m.concepto.relaciones) r.perfilId,
+  };
 
   test('"harina de trigo tipo 000 enriquecida" contiene harina de trigo', () {
     final m = analizar('harina de trigo tipo 000 enriquecida').single;
     expect(m, isA<Coincidencia>());
     m as Coincidencia;
     expect(m.porContencion, isTrue);
-    expect(m.ingrediente.grupoAlergenoId, 'trigo');
+    expect(m.concepto.relaciones.map((r) => r.perfilId), contains('trigo'));
   });
 
   test('un ítem con dos alérgenos genera una coincidencia por grupo', () {

@@ -33,6 +33,9 @@ CREATE TABLE denomination (
   name TEXT NOT NULL COLLATE NOCASE,
   language TEXT NOT NULL,
   concept_id TEXT NOT NULL REFERENCES concept(id),
+  mapping_type TEXT NOT NULL CHECK(mapping_type IN ('alias', 'curated')),
+  reviewed_by TEXT,
+  review_notes TEXT,
   UNIQUE(name, language)
 );
 
@@ -68,10 +71,11 @@ CREATE INDEX idx_denomination_concept ON denomination(concept_id);
 CREATE INDEX idx_evidence_concept ON evidence(concept_id);
 CREATE INDEX idx_evidence_source ON evidence(source_id);
 
-CREATE VIEW v_restriction_matches AS
+CREATE VIEW v_concept_matches AS
 SELECT
   denomination.name AS denomination,
   denomination.language AS language,
+  denomination.mapping_type AS mapping_type,
   concept.id AS concept_id,
   concept.canonical_name AS matched_concept,
   concept_restriction.match_type AS match_type,
@@ -79,12 +83,26 @@ SELECT
   target.canonical_name AS target_concept,
   restriction.id AS restriction_id,
   restriction.name AS restriction_name,
-  'certain' AS certainty
+  CASE
+    WHEN concept_restriction.restriction_id IS NULL THEN 'RECOGNIZED'
+    ELSE 'MATCHED'
+  END AS status,
+  CASE
+    WHEN concept_restriction.restriction_id IS NULL THEN NULL
+    ELSE 'certain'
+  END AS certainty
 FROM denomination
 JOIN concept ON concept.id = denomination.concept_id
-JOIN concept_restriction ON concept_restriction.concept_id = concept.id
-JOIN restriction ON restriction.id = concept_restriction.restriction_id
-JOIN concept target ON target.id = restriction.target_concept_id;
+LEFT JOIN concept_restriction ON concept_restriction.concept_id = concept.id
+LEFT JOIN restriction ON restriction.id = concept_restriction.restriction_id
+LEFT JOIN concept target ON target.id = restriction.target_concept_id;
+
+CREATE VIEW v_restriction_matches AS
+SELECT
+  denomination, language, concept_id, matched_concept, match_type,
+  relation_type, target_concept, restriction_id, restriction_name, certainty
+FROM v_concept_matches
+WHERE restriction_id IS NOT NULL;
 """
 
 
@@ -104,6 +122,7 @@ def main():
     restrictions = payload["restrictions"]
     concepts = payload["concepts"]
     relations = payload["relations"]
+    recognition_terms = payload.get("recognition_terms", [])
     concept_ids = {concept["id"] for concept in concepts}
     for restriction in restrictions:
         if restriction["target_concept_id"] not in concept_ids:
@@ -126,9 +145,31 @@ def main():
             )
             for alias in concept["aliases"]:
                 conn.execute(
-                    "INSERT OR IGNORE INTO denomination(name, language, concept_id) VALUES (?, ?, ?)",
+                    """
+                    INSERT INTO denomination(
+                      name, language, concept_id, mapping_type,
+                      reviewed_by, review_notes
+                    ) VALUES (?, ?, ?, 'alias', NULL, NULL)
+                    """,
                     (alias["term"], alias["language"], concept["id"])
                 )
+
+        for term in recognition_terms:
+            conn.execute(
+                """
+                INSERT INTO denomination(
+                  name, language, concept_id, mapping_type,
+                  reviewed_by, review_notes
+                ) VALUES (?, ?, ?, 'curated', ?, ?)
+                """,
+                (
+                    term["term"],
+                    term["language"],
+                    term["concept_id"],
+                    term["reviewed_by"],
+                    term.get("review_notes")
+                )
+            )
 
         for restriction in restrictions:
             conn.execute(
@@ -201,7 +242,8 @@ def main():
     print(
         f"SQLite generada: {len(restrictions)} restricción(es), "
         f"{len(concepts)} concepto(s), {len(relations)} relación(es), "
-        f"{alias_count} denominación(es), {evidence_count} evidencia(s): {output}"
+        f"{alias_count} denominación(es) —{len(recognition_terms)} curada(s)—, "
+        f"{evidence_count} evidencia(s): {output}"
     )
 
 

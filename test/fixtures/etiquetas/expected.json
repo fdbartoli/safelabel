@@ -1,0 +1,102 @@
+{
+  "knowledge_base_version": "0.10.0",
+  "fixtures": [
+    {
+      "file": "01_leche_directa.jpg",
+      "ocr_should_contain": ["leche", "azúcar", "cacao"],
+      "ingredient_expectations": [
+        {
+          "term": "leche entera",
+          "status": "MATCHED",
+          "restriction_ids": ["RES-MILK"]
+        },
+        {
+          "term": "cacao",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
+        }
+      ],
+      "declared_contains": ["RES-MILK"]
+    },
+    {
+      "file": "02_caseinato_sodio.jpg",
+      "ocr_should_contain": ["caseinato de sodio", "sal"],
+      "ingredient_expectations": [
+        {
+          "term": "caseinato de sodio",
+          "status": "MATCHED",
+          "restriction_ids": ["RES-MILK"]
+        },
+        {
+          "term": "sal",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
+        }
+      ],
+      "declared_contains": ["RES-MILK"]
+    },
+    {
+      "file": "03_trigo_directo.jpg",
+      "ocr_should_contain": ["trigo", "azúcar", "sal"],
+      "ingredient_expectations": [
+        {
+          "term": "trigo",
+          "status": "MATCHED",
+          "restriction_ids": ["RES-CELIAC"]
+        }
+      ],
+      "declared_contains": ["RES-CELIAC"]
+    },
+    {
+      "file": "04_harina_trigo.jpg",
+      "ocr_should_contain": ["harina enriquecida de trigo", "azúcar", "sal"],
+      "ingredient_expectations": [
+        {
+          "term": "harina enriquecida de trigo",
+          "status": "MATCHED",
+          "restriction_ids": ["RES-CELIAC"]
+        }
+      ],
+      "declared_contains": ["RES-CELIAC"]
+    },
+    {
+      "file": "05_leche_almendras.jpg",
+      "ocr_should_contain": ["leche de almendras", "azúcar", "sal"],
+      "ingredient_expectations": [
+        {
+          "term": "leche de almendras",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
+        }
+      ],
+      "must_not_match_restriction_ids": ["RES-MILK"]
+    },
+    {
+      "file": "06_sal_azucar.jpg",
+      "ocr_should_contain": ["azúcar", "sal"],
+      "ingredient_expectations": [
+        {
+          "term": "azúcar",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
+        },
+        {
+          "term": "sal",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
+        }
+      ]
+    },
+    {
+      "file": "07_desconocido.jpg",
+      "ocr_should_contain": ["extracto de achicoria"],
+      "ingredient_expectations": [
+        {
+          "term": "extracto de achicoria",
+          "status": "UNKNOWN",
+          "restriction_ids": []
+        }
+      ]
+    }
+  ]
+}

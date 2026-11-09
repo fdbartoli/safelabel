@@ -85,6 +85,8 @@ for restriction in milk celiac; do
 done
 
 python3 scripts/70_consolidate_knowledge.py \
+  --catalog config/compounds.json \
+  --recognition-terms config/recognition_terms.json \
   --inputs \
     "$smoke_dir/knowledge/milk.json" \
     "$smoke_dir/knowledge/celiac.json" \
@@ -112,6 +114,38 @@ python3 scripts/90_query_ingredient.py \
   "$smoke_dir/output/safelabel.sqlite" \
   "caseína" |
   grep -q '"status": "MATCHED"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "sal" |
+  grep -q '"status": "RECOGNIZED"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "leche entera" |
+  grep -q '"restriction_id": "RES-MILK"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "harina enriquecida de trigo" |
+  grep -q '"restriction_id": "RES-CELIAC"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "leche de almendras" |
+  grep -q '"status": "RECOGNIZED"'
+
+python3 scripts/90_query_ingredient.py \
+  "$smoke_dir/output/safelabel.sqlite" \
+  "cacao" |
+  grep -q '"status": "RECOGNIZED"'
+
+for ingredient in "agua" "aceite de girasol" "carbonato de calcio"; do
+  python3 scripts/90_query_ingredient.py \
+    "$smoke_dir/output/safelabel.sqlite" \
+    "$ingredient" |
+    grep -q '"status": "RECOGNIZED"'
+done
 
 python3 scripts/90_query_ingredient.py \
   "$smoke_dir/output/safelabel.sqlite" \

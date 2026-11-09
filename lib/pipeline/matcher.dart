@@ -1,5 +1,5 @@
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../datos/base_conocimiento.dart';
-import '../modelo/ingrediente.dart';
 import 'normalizador.dart';
 import 'similitud.dart';
 
@@ -20,14 +20,14 @@ sealed class ResultadoMatch {
 class Coincidencia extends ResultadoMatch {
   const Coincidencia(
     super.item, {
-    required this.ingrediente,
+    required this.concepto,
     required this.exacta,
     required this.similitud,
     required this.terminoBase,
     this.porContencion = false,
   });
 
-  final Ingrediente ingrediente;
+  final ConceptoConocimiento concepto;
 
   /// `true` si fue match exacto; `false` si fue difuso o por contención.
   final bool exacta;
@@ -64,23 +64,35 @@ class SinCoincidencia extends ResultadoMatch {
 
 class Emparejador {
   Emparejador(
-    this.base, {
+    BaseConocimiento base, {
+    this.umbralDifuso = 0.84,
+    this.umbralSospechaOcr = 0.62,
+  }) : catalogo = CatalogoConocimiento.desdeBaseLegacy(base);
+
+  // No es `const`: la lista de términos para contención se arma una vez, en
+  // forma diferida.
+  Emparejador.desdeCatalogo(
+    this.catalogo, {
     this.umbralDifuso = 0.84,
     this.umbralSospechaOcr = 0.62,
   });
 
-  final BaseConocimiento base;
+  final CatalogoConocimiento catalogo;
 
-  /// Términos de la base que implican un alérgeno, con su patrón de palabra
-  /// completa (plural tolerado), del más largo al más corto. Para la
-  /// búsqueda por contención.
-  late final List<(String, String, RegExp)> _terminosConAlergeno = () {
-    final lista = <(String, String, RegExp)>[];
-    for (final t in base.terminosIndexados) {
-      final grupo = base.matchExacto(t)?.grupoAlergenoId;
+  /// Términos de la base cuyo concepto está relacionado con alguna
+  /// restricción, con su patrón de palabra completa (plural tolerado), del más
+  /// largo al más corto. Para la búsqueda por contención.
+  late final List<(String, Set<String>, RegExp)> _terminosConAlergeno = () {
+    final lista = <(String, Set<String>, RegExp)>[];
+    for (final t in catalogo.terminosIndexados) {
+      final relaciones = catalogo.matchExacto(t)?.relaciones ?? const [];
       // Mínimo 4 letras: "soja", "mani", "nuez" entran; "sal" o "soy" no.
-      if (grupo == null || t.replaceAll(' ', '').length < 4) continue;
-      lista.add((t, grupo, RegExp('(?:^| )${RegExp.escape(t)}(?:s|es)?(?: |\$)')));
+      if (relaciones.isEmpty || t.replaceAll(' ', '').length < 4) continue;
+      lista.add((
+        t,
+        {for (final r in relaciones) r.perfilId},
+        RegExp('(?:^| )${RegExp.escape(t)}(?:s|es)?(?: |\$)'),
+      ));
     }
     lista.sort((a, b) => b.$1.length.compareTo(a.$1.length));
     return lista;
@@ -105,14 +117,14 @@ class Emparejador {
     }
 
     // 1. Exacto.
-    final exacto = base.matchExacto(texto);
+    final exacto = catalogo.matchExacto(texto);
     if (exacto != null) {
       return Coincidencia(
         item,
-        ingrediente: exacto,
+        concepto: exacto,
         exacta: true,
         similitud: 1,
-        terminoBase: base.etiquetaDe(texto),
+        terminoBase: catalogo.etiquetaDe(texto),
       );
     }
 
@@ -124,7 +136,7 @@ class Emparejador {
     // 3. Difuso: mejor término de la base.
     var mejor = 0.0;
     String? mejorTermino;
-    for (final termino in base.terminosIndexados) {
+    for (final termino in catalogo.terminosIndexados) {
       final s = similitud(texto, termino);
       if (s > mejor) {
         mejor = s;
@@ -136,10 +148,10 @@ class Emparejador {
     if (mejor >= umbralDifuso && mejorTermino != null) {
       return Coincidencia(
         item,
-        ingrediente: base.matchExacto(mejorTermino)!,
+        concepto: catalogo.matchExacto(mejorTermino)!,
         exacta: false,
         similitud: mejor,
-        terminoBase: base.etiquetaDe(mejorTermino),
+        terminoBase: catalogo.etiquetaDe(mejorTermino),
       );
     }
 
@@ -148,30 +160,35 @@ class Emparejador {
       item,
       mejorSimilitud: mejor,
       candidato: mejor >= umbralSospechaOcr && mejorTermino != null
-          ? base.etiquetaDe(mejorTermino)
+          ? catalogo.etiquetaDe(mejorTermino)
           : null,
       probableErrorOcr: mejor >= umbralSospechaOcr,
     );
   }
 
-  /// Una coincidencia por cada grupo de alérgeno distinto contenido en el
-  /// ítem, con el término más largo de cada grupo. Vacío si no contiene ninguno.
+  /// Coincidencias por los términos con restricción contenidos en el ítem:
+  /// el término más largo primero, y uno más solo si suma una restricción que
+  /// los anteriores no cubrían. Vacío si no contiene ninguno.
   List<Coincidencia> _contenidosConAlergeno(ItemNormalizado item) {
     final texto = item.textoNormalizado;
-    final porGrupo = <String, Coincidencia>{};
-    for (final (termino, grupo, patron) in _terminosConAlergeno) {
-      if (porGrupo.containsKey(grupo)) continue;
+    final cubiertas = <String>{};
+    final resultado = <Coincidencia>[];
+    for (final (termino, restricciones, patron) in _terminosConAlergeno) {
+      if (cubiertas.containsAll(restricciones)) continue;
       if (!patron.hasMatch(texto)) continue;
-      porGrupo[grupo] = Coincidencia(
-        item,
-        ingrediente: base.matchExacto(termino)!,
-        exacta: false,
-        similitud: 1,
-        terminoBase: base.etiquetaDe(termino),
-        porContencion: true,
+      cubiertas.addAll(restricciones);
+      resultado.add(
+        Coincidencia(
+          item,
+          concepto: catalogo.matchExacto(termino)!,
+          exacta: false,
+          similitud: 1,
+          terminoBase: catalogo.etiquetaDe(termino),
+          porContencion: true,
+        ),
       );
     }
-    return porGrupo.values.toList();
+    return resultado;
   }
 
   /// Todas las coincidencias de cada ítem. Un ítem que contiene términos de

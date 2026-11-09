@@ -1,0 +1,36 @@
+CASO 01 — Leche directa
+Ingredientes: Leche entera, azúcar, cacao, estabilizante y esencia natural de vainilla.
+CONTIENE LECHE.
+
+--------------------------------------------------------------------------------
+
+CASO 02 — Caseinato de sodio
+Ingredientes: Agua, aceite vegetal, caseinato de sodio, azúcar, sal y estabilizante.
+CONTIENE DERIVADOS DE LECHE.
+
+--------------------------------------------------------------------------------
+
+CASO 03 — Trigo directo
+Ingredientes: Trigo, azúcar, cacao, sal y extracto natural de vainilla.
+CONTIENE TRIGO.
+
+--------------------------------------------------------------------------------
+
+CASO 04 — Harina enriquecida de trigo
+Ingredientes: Harina enriquecida de trigo, azúcar, aceite de girasol, cacao y sal.
+CONTIENE TRIGO.
+
+--------------------------------------------------------------------------------
+
+CASO 05 — Leche de almendras
+Ingredientes: Agua, leche de almendras, azúcar, carbonato de calcio y sal.
+
+--------------------------------------------------------------------------------
+
+CASO 06 — Sal y azúcar reconocidos
+Ingredientes: Azúcar, sal, agua y esencia natural.
+
+--------------------------------------------------------------------------------
+
+CASO 07 — Ingrediente desconocido
+Ingredientes: Agua, extracto de achicoria, regulador de acidez y aroma natural.
