@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
@@ -15,12 +16,19 @@ class BdConocimiento {
     // La base es un artefacto de solo lectura incluido en cada versión de la
     // app. Se reemplaza al arrancar para que una actualización de la app no
     // siga consultando la copia de una versión anterior.
-    final bytes = await rootBundle.load(rutaAsset);
-    await File(ruta).parent.create(recursive: true);
-    await File(ruta).writeAsBytes(
-      bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
-      flush: true,
+    final datos = await rootBundle.load(rutaAsset);
+    final bytes = datos.buffer.asUint8List(
+      datos.offsetInBytes,
+      datos.lengthInBytes,
     );
+    if (kIsWeb) {
+      // En el navegador no hay sistema de archivos (dart:io): la fábrica web
+      // guarda la base en IndexedDB y la escribe ella misma.
+      await fabrica.writeDatabaseBytes(ruta, bytes);
+    } else {
+      await File(ruta).parent.create(recursive: true);
+      await File(ruta).writeAsBytes(bytes, flush: true);
+    }
     return fabrica.openDatabase(
       ruta,
       options: OpenDatabaseOptions(readOnly: true),
