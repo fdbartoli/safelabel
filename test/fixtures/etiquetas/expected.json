@@ -1,14 +1,19 @@
 {
-  "knowledge_base_version": "0.9.0",
+  "knowledge_base_version": "0.10.0",
   "fixtures": [
     {
       "file": "01_leche_directa.jpg",
       "ocr_should_contain": ["leche", "azúcar", "cacao"],
       "ingredient_expectations": [
         {
-          "term": "leche",
+          "term": "leche entera",
           "status": "MATCHED",
           "restriction_ids": ["RES-MILK"]
+        },
+        {
+          "term": "cacao",
+          "status": "RECOGNIZED",
+          "restriction_ids": []
         }
       ],
       "declared_contains": ["RES-MILK"]
@@ -48,12 +53,11 @@
       "ingredient_expectations": [
         {
           "term": "harina enriquecida de trigo",
-          "status": "UNKNOWN",
-          "restriction_ids": []
+          "status": "MATCHED",
+          "restriction_ids": ["RES-CELIAC"]
         }
       ],
-      "declared_contains": ["RES-CELIAC"],
-      "pending": "Incorporar una regla composicional controlada para harina de trigo."
+      "declared_contains": ["RES-CELIAC"]
     },
     {
       "file": "05_leche_almendras.jpg",
@@ -61,12 +65,11 @@
       "ingredient_expectations": [
         {
           "term": "leche de almendras",
-          "status": "UNKNOWN",
+          "status": "RECOGNIZED",
           "restriction_ids": []
         }
       ],
-      "must_not_match_restriction_ids": ["RES-MILK"],
-      "pending": "Modelar la expresión sin inferir leche por coincidencia parcial."
+      "must_not_match_restriction_ids": ["RES-MILK"]
     },
     {
       "file": "06_sal_azucar.jpg",

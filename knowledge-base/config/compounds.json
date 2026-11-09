@@ -345,5 +345,49 @@
       {"term": "amande", "language": "fr"},
       {"term": "amêndoa", "language": "pt"}
     ]
+  },
+  {
+    "id": "CMP-COCOA",
+    "canonical_name": "cacao",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "cacao", "language": "es"},
+      {"term": "cocoa", "language": "en"},
+      {"term": "cacao", "language": "fr"},
+      {"term": "cacau", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-WATER",
+    "canonical_name": "agua",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "agua", "language": "es"},
+      {"term": "water", "language": "en"},
+      {"term": "eau", "language": "fr"},
+      {"term": "água", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SUNFLOWER-OIL",
+    "canonical_name": "aceite de girasol",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aceite de girasol", "language": "es"},
+      {"term": "sunflower oil", "language": "en"},
+      {"term": "huile de tournesol", "language": "fr"},
+      {"term": "óleo de girassol", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CALCIUM-CARBONATE",
+    "canonical_name": "carbonato de calcio",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "carbonato de calcio", "language": "es"},
+      {"term": "calcium carbonate", "language": "en"},
+      {"term": "carbonate de calcium", "language": "fr"},
+      {"term": "carbonato de cálcio", "language": "pt"}
+    ]
   }
 ]

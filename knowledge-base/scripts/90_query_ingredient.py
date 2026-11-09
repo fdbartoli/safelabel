@@ -5,7 +5,8 @@ import sqlite3
 
 
 QUERY = """
-SELECT DISTINCT denomination, matched_concept, match_type, relation_type,
+SELECT DISTINCT denomination, mapping_type, matched_concept,
+       match_type, relation_type,
        target_concept, restriction_id, restriction_name, status, certainty
 FROM v_concept_matches
 WHERE denomination = ? COLLATE NOCASE

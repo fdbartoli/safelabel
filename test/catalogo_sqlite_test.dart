@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.9.0');
-    expect(catalogo.conceptos, hasLength(31));
+    expect(catalogo.version, '0.10.1');
+    expect(catalogo.conceptos, hasLength(35));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.9.0');
+      expect(resultado.versionBase, '0.10.1');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
@@ -112,5 +112,37 @@ void main() {
     expect(resultado.coincidencias, isEmpty);
     expect(resultado.noReconocidos, isEmpty);
     expect(resultado.itemsAnalizados, 1);
+  });
+
+  test('resuelve términos de reconocimiento curados', () async {
+    final lecheEntera = await repositorio.buscar('leche entera');
+    final harina = await repositorio.buscar('harina enriquecida de trigo');
+    final almendras = await repositorio.buscar('leche de almendras');
+    final cacao = await repositorio.buscar('cacao');
+
+    expect(lecheEntera.estado, EstadoConsultaConocimiento.matched);
+    expect(lecheEntera.coincidencias.single.restriccion, 'Leche');
+
+    expect(harina.estado, EstadoConsultaConocimiento.matched);
+    expect(harina.coincidencias.single.restriccion, 'Enfermedad celíaca');
+
+    expect(almendras.estado, EstadoConsultaConocimiento.recognized);
+    expect(almendras.coincidencias.single.tieneRestriccion, isFalse);
+
+    expect(cacao.estado, EstadoConsultaConocimiento.recognized);
+    expect(cacao.coincidencias.single.tieneRestriccion, isFalse);
+  });
+
+  test('reconoce ingredientes comunes sin relación', () async {
+    final agua = await repositorio.buscar('agua');
+    final aceite = await repositorio.buscar('aceite de girasol');
+    final carbonato = await repositorio.buscar('carbonato de calcio');
+
+    for (final resultado in [agua, aceite, carbonato]) {
+      expect(resultado.estado, EstadoConsultaConocimiento.recognized);
+      expect(resultado.coincidencias.single.tieneRestriccion, isFalse);
+    }
+
+    expect(carbonato.coincidencias.single.concepto, 'carbonato de calcio');
   });
 }

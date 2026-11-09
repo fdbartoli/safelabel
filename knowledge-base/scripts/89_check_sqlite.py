@@ -14,7 +14,7 @@ REQUIRED_TABLES = {
 }
 
 MATCH_QUERY = """
-SELECT denomination, language, concept_id, matched_concept,
+SELECT denomination, language, mapping_type, concept_id, matched_concept,
        status, match_type, target_concept, restriction_id, restriction_name
 FROM v_concept_matches
 ORDER BY matched_concept, language, denomination
@@ -78,6 +78,20 @@ def main():
             )
         }
         rows = conn.execute(MATCH_QUERY).fetchall()
+        denomination_columns = {
+            row[1] for row in conn.execute("PRAGMA table_info(denomination)")
+        }
+        required_denomination_columns = {
+            "mapping_type",
+            "reviewed_by",
+            "review_notes",
+        }
+        missing_columns = required_denomination_columns - denomination_columns
+        if missing_columns:
+            raise SystemExit(
+                "Faltan columnas de denominación: "
+                + ", ".join(sorted(missing_columns))
+            )
         recognized_count = conn.execute(
             "SELECT COUNT(*) FROM v_concept_matches WHERE status = 'RECOGNIZED'"
         ).fetchone()[0]

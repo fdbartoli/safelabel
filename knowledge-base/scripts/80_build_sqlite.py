@@ -33,6 +33,9 @@ CREATE TABLE denomination (
   name TEXT NOT NULL COLLATE NOCASE,
   language TEXT NOT NULL,
   concept_id TEXT NOT NULL REFERENCES concept(id),
+  mapping_type TEXT NOT NULL CHECK(mapping_type IN ('alias', 'curated')),
+  reviewed_by TEXT,
+  review_notes TEXT,
   UNIQUE(name, language)
 );
 
@@ -72,6 +75,7 @@ CREATE VIEW v_concept_matches AS
 SELECT
   denomination.name AS denomination,
   denomination.language AS language,
+  denomination.mapping_type AS mapping_type,
   concept.id AS concept_id,
   concept.canonical_name AS matched_concept,
   concept_restriction.match_type AS match_type,
@@ -118,6 +122,7 @@ def main():
     restrictions = payload["restrictions"]
     concepts = payload["concepts"]
     relations = payload["relations"]
+    recognition_terms = payload.get("recognition_terms", [])
     concept_ids = {concept["id"] for concept in concepts}
     for restriction in restrictions:
         if restriction["target_concept_id"] not in concept_ids:
@@ -140,9 +145,31 @@ def main():
             )
             for alias in concept["aliases"]:
                 conn.execute(
-                    "INSERT OR IGNORE INTO denomination(name, language, concept_id) VALUES (?, ?, ?)",
+                    """
+                    INSERT INTO denomination(
+                      name, language, concept_id, mapping_type,
+                      reviewed_by, review_notes
+                    ) VALUES (?, ?, ?, 'alias', NULL, NULL)
+                    """,
                     (alias["term"], alias["language"], concept["id"])
                 )
+
+        for term in recognition_terms:
+            conn.execute(
+                """
+                INSERT INTO denomination(
+                  name, language, concept_id, mapping_type,
+                  reviewed_by, review_notes
+                ) VALUES (?, ?, ?, 'curated', ?, ?)
+                """,
+                (
+                    term["term"],
+                    term["language"],
+                    term["concept_id"],
+                    term["reviewed_by"],
+                    term.get("review_notes")
+                )
+            )
 
         for restriction in restrictions:
             conn.execute(
@@ -215,7 +242,8 @@ def main():
     print(
         f"SQLite generada: {len(restrictions)} restricción(es), "
         f"{len(concepts)} concepto(s), {len(relations)} relación(es), "
-        f"{alias_count} denominación(es), {evidence_count} evidencia(s): {output}"
+        f"{alias_count} denominación(es) —{len(recognition_terms)} curada(s)—, "
+        f"{evidence_count} evidencia(s): {output}"
     )
 
 

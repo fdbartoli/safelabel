@@ -11,7 +11,7 @@ depender de imágenes externas.
 - Conservar casos positivos, negativos y pendientes conocidos.
 - No se usan como certificación de precisión del OCR ni como prueba clínica.
 
-Las expectativas corresponden a la base de conocimiento `0.9.0`. El archivo
+Las expectativas corresponden a la base de conocimiento `0.10.0`. El archivo
 `expected.json` diferencia el resultado del ingrediente de lo declarado en la
 línea `CONTIENE`.
 
@@ -22,8 +22,8 @@ línea `CONTIENE`.
 | `01_leche_directa.jpg` | Relación directa con `RES-MILK`. |
 | `02_caseinato_sodio.jpg` | Derivado relacionado con `RES-MILK`. |
 | `03_trigo_directo.jpg` | Relación con `RES-CELIAC`. |
-| `04_harina_trigo.jpg` | Caso pendiente de regla composicional. |
-| `05_leche_almendras.jpg` | Evitar un falso positivo por la palabra “leche”. |
+| `04_harina_trigo.jpg` | Término curado que se resuelve al concepto trigo. |
+| `05_leche_almendras.jpg` | Término curado que evita asociarlo con leche. |
 | `06_sal_azucar.jpg` | Conceptos reconocidos sin relación registrada. |
 | `07_desconocido.jpg` | Ingrediente ausente del catálogo actual. |
 
