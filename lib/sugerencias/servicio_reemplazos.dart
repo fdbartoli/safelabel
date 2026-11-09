@@ -89,7 +89,9 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
   final http.Client _cliente;
   final Duration timeout;
 
-  Uri get _url => Uri.parse(
+  static const _modeloRespaldo = 'gemini-3.5-flash-lite';
+
+  Uri _url(String modelo) => Uri.parse(
     'https://generativelanguage.googleapis.com/v1beta/models/$modelo:generateContent',
   );
 
@@ -216,15 +218,18 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
 
   @override
   Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud) async {
-    final http.Response respuesta;
+    late final http.Response respuesta;
     try {
-      respuesta = await _cliente
-          .post(
-            _url,
-            headers: construirHeaders(apiKey),
-            body: jsonEncode(construirCuerpo(solicitud)),
-          )
+      final cuerpo = jsonEncode(construirCuerpo(solicitud));
+      Future<http.Response> enviar(String modelo) => _cliente
+          .post(_url(modelo), headers: construirHeaders(apiKey), body: cuerpo)
           .timeout(timeout);
+
+      final principal = await enviar(modelo);
+      // Solo la indisponibilidad del servicio habilita un intento de respaldo.
+      respuesta = principal.statusCode == 503
+          ? await enviar(_modeloRespaldo)
+          : principal;
     } catch (e) {
       throw ErrorReemplazos('sin conexión: $e');
     }
