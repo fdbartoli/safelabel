@@ -11,5 +11,6 @@ import 'fabrica_bd_sin_ffi.dart'
 /// plugin. En Windows y Linux sqflite no tiene plugin, así que se usa
 /// `sqflite_common_ffi`, que carga una librería SQLite empaquetada. Sirve para
 /// probar perfiles y el análisis de texto pegado en la PC; la cámara y el OCR
-/// siguen siendo solo de móvil.
+/// siguen siendo solo de móvil. En web (Chrome) se usa
+/// `sqflite_common_ffi_web` (SQLite en WebAssembly).
 DatabaseFactory? fabricaBdPlataforma() => plataforma.fabricaBdPlataforma();
