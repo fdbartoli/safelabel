@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
+import 'package:safelabel/conocimiento/catalogo_conocimiento.dart';
 import 'package:safelabel/datos/bd_local.dart';
 import 'package:safelabel/datos/perfiles_iniciales.dart';
 import 'package:safelabel/datos/repositorio_perfiles.dart';
@@ -19,6 +20,7 @@ import 'ayuda_base.dart';
 void main() {
   final base = cargarBaseReal();
   final gruposValidos = base.grupos.keys.toSet();
+  final catalogo = CatalogoConocimiento.desdeBaseLegacy(base);
 
   late RepositorioPerfilesMemoria repo;
   late Database bdConocimiento;
@@ -280,6 +282,7 @@ void main() {
           base: base,
           repositorio: repo,
           conocimiento: conocimiento,
+          catalogo: catalogo,
         ),
       );
 
@@ -313,6 +316,7 @@ void main() {
           base: base,
           repositorio: repo,
           conocimiento: conocimiento,
+          catalogo: catalogo,
         ),
       );
       await tester.tap(find.text(todos[3].nombre));
@@ -331,6 +335,7 @@ void main() {
           base: base,
           repositorio: repo,
           conocimiento: conocimiento,
+          catalogo: catalogo,
         ),
       );
       expect(find.textContaining('No hay perfiles guardados'), findsOneWidget);

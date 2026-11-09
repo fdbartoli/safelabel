@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../cuenta/servicio_cuenta.dart';
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../datos/base_conocimiento.dart';
 import '../datos/repositorio_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
@@ -19,12 +20,14 @@ class PantallaInicio extends StatefulWidget {
     required this.base,
     required this.repositorio,
     required this.conocimiento,
+    required this.catalogo,
     this.servicioCuenta,
   });
 
   final BaseConocimiento base;
   final RepositorioPerfiles repositorio;
   final RepositorioConocimiento conocimiento;
+  final CatalogoConocimiento catalogo;
 
   /// Si está, la barra superior muestra el acceso a "Mi cuenta" (HU03 a HU05).
   final ServicioCuenta? servicioCuenta;
@@ -201,6 +204,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                     MaterialPageRoute(
                       builder: (_) => PantallaCaptura(
                         base: widget.base,
+                        catalogo: widget.catalogo,
                         perfilesActivos: perfiles,
                       ),
                     ),
@@ -216,6 +220,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                     MaterialPageRoute(
                       builder: (_) => PantallaAnalisisTexto(
                         base: widget.base,
+                        catalogo: widget.catalogo,
                         perfilesActivos: perfiles,
                       ),
                     ),
@@ -251,8 +256,8 @@ class _PantallaInicioState extends State<PantallaInicio> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Base de conocimiento ${widget.base.version} · '
-                  '${widget.base.cantidadIngredientes} ingredientes',
+                  'Base de conocimiento ${widget.catalogo.version} · '
+                  '${widget.catalogo.conceptos.length} conceptos',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(height: 6),

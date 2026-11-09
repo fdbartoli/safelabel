@@ -107,9 +107,14 @@ class FiltroReemplazos {
     for (final item in items) {
       final r = _emparejador.match(item);
       if (r is Coincidencia) {
-        final grupoId = r.ingrediente.grupoAlergenoId;
-        if (grupoId != null && _terminos.containsValue(grupoId)) {
-          return MapEntry(r.ingrediente.nombreNormalizado, grupoId);
+        for (final relacion in r.concepto.relaciones) {
+          final grupoId = relacion.perfilId;
+          if (_terminos.containsValue(grupoId)) {
+            return MapEntry(
+              _normalizador.normalizarTexto(r.concepto.nombreCanonico),
+              grupoId,
+            );
+          }
         }
       }
     }

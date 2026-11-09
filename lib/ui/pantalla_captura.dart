@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import '../conocimiento/catalogo_conocimiento.dart';
 import '../datos/base_conocimiento.dart';
 import '../modelo/perfil.dart';
 import '../ocr/guia_captura.dart';
@@ -19,11 +20,13 @@ class PantallaCaptura extends StatefulWidget {
   const PantallaCaptura({
     super.key,
     required this.base,
+    required this.catalogo,
     required this.perfilesActivos,
     this.servicioOcr,
   });
 
   final BaseConocimiento base;
+  final CatalogoConocimiento catalogo;
   final List<Perfil> perfilesActivos;
 
   /// Inyectable para tests; por defecto usa ML Kit / Vision.
@@ -96,6 +99,7 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
 
       final resultado = Analizador(
         widget.base,
+        catalogo: widget.catalogo,
         triage: _triage,
       ).analizar(lectura, perfilesActivos: widget.perfilesActivos);
 

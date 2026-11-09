@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'cuenta/servicio_cuenta.dart';
+import 'conocimiento/catalogo_conocimiento.dart';
 import 'datos/almacen_local.dart';
 import 'datos/base_conocimiento.dart';
 import 'datos/bd_conocimiento.dart';
@@ -24,10 +25,16 @@ Future<void> main() async {
 
 /// Lo que la app necesita cargado antes de mostrar la pantalla de inicio.
 class _Arranque {
-  const _Arranque(this.base, this.repositorio, this.conocimiento);
+  const _Arranque(
+    this.base,
+    this.repositorio,
+    this.conocimiento,
+    this.catalogo,
+  );
   final BaseConocimiento base;
   final RepositorioPerfiles repositorio;
   final RepositorioConocimiento conocimiento;
+  final CatalogoConocimiento catalogo;
 }
 
 Future<_Arranque> _arrancar() async {
@@ -47,7 +54,9 @@ Future<_Arranque> _arrancar() async {
   );
   if (recienCreada) await sembrarPerfilesIniciales(repositorio);
   final bdConocimiento = await BdConocimiento.abrir(fabrica);
-  return _Arranque(base, repositorio, RepositorioConocimiento(bdConocimiento));
+  final conocimiento = RepositorioConocimiento(bdConocimiento);
+  final catalogo = await conocimiento.cargarCatalogo();
+  return _Arranque(base, repositorio, conocimiento, catalogo);
 }
 
 class SafeLabelApp extends StatelessWidget {
@@ -115,6 +124,7 @@ class _CargaDeBaseState extends State<_CargaDeBase> {
           base: arranque.base,
           repositorio: arranque.repositorio,
           conocimiento: arranque.conocimiento,
+          catalogo: arranque.catalogo,
           servicioCuenta: widget.servicioCuenta,
         );
       },

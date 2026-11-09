@@ -12,6 +12,8 @@ class EvidenciaConocimiento {
   final String fragmento;
 }
 
+enum EstadoConsultaConocimiento { matched, recognized, unknown }
+
 class CoincidenciaConocimiento {
   const CoincidenciaConocimiento({
     required this.denominacion,
@@ -26,20 +28,27 @@ class CoincidenciaConocimiento {
   final String denominacion;
   final String idioma;
   final String concepto;
-  final String tipoCoincidencia;
-  final String restriccion;
-  final String restriccionVisible;
+  final String? tipoCoincidencia;
+  final String? restriccion;
+  final String? restriccionVisible;
   final List<EvidenciaConocimiento> evidencias;
+
+  bool get tieneRestriccion => restriccion != null;
 }
 
 class ResultadoConsultaConocimiento {
   const ResultadoConsultaConocimiento({
     required this.entrada,
+    required this.estado,
     required this.coincidencias,
   });
 
   final String entrada;
+  final EstadoConsultaConocimiento estado;
   final List<CoincidenciaConocimiento> coincidencias;
 
-  bool get encontrado => coincidencias.isNotEmpty;
+  bool get encontrado => estado != EstadoConsultaConocimiento.unknown;
+  bool get relacionado => estado == EstadoConsultaConocimiento.matched;
+  bool get reconocidoSinRelacion =>
+      estado == EstadoConsultaConocimiento.recognized;
 }
