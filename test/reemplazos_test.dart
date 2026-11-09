@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -103,6 +104,18 @@ void main() {
       ingredientesLeidos: ['leche', 'azucar'],
     );
 
+    String modeloDe(http.Request p) => p.url.pathSegments.last.split(':').first;
+
+    test('los modelos por defecto siguen el orden pedido', () {
+      expect(ServicioReemplazosGemini.modelos, [
+        'gemini-3.1-flash-lite',
+        'gemini-3.6-flash',
+        'gemini-3.5-flash',
+        'gemini-3.5-flash-lite',
+        'gemini-3.8-flash',
+      ]);
+    });
+
     Map<String, dynamic> respuestaOk(
       Map<String, dynamic> datos, {
       String fin = 'STOP',
@@ -156,15 +169,9 @@ void main() {
           );
         }
         expect(pedidos, hasLength(estado == 503 ? 2 : 1));
-        expect(
-          pedidos.first.url.path,
-          '/v1beta/models/gemini-3.8-flash:generateContent',
-        );
+        expect(modeloDe(pedidos.first), 'gemini-3.1-flash-lite');
         if (estado == 503) {
-          expect(
-            pedidos.last.url.path,
-            '/v1beta/models/gemini-3.5-flash-lite:generateContent',
-          );
+          expect(modeloDe(pedidos.last), 'gemini-3.6-flash');
           expect(pedidos.last.body, pedidos.first.body);
         }
         for (final pedido in pedidos) {
@@ -174,11 +181,11 @@ void main() {
     }
 
     test(
-      'si el respaldo también devuelve 503, informa error sin bucle',
+      'si todos los modelos devuelven 503, informa error sin bucle',
       () async {
-        var llamadas = 0;
-        final cliente = MockClient((_) async {
-          llamadas++;
+        final pedidos = <http.Request>[];
+        final cliente = MockClient((pedido) async {
+          pedidos.add(pedido);
           return http.Response('{}', 503);
         });
         addTearDown(cliente.close);
@@ -196,9 +203,136 @@ void main() {
             ),
           ),
         );
-        expect(llamadas, 2);
+        expect(pedidos, hasLength(5));
+        expect(pedidos.map(modeloDe), ServicioReemplazosGemini.modelos);
       },
     );
+
+    test('un timeout por modelo pasa al siguiente modelo', () async {
+      final pedidos = <http.Request>[];
+      final cliente = MockClient((pedido) async {
+        pedidos.add(pedido);
+        if (pedidos.length == 1) {
+          return Completer<http.Response>().future;
+        }
+        return http.Response(
+          jsonEncode(
+            respuestaOk({
+              'tipo_producto': 'bebida',
+              'sugerencias': [
+                {'nombre': 'Bebida de arroz', 'motivo': 'Idea para buscar.'},
+              ],
+            }),
+          ),
+          200,
+        );
+      });
+      addTearDown(cliente.close);
+      final servicio = ServicioReemplazosGemini(
+        apiKey: 'clave-ficticia',
+        cliente: cliente,
+        timeoutPorModelo: const Duration(milliseconds: 20),
+        timeoutTotal: const Duration(seconds: 1),
+      );
+
+      final resultado = await servicio.sugerir(solicitud);
+
+      expect(resultado.sugerencias.single.nombre, 'Bebida de arroz');
+      expect(pedidos, hasLength(2));
+      expect(pedidos.map(modeloDe), [
+        'gemini-3.1-flash-lite',
+        'gemini-3.6-flash',
+      ]);
+    });
+
+    test('el timeout global corta la cadena aunque queden modelos', () async {
+      var llamadas = 0;
+      final cliente = MockClient((_) async {
+        llamadas++;
+        return Completer<http.Response>().future;
+      });
+      addTearDown(cliente.close);
+      final servicio = ServicioReemplazosGemini(
+        apiKey: 'clave-ficticia',
+        cliente: cliente,
+        timeoutPorModelo: const Duration(seconds: 1),
+        timeoutTotal: const Duration(milliseconds: 20),
+      );
+
+      await expectLater(
+        servicio.sugerir(solicitud),
+        throwsA(
+          isA<ErrorReemplazos>().having(
+            (e) => e.motivo,
+            'motivo',
+            'tiempo de espera agotado',
+          ),
+        ),
+      );
+      expect(llamadas, greaterThanOrEqualTo(1));
+      expect(llamadas, lessThan(5));
+    });
+
+    test('un modelo inyectado se intenta primero y no se repite', () async {
+      final pedidos = <http.Request>[];
+      final cliente = MockClient((pedido) async {
+        pedidos.add(pedido);
+        if (pedidos.length == 1) {
+          return http.Response('{}', 503);
+        }
+        return http.Response(
+          jsonEncode(
+            respuestaOk({
+              'tipo_producto': 'bebida',
+              'sugerencias': [
+                {'nombre': 'Bebida de arroz', 'motivo': 'Idea para buscar.'},
+              ],
+            }),
+          ),
+          200,
+        );
+      });
+      addTearDown(cliente.close);
+      final servicio = ServicioReemplazosGemini(
+        apiKey: 'clave-ficticia',
+        modelo: 'gemini-3.6-flash',
+        cliente: cliente,
+      );
+
+      await servicio.sugerir(solicitud);
+
+      expect(pedidos.map(modeloDe), [
+        'gemini-3.6-flash',
+        'gemini-3.1-flash-lite',
+      ]);
+    });
+
+    test('el logging no expone la API key', () async {
+      final logs = <String>[];
+      final anterior = debugPrint;
+      debugPrint = (mensaje, {int? wrapWidth}) {
+        if (mensaje != null) logs.add(mensaje);
+      };
+      addTearDown(() => debugPrint = anterior);
+      final cliente = MockClient(
+        (_) async => http.Response(
+          jsonEncode(respuestaOk({'tipo_producto': '', 'sugerencias': []})),
+          200,
+        ),
+      );
+      addTearDown(cliente.close);
+      final servicio = ServicioReemplazosGemini(
+        apiKey: 'clave-ficticia',
+        cliente: cliente,
+      );
+
+      await servicio.sugerir(solicitud);
+
+      final texto = logs.join('\n');
+      expect(texto, contains('gemini-3.1-flash-lite'));
+      expect(texto, isNot(contains('clave-ficticia')));
+      expect(texto, isNot(contains('x-goog-api-key')));
+    });
 
     test('un error de conexión no activa el respaldo', () async {
       var llamadas = 0;

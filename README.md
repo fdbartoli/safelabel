@@ -39,11 +39,34 @@ Identificadores de código en **español** (`ingrediente`, `alergeno`, `perfil`,
 
 ## Correr
 
-```bash
-flutter test          # pipeline determinista: normalización, matcher, cruce, 3 bloques
-flutter analyze
-flutter run            # necesita toolchain de Android/iOS
+Usá `dev.ps1` como punto de entrada: detecta Flutter desde el `PATH` o desde
+`FLUTTER_PATH` y, al ejecutar `run` o `build`, pasa `gemini.env` completo a
+Flutter con `--dart-define-from-file`. Así `GEMINI_API_KEY` y, si está,
+`GEMINI_MODEL` llegan a Chrome y Android sin cargar variables a mano.
+
+```powershell
+.\dev.ps1 run          # elegí Chrome o un dispositivo Android
+.\dev.ps1 test         # pipeline determinista: normalización, matcher, cruce, 3 bloques
+.\dev.ps1 analyze
 ```
+
+Para elegir Chrome directamente o compilar un APK:
+
+```powershell
+.\dev.ps1 run -d chrome
+.\dev.ps1 build apk --debug
+```
+
+Si Flutter no está en el `PATH`, definí `FLUTTER_PATH` apuntando a su carpeta
+`bin`. Si PowerShell bloquea el script:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\dev.ps1 run
+```
+
+No uses `flutter run` directamente si necesitás las sugerencias de Gemini: ese
+comando no lee `gemini.env`. En CI se pueden seguir usando los comandos
+`flutter` directamente.
 
 Sin cámara: en la app, "Analizar texto pegado" corre el mismo pipeline sobre
 texto escrito a mano (útil para las fixtures de la Etapa 1).
@@ -54,7 +77,12 @@ Las sugerencias por IA necesitan una API Key de Google Gemini. La guía paso a
 paso —cómo generarla, qué archivo crear y qué formato usar— está en
 [`GEMINI_API_KEY.md`](GEMINI_API_KEY.md). En resumen: creá `gemini.env` en la
 raíz con `GEMINI_API_KEY=ponetuclaveaqui` (tu clave real) y ejecutá
-`.\dev.ps1 run`.
+`.\dev.ps1 run`. Si querés fijar el modelo, agregá `GEMINI_MODEL=...` en el
+mismo archivo.
+
+`gemini.env` es local y está excluido de Git. Si ya tenés `GEMINI_API_KEY` o
+`GEMINI_MODEL` en el entorno, conservan prioridad sobre el archivo por
+compatibilidad; no hace falta definirlas para usar `dev.ps1`.
 
 ## Pendiente en esta etapa
 

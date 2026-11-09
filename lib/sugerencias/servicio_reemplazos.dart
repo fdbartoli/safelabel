@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -70,26 +71,43 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
     required this.apiKey,
     this.modelo = modeloDeCompilacion,
     http.Client? cliente,
-    this.timeout = const Duration(seconds: 45),
+    this.timeoutPorModelo = const Duration(seconds: 8),
+    this.timeoutTotal = const Duration(seconds: 20),
   }) : _cliente = cliente ?? http.Client();
 
   /// Se inyecta en la compilación con `--dart-define=GEMINI_API_KEY=...`
   /// (lo hace dev.ps1 desde la variable de entorno). Nunca se commitea.
   static const apiKeyDeCompilacion = String.fromEnvironment('GEMINI_API_KEY');
 
-  /// Modelo del plan gratuito. Se puede cambiar sin tocar código con
-  /// `--dart-define=GEMINI_MODEL=...`.
+  /// Modelo principal. Se puede cambiar sin tocar código con
+  /// `--dart-define=GEMINI_MODEL=...`; si se define, se intenta primero y no
+  /// se repite en la cadena de respaldo.
   static const modeloDeCompilacion = String.fromEnvironment(
     'GEMINI_MODEL',
-    defaultValue: 'gemini-3.8-flash',
+    defaultValue: 'gemini-3.1-flash-lite',
   );
+
+  /// Orden de preferencia de los modelos. Solo se pasa al siguiente ante
+  /// HTTP 503 o timeout; los demás errores cortan la operación.
+  static const modelos = [
+    'gemini-3.1-flash-lite',
+    'gemini-3.6-flash',
+    'gemini-3.5-flash',
+    'gemini-3.5-flash-lite',
+    'gemini-3.8-flash',
+  ];
 
   final String apiKey;
   final String modelo;
   final http.Client _cliente;
-  final Duration timeout;
+  final Duration timeoutPorModelo;
+  final Duration timeoutTotal;
 
-  static const _modeloRespaldo = 'gemini-3.5-flash-lite';
+  List<String> get _cadena {
+    final principal = modelo.trim();
+    if (principal.isEmpty) return modelos;
+    return [principal, ...modelos.where((m) => m != principal)];
+  }
 
   Uri _url(String modelo) => Uri.parse(
     'https://generativelanguage.googleapis.com/v1beta/models/$modelo:generateContent',
@@ -218,29 +236,60 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
 
   @override
   Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud) async {
-    late final http.Response respuesta;
-    try {
-      final cuerpo = jsonEncode(construirCuerpo(solicitud));
-      Future<http.Response> enviar(String modelo) => _cliente
-          .post(_url(modelo), headers: construirHeaders(apiKey), body: cuerpo)
-          .timeout(timeout);
+    final cuerpo = jsonEncode(construirCuerpo(solicitud));
+    final reloj = Stopwatch()..start();
+    final cadena = _cadena;
+    ErrorReemplazos? ultimoError;
 
-      final principal = await enviar(modelo);
-      // Solo la indisponibilidad del servicio habilita un intento de respaldo.
-      respuesta = principal.statusCode == 503
-          ? await enviar(_modeloRespaldo)
-          : principal;
-    } catch (e) {
-      throw ErrorReemplazos('sin conexión: $e');
-    }
-    if (respuesta.statusCode == 429) {
-      throw const ErrorReemplazos('límite del plan gratuito alcanzado');
-    }
-    if (respuesta.statusCode != 200) {
-      debugPrint('Gemini HTTP ${respuesta.statusCode}: ${respuesta.body}');
+    for (var i = 0; i < cadena.length; i++) {
+      final modelo = cadena[i];
+      final restante = timeoutTotal - reloj.elapsed;
+      if (restante <= Duration.zero) {
+        debugPrint('Gemini: tiempo total de espera agotado');
+        throw const ErrorReemplazos('tiempo de espera agotado');
+      }
+      final espera = restante < timeoutPorModelo ? restante : timeoutPorModelo;
+      debugPrint(
+        'Gemini: intentando modelo $modelo (${i + 1}/${cadena.length})',
+      );
+
+      final http.Response respuesta;
+      try {
+        respuesta = await _cliente
+            .post(_url(modelo), headers: construirHeaders(apiKey), body: cuerpo)
+            .timeout(espera);
+      } on TimeoutException {
+        ultimoError = const ErrorReemplazos('tiempo de espera agotado');
+        debugPrint('Gemini: timeout en modelo $modelo');
+        continue;
+      } catch (e) {
+        // Un error de conexión no es un 503: no se prueba otro modelo.
+        debugPrint('Gemini: error de conexión en modelo $modelo');
+        throw ErrorReemplazos('sin conexión: $e');
+      }
+
+      if (respuesta.statusCode == 200) {
+        debugPrint('Gemini: respuesta válida de modelo $modelo');
+        final json = jsonDecode(utf8.decode(respuesta.bodyBytes));
+        return parsearRespuesta(json as Map<String, dynamic>);
+      }
+      if (respuesta.statusCode == 503) {
+        ultimoError = const ErrorReemplazos('HTTP 503');
+        debugPrint('Gemini: modelo $modelo no disponible (HTTP 503)');
+        continue;
+      }
+      if (respuesta.statusCode == 429) {
+        debugPrint(
+          'Gemini: límite del plan gratuito en modelo $modelo (HTTP 429)',
+        );
+        throw const ErrorReemplazos('límite del plan gratuito alcanzado');
+      }
+      debugPrint(
+        'Gemini HTTP ${respuesta.statusCode} en modelo $modelo: '
+        '${respuesta.body}',
+      );
       throw ErrorReemplazos('HTTP ${respuesta.statusCode}');
     }
-    final json = jsonDecode(utf8.decode(respuesta.bodyBytes));
-    return parsearRespuesta(json as Map<String, dynamic>);
+    throw ultimoError ?? const ErrorReemplazos('sin respuesta del modelo');
   }
 }
