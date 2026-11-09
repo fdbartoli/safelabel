@@ -4,10 +4,11 @@ import '../conocimiento/catalogo_conocimiento.dart';
 import '../conocimiento/ids_restricciones.dart';
 import '../modelo/consulta_conocimiento.dart';
 import '../modelo/ingrediente.dart';
+import '../pipeline/matcher.dart';
 import '../pipeline/normalizador.dart';
 
 class RepositorioConocimiento {
-  const RepositorioConocimiento(this._bd);
+  RepositorioConocimiento(this._bd);
 
   final Database _bd;
 
@@ -27,10 +28,13 @@ class RepositorioConocimiento {
       columns: ['id', 'canonical_name'],
       orderBy: 'canonical_name',
     );
+    // Español primero: varias denominaciones normalizan igual ("caseinato de
+    // sódio" en portugués y "caseinato de sodio") y la primera que se carga
+    // es la que se muestra.
     final denominacionesRaw = await _bd.query(
       'denomination',
       columns: ['name', 'concept_id'],
-      orderBy: 'id',
+      orderBy: "CASE WHEN language LIKE 'es%' THEN 0 ELSE 1 END, id",
     );
     final relacionesRaw = await _bd.rawQuery('''
       SELECT cr.concept_id, cr.restriction_id, cr.match_type,
@@ -70,15 +74,22 @@ class RepositorioConocimiento {
     Normalizador normalizador,
   ) {
     final conceptoId = conceptoRaw['id']! as String;
+    // Si dos denominaciones normalizan igual, se queda la primera (español,
+    // por el orden de la consulta): un literal de mapa se quedaría con la
+    // última.
+    final denominaciones = <String, String>{};
+    for (final denominacion in denominacionesRaw) {
+      if (denominacion['concept_id'] != conceptoId) continue;
+      final nombre = denominacion['name']! as String;
+      denominaciones.putIfAbsent(
+        normalizador.normalizarTexto(nombre),
+        () => nombre,
+      );
+    }
     return ConceptoConocimiento(
       id: conceptoId,
       nombreCanonico: conceptoRaw['canonical_name']! as String,
-      denominaciones: {
-        for (final denominacion in denominacionesRaw)
-          if (denominacion['concept_id'] == conceptoId)
-            normalizador.normalizarTexto(denominacion['name']! as String):
-                denominacion['name']! as String,
-      },
+      denominaciones: denominaciones,
       relaciones: [
         for (final relacion in relacionesRaw)
           if (relacion['concept_id'] == conceptoId)
@@ -107,96 +118,99 @@ class RepositorioConocimiento {
     );
   }
 
+  /// Matcher sobre el catálogo, armado una sola vez por repositorio.
+  late final Future<Emparejador> _emparejador = cargarCatalogo().then(
+    Emparejador.desdeCatalogo,
+  );
+
+  /// Busca un ingrediente suelto con el mismo criterio que el análisis de una
+  /// etiqueta: normaliza (minúsculas, sin tildes) y empareja exacto →
+  /// contención → aproximado → desconocido. Así la consulta y el escaneo nunca
+  /// dan resultados distintos para el mismo texto.
   Future<ResultadoConsultaConocimiento> buscar(String entrada) async {
     final termino = entrada.trim();
-    if (termino.isEmpty) {
-      return const ResultadoConsultaConocimiento(
-        entrada: '',
+    const normalizador = Normalizador();
+    final normalizado = normalizador.normalizarTexto(termino);
+    if (normalizado.isEmpty) {
+      return ResultadoConsultaConocimiento(
+        entrada: termino,
         estado: EstadoConsultaConocimiento.unknown,
-        coincidencias: [],
+        coincidencias: const [],
       );
     }
 
-    final filas = await _bd.rawQuery(
-      '''
-      SELECT denomination, MIN(language) AS language,
-             concept_id, matched_concept, match_type,
-             restriction_id, restriction_name, status
-      FROM v_concept_matches
-      WHERE denomination = ? COLLATE NOCASE
-      GROUP BY denomination, concept_id, matched_concept, match_type,
-               restriction_id, restriction_name, status
-      ORDER BY restriction_id, match_type
-    ''',
-      [termino],
-    );
+    final emparejador = await _emparejador;
+    final matches = emparejador.matchTodos([
+      ItemNormalizado(textoOriginal: termino, textoNormalizado: normalizado),
+    ]);
 
     final coincidencias = <CoincidenciaConocimiento>[];
-    for (final fila in filas) {
-      final conceptoId = fila['concept_id']! as String;
-      final restriccionId = fila['restriction_id'] as String?;
-      final evidenciasRaw = restriccionId == null
-          ? <Map<String, Object?>>[]
-          : await _bd.rawQuery(
-              '''
-        SELECT evidence.fragment, source.id AS source_id,
-               source.title, source.url
-        FROM evidence
-        JOIN source ON source.id = evidence.source_id
-        WHERE evidence.concept_id = ? AND evidence.restriction_id = ?
-        ORDER BY source.title
-      ''',
-              [conceptoId, restriccionId],
-            );
-
-      final restriccion = restriccionId == null
-          ? <Map<String, Object?>>[]
-          : await _bd.query(
-              'restriction',
-              columns: ['display_name'],
-              where: 'id = ?',
-              whereArgs: [restriccionId],
-              limit: 1,
-            );
-
-      String? restriccionVisible;
-      if (restriccionId != null) {
-        restriccionVisible = restriccion.isEmpty
-            ? fila['restriction_name']! as String
-            : restriccion.first['display_name']! as String;
-      }
-
-      coincidencias.add(
-        CoincidenciaConocimiento(
-          denominacion: fila['denomination']! as String,
-          idioma: fila['language']! as String,
-          concepto: fila['matched_concept']! as String,
-          tipoCoincidencia: fila['match_type'] as String?,
-          restriccion: fila['restriction_name'] as String?,
-          restriccionVisible: restriccionVisible,
-          evidencias: [
-            for (final evidencia in evidenciasRaw)
-              EvidenciaConocimiento(
-                fuente: evidencia['source_id']! as String,
-                tituloFuente: evidencia['title']! as String,
-                url: evidencia['url']! as String,
-                fragmento: evidencia['fragment']! as String,
+    for (final m in matches) {
+      switch (m) {
+        case Coincidencia():
+          final tipo = m.exacta
+              ? TipoCoincidenciaConsulta.exacta
+              : m.porContencion
+              ? TipoCoincidenciaConsulta.contiene
+              : TipoCoincidenciaConsulta.aproximada;
+          final concepto = m.concepto;
+          if (concepto.relaciones.isEmpty) {
+            coincidencias.add(
+              CoincidenciaConocimiento(
+                denominacion: m.terminoBase,
+                concepto: concepto.nombreCanonico,
+                tipoCoincidencia: null,
+                restriccion: null,
+                restriccionVisible: null,
+                evidencias: const [],
+                coincidencia: tipo,
+                similitud: m.similitud,
               ),
-          ],
-        ),
-      );
-    }
-
-    var estado = EstadoConsultaConocimiento.unknown;
-    if (filas.isNotEmpty) {
-      estado = filas.any((fila) => fila['restriction_id'] != null)
-          ? EstadoConsultaConocimiento.matched
-          : EstadoConsultaConocimiento.recognized;
+            );
+            continue;
+          }
+          for (final relacion in concepto.relaciones) {
+            coincidencias.add(
+              CoincidenciaConocimiento(
+                denominacion: m.terminoBase,
+                concepto: concepto.nombreCanonico,
+                tipoCoincidencia: relacion.tipo,
+                restriccion: relacion.nombre,
+                restriccionVisible: relacion.nombreVisible,
+                evidencias: [
+                  for (final e in relacion.evidencias)
+                    EvidenciaConocimiento(
+                      fuente: e.fuenteId,
+                      tituloFuente: e.titulo,
+                      url: e.url,
+                      fragmento: e.fragmento,
+                    ),
+                ],
+                coincidencia: tipo,
+                similitud: m.similitud,
+              ),
+            );
+          }
+        case SinCoincidencia():
+          // Sin coincidencia: se distingue "se parece a algo" (probable
+          // error de escritura) de "no se parece a nada" (sección 5.1).
+          return ResultadoConsultaConocimiento(
+            entrada: termino,
+            estado: m.probableErrorOcr && m.candidato != null
+                ? EstadoConsultaConocimiento.parecido
+                : EstadoConsultaConocimiento.unknown,
+            coincidencias: const [],
+            sugerencia: m.probableErrorOcr ? m.candidato : null,
+            similitudSugerencia: m.probableErrorOcr ? m.mejorSimilitud : null,
+          );
+      }
     }
 
     return ResultadoConsultaConocimiento(
       entrada: termino,
-      estado: estado,
+      estado: coincidencias.any((c) => c.tieneRestriccion)
+          ? EstadoConsultaConocimiento.matched
+          : EstadoConsultaConocimiento.recognized,
       coincidencias: coincidencias,
     );
   }

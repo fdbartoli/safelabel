@@ -1,4 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:safelabel/modelo/perfil.dart';
+import 'package:safelabel/ocr/linea_ocr.dart';
+import 'package:safelabel/pipeline/analizador.dart';
 import 'package:safelabel/pipeline/matcher.dart';
 import 'package:safelabel/pipeline/normalizador.dart';
 
@@ -50,5 +53,31 @@ void main() {
   test('las palabras cortas no disparan contención', () {
     // "sal" no tiene alérgeno, pero tampoco debe "contener" nada por letras.
     expect(analizar('sal marina gruesa').whereType<Coincidencia>(), isEmpty);
+  });
+
+  test('en el resultado, la contención no se muestra como lectura aproximada',
+      () {
+    const celiaco = Perfil(
+      nombre: 'Celíaco',
+      restricciones: [
+        RestriccionPerfil(
+          grupoAlergenoId: 'trigo',
+          severidad: Severidad.moderada,
+        ),
+      ],
+    );
+    final resultado = Analizador(base).analizar(
+      const LecturaOcr([
+        LineaOcr(
+          texto: 'Ingredientes: harina de trigo tipo 000 enriquecida.',
+          confianza: 0.99,
+          indice: 0,
+        ),
+      ]),
+      perfilesActivos: const [celiaco],
+    );
+    final hallazgo = resultado.coincidencias.single;
+    expect(hallazgo.grupoAlergeno, 'cereales con gluten');
+    expect(hallazgo.difuso, isFalse);
   });
 }
