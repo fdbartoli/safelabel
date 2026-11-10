@@ -70,5 +70,23 @@
   "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
   "language": "fr-CA",
   "format": "html"
+},
+{
+  "id": "SRC-CFIA-ALLERGEN-LABELLING",
+  "organization": "Canadian Food Inspection Agency",
+  "title": "Industry resource: food allergen labelling",
+  "url": "data/manual/cfia-food-allergen-labelling.html",
+  "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+  "language": "en-CA",
+  "format": "html"
+},
+{
+  "id": "SRC-ARG-CAA-CAP-XIII",
+  "organization": "Argentina.gob.ar",
+  "title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
+  "url": "data/manual/arg-caa-capitulo-xiii.pdf",
+  "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
+  "language": "es-AR",
+  "format": "pdf"
 }
 ]

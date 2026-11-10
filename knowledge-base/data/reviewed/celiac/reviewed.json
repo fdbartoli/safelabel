@@ -12,7 +12,7 @@
       "canonical_concept": "cebada",
       "concept_type": "food_origin",
       "match_type": "RELATED",
-      "occurrence_count": 46,
+      "occurrence_count": 58,
       "aliases": [
         {
           "term": "barley",
@@ -44,8 +44,8 @@
                 "CAND-0013",
                 "CAND-0023",
                 "CAND-0029",
-                "CAND-0034",
-                "CAND-0036"
+                "CAND-0036",
+                "CAND-0038"
               ],
               "representative_evidence": "ctualmente, en la normativa argentina se contempla al grupo de alérgenos conocidos como\nlos “grandes 8”, a saber: leche, soja, huevos, cereales que contienen gluten (trigo, avena,\ncebada y centeno), maní, frutas secas, crustáceos y pescados. Éstos son responsables de la\nmayoría de las alergias alimentarias conocidas. Además, se ha incluido en la lista a los sulfit",
               "representative_location": "character:9771"
@@ -67,12 +67,12 @@
               "language": "es",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0084",
-                "CAND-0089",
-                "CAND-0095",
-                "CAND-0101",
-                "CAND-0111",
-                "CAND-0258"
+                "CAND-0086",
+                "CAND-0091",
+                "CAND-0097",
+                "CAND-0103",
+                "CAND-0113",
+                "CAND-0260"
               ],
               "representative_evidence": "luten\n\nPC: Punto de Control\n\nPOE: Procedimiento Operativo Estandarizado\n\nPOES: Procedimientos Operativos Estandarizados de Saneamiento\n\nPT: Producto Terminado\n\nTACC: Trigo, Avena, Cebada, Centeno\n\n\n\n\n                                                                                    6\n\fGuía de Buenas Prácticas de Manufactura\n\nEstablecimientos Elaboradores de Alime",
               "representative_location": "character:9073"
@@ -94,8 +94,8 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0054",
-                "CAND-0064"
+                "CAND-0056",
+                "CAND-0066"
               ],
               "representative_evidence": "prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 mg/Kg. En caso de utilizar enzimas en los procedimientos de remoción de gluten éstas",
               "representative_location": "character:5618"
@@ -103,6 +103,39 @@
           ],
           "review_status": "approved",
           "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ARG-CAA-CAP-XIII",
+          "source_title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
+          "source_sha256": "e63afb5443981142404af8c744a0ee1fa6d18472f61f055bf86a101327233780",
+          "occurrence_count": 12,
+          "denominations": [
+            {
+              "term": "cebada",
+              "language": "es",
+              "occurrence_count": 12,
+              "candidate_ids": [
+                "CAND-0629",
+                "CAND-0631",
+                "CAND-0635",
+                "CAND-0637",
+                "CAND-0639",
+                "CAND-0641",
+                "CAND-0643",
+                "CAND-0648",
+                "CAND-0651",
+                "CAND-0653",
+                "CAND-0656",
+                "CAND-0666"
+              ],
+              "representative_evidence": "AGPyA N° 345/02)\n\n1. DESCRIPCIÓN\n\n1.1 DEFINICIONES\n1.1.1 Cerveza\nSe entiende exclusivamente por cerveza la bebida resultante de fermentar, mediante\nlevadura cervecera, al mosto de cebada malteada o de extracto de malta, sometido\npreviamente a un proceso de cocción, adicionado de lúpulo. Una parte de la cebada\nmalteada o de extracto de malta podrá ser reemplazada p",
+              "representative_location": "character:336"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -117,22 +150,22 @@
               "language": "en",
               "occurrence_count": 16,
               "candidate_ids": [
-                "CAND-0287",
-                "CAND-0296",
-                "CAND-0302",
-                "CAND-0332",
-                "CAND-0342",
-                "CAND-0349",
-                "CAND-0355",
-                "CAND-0374",
-                "CAND-0383",
-                "CAND-0412",
-                "CAND-0431",
-                "CAND-0432",
-                "CAND-0433",
+                "CAND-0289",
+                "CAND-0298",
+                "CAND-0304",
+                "CAND-0334",
+                "CAND-0344",
+                "CAND-0351",
+                "CAND-0357",
+                "CAND-0376",
+                "CAND-0385",
+                "CAND-0414",
                 "CAND-0434",
                 "CAND-0435",
-                "CAND-0439"
+                "CAND-0436",
+                "CAND-0438",
+                "CAND-0439",
+                "CAND-0444"
               ],
               "representative_evidence": "at. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat allergy, as well as",
               "representative_location": "character:1119"
@@ -154,22 +187,22 @@
               "language": "fr",
               "occurrence_count": 16,
               "candidate_ids": [
-                "CAND-0459",
-                "CAND-0468",
-                "CAND-0474",
-                "CAND-0503",
-                "CAND-0513",
-                "CAND-0519",
-                "CAND-0526",
-                "CAND-0544",
-                "CAND-0553",
-                "CAND-0579",
-                "CAND-0599",
-                "CAND-0600",
-                "CAND-0601",
-                "CAND-0602",
-                "CAND-0603",
-                "CAND-0607"
+                "CAND-0464",
+                "CAND-0473",
+                "CAND-0479",
+                "CAND-0508",
+                "CAND-0518",
+                "CAND-0524",
+                "CAND-0531",
+                "CAND-0549",
+                "CAND-0558",
+                "CAND-0584",
+                "CAND-0605",
+                "CAND-0606",
+                "CAND-0608",
+                "CAND-0609",
+                "CAND-0610",
+                "CAND-0615"
               ],
               "representative_evidence": "mment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie cœliaque, l’allergie",
               "representative_location": "character:1335"
@@ -183,6 +216,71 @@
     },
     {
       "id": "REV-0002",
+      "restriction_id": "RES-CELIAC",
+      "concept_id": "CMP-COUSCOUS",
+      "canonical_concept": "cuscús",
+      "concept_type": "food_product",
+      "match_type": "RELATED",
+      "occurrence_count": 2,
+      "aliases": [
+        {
+          "term": "couscous",
+          "language": "en"
+        },
+        {
+          "term": "couscous",
+          "language": "fr"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "couscous",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0420"
+              ],
+              "representative_evidence": "sources and added sulphites; however, if you have a wheat allergy or celiac disease and see one of the following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can",
+              "representative_location": "character:8977"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "couscous",
+              "language": "fr",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0591"
+              ],
+              "representative_evidence": "es allergique au blé ou que vous souffrez de la maladie cœliaque et que vous voyez l’un des termes suivants dans la liste des ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’alimen",
+              "representative_location": "character:10963"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0003",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-DURUM-WHEAT",
       "canonical_concept": "trigo duro",
@@ -238,7 +336,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0109"
+                "CAND-0111"
               ],
               "representative_evidence": "no contiene prolaminas procedentes del trigo, de todas las especies de Triticum,\n           como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de\n           trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido\n           de gluten no podrá superar el máximo de 10mg/Kg…",
               "representative_location": "character:15869"
@@ -260,7 +358,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0052"
+                "CAND-0054"
               ],
               "representative_evidence": "cruzada- no contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 mg/Kg. En caso de utilizar enzimas en los procedimientos de remoción",
               "representative_location": "character:5597"
@@ -282,7 +380,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0418"
+                "CAND-0421"
               ],
               "representative_evidence": "nd added sulphites; however, if you have a wheat allergy or celiac disease and see one of the following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be fou",
               "representative_location": "character:8986"
@@ -304,7 +402,7 @@
               "language": "fr",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0586"
+                "CAND-0592"
               ],
               "representative_evidence": "ique au blé ou que vous souffrez de la maladie cœliaque et que vous voyez l’un des termes suivants dans la liste des ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’",
               "representative_location": "character:10972"
@@ -317,7 +415,7 @@
       ]
     },
     {
-      "id": "REV-0003",
+      "id": "REV-0004",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-GLUTEN",
       "canonical_concept": "gluten",
@@ -361,7 +459,7 @@
                 "CAND-0025",
                 "CAND-0026",
                 "CAND-0031",
-                "CAND-0037"
+                "CAND-0039"
               ],
               "representative_evidence": "DE ADVERTENCIA.......................................................................................................................................13\n\n5.5 - ETIQUETADO “CONTIENE GLUTEN”..................................................................................................................14\n\n5.6 - ETIQUETADO “SIN…”, “LIBRE DE…”.........................",
               "representative_location": "character:3077"
@@ -383,8 +481,6 @@
               "language": "es",
               "occurrence_count": 178,
               "candidate_ids": [
-                "CAND-0073",
-                "CAND-0074",
                 "CAND-0075",
                 "CAND-0076",
                 "CAND-0077",
@@ -392,16 +488,16 @@
                 "CAND-0079",
                 "CAND-0080",
                 "CAND-0081",
-                "CAND-0086",
-                "CAND-0087",
-                "CAND-0092",
-                "CAND-0093",
-                "CAND-0098",
-                "CAND-0099",
-                "CAND-0104",
-                "CAND-0105",
-                "CAND-0113",
-                "CAND-0114",
+                "CAND-0082",
+                "CAND-0083",
+                "CAND-0088",
+                "CAND-0089",
+                "CAND-0094",
+                "CAND-0095",
+                "CAND-0100",
+                "CAND-0101",
+                "CAND-0106",
+                "CAND-0107",
                 "CAND-0115",
                 "CAND-0116",
                 "CAND-0117",
@@ -462,8 +558,8 @@
                 "CAND-0172",
                 "CAND-0173",
                 "CAND-0174",
-                "CAND-0177",
-                "CAND-0178",
+                "CAND-0175",
+                "CAND-0176",
                 "CAND-0179",
                 "CAND-0180",
                 "CAND-0181",
@@ -541,8 +637,8 @@
                 "CAND-0253",
                 "CAND-0254",
                 "CAND-0255",
-                "CAND-0260",
-                "CAND-0261",
+                "CAND-0256",
+                "CAND-0257",
                 "CAND-0262",
                 "CAND-0263",
                 "CAND-0264",
@@ -560,7 +656,9 @@
                 "CAND-0276",
                 "CAND-0277",
                 "CAND-0278",
-                "CAND-0279"
+                "CAND-0279",
+                "CAND-0280",
+                "CAND-0281"
               ],
               "representative_evidence": "Industrias Elaboradoras de Alimentos Libres de Gluten\n\n\n\n\nEstablecimientos\nElaboradores de Alimentos\nLibres de Gluten\n\f Cuidar tus\nalimentos\nes cuidar tu\n  salud\n\fSi desea más información, puede dirigirse a:\nAdministración Nacional d",
               "representative_location": "character:51"
@@ -582,8 +680,6 @@
               "language": "es",
               "occurrence_count": 24,
               "candidate_ids": [
-                "CAND-0038",
-                "CAND-0039",
                 "CAND-0040",
                 "CAND-0041",
                 "CAND-0042",
@@ -593,19 +689,21 @@
                 "CAND-0046",
                 "CAND-0047",
                 "CAND-0048",
-                "CAND-0056",
-                "CAND-0057",
+                "CAND-0049",
+                "CAND-0050",
                 "CAND-0058",
                 "CAND-0059",
                 "CAND-0060",
                 "CAND-0061",
-                "CAND-0066",
-                "CAND-0067",
+                "CAND-0062",
+                "CAND-0063",
                 "CAND-0068",
                 "CAND-0069",
                 "CAND-0070",
                 "CAND-0071",
-                "CAND-0072"
+                "CAND-0072",
+                "CAND-0073",
+                "CAND-0074"
               ],
               "representative_evidence": "ínica y epidemiológica, la capacitación profesional en la detección temprana, diagnóstico y tratamiento de la enfermedad celíaca, su difusión y el acceso a los alimentos libres de gluten, el Ministerio de Salud y la Administración Nacional de Alimentos, Medicamentos y Tecnología Médica (ANMAT), a través del Instituto Nacional de Alimentos (INAL), lideran el fortal",
               "representative_location": "character:1292"
@@ -627,61 +725,59 @@
               "language": "en",
               "occurrence_count": 76,
               "candidate_ids": [
-                "CAND-0280",
-                "CAND-0281",
                 "CAND-0282",
                 "CAND-0283",
                 "CAND-0284",
-                "CAND-0288",
-                "CAND-0289",
+                "CAND-0285",
+                "CAND-0286",
                 "CAND-0290",
+                "CAND-0291",
                 "CAND-0292",
-                "CAND-0293",
-                "CAND-0298",
+                "CAND-0294",
+                "CAND-0295",
                 "CAND-0300",
-                "CAND-0304",
-                "CAND-0305",
+                "CAND-0302",
                 "CAND-0306",
                 "CAND-0307",
                 "CAND-0308",
                 "CAND-0309",
-                "CAND-0315",
+                "CAND-0310",
+                "CAND-0311",
                 "CAND-0317",
-                "CAND-0318",
                 "CAND-0319",
+                "CAND-0320",
                 "CAND-0321",
                 "CAND-0323",
-                "CAND-0326",
-                "CAND-0327",
+                "CAND-0325",
                 "CAND-0328",
                 "CAND-0329",
-                "CAND-0333",
-                "CAND-0334",
-                "CAND-0337",
-                "CAND-0343",
-                "CAND-0344",
+                "CAND-0330",
+                "CAND-0331",
+                "CAND-0335",
+                "CAND-0336",
+                "CAND-0339",
                 "CAND-0345",
                 "CAND-0346",
                 "CAND-0347",
                 "CAND-0348",
-                "CAND-0354",
-                "CAND-0360",
-                "CAND-0361",
+                "CAND-0349",
+                "CAND-0350",
+                "CAND-0356",
                 "CAND-0362",
                 "CAND-0363",
                 "CAND-0364",
                 "CAND-0365",
                 "CAND-0366",
                 "CAND-0367",
-                "CAND-0370",
-                "CAND-0371",
-                "CAND-0376",
+                "CAND-0368",
+                "CAND-0369",
+                "CAND-0372",
+                "CAND-0373",
                 "CAND-0378",
                 "CAND-0380",
-                "CAND-0385",
-                "CAND-0389",
+                "CAND-0382",
+                "CAND-0387",
                 "CAND-0391",
-                "CAND-0392",
                 "CAND-0393",
                 "CAND-0394",
                 "CAND-0395",
@@ -692,17 +788,19 @@
                 "CAND-0400",
                 "CAND-0401",
                 "CAND-0402",
-                "CAND-0409",
-                "CAND-0416",
-                "CAND-0419",
-                "CAND-0442",
-                "CAND-0444",
-                "CAND-0445",
+                "CAND-0403",
+                "CAND-0404",
+                "CAND-0411",
+                "CAND-0418",
+                "CAND-0422",
                 "CAND-0447",
-                "CAND-0448",
                 "CAND-0449",
                 "CAND-0450",
-                "CAND-0451"
+                "CAND-0452",
+                "CAND-0453",
+                "CAND-0454",
+                "CAND-0455",
+                "CAND-0456"
               ],
               "representative_evidence": "Gluten – A group of proteins that people with gluten-related disorders should avoid - Canada.ca Skip to main content Skip to \"About government\" Language selection Français fr / Gouvernem",
               "representative_location": "character:0"
@@ -724,79 +822,79 @@
               "language": "fr",
               "occurrence_count": 73,
               "candidate_ids": [
-                "CAND-0452",
-                "CAND-0453",
-                "CAND-0454",
-                "CAND-0455",
-                "CAND-0456",
+                "CAND-0457",
+                "CAND-0458",
+                "CAND-0459",
                 "CAND-0460",
                 "CAND-0461",
-                "CAND-0462",
-                "CAND-0464",
                 "CAND-0465",
+                "CAND-0466",
+                "CAND-0467",
+                "CAND-0469",
                 "CAND-0470",
-                "CAND-0472",
                 "CAND-0475",
                 "CAND-0477",
-                "CAND-0478",
-                "CAND-0479",
                 "CAND-0480",
-                "CAND-0481",
+                "CAND-0482",
+                "CAND-0483",
+                "CAND-0484",
+                "CAND-0485",
                 "CAND-0486",
-                "CAND-0488",
-                "CAND-0489",
-                "CAND-0490",
-                "CAND-0492",
+                "CAND-0491",
+                "CAND-0493",
                 "CAND-0494",
+                "CAND-0495",
                 "CAND-0497",
-                "CAND-0498",
                 "CAND-0499",
-                "CAND-0500",
+                "CAND-0502",
+                "CAND-0503",
                 "CAND-0504",
                 "CAND-0505",
                 "CAND-0509",
+                "CAND-0510",
                 "CAND-0514",
-                "CAND-0515",
-                "CAND-0516",
-                "CAND-0517",
-                "CAND-0518",
-                "CAND-0525",
+                "CAND-0519",
+                "CAND-0520",
+                "CAND-0521",
+                "CAND-0522",
+                "CAND-0523",
                 "CAND-0530",
-                "CAND-0531",
-                "CAND-0532",
-                "CAND-0533",
-                "CAND-0534",
                 "CAND-0535",
                 "CAND-0536",
                 "CAND-0537",
+                "CAND-0538",
+                "CAND-0539",
                 "CAND-0540",
                 "CAND-0541",
+                "CAND-0542",
+                "CAND-0545",
                 "CAND-0546",
-                "CAND-0548",
-                "CAND-0550",
+                "CAND-0551",
+                "CAND-0553",
                 "CAND-0555",
                 "CAND-0560",
-                "CAND-0561",
-                "CAND-0562",
-                "CAND-0563",
-                "CAND-0564",
                 "CAND-0565",
                 "CAND-0566",
                 "CAND-0567",
                 "CAND-0568",
                 "CAND-0569",
-                "CAND-0576",
-                "CAND-0583",
+                "CAND-0570",
+                "CAND-0571",
+                "CAND-0572",
+                "CAND-0573",
+                "CAND-0574",
+                "CAND-0581",
                 "CAND-0588",
-                "CAND-0611",
-                "CAND-0612",
-                "CAND-0613",
-                "CAND-0615",
-                "CAND-0616",
-                "CAND-0617",
-                "CAND-0618",
+                "CAND-0594",
                 "CAND-0619",
-                "CAND-0620"
+                "CAND-0620",
+                "CAND-0621",
+                "CAND-0623",
+                "CAND-0624",
+                "CAND-0625",
+                "CAND-0626",
+                "CAND-0627",
+                "CAND-0628"
               ],
               "representative_evidence": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter - Canada.ca Passer au contenu principal Passer à « Au sujet du gouvernement » Séle",
               "representative_location": "character:0"
@@ -809,7 +907,7 @@
       ]
     },
     {
-      "id": "REV-0004",
+      "id": "REV-0005",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-KAMUT",
       "canonical_concept": "kamut",
@@ -865,7 +963,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0108"
+                "CAND-0110"
               ],
               "representative_evidence": "impidan la contaminación cruzada—\n           no contiene prolaminas procedentes del trigo, de todas las especies de Triticum,\n           como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de\n           trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido\n           de gluten no podrá superar el máximo de 10mg/Kg…",
               "representative_location": "character:15824"
@@ -887,7 +985,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0051"
+                "CAND-0053"
               ],
               "representative_evidence": "ura -que impidan la contaminación cruzada- no contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 mg/Kg. En caso de utilizar en",
               "representative_location": "character:5563"
@@ -909,7 +1007,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0420"
+                "CAND-0423"
               ],
               "representative_evidence": "se and see one of the following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and pr",
               "representative_location": "character:9058"
@@ -931,7 +1029,7 @@
               "language": "fr",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0589"
+                "CAND-0595"
               ],
               "representative_evidence": "ts dans la liste des ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritair",
               "representative_location": "character:11068"
@@ -944,7 +1042,191 @@
       ]
     },
     {
-      "id": "REV-0005",
+      "id": "REV-0006",
+      "restriction_id": "RES-CELIAC",
+      "concept_id": "CMP-MALT",
+      "canonical_concept": "malta",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 29,
+      "aliases": [
+        {
+          "term": "malt",
+          "language": "en"
+        },
+        {
+          "term": "malt",
+          "language": "fr"
+        },
+        {
+          "term": "malta",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "malta",
+              "language": "es",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0033",
+                "CAND-0035"
+              ],
+              "representative_evidence": "S SUSCEP TIBLE S   14\n\fSección 6 – ANEXO - EJEMPLOS\n\n\n\n\n      CONTIENE LECHE Y DERIVADOS DE SOJA. PUEDE CONTENER ALMENDRA Y\n      AVELLANA\n\n\n\n\n 3- CERVEZA DE TRIGO\n\n Ingredientes: Malta de trigo, malta de cebada, l evadura, lúpulo, extracto de lúpul o\n\n       CONTIENE DERIVADOS DE TRIGO Y CEBADA\n\n\n       INCORRECTO:\n\n     CONTIENE CEREALES CON GLUTEN",
+              "representative_location": "character:22396"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ARG-CAA-CAP-XIII",
+          "source_title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
+          "source_sha256": "e63afb5443981142404af8c744a0ee1fa6d18472f61f055bf86a101327233780",
+          "occurrence_count": 23,
+          "denominations": [
+            {
+              "term": "malta",
+              "language": "es",
+              "occurrence_count": 23,
+              "candidate_ids": [
+                "CAND-0633",
+                "CAND-0634",
+                "CAND-0640",
+                "CAND-0642",
+                "CAND-0644",
+                "CAND-0647",
+                "CAND-0649",
+                "CAND-0652",
+                "CAND-0654",
+                "CAND-0655",
+                "CAND-0657",
+                "CAND-0658",
+                "CAND-0659",
+                "CAND-0660",
+                "CAND-0661",
+                "CAND-0662",
+                "CAND-0663",
+                "CAND-0664",
+                "CAND-0665",
+                "CAND-0668",
+                "CAND-0669",
+                "CAND-0670",
+                "CAND-0671"
+              ],
+              "representative_evidence": "o de malta podrá ser reemplazada por adjuntos cerveceros.\nLa cerveza negra podrá ser azucarada.\nLa cerveza podrá ser adicionada de colorantes, saborizantes y aromatizantes.\n\n1.1.2 Malta Líquida\nSe entiende por malta líquida la bebida no alcohólica, resultante del mosto de cebada\nmalteada o de extracto de malta y agua potable, sometido previamente a un proceso\nde",
+              "representative_location": "character:668"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-EN",
+          "source_title": "Gluten - A group of proteins that people with gluten-related disorders should avoid",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/gluten-pamphlet.html",
+          "source_sha256": "cbdacb1b1c46249d39b8702f33a90d1046e6e0081eba70d1bdc275ad588a8e90",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "malt",
+              "language": "en",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0437",
+                "CAND-0440"
+              ],
+              "representative_evidence": "on the label) Breads and baked goods Flour (would normally be identified as rye flour) Triticale Barley Examples of foods and products that contain or often contain barley: Barley malt (extract, flavouring, syrup) Beer (standardized beer is not required to provide a list of ingredients so the presence of barley does not have to appear on the label) Breads and ba",
+              "representative_location": "character:9600"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-GLUTEN-FR",
+          "source_title": "Gluten : Un groupe de protéines que les personnes atteintes de troubles liés au gluten devraient éviter",
+          "source_url": "https://www.canada.ca/fr/sante-canada/services/aliments-nutrition/rapports-publications/salubrite-aliments/gluten-brochure.html",
+          "source_sha256": "ca1560bd3be0690dd445a8d21fca6115a5b1a70f52e292312a8a5783a1698523",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "malt",
+              "language": "fr",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0607",
+                "CAND-0611"
+              ],
+              "representative_evidence": "ulangerie Farine (devrait normalement être identifiée à titre de farine de seigle) Triticale Orge Exemples d'aliments et de produits qui contiennent toujours ou souvent de l’orge: Malt d’orge (extrait, arôme, sirop) Bière (les fabricants de bières normalisées ne sont pas tenus de présenter une liste des ingrédients et l’orge n’a pas besoin d’être mentionnée sur",
+              "representative_location": "character:11723"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0007",
+      "restriction_id": "RES-CELIAC",
+      "concept_id": "CMP-MALT-EXTRACT",
+      "canonical_concept": "extracto de malta",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 8,
+      "aliases": [
+        {
+          "term": "extracto de malta",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ARG-CAA-CAP-XIII",
+          "source_title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
+          "source_sha256": "e63afb5443981142404af8c744a0ee1fa6d18472f61f055bf86a101327233780",
+          "occurrence_count": 8,
+          "denominations": [
+            {
+              "term": "extracto de malta",
+              "language": "es",
+              "occurrence_count": 8,
+              "candidate_ids": [
+                "CAND-0630",
+                "CAND-0632",
+                "CAND-0636",
+                "CAND-0638",
+                "CAND-0645",
+                "CAND-0646",
+                "CAND-0650",
+                "CAND-0667"
+              ],
+              "representative_evidence": "DESCRIPCIÓN\n\n1.1 DEFINICIONES\n1.1.1 Cerveza\nSe entiende exclusivamente por cerveza la bebida resultante de fermentar, mediante\nlevadura cervecera, al mosto de cebada malteada o de extracto de malta, sometido\npreviamente a un proceso de cocción, adicionado de lúpulo. Una parte de la cebada\nmalteada o de extracto de malta podrá ser reemplazada por adjuntos cerveceros.\nLa cerve",
+              "representative_location": "character:357"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0008",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-OATS",
       "canonical_concept": "avena",
@@ -1003,12 +1285,12 @@
               "language": "es",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0083",
-                "CAND-0090",
-                "CAND-0097",
-                "CAND-0102",
-                "CAND-0112",
-                "CAND-0257"
+                "CAND-0085",
+                "CAND-0092",
+                "CAND-0099",
+                "CAND-0104",
+                "CAND-0114",
+                "CAND-0259"
               ],
               "representative_evidence": "re de Gluten\n\nPC: Punto de Control\n\nPOE: Procedimiento Operativo Estandarizado\n\nPOES: Procedimientos Operativos Estandarizados de Saneamiento\n\nPT: Producto Terminado\n\nTACC: Trigo, Avena, Cebada, Centeno\n\n\n\n\n                                                                                    6\n\fGuía de Buenas Prácticas de Manufactura\n\nEstablecimientos Elaboradores",
               "representative_location": "character:9066"
@@ -1030,8 +1312,8 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0055",
-                "CAND-0063"
+                "CAND-0057",
+                "CAND-0065"
               ],
               "representative_evidence": "as y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 mg/Kg. En caso de utilizar enzimas en los procedimientos de remoción de gluten éstas deberán",
               "representative_location": "character:5626"
@@ -1053,21 +1335,21 @@
               "language": "en",
               "occurrence_count": 15,
               "candidate_ids": [
-                "CAND-0353",
-                "CAND-0356",
-                "CAND-0368",
-                "CAND-0369",
-                "CAND-0375",
+                "CAND-0355",
+                "CAND-0358",
+                "CAND-0370",
+                "CAND-0371",
                 "CAND-0377",
                 "CAND-0379",
-                "CAND-0384",
+                "CAND-0381",
                 "CAND-0386",
-                "CAND-0387",
                 "CAND-0388",
+                "CAND-0389",
                 "CAND-0390",
-                "CAND-0440",
-                "CAND-0441",
-                "CAND-0443"
+                "CAND-0392",
+                "CAND-0445",
+                "CAND-0446",
+                "CAND-0448"
               ],
               "representative_evidence": ". Gluten sources need to be declared when a prepackaged food contains gluten protein, modified gluten protein, or gluten protein fractions from barley, rye, wheat or triticale and oats. The Canadian Food and Drug Regulations require gluten sources to be declared by the grain name, such as barley, oats, rye, triticale or wheat. The declaration of the source of gl",
               "representative_location": "character:5175"
@@ -1089,22 +1371,22 @@
               "language": "fr",
               "occurrence_count": 16,
               "candidate_ids": [
-                "CAND-0520",
-                "CAND-0524",
-                "CAND-0527",
-                "CAND-0538",
-                "CAND-0539",
-                "CAND-0545",
-                "CAND-0547",
-                "CAND-0549",
+                "CAND-0525",
+                "CAND-0529",
+                "CAND-0532",
+                "CAND-0543",
+                "CAND-0544",
+                "CAND-0550",
+                "CAND-0552",
                 "CAND-0554",
-                "CAND-0556",
-                "CAND-0557",
-                "CAND-0558",
                 "CAND-0559",
-                "CAND-0608",
-                "CAND-0609",
-                "CAND-0610"
+                "CAND-0561",
+                "CAND-0562",
+                "CAND-0563",
+                "CAND-0564",
+                "CAND-0616",
+                "CAND-0617",
+                "CAND-0618"
               ],
               "representative_evidence": "nt faire l’objet d’une déclaration lorsqu’un aliment préemballé contient une protéine de gluten, une protéine de gluten modifiée ou des fractions protéiques issues de l’orge, de l’avoine, du seigle, du blé ou du triticale et de l’avoine. Le Règlement sur les aliments et drogues canadien exige que l’on déclare les sources de gluten en utilisant le nom de la céréale",
               "representative_location": "character:6415"
@@ -1117,7 +1399,7 @@
       ]
     },
     {
-      "id": "REV-0006",
+      "id": "REV-0009",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-RYE",
       "canonical_concept": "centeno",
@@ -1176,12 +1458,12 @@
               "language": "es",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0085",
-                "CAND-0091",
-                "CAND-0096",
-                "CAND-0103",
-                "CAND-0110",
-                "CAND-0259"
+                "CAND-0087",
+                "CAND-0093",
+                "CAND-0098",
+                "CAND-0105",
+                "CAND-0112",
+                "CAND-0261"
               ],
               "representative_evidence": "C: Punto de Control\n\nPOE: Procedimiento Operativo Estandarizado\n\nPOES: Procedimientos Operativos Estandarizados de Saneamiento\n\nPT: Producto Terminado\n\nTACC: Trigo, Avena, Cebada, Centeno\n\n\n\n\n                                                                                    6\n\fGuía de Buenas Prácticas de Manufactura\n\nEstablecimientos Elaboradores de Alimentos Libr",
               "representative_location": "character:9081"
@@ -1203,8 +1485,8 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0053",
-                "CAND-0065"
+                "CAND-0055",
+                "CAND-0067"
               ],
               "representative_evidence": "contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 mg/Kg. En caso de utilizar enzimas en los procedimientos de remoción de glute",
               "representative_location": "character:5609"
@@ -1226,22 +1508,22 @@
               "language": "en",
               "occurrence_count": 16,
               "candidate_ids": [
-                "CAND-0286",
-                "CAND-0295",
-                "CAND-0301",
-                "CAND-0331",
-                "CAND-0341",
-                "CAND-0350",
-                "CAND-0357",
-                "CAND-0373",
-                "CAND-0382",
-                "CAND-0406",
-                "CAND-0411",
-                "CAND-0426",
-                "CAND-0427",
-                "CAND-0428",
+                "CAND-0288",
+                "CAND-0297",
+                "CAND-0303",
+                "CAND-0333",
+                "CAND-0343",
+                "CAND-0352",
+                "CAND-0359",
+                "CAND-0375",
+                "CAND-0384",
+                "CAND-0408",
+                "CAND-0413",
                 "CAND-0429",
-                "CAND-0438"
+                "CAND-0430",
+                "CAND-0431",
+                "CAND-0432",
+                "CAND-0443"
               ],
               "representative_evidence": "0 2020 Cat. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat allergy,",
               "representative_location": "character:1111"
@@ -1263,21 +1545,21 @@
               "language": "fr",
               "occurrence_count": 15,
               "candidate_ids": [
-                "CAND-0458",
-                "CAND-0467",
-                "CAND-0473",
-                "CAND-0502",
-                "CAND-0512",
-                "CAND-0521",
-                "CAND-0543",
-                "CAND-0552",
-                "CAND-0573",
+                "CAND-0463",
+                "CAND-0472",
+                "CAND-0478",
+                "CAND-0507",
+                "CAND-0517",
+                "CAND-0526",
+                "CAND-0548",
+                "CAND-0557",
                 "CAND-0578",
-                "CAND-0594",
-                "CAND-0595",
-                "CAND-0596",
-                "CAND-0597",
-                "CAND-0606"
+                "CAND-0583",
+                "CAND-0600",
+                "CAND-0601",
+                "CAND-0602",
+                "CAND-0603",
+                "CAND-0614"
               ],
               "representative_evidence": "» est couramment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie cœliaque,",
               "representative_location": "character:1323"
@@ -1290,7 +1572,7 @@
       ]
     },
     {
-      "id": "REV-0007",
+      "id": "REV-0010",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-SPELT",
       "canonical_concept": "espelta",
@@ -1362,7 +1644,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0107"
+                "CAND-0109"
               ],
               "representative_evidence": "enas prácticas de elaboración —que impidan la contaminación cruzada—\n           no contiene prolaminas procedentes del trigo, de todas las especies de Triticum,\n           como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de\n           trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido\n           de gluten no podrá sup",
               "representative_location": "character:15789"
@@ -1384,7 +1666,7 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0050"
+                "CAND-0052"
               ],
               "representative_evidence": "ión de buenas prácticas de manufactura -que impidan la contaminación cruzada- no contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas. El contenido de gluten no podrá superar el máximo de 10 m",
               "representative_location": "character:5528"
@@ -1406,7 +1688,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0422"
+                "CAND-0425"
               ],
               "representative_evidence": "ng ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or often c",
               "representative_location": "character:9087"
@@ -1416,7 +1698,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0423"
+                "CAND-0426"
               ],
               "representative_evidence": "dients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or often contain",
               "representative_location": "character:9095"
@@ -1426,7 +1708,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0421"
+                "CAND-0424"
               ],
               "representative_evidence": "following ingredients listed on a product you should not eat it: Atta Bulgur Couscous Durum Einkorn Emmer Farina Fu Graham High-gluten and high-protein flour Kamut Seitan Semolina Spelt (dinkel, farro) Examples of food and other products that can contain wheat can be found in the wheat priority allergen pamphlet. Rye Examples of foods and products that contain or",
               "representative_location": "character:9080"
@@ -1448,7 +1730,7 @@
               "language": "fr",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0591"
+                "CAND-0597"
               ],
               "representative_evidence": "s, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'aliments e",
               "representative_location": "character:11099"
@@ -1458,7 +1740,7 @@
               "language": "fr",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0592"
+                "CAND-0598"
               ],
               "representative_evidence": "consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'aliments et de pr",
               "representative_location": "character:11107"
@@ -1468,7 +1750,7 @@
               "language": "fr",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0590"
+                "CAND-0596"
               ],
               "representative_evidence": "ingrédients, n’en consommez pas: Farine de blé Bulgur Couscous Blé dur Blé Einkorn Amidonnier Farina Fu Graham Farine à haute teneur en gluten et en protéines Kamut Seitan Semoule Épeautre (dinkel, farro) On peut trouver des exemples d’aliments et d’autres produits pouvant contenir du blé dans la brochure portant sur les allergènes prioritaires. Seigle Exemples d'al",
               "representative_location": "character:11089"
@@ -1481,7 +1763,7 @@
       ]
     },
     {
-      "id": "REV-0008",
+      "id": "REV-0011",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-TRITICALE",
       "canonical_concept": "triticale",
@@ -1511,13 +1793,13 @@
               "language": "en",
               "occurrence_count": 7,
               "candidate_ids": [
-                "CAND-0352",
-                "CAND-0358",
-                "CAND-0403",
-                "CAND-0404",
-                "CAND-0408",
-                "CAND-0430",
-                "CAND-0437"
+                "CAND-0354",
+                "CAND-0360",
+                "CAND-0405",
+                "CAND-0406",
+                "CAND-0410",
+                "CAND-0433",
+                "CAND-0442"
               ],
               "representative_evidence": "ad food labels. Gluten sources need to be declared when a prepackaged food contains gluten protein, modified gluten protein, or gluten protein fractions from barley, rye, wheat or triticale and oats. The Canadian Food and Drug Regulations require gluten sources to be declared by the grain name, such as barley, oats, rye, triticale or wheat. The declaration of the sou",
               "representative_location": "character:5161"
@@ -1539,13 +1821,13 @@
               "language": "fr",
               "occurrence_count": 7,
               "candidate_ids": [
-                "CAND-0523",
                 "CAND-0528",
-                "CAND-0570",
-                "CAND-0571",
+                "CAND-0533",
                 "CAND-0575",
-                "CAND-0598",
-                "CAND-0605"
+                "CAND-0576",
+                "CAND-0580",
+                "CAND-0604",
+                "CAND-0613"
               ],
               "representative_evidence": "on lorsqu’un aliment préemballé contient une protéine de gluten, une protéine de gluten modifiée ou des fractions protéiques issues de l’orge, de l’avoine, du seigle, du blé ou du triticale et de l’avoine. Le Règlement sur les aliments et drogues canadien exige que l’on déclare les sources de gluten en utilisant le nom de la céréale, par exemple orge, avoine, tritica",
               "representative_location": "character:6447"
@@ -1558,7 +1840,7 @@
       ]
     },
     {
-      "id": "REV-0009",
+      "id": "REV-0012",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-WHEAT",
       "canonical_concept": "trigo",
@@ -1599,8 +1881,8 @@
                 "CAND-0018",
                 "CAND-0027",
                 "CAND-0032",
-                "CAND-0033",
-                "CAND-0035"
+                "CAND-0034",
+                "CAND-0037"
               ],
               "representative_evidence": "rgo, sólo ocho son\nlos que provocan aproximadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirlas es eliminar",
               "representative_location": "character:4485"
@@ -1622,14 +1904,14 @@
               "language": "es",
               "occurrence_count": 8,
               "candidate_ids": [
-                "CAND-0082",
-                "CAND-0088",
-                "CAND-0094",
-                "CAND-0100",
-                "CAND-0106",
-                "CAND-0175",
-                "CAND-0176",
-                "CAND-0256"
+                "CAND-0084",
+                "CAND-0090",
+                "CAND-0096",
+                "CAND-0102",
+                "CAND-0108",
+                "CAND-0177",
+                "CAND-0178",
+                "CAND-0258"
               ],
               "representative_evidence": "LG: Libre de Gluten\n\nPC: Punto de Control\n\nPOE: Procedimiento Operativo Estandarizado\n\nPOES: Procedimientos Operativos Estandarizados de Saneamiento\n\nPT: Producto Terminado\n\nTACC: Trigo, Avena, Cebada, Centeno\n\n\n\n\n                                                                                    6\n\fGuía de Buenas Prácticas de Manufactura\n\nEstablecimientos Elabor",
               "representative_location": "character:9059"
@@ -1651,8 +1933,8 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0049",
-                "CAND-0062"
+                "CAND-0051",
+                "CAND-0064"
               ],
               "representative_evidence": "mente demuestre que remueve el gluten y la aplicación de buenas prácticas de manufactura -que impidan la contaminación cruzada- no contiene prolaminas y glutelinas procedentes del trigo, de todas las especies de Triticum, como la escaña común (Triticum spelta L.), kamut (Triticum polonicum L.), de trigo duro, centeno, cebada, avena ni de sus variedades cruzadas.",
               "representative_location": "character:5478"
@@ -1674,43 +1956,43 @@
               "language": "en",
               "occurrence_count": 37,
               "candidate_ids": [
-                "CAND-0285",
-                "CAND-0291",
-                "CAND-0294",
-                "CAND-0297",
+                "CAND-0287",
+                "CAND-0293",
+                "CAND-0296",
                 "CAND-0299",
-                "CAND-0303",
-                "CAND-0310",
-                "CAND-0311",
+                "CAND-0301",
+                "CAND-0305",
                 "CAND-0312",
                 "CAND-0313",
                 "CAND-0314",
+                "CAND-0315",
                 "CAND-0316",
-                "CAND-0320",
+                "CAND-0318",
                 "CAND-0322",
                 "CAND-0324",
-                "CAND-0325",
-                "CAND-0330",
-                "CAND-0335",
-                "CAND-0336",
+                "CAND-0326",
+                "CAND-0327",
+                "CAND-0332",
+                "CAND-0337",
                 "CAND-0338",
-                "CAND-0339",
                 "CAND-0340",
-                "CAND-0351",
-                "CAND-0359",
-                "CAND-0372",
-                "CAND-0381",
-                "CAND-0405",
+                "CAND-0341",
+                "CAND-0342",
+                "CAND-0353",
+                "CAND-0361",
+                "CAND-0374",
+                "CAND-0383",
                 "CAND-0407",
-                "CAND-0410",
-                "CAND-0413",
-                "CAND-0414",
+                "CAND-0409",
+                "CAND-0412",
                 "CAND-0415",
+                "CAND-0416",
                 "CAND-0417",
-                "CAND-0424",
-                "CAND-0425",
-                "CAND-0436",
-                "CAND-0446"
+                "CAND-0419",
+                "CAND-0427",
+                "CAND-0428",
+                "CAND-0441",
+                "CAND-0451"
               ],
               "representative_evidence": "ust 2020 2020 Cat. No.: H164-234/2020E-PDF ISBN: 978-0-660-35157-5 Pub.: 200075 Gluten is the common term for a group of related proteins known as prolamins and glutenins found in wheat, rye and barley. Gluten is harmful for patients with gluten-related disorders (a term used to describe all conditions related to gluten), which includes celiac disease, wheat alle",
               "representative_location": "character:1104"
@@ -1732,43 +2014,43 @@
               "language": "fr",
               "occurrence_count": 37,
               "candidate_ids": [
-                "CAND-0457",
-                "CAND-0463",
-                "CAND-0466",
-                "CAND-0469",
+                "CAND-0462",
+                "CAND-0468",
                 "CAND-0471",
+                "CAND-0474",
                 "CAND-0476",
-                "CAND-0482",
-                "CAND-0483",
-                "CAND-0484",
-                "CAND-0485",
+                "CAND-0481",
                 "CAND-0487",
-                "CAND-0491",
-                "CAND-0493",
-                "CAND-0495",
+                "CAND-0488",
+                "CAND-0489",
+                "CAND-0490",
+                "CAND-0492",
                 "CAND-0496",
+                "CAND-0498",
+                "CAND-0500",
                 "CAND-0501",
                 "CAND-0506",
-                "CAND-0507",
-                "CAND-0508",
-                "CAND-0510",
                 "CAND-0511",
-                "CAND-0522",
-                "CAND-0529",
-                "CAND-0542",
-                "CAND-0551",
-                "CAND-0572",
-                "CAND-0574",
+                "CAND-0512",
+                "CAND-0513",
+                "CAND-0515",
+                "CAND-0516",
+                "CAND-0527",
+                "CAND-0534",
+                "CAND-0547",
+                "CAND-0556",
                 "CAND-0577",
-                "CAND-0580",
-                "CAND-0581",
+                "CAND-0579",
                 "CAND-0582",
-                "CAND-0584",
                 "CAND-0585",
+                "CAND-0586",
                 "CAND-0587",
+                "CAND-0589",
+                "CAND-0590",
                 "CAND-0593",
-                "CAND-0604",
-                "CAND-0614"
+                "CAND-0599",
+                "CAND-0612",
+                "CAND-0622"
               ],
               "representative_evidence": "« gluten » est couramment utilisé pour désigner un groupe de protéines appartenant à la même famille que l’on appelle les prolamines et les gluténines et que l’on retrouve dans le blé, le seigle et l’orge. Le gluten est nocif pour les patients souffrant de troubles liés au gluten (expression désignant l’ensemble des troubles associés au gluten), dont la maladie",
               "representative_location": "character:1315"
