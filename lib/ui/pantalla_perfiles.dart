@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../datos/base_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
+import '../compartir/servicio_compartir_restricciones.dart';
 import 'editor_perfil.dart';
+import 'pantalla_compartir_restricciones.dart';
+import 'pantalla_escanear_restricciones.dart';
 
 /// Lista de perfiles guardados en el dispositivo, con alta, edición y borrado.
 class PantallaPerfiles extends StatefulWidget {
@@ -11,16 +14,27 @@ class PantallaPerfiles extends StatefulWidget {
     super.key,
     required this.repositorio,
     required this.base,
+    required this.nombrePropietario,
+    required this.apellidoPropietario,
   });
 
   final RepositorioPerfiles repositorio;
   final BaseConocimiento base;
+  final String nombrePropietario;
+  final String apellidoPropietario;
 
   @override
   State<PantallaPerfiles> createState() => _PantallaPerfilesState();
 }
 
 class _PantallaPerfilesState extends State<PantallaPerfiles> {
+  ServicioCompartirRestricciones get _compartir =>
+      ServicioCompartirRestricciones(
+        repositorio: widget.repositorio,
+        gruposValidos: widget.base.grupos.keys.toSet(),
+        nombrePropietario: widget.nombrePropietario,
+        apellidoPropietario: widget.apellidoPropietario,
+      );
   List<Perfil>? _perfiles;
 
   /// Perfil cuya tarjeta está pidiendo confirmación de borrado. La
@@ -35,6 +49,7 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
 
   Future<void> _cargar() async {
     final perfiles = await widget.repositorio.obtenerTodos();
+    perfiles.sort((a, b) => (b.esPersonal ? 1 : 0) - (a.esPersonal ? 1 : 0));
     if (mounted) setState(() => _perfiles = perfiles);
   }
 
@@ -62,11 +77,32 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
     await _cargar();
   }
 
+  Future<void> _escanear() async {
+    await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => PantallaEscanearRestricciones(
+          servicio: _compartir,
+          base: widget.base,
+        ),
+      ),
+    );
+    if (mounted) await _cargar();
+  }
+
   @override
   Widget build(BuildContext context) {
     final perfiles = _perfiles;
     return Scaffold(
-      appBar: AppBar(title: const Text('Perfiles')),
+      appBar: AppBar(
+        title: const Text('Perfiles'),
+        actions: [
+          IconButton(
+            onPressed: _escanear,
+            tooltip: 'Escanear restricciones',
+            icon: const Icon(Icons.qr_code_scanner),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _abrirEditor(),
         icon: const Icon(Icons.add),
@@ -108,7 +144,7 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    p.nombre,
+                    p.esPersonal ? 'Mi perfil' : p.nombre,
                     style: texto.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -126,11 +162,27 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
               icon: const Icon(Icons.edit_outlined),
               onPressed: () => _abrirEditor(p),
             ),
-            IconButton(
-              tooltip: 'Eliminar',
-              icon: const Icon(Icons.delete_outline),
-              onPressed: () => setState(() => _confirmandoId = p.id),
-            ),
+            if (p.esPersonal)
+              IconButton(
+                tooltip: 'Compartir mis restricciones',
+                icon: const Icon(Icons.qr_code),
+                onPressed: p.restricciones.isEmpty
+                    ? null
+                    : () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => PantallaCompartirRestricciones(
+                            servicio: _compartir,
+                            base: widget.base,
+                          ),
+                        ),
+                      ),
+              ),
+            if (!p.esPersonal)
+              IconButton(
+                tooltip: 'Eliminar',
+                icon: const Icon(Icons.delete_outline),
+                onPressed: () => setState(() => _confirmandoId = p.id),
+              ),
           ],
         ),
       ),

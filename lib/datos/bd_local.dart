@@ -11,7 +11,7 @@ class BdLocal {
   BdLocal._();
 
   static const nombreArchivo = 'safelabel.db';
-  static const version = 1;
+  static const version = 2;
 
   /// Abre (o crea) la base.
   ///
@@ -37,7 +37,11 @@ class BdLocal {
         onConfigure: _configurar,
         onCreate: (db, version) async {
           await _crear(db, version);
+          await _agregarPropiedad(db);
           alCrear?.call();
+        },
+        onUpgrade: (db, anterior, nueva) async {
+          if (anterior < 2) await _agregarPropiedad(db);
         },
       ),
     );
@@ -48,6 +52,34 @@ class BdLocal {
   /// sus restricciones huérfanas.
   static Future<void> _configurar(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
+  }
+
+  /// onCreate/onUpgrade ya se ejecutan dentro de una transacción de sqflite.
+  /// Los null heredados quedan fuera de todos los repositorios de usuario.
+  static Future<void> _agregarPropiedad(Database db) async {
+    await db.execute('ALTER TABLE perfil ADD COLUMN usuario_id TEXT');
+    await db.execute('''ALTER TABLE perfil ADD COLUMN es_personal INTEGER
+      NOT NULL DEFAULT 0 CHECK (es_personal IN (0, 1))''');
+    await db.execute('CREATE INDEX perfil_usuario ON perfil(usuario_id)');
+    await db.execute('''CREATE UNIQUE INDEX perfil_personal_unico
+      ON perfil(usuario_id) WHERE es_personal = 1''');
+    await db.execute('''CREATE TABLE migracion_perfiles (
+      clave TEXT PRIMARY KEY NOT NULL
+    )''');
+    await db.execute('''CREATE TRIGGER perfil_personal_con_usuario
+      BEFORE INSERT ON perfil WHEN NEW.es_personal = 1
+        AND (NEW.usuario_id IS NULL OR length(trim(NEW.usuario_id)) = 0)
+      BEGIN SELECT RAISE(ABORT, 'El perfil personal necesita usuario'); END''');
+    await db.execute('''CREATE TRIGGER perfil_personal_no_eliminar
+      BEFORE DELETE ON perfil WHEN OLD.es_personal = 1
+      BEGIN SELECT RAISE(ABORT, 'No se puede eliminar Mi perfil'); END''');
+    await db.execute(
+      '''CREATE TRIGGER perfil_identidad_inmutable
+      BEFORE UPDATE OF usuario_id, es_personal ON perfil
+      WHEN (OLD.usuario_id IS NOT NULL AND NEW.usuario_id IS NOT OLD.usuario_id)
+        OR NEW.es_personal != OLD.es_personal
+      BEGIN SELECT RAISE(ABORT, 'No se puede cambiar la identidad del perfil'); END''',
+    );
   }
 
   static Future<void> _crear(Database db, int version) async {

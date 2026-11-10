@@ -151,7 +151,10 @@ void main() {
   test(
     'un perfil del repositorio en memoria da los mismos hallazgos',
     () async {
-      final repo = RepositorioPerfilesMemoria(gruposValidos: gruposValidos);
+      final repo = RepositorioPerfilesMemoria(
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      );
       final activos = await guardarYActivar(repo);
 
       final r = analizador.analizar(etiqueta, perfilesActivos: activos);
@@ -168,13 +171,18 @@ void main() {
 
     var bd = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
     await guardarYActivar(
-      RepositorioPerfilesSqlite(bd, gruposValidos: gruposValidos),
+      RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      ),
     );
     await bd.close();
 
     bd = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
     final activos = await RepositorioPerfilesSqlite(
       bd,
+      usuarioId: 'prueba',
       gruposValidos: gruposValidos,
     ).obtenerActivos();
     await bd.close();

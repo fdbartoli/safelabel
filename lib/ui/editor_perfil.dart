@@ -104,17 +104,26 @@ class _EditorPerfilState extends State<EditorPerfil> {
     final scheme = Theme.of(context).colorScheme;
     final huerfanos = _gruposHuerfanos;
     return Scaffold(
-      appBar: AppBar(title: Text(_esNuevo ? 'Nuevo perfil' : 'Editar perfil')),
+      appBar: AppBar(
+        title: Text(
+          widget.perfil?.esPersonal == true
+              ? 'Editar Mi perfil'
+              : (_esNuevo ? 'Nuevo perfil' : 'Editar perfil'),
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [
-          TextField(
-            key: const Key('nombre_perfil'),
-            controller: _nombre,
-            maxLength: largoMaximoNombre,
-            textCapitalization: TextCapitalization.sentences,
-            decoration: const InputDecoration(labelText: 'Nombre'),
-          ),
+          if (widget.perfil?.esPersonal == true)
+            Text('Mi perfil', style: texto.titleMedium)
+          else
+            TextField(
+              key: const Key('nombre_perfil'),
+              controller: _nombre,
+              maxLength: largoMaximoNombre,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(labelText: 'Nombre'),
+            ),
           const SizedBox(height: 12),
           Text('Restricciones', style: texto.titleMedium),
           const SizedBox(height: 4),

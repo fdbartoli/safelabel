@@ -53,6 +53,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
 
   Future<void> _cargar() async {
     final todos = await widget.repositorio.obtenerTodos();
+    todos.sort((a, b) => (b.esPersonal ? 1 : 0) - (a.esPersonal ? 1 : 0));
     final activos = await widget.repositorio.obtenerActivos();
     if (!mounted) return;
     setState(() {
@@ -75,11 +76,14 @@ class _PantallaInicioState extends State<PantallaInicio> {
   }
 
   Future<void> _administrarPerfiles() async {
+    final cuenta = widget.servicioCuenta?.cuentaActual();
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => PantallaPerfiles(
           repositorio: widget.repositorio,
           base: widget.base,
+          nombrePropietario: cuenta?.nombre ?? '',
+          apellidoPropietario: cuenta?.apellido ?? '',
         ),
       ),
     );
@@ -134,6 +138,14 @@ class _PantallaInicioState extends State<PantallaInicio> {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 10),
+          if (_todos.any((p) => p.esPersonal && p.restricciones.isEmpty))
+            const Padding(
+              padding: EdgeInsets.only(bottom: 12),
+              child: Text(
+                'Mi perfil todavía no tiene restricciones '
+                'configuradas. Podés agregarlas desde Administrar.',
+              ),
+            ),
           if (_cargando)
             const Padding(
               padding: EdgeInsets.all(16),
@@ -177,7 +189,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                p.nombre,
+                                p.esPersonal ? 'Mi perfil' : p.nombre,
                                 style: Theme.of(context).textTheme.titleSmall
                                     ?.copyWith(fontWeight: FontWeight.w600),
                               ),

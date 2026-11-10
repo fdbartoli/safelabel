@@ -84,6 +84,63 @@ mismo archivo.
 `GEMINI_MODEL` en el entorno, conservan prioridad sobre el archivo por
 compatibilidad; no hace falta definirlas para usar `dev.ps1`.
 
+## Perfiles por cuenta
+
+Cada cuenta local tiene un único «Mi perfil», creado sin restricciones e
+inactivo. Sus restricciones se editan desde Administrar; el perfil personal no
+se puede eliminar. Los perfiles adicionales y la selección de activos están
+aislados por cuenta. Usuarios y sesión siguen en SharedPreferences; los perfiles
+se guardan en SQLite.
+
+Las cuentas nuevas también reciben una sola vez los cuatro perfiles de
+demostración como adicionales: Sofía, Mateo, Juli e Intolerancia a sulfitos.
+Se conservan sus restricciones y severidades originales y queda activo el
+primer ejemplo, no «Mi perfil». Los ejemplos se pueden editar o eliminar y no
+reaparecen al iniciar sesión. Las cuentas anteriores no reciben esta carga.
+
+La migración a SQLite v2 conserva los perfiles anteriores, sus restricciones,
+severidades y selecciones. Si había una sola cuenta, recibe esos perfiles como
+adicionales. Si había varias o ninguna, quedan sin propietario, pendientes de
+asignación y fuera de las listas de usuario; no se borran ni se adjudican al
+primer login. Todavía no hay una pantalla para resolver esa asignación.
+
+La preparación se puede reintentar sin duplicar el perfil personal. Si el
+registro guardó la cuenta pero falló la preparación de sus perfiles o de la
+sesión, reintentá iniciando sesión con el mismo email y contraseña.
+
+## Compartir mis restricciones
+
+Desde **Administrar → Mi perfil → Compartir mis restricciones** se genera un
+QR solo si el perfil personal tiene restricciones. El JSON v2 incluye tipo,
+versión, esquema de grupos, nombre y apellido del titular de la cuenta y pares
+de ID de grupo/severidad. No incluye credenciales, IDs de cuenta ni otros
+perfiles. Se siguen aceptando los QR v1 anteriores, que no tenían nombre: la
+copia se guarda como «Perfil recibido».
+
+El receptor abre **Administrar → Escanear restricciones**, apunta la cámara al
+QR y revisa la vista previa con el nombre del propietario. Solo toca
+**Guardar perfil** para crear una copia adicional inactiva, o cancela sin
+guardar. El perfil personal y la selección de activos del receptor no se
+modifican.
+
+Se rechazan versiones incompatibles, campos extra, claves o grupos repetidos,
+grupos/severidades desconocidos, listas vacías, nombres inválidos y contenidos
+de más de 2 KiB. Las restricciones iguales a las de otro perfil no bloquean la
+importación: dos personas distintas pueden compartir las mismas alergias. La
+vista previa y el guardado tienen protecciones contra dobles toques y
+escaneos repetidos accidentales.
+
+La función es local, sin backend ni llamadas a IA. Android usa el lector
+empaquetado de `mobile_scanner`. Chrome usa ZXing 0.23.0 incluido en
+`web/vendor/zxing`, sin cargar el lector desde un CDN; requiere permiso de
+cámara y HTTPS o localhost. Los recursos de la aplicación web deben estar
+disponibles para abrirla: esto no agrega una PWA offline.
+
+El QR es una copia estática, legible por quien lo tenga y sin acreditación de
+identidad del emisor. No hay sincronización, enlaces, importación desde imágenes
+ni integración con WhatsApp. Los perfiles recibidos son adicionales y no
+ofrecen la acción de compartir el perfil personal.
+
 ## Pendiente en esta etapa
 
 - Fixtures de fotos reales (envase curvo, texto blanco sobre foto, letra chica,

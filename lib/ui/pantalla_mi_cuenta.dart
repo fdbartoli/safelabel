@@ -52,7 +52,15 @@ class _PantallaMiCuentaState extends State<PantallaMiCuenta> {
       ),
     );
     if (confirmado != true) return;
-    await widget.servicio.cerrarSesion();
+    try {
+      await widget.servicio.cerrarSesion();
+    } on ErrorCuenta catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error.mensaje)));
+      }
+      return;
+    }
     if (!mounted) return;
     volverAlInicio(context);
   }

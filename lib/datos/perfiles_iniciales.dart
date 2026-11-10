@@ -1,9 +1,9 @@
 import '../modelo/perfil.dart';
 import 'repositorio_perfiles.dart';
 
-/// Perfiles que se siembran la primera vez que se crea la base local, para que
-/// la app no arranque vacía en la demostración. Después son perfiles comunes:
-/// se editan y se borran como cualquier otro, y no vuelven a sembrarse.
+/// Ejemplos adicionales para cuentas nuevas. PreparadorPerfiles registra su
+/// carga una sola vez por usuario; después pueden editarse o borrarse sin que
+/// reaparezcan. Nunca se usan para reconstruir perfiles heredados.
 const perfilesIniciales = <Perfil>[
   Perfil(
     nombre: 'Sofía (alergia a la leche)',
@@ -49,10 +49,13 @@ const perfilesIniciales = <Perfil>[
 ///
 /// Pasa por el repositorio, no por SQL directo: así los datos iniciales cumplen
 /// las mismas validaciones que un perfil creado a mano.
-Future<void> sembrarPerfilesIniciales(RepositorioPerfiles repositorio) async {
+Future<void> sembrarPerfilesIniciales(
+  RepositorioPerfiles repositorio, {
+  bool activarPrimero = true,
+}) async {
   final creados = <Perfil>[];
   for (final p in perfilesIniciales) {
     creados.add(await repositorio.crear(p));
   }
-  await repositorio.marcarActivos({creados.first.id});
+  if (activarPrimero) await repositorio.marcarActivos({creados.first.id});
 }
