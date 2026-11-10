@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../cuenta/servicio_cuenta.dart';
+import 'avatar.dart';
 import 'componentes_cuenta.dart';
 import 'pantalla_editar_cuenta.dart';
 import 'pantalla_terminos.dart';
@@ -74,6 +75,15 @@ class _PantallaMiCuentaState extends State<PantallaMiCuenta> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SelectorAvatar(
+              semilla: cuenta.semillaAvatar,
+              titulo: 'Elegí tu avatar',
+              alCambiar: (s) async {
+                await widget.servicio.cambiarAvatar(s);
+                if (mounted) setState(() {});
+              },
+            ),
+            const SizedBox(height: 8),
             _Dato(
               icono: Icons.person_outline,
               titulo: 'Nombre y apellido',

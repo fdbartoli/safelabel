@@ -11,7 +11,9 @@ class BdLocal {
   BdLocal._();
 
   static const nombreArchivo = 'safelabel.db';
-  static const version = 1;
+
+  /// 1: perfiles y restricciones. 2: avatar del perfil.
+  static const version = 2;
 
   /// Abre (o crea) la base.
   ///
@@ -39,6 +41,7 @@ class BdLocal {
           await _crear(db, version);
           alCrear?.call();
         },
+        onUpgrade: _migrar,
       ),
     );
   }
@@ -50,6 +53,17 @@ class BdLocal {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
+  /// Migraciones de instalaciones existentes, sin perder los perfiles.
+  static Future<void> _migrar(Database db, int anterior, int nueva) async {
+    if (anterior < 2) {
+      // Los perfiles existentes quedan con avatar vacío: se dibuja a partir
+      // del nombre (ver Perfil.semillaAvatar).
+      await db.execute(
+        "ALTER TABLE perfil ADD COLUMN avatar TEXT NOT NULL DEFAULT ''",
+      );
+    }
+  }
+
   static Future<void> _crear(Database db, int version) async {
     final lote = db.batch();
     // AUTOINCREMENT evita que SQLite reutilice el id de un perfil borrado: una
@@ -57,7 +71,8 @@ class BdLocal {
     lote.execute('''
       CREATE TABLE perfil (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT NOT NULL
+        nombre TEXT NOT NULL,
+        avatar TEXT NOT NULL DEFAULT ''
       )
     ''');
     lote.execute('''

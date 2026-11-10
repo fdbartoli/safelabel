@@ -62,7 +62,11 @@ class SemaforoPerfil {
     required this.motivos,
     required this.ingredientes,
     this.restricciones = const [],
+    this.avatar = '',
   });
+
+  /// Semilla del avatar del perfil (ver `ui/avatar.dart`).
+  final String avatar;
 
   /// Nombre completo del perfil ("Sofía (alergia a la leche)").
   final String perfil;

@@ -1,0 +1,6 @@
+{
+  // Se aplica a cualquier forma de correr Flutter desde VS Code (F5, el botón
+  // Run de arriba de main.dart, la barra de depuración): pasa gemini.env para
+  // que las funciones de IA tengan la clave. gemini.env no se commitea.
+  "dart.flutterAdditionalArgs": ["--dart-define-from-file=gemini.env"]
+}

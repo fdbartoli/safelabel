@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../datos/base_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/grupo_alergeno.dart';
 import '../modelo/perfil.dart';
+import 'avatar.dart';
 
 /// Alta y edición de un perfil.
 ///
@@ -34,6 +37,10 @@ class EditorPerfil extends StatefulWidget {
 class _EditorPerfilState extends State<EditorPerfil> {
   late final TextEditingController _nombre;
 
+  /// Semilla del avatar. Un perfil nuevo arranca con uno al azar de los
+  /// sugeridos, así nunca queda sin avatar.
+  late String _avatar;
+
   /// grupo → severidad. Conserva el orden original de las restricciones; las
   /// nuevas se agregan al final.
   final Map<String, Severidad> _severidades = {};
@@ -47,6 +54,10 @@ class _EditorPerfilState extends State<EditorPerfil> {
   void initState() {
     super.initState();
     _nombre = TextEditingController(text: widget.perfil?.nombre ?? '');
+    final sugeridos = semillasSugeridas(0);
+    _avatar =
+        widget.perfil?.semillaAvatar ??
+        sugeridos[Random().nextInt(sugeridos.length)];
     for (final r in widget.perfil?.restricciones ?? const []) {
       _severidades[r.grupoAlergenoId] = r.severidad;
     }
@@ -78,13 +89,18 @@ class _EditorPerfilState extends State<EditorPerfil> {
     try {
       if (_esNuevo) {
         await widget.repositorio.crear(
-          Perfil(nombre: _nombre.text, restricciones: restricciones),
+          Perfil(
+            nombre: _nombre.text,
+            restricciones: restricciones,
+            avatar: _avatar,
+          ),
         );
       } else {
         await widget.repositorio.actualizar(
           widget.perfil!.copiarCon(
             nombre: _nombre.text,
             restricciones: restricciones,
+            avatar: _avatar,
           ),
         );
       }
@@ -108,6 +124,12 @@ class _EditorPerfilState extends State<EditorPerfil> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [
+          SelectorAvatar(
+            semilla: _avatar,
+            titulo: 'Elegí el avatar del perfil',
+            alCambiar: (s) => setState(() => _avatar = s),
+          ),
+          const SizedBox(height: 8),
           TextField(
             key: const Key('nombre_perfil'),
             controller: _nombre,

@@ -19,6 +19,7 @@ class CuentaUsuario {
     required this.fechaAlta,
     required this.versionTerminos,
     required this.fechaAceptacionTerminos,
+    this.avatar = '',
   });
 
   final String nombre;
@@ -29,7 +30,13 @@ class CuentaUsuario {
   final String? versionTerminos;
   final DateTime? fechaAceptacionTerminos;
 
+  /// Semilla del avatar; vacía en cuentas anteriores a los avatares.
+  final String avatar;
+
   String get nombreCompleto => '$nombre $apellido'.trim();
+
+  /// La semilla con la que se dibuja el avatar.
+  String get semillaAvatar => avatar.isEmpty ? nombreCompleto : avatar;
 }
 
 /// Error de negocio con un mensaje listo para mostrar en pantalla.
@@ -84,6 +91,7 @@ class ServicioCuenta extends ChangeNotifier {
     required DateTime? fechaNacimiento,
     required String contrasena,
     required bool aceptaTerminos,
+    String avatar = '',
   }) async {
     _exigir(ReglasUsuario.validarNombre(nombre));
     _exigir(ReglasUsuario.validarApellido(apellido));
@@ -110,6 +118,7 @@ class ServicioCuenta extends ChangeNotifier {
       fechaAlta: ahora,
       versionTerminos: TerminosCondiciones.version,
       fechaAceptacionTerminos: ahora,
+      avatar: avatar.trim(),
     );
     await _repositorio.guardar(usuario);
     await _repositorio.guardarSesion(usuario.id);
@@ -195,6 +204,14 @@ class ServicioCuenta extends ChangeNotifier {
     );
   }
 
+  /// Cambia el avatar de la cuenta en sesión.
+  Future<CuentaUsuario> cambiarAvatar(String avatar) async {
+    final actualizado = _usuarioEnSesion().copiarCon(avatar: avatar.trim());
+    await _repositorio.guardar(actualizado);
+    notifyListeners();
+    return _aCuenta(actualizado);
+  }
+
   /// HU05: cierra la sesión activa.
   Future<void> cerrarSesion() async {
     await _repositorio.borrarSesion();
@@ -225,6 +242,7 @@ class ServicioCuenta extends ChangeNotifier {
       fechaAlta: usuario.fechaAlta,
       versionTerminos: usuario.versionTerminos,
       fechaAceptacionTerminos: usuario.fechaAceptacionTerminos,
+      avatar: usuario.avatar,
     );
   }
 }

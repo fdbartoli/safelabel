@@ -18,6 +18,9 @@ library;
 
 import 'package:flutter/material.dart';
 
+/// Tipografía de la app (ver la sección `fonts` de pubspec.yaml).
+const familiaTipografica = 'PlusJakartaSans';
+
 /// Verde salvia pastel: la marca. Nunca se usa para `temaResultado`.
 const colorSemillaMarca = Color(0xFF74A687);
 
@@ -29,15 +32,19 @@ const colorSemillaResultado = Color(0xFF8A8A8A);
 ThemeData _construir(
   Color semilla, {
   DynamicSchemeVariant variante = DynamicSchemeVariant.tonalSpot,
+  Brightness brillo = Brightness.light,
 }) {
   final scheme = ColorScheme.fromSeed(
     seedColor: semilla,
-    brightness: Brightness.light,
+    brightness: brillo,
     dynamicSchemeVariant: variante,
   );
   return ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
+    // Plus Jakarta Sans en toda la app (pubspec.yaml), empaquetada para que
+    // funcione sin conexión.
+    fontFamily: familiaTipografica,
     scaffoldBackgroundColor: scheme.surface,
     appBarTheme: AppBarTheme(
       backgroundColor: scheme.surface,
@@ -57,7 +64,10 @@ ThemeData _construir(
       style: FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(
+          fontFamily: familiaTipografica,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -65,7 +75,10 @@ ThemeData _construir(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         side: BorderSide(color: scheme.outline),
-        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(
+          fontFamily: familiaTipografica,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     checkboxTheme: CheckboxThemeData(
@@ -115,13 +128,67 @@ class ColoresSemaforo {
     Color(0xFF2E7D32),
     Color(0xFF14532D),
   );
+
+  // Modo oscuro: fondo oscuro teñido y color claro, con el mismo contraste.
+  static const rojoOscuro = ColoresSemaforo._(
+    Color(0xFF3D2020),
+    Color(0xFFFF8A80),
+    Color(0xFFFFDAD6),
+  );
+  static const ambarOscuro = ColoresSemaforo._(
+    Color(0xFF3A2E14),
+    Color(0xFFFFC266),
+    Color(0xFFFFE3B8),
+  );
+  static const verdeOscuro = ColoresSemaforo._(
+    Color(0xFF173222),
+    Color(0xFF7BD88F),
+    Color(0xFFCDEFD6),
+  );
+
+  /// Rojo, ámbar o verde según el brillo del tema actual.
+  static ColoresSemaforo segun(
+    Brightness brillo, {
+    required bool rojo,
+    required bool verde,
+  }) {
+    final oscuro = brillo == Brightness.dark;
+    if (rojo) return oscuro ? rojoOscuro : ColoresSemaforo.rojo;
+    if (verde) return oscuro ? verdeOscuro : ColoresSemaforo.verde;
+    return oscuro ? ambarOscuro : ambar;
+  }
 }
 
 /// Verde pastel moderno: inicio, perfiles, captura, texto pegado.
 final ThemeData temaApp = _construir(colorSemillaMarca);
+
+/// La misma marca en modo oscuro.
+final ThemeData temaAppOscuro = _construir(
+  colorSemillaMarca,
+  brillo: Brightness.dark,
+);
 
 /// Neutro, sin verde: exclusivo de la pantalla de resultado (regla 1.4).
 final ThemeData temaResultado = _construir(
   colorSemillaResultado,
   variante: DynamicSchemeVariant.monochrome,
 );
+
+/// El tema neutro de resultado en modo oscuro.
+final ThemeData temaResultadoOscuro = _construir(
+  colorSemillaResultado,
+  variante: DynamicSchemeVariant.monochrome,
+  brillo: Brightness.dark,
+);
+
+/// El tema de resultado que corresponde al modo (claro u oscuro) actual.
+ThemeData temaResultadoPara(BuildContext context) =>
+    Theme.of(context).brightness == Brightness.dark
+    ? temaResultadoOscuro
+    : temaResultado;
+
+/// Los colores de la marca (verde salvia) para el modo actual. Para las
+/// acciones dentro de pantallas con tema neutro (sustitutos, "Más info").
+ColorScheme marcaPara(BuildContext context) =>
+    (Theme.of(context).brightness == Brightness.dark ? temaAppOscuro : temaApp)
+        .colorScheme;

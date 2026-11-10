@@ -12,6 +12,7 @@ import 'datos/perfiles_iniciales.dart';
 import 'datos/repositorio_conocimiento.dart';
 import 'datos/repositorio_perfiles.dart';
 import 'datos/repositorio_usuarios.dart';
+import 'ui/controlador_tema.dart';
 import 'ui/pantalla_inicio.dart';
 import 'ui/puerta_de_sesion.dart';
 import 'ui/tema.dart';
@@ -21,7 +22,14 @@ Future<void> main() async {
   // Cuentas de usuario guardadas en el almacenamiento local (HU01 a HU05).
   final almacen = await AlmacenLocal.abrir();
   final servicioCuenta = ServicioCuenta(RepositorioUsuarios(almacen));
-  runApp(SafeLabelApp(servicioCuenta: servicioCuenta));
+  // Modo claro u oscuro elegido por la persona (o el del teléfono).
+  final controladorTema = ControladorTema(almacen);
+  runApp(
+    SafeLabelApp(
+      servicioCuenta: servicioCuenta,
+      controladorTema: controladorTema,
+    ),
+  );
 }
 
 /// Lo que la app necesita cargado antes de mostrar la pantalla de inicio.
@@ -60,33 +68,51 @@ Future<_Arranque> _arrancar() async {
 }
 
 class SafeLabelApp extends StatelessWidget {
-  const SafeLabelApp({super.key, required this.servicioCuenta});
+  const SafeLabelApp({
+    super.key,
+    required this.servicioCuenta,
+    this.controladorTema,
+  });
 
   final ServicioCuenta servicioCuenta;
 
+  /// `null` = sigue el modo del teléfono, sin botón para cambiarlo.
+  final ControladorTema? controladorTema;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final controlador = controladorTema;
+    Widget app(ThemeMode modo) => MaterialApp(
       title: 'SafeLabel',
       debugShowCheckedModeBanner: false,
-      // Verde pastel para el chrome general. La pantalla de resultado usa su
-      // propio tema neutro — ver lib/ui/tema.dart (regla 1.4).
+      // Verde pastel para el chrome general, claro u oscuro. La pantalla de
+      // resultado usa su propio tema neutro — ver lib/ui/tema.dart.
       theme: temaApp,
+      darkTheme: temaAppOscuro,
+      themeMode: modo,
       // Sin sesión se muestra el ingreso; con sesión, la app de siempre.
       home: PuertaDeSesion(
         servicio: servicioCuenta,
-        construirPrincipal: (context) =>
-            _CargaDeBase(servicioCuenta: servicioCuenta),
+        construirPrincipal: (context) => _CargaDeBase(
+          servicioCuenta: servicioCuenta,
+          controladorTema: controlador,
+        ),
       ),
+    );
+    if (controlador == null) return app(ThemeMode.system);
+    return ListenableBuilder(
+      listenable: controlador,
+      builder: (context, _) => app(controlador.modo),
     );
   }
 }
 
 /// Carga la base de conocimiento y los perfiles, y abre la pantalla de inicio.
 class _CargaDeBase extends StatefulWidget {
-  const _CargaDeBase({required this.servicioCuenta});
+  const _CargaDeBase({required this.servicioCuenta, this.controladorTema});
 
   final ServicioCuenta servicioCuenta;
+  final ControladorTema? controladorTema;
 
   @override
   State<_CargaDeBase> createState() => _CargaDeBaseState();
@@ -126,6 +152,7 @@ class _CargaDeBaseState extends State<_CargaDeBase> {
           conocimiento: arranque.conocimiento,
           catalogo: arranque.catalogo,
           servicioCuenta: widget.servicioCuenta,
+          controladorTema: widget.controladorTema,
         );
       },
     );

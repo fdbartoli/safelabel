@@ -7,6 +7,8 @@ import '../datos/repositorio_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
 import 'aviso_informativo.dart';
+import 'controlador_tema.dart';
+import 'avatar.dart';
 import 'editor_perfil.dart';
 import 'pantalla_analisis_texto.dart';
 import 'pantalla_captura.dart';
@@ -22,6 +24,7 @@ class PantallaInicio extends StatefulWidget {
     required this.conocimiento,
     required this.catalogo,
     this.servicioCuenta,
+    this.controladorTema,
   });
 
   final BaseConocimiento base;
@@ -31,6 +34,9 @@ class PantallaInicio extends StatefulWidget {
 
   /// Si está, la barra superior muestra el acceso a "Mi cuenta" (HU03 a HU05).
   final ServicioCuenta? servicioCuenta;
+
+  /// Si está, la barra superior muestra el botón de modo claro / oscuro.
+  final ControladorTema? controladorTema;
 
   @override
   State<PantallaInicio> createState() => _PantallaInicioState();
@@ -97,15 +103,30 @@ class _PantallaInicioState extends State<PantallaInicio> {
       appBar: AppBar(
         title: const Text('SafeLabel'),
         actions: [
+          if (widget.controladorTema case final controlador?)
+            BotonModoTema(controlador: controlador),
           if (widget.servicioCuenta case final servicio?)
-            IconButton(
-              tooltip: 'Mi cuenta',
-              icon: const Icon(Icons.account_circle_outlined),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => PantallaMiCuenta(servicio: servicio),
-                ),
-              ),
+            // Se redibuja cuando cambia la cuenta (por ejemplo, el avatar).
+            ListenableBuilder(
+              listenable: servicio,
+              builder: (context, _) {
+                final cuenta = servicio.cuentaActual();
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: IconButton(
+                    key: const Key('boton_mi_cuenta'),
+                    tooltip: 'Mi cuenta',
+                    icon: cuenta == null
+                        ? const Icon(Icons.account_circle_outlined)
+                        : Avatar(semilla: cuenta.semillaAvatar, tamano: 34),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => PantallaMiCuenta(servicio: servicio),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
         ],
       ),
@@ -165,13 +186,35 @@ class _PantallaInicioState extends State<PantallaInicio> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
-                          activo
-                              ? Icons.check_circle_rounded
-                              : Icons.circle_outlined,
-                          color: activo ? scheme.primary : scheme.outline,
+                        // Avatar con una marca de activo, al estilo de
+                        // "¿Quién está mirando?".
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Opacity(
+                              opacity: activo ? 1 : 0.55,
+                              child: Avatar(
+                                semilla: p.semillaAvatar,
+                                tamano: 44,
+                              ),
+                            ),
+                            Positioned(
+                              right: -5,
+                              bottom: -5,
+                              child: Icon(
+                                activo
+                                    ? Icons.check_circle_rounded
+                                    : Icons.circle_outlined,
+                                size: 20,
+                                color: activo ? scheme.primary : scheme.outline,
+                                shadows: [
+                                  Shadow(color: scheme.surface, blurRadius: 4),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

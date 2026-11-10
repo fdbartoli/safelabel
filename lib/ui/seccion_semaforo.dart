@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../modelo/semaforo.dart';
 import '../sugerencias/info_ingrediente.dart';
+import 'avatar.dart';
 import 'tema.dart';
 
 /// Semáforo por perfil, arriba del resultado: una tarjeta por perfil activo
@@ -35,24 +36,29 @@ class SeccionSemaforo extends StatelessWidget {
   }
 }
 
-ColoresSemaforo _colores(ColorSemaforo c) => switch (c) {
-  ColorSemaforo.rojo => ColoresSemaforo.rojo,
-  ColorSemaforo.ambar => ColoresSemaforo.ambar,
-  ColorSemaforo.verde => ColoresSemaforo.verde,
-};
+/// Colores de la tarjeta según el estado y el modo (claro u oscuro).
+ColoresSemaforo _colores(BuildContext context, ColorSemaforo c) =>
+    ColoresSemaforo.segun(
+      Theme.of(context).brightness,
+      rojo: c == ColorSemaforo.rojo,
+      verde: c == ColorSemaforo.verde,
+    );
 
-(ColoresSemaforo, IconData) _estiloIngrediente(EstadoIngrediente e) =>
-    switch (e) {
-      EstadoIngrediente.choca => (ColoresSemaforo.rojo, Icons.cancel_rounded),
-      EstadoIngrediente.noReconocido => (
-        ColoresSemaforo.ambar,
-        Icons.help_rounded,
-      ),
-      EstadoIngrediente.noChoca => (
-        ColoresSemaforo.verde,
-        Icons.check_circle_rounded,
-      ),
-    };
+(ColoresSemaforo, IconData) _estiloIngrediente(
+  BuildContext context,
+  EstadoIngrediente e,
+) => (
+  ColoresSemaforo.segun(
+    Theme.of(context).brightness,
+    rojo: e == EstadoIngrediente.choca,
+    verde: e == EstadoIngrediente.noChoca,
+  ),
+  switch (e) {
+    EstadoIngrediente.choca => Icons.cancel_rounded,
+    EstadoIngrediente.noReconocido => Icons.help_rounded,
+    EstadoIngrediente.noChoca => Icons.check_circle_rounded,
+  },
+);
 
 class _TarjetaPerfil extends StatelessWidget {
   const _TarjetaPerfil({required this.semaforo, this.gestorInfo});
@@ -63,7 +69,7 @@ class _TarjetaPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
-    final colores = _colores(semaforo.color);
+    final colores = _colores(context, semaforo.color);
     final icono = switch (semaforo.color) {
       ColorSemaforo.rojo => Icons.cancel_rounded,
       ColorSemaforo.ambar => Icons.help_rounded,
@@ -96,8 +102,26 @@ class _TarjetaPerfil extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(icono, size: 44, color: colores.fuerte),
-                  const SizedBox(width: 14),
+                  // El avatar del perfil, con el estado como insignia.
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Avatar(semilla: semaforo.avatar, tamano: 52),
+                      Positioned(
+                        right: -6,
+                        bottom: -6,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: colores.fondo,
+                            shape: BoxShape.circle,
+                          ),
+                          padding: const EdgeInsets.all(2),
+                          child: Icon(icono, size: 22, color: colores.fuerte),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,7 +238,7 @@ class _FilaIngrediente extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
-    final (colores, icono) = _estiloIngrediente(ingrediente.estado);
+    final (colores, icono) = _estiloIngrediente(context, ingrediente.estado);
     final detalle = switch (ingrediente.estado) {
       // Lo declarado en la etiqueta ya lo dice en el nombre.
       EstadoIngrediente.choca when ingrediente.declarado => null,
@@ -264,7 +288,7 @@ class _FilaIngrediente extends StatelessWidget {
               icon: const Icon(Icons.auto_awesome, size: 18),
               label: const Text('Más info'),
               style: TextButton.styleFrom(
-                foregroundColor: temaApp.colorScheme.primary,
+                foregroundColor: marcaPara(context).primary,
                 visualDensity: VisualDensity.compact,
               ),
             ),
@@ -306,7 +330,7 @@ class _HojaInfoIngredienteState extends State<HojaInfoIngrediente> {
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
     final i = widget.ingrediente;
-    final (colores, icono) = _estiloIngrediente(i.estado);
+    final (colores, icono) = _estiloIngrediente(context, i.estado);
     final dictamen = switch (i.estado) {
       EstadoIngrediente.choca =>
         'No es seguro para ${widget.nombre}: contiene '
@@ -364,13 +388,13 @@ class _HojaInfoIngredienteState extends State<HojaInfoIngrediente> {
                   Icon(
                     Icons.auto_awesome,
                     size: 18,
-                    color: temaApp.colorScheme.primary,
+                    color: marcaPara(context).primary,
                   ),
                   const SizedBox(width: 6),
                   Text(
                     'Generado por IA',
                     style: tema.textTheme.labelLarge?.copyWith(
-                      color: temaApp.colorScheme.primary,
+                      color: marcaPara(context).primary,
                     ),
                   ),
                 ],

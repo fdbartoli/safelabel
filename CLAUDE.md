@@ -154,9 +154,11 @@ exemption
 Enteramente locales: sin cuentas, sin servidor. Viven en el SQLite del dispositivo.
 
 ```
-profile                   -- id, display_name
+profile                   -- id, display_name, avatar
 profile_restriction       -- profile_id, allergen_group_id, severity
 ```
+
+`avatar` es una semilla de texto: el dibujo lo genera `random_avatar` (MIT) en el dispositivo, sin internet (`lib/ui/avatar.dart`). La cuenta del usuario también tiene avatar, elegido al registrarse. Perfiles y cuentas anteriores a los avatares usan el nombre como semilla.
 
 `severity` importa: un perfil con anafilaxia debe recibir advertencias más firmes ante ingredientes desconocidos que un perfil de intolerancia leve.
 
