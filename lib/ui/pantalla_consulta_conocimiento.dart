@@ -70,8 +70,12 @@ class _PantallaConsultaConocimientoState
                 }
                 final resultado = snapshot.data!;
                 if (!resultado.encontrado) {
-                  return Text(
-                    'No encontramos "${resultado.entrada}" en la base de conocimiento.',
+                  return _SinCoincidencia(
+                    resultado: resultado,
+                    alElegirSugerencia: (sugerencia) {
+                      _controlador.text = sugerencia;
+                      _buscar();
+                    },
                   );
                 }
                 return Column(
@@ -88,13 +92,74 @@ class _PantallaConsultaConocimientoState
   }
 }
 
+/// "No encontrado" o "se parece a…". Nunca se presenta como seguro (regla 1.3).
+class _SinCoincidencia extends StatelessWidget {
+  const _SinCoincidencia({
+    required this.resultado,
+    required this.alElegirSugerencia,
+  });
+
+  final ResultadoConsultaConocimiento resultado;
+  final ValueChanged<String> alElegirSugerencia;
+
+  @override
+  Widget build(BuildContext context) {
+    final tema = Theme.of(context);
+    final sugerencia = resultado.sugerencia;
+    final similitud = resultado.similitudSugerencia;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'No encontramos "${resultado.entrada}" en la base de conocimiento.',
+          style: tema.textTheme.bodyLarge,
+        ),
+        if (sugerencia != null) ...[
+          const SizedBox(height: 12),
+          Text(
+            'Se parece a "$sugerencia"'
+            '${similitud == null ? '' : ' (${(similitud * 100).round()}%)'}. '
+            'Puede ser un error de escritura.',
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton(
+            onPressed: () => alElegirSugerencia(sugerencia),
+            child: Text('Buscar "$sugerencia"'),
+          ),
+        ],
+        const SizedBox(height: 12),
+        Text(
+          'Que no esté en la base no significa que sea seguro: la base no '
+          'tiene información sobre este término.',
+          style: tema.textTheme.bodySmall,
+        ),
+      ],
+    );
+  }
+}
+
 class _TarjetaCoincidencia extends StatelessWidget {
   const _TarjetaCoincidencia({required this.coincidencia});
 
   final CoincidenciaConocimiento coincidencia;
 
+  String? get _comoCoincidio {
+    switch (coincidencia.coincidencia) {
+      case TipoCoincidenciaConsulta.exacta:
+        return null;
+      case TipoCoincidenciaConsulta.contiene:
+        return 'Lo escrito contiene "${coincidencia.denominacion}".';
+      case TipoCoincidenciaConsulta.aproximada:
+        return 'Coincidencia aproximada '
+            '(${(coincidencia.similitud * 100).round()}%) con '
+            '"${coincidencia.denominacion}". Verificá cómo está escrito.';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final comoCoincidio = _comoCoincidio;
+    final idioma = coincidencia.idioma;
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -103,12 +168,20 @@ class _TarjetaCoincidencia extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              coincidencia.concepto,
+              coincidencia.denominacion,
               style: Theme.of(context).textTheme.titleMedium,
             ),
+            if (comoCoincidio != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                comoCoincidio,
+                style: const TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ],
             const SizedBox(height: 8),
             Text(
-              'Denominación: ${coincidencia.denominacion} (${coincidencia.idioma})',
+              'Concepto en la base: ${coincidencia.concepto}'
+              '${idioma == null ? '' : ' ($idioma)'}',
             ),
             if (!coincidencia.tieneRestriccion) ...[
               const SizedBox(height: 8),

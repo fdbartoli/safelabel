@@ -113,7 +113,9 @@ class Analizador {
                     '${concepto.nombreCanonico} está relacionado con '
                     '${relacion.nombreVisible} según la base de conocimiento.',
                 certeza: relacion.certeza,
-                difuso: !m.exacta,
+                // Contener el término no es una lectura aproximada: el
+                // término está, completo, dentro de lo leído.
+                difuso: !m.exacta && !m.porContencion,
                 similitud: m.similitud,
                 perfilesAfectados: perfilesAfectados,
                 severidadMaxima: sevHallazgo,

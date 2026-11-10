@@ -24,12 +24,17 @@ class Coincidencia extends ResultadoMatch {
     required this.exacta,
     required this.similitud,
     required this.terminoBase,
+    this.porContencion = false,
   });
 
   final ConceptoConocimiento concepto;
 
-  /// `true` si fue match exacto; `false` si fue difuso.
+  /// `true` si fue match exacto; `false` si fue difuso o por contención.
   final bool exacta;
+
+  /// `true` si el ítem no es el término, sino que lo contiene como palabras:
+  /// "harina de trigo tipo 000 enriquecida" contiene "harina de trigo".
+  final bool porContencion;
 
   /// 1.0 en match exacto; en (0, 1) para el difuso.
   final double similitud;
@@ -64,13 +69,34 @@ class Emparejador {
     this.umbralSospechaOcr = 0.62,
   }) : catalogo = CatalogoConocimiento.desdeBaseLegacy(base);
 
-  const Emparejador.desdeCatalogo(
+  // No es `const`: la lista de términos para contención se arma una vez, en
+  // forma diferida.
+  Emparejador.desdeCatalogo(
     this.catalogo, {
     this.umbralDifuso = 0.84,
     this.umbralSospechaOcr = 0.62,
   });
 
   final CatalogoConocimiento catalogo;
+
+  /// Términos de la base cuyo concepto está relacionado con alguna
+  /// restricción, con su patrón de palabra completa (plural tolerado), del más
+  /// largo al más corto. Para la búsqueda por contención.
+  late final List<(String, Set<String>, RegExp)> _terminosConAlergeno = () {
+    final lista = <(String, Set<String>, RegExp)>[];
+    for (final t in catalogo.terminosIndexados) {
+      final relaciones = catalogo.matchExacto(t)?.relaciones ?? const [];
+      // Mínimo 4 letras: "soja", "mani", "nuez" entran; "sal" o "soy" no.
+      if (relaciones.isEmpty || t.replaceAll(' ', '').length < 4) continue;
+      lista.add((
+        t,
+        {for (final r in relaciones) r.perfilId},
+        RegExp('(?:^| )${RegExp.escape(t)}(?:s|es)?(?: |\$)'),
+      ));
+    }
+    lista.sort((a, b) => b.$1.length.compareTo(a.$1.length));
+    return lista;
+  }();
 
   /// A partir de esta similitud se acepta como coincidencia difusa.
   final double umbralDifuso;
@@ -102,7 +128,12 @@ class Emparejador {
       );
     }
 
-    // 2. Difuso: mejor término de la base.
+    // 2. Contención de un término con alérgeno: va antes que el difuso para
+    //    que "aceite de mani" no termine emparejado con "aceite de maiz".
+    final contenidos = _contenidosConAlergeno(item);
+    if (contenidos.isNotEmpty) return contenidos.first;
+
+    // 3. Difuso: mejor término de la base.
     var mejor = 0.0;
     String? mejorTermino;
     for (final termino in catalogo.terminosIndexados) {
@@ -124,7 +155,7 @@ class Emparejador {
       );
     }
 
-    // 3. Desconocido. La similitud decide si parece typo de OCR o término nuevo.
+    // 4. Desconocido. La similitud decide si parece typo de OCR o término nuevo.
     return SinCoincidencia(
       item,
       mejorSimilitud: mejor,
@@ -135,7 +166,45 @@ class Emparejador {
     );
   }
 
+  /// Coincidencias por los términos con restricción contenidos en el ítem:
+  /// el término más largo primero, y uno más solo si suma una restricción que
+  /// los anteriores no cubrían. Vacío si no contiene ninguno.
+  List<Coincidencia> _contenidosConAlergeno(ItemNormalizado item) {
+    final texto = item.textoNormalizado;
+    final cubiertas = <String>{};
+    final resultado = <Coincidencia>[];
+    for (final (termino, restricciones, patron) in _terminosConAlergeno) {
+      if (cubiertas.containsAll(restricciones)) continue;
+      if (!patron.hasMatch(texto)) continue;
+      cubiertas.addAll(restricciones);
+      resultado.add(
+        Coincidencia(
+          item,
+          concepto: catalogo.matchExacto(termino)!,
+          exacta: false,
+          similitud: 1,
+          terminoBase: catalogo.etiquetaDe(termino),
+          porContencion: true,
+        ),
+      );
+    }
+    return resultado;
+  }
+
+  /// Todas las coincidencias de cada ítem. Un ítem que contiene términos de
+  /// más de un grupo ("galletita de trigo con leche") genera una por grupo,
+  /// para que ningún perfil se pierda el suyo.
+  ///
+  /// Un match exacto manda: "manteca de cacao" es cacao (sin alérgeno), no
+  /// "manteca" (leche), aunque contenga la palabra.
   List<ResultadoMatch> matchTodos(Iterable<ItemNormalizado> items) => [
-    for (final i in items) match(i),
+    for (final i in items)
+      ...() {
+        final principal = match(i);
+        if (principal is Coincidencia && principal.porContencion) {
+          return _contenidosConAlergeno(i);
+        }
+        return [principal];
+      }(),
   ];
 }

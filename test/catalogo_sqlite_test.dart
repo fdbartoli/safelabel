@@ -145,4 +145,62 @@ void main() {
 
     expect(carbonato.coincidencias.single.concepto, 'carbonato de calcio');
   });
+
+  group('consulta con el mismo criterio que el análisis', () {
+    test('ignora tildes y mayúsculas', () async {
+      for (final entrada in ['caseina', 'CASEÍNA', '  Caseína ']) {
+        final r = await repositorio.buscar(entrada);
+        expect(r.estado, EstadoConsultaConocimiento.matched, reason: entrada);
+        final c = r.coincidencias.single;
+        expect(c.restriccion, 'Leche');
+        expect(c.coincidencia, TipoCoincidenciaConsulta.exacta);
+      }
+    });
+
+    test('un nombre largo que contiene un término con restricción', () async {
+      final r = await repositorio.buscar('Harina de trigo tipo 000');
+      expect(r.estado, EstadoConsultaConocimiento.matched);
+      final c = r.coincidencias.single;
+      expect(c.restriccion, 'Enfermedad celíaca');
+      expect(c.coincidencia, TipoCoincidenciaConsulta.contiene);
+      expect(c.denominacion, 'harina de trigo');
+    });
+
+    test('un error de escritura coincide de forma aproximada', () async {
+      final r = await repositorio.buscar('caselnato de sodio');
+      expect(r.estado, EstadoConsultaConocimiento.matched);
+      final c = r.coincidencias.single;
+      expect(c.restriccion, 'Leche');
+      expect(c.coincidencia, TipoCoincidenciaConsulta.aproximada);
+      expect(c.similitud, inInclusiveRange(0.84, 0.99));
+      expect(c.denominacion, 'caseinato de sodio');
+    });
+
+    test('se informan las evidencias de la relación', () async {
+      final r = await repositorio.buscar('caseinato de sodio');
+      expect(r.coincidencias.single.evidencias, isNotEmpty);
+    });
+
+    test('un término sin relación no se presenta como desconocido', () async {
+      final r = await repositorio.buscar('Almendra');
+      expect(r.estado, EstadoConsultaConocimiento.recognized);
+      expect(r.coincidencias.single.tieneRestriccion, isFalse);
+    });
+
+    test(
+      'algo que no se parece a nada es desconocido, sin sugerencia',
+      () async {
+        final r = await repositorio.buscar('xyzqwv');
+        expect(r.estado, EstadoConsultaConocimiento.unknown);
+        expect(r.encontrado, isFalse);
+        expect(r.sugerencia, isNull);
+      },
+    );
+
+    test('la entrada vacía es desconocida', () async {
+      final r = await repositorio.buscar('   ');
+      expect(r.estado, EstadoConsultaConocimiento.unknown);
+      expect(r.coincidencias, isEmpty);
+    });
+  });
 }

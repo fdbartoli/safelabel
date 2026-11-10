@@ -192,6 +192,8 @@ Nunca colapsar a dos. El código debe distinguir:
 
 Ambos primeros devuelven vacío desde la consulta, pero requieren respuestas opuestas al usuario. La similitud difusa ayuda a decidir: si el texto se parece mucho a algo de la base, probablemente sea error de OCR; si no se parece a nada, es un término desconocido real.
 
+Orden del match: exacto → **contención** de un término con restricción (palabras completas, plural tolerado, mínimo 4 letras: "harina de trigo tipo 000 enriquecida" contiene "harina de trigo") → difuso (≥ 84 %) → desconocido. La contención va antes que el difuso para que "aceite de maní" no quede emparejado con "aceite de maíz". Un ítem que contiene términos de varias restricciones genera una coincidencia por cada una. Un match exacto sin restricción manda sobre la contención ("manteca de cacao" es cacao, no manteca). "Consultar ingrediente" usa este mismo matcher: la consulta y el escaneo nunca dan resultados distintos para el mismo texto.
+
 ### 5.2. Normalización (paso 4)
 
 - minúsculas, quitar acentos
