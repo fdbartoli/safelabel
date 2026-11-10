@@ -37,8 +37,10 @@ void main() {
   });
 
   test('un ítem con dos alérgenos genera una coincidencia por grupo', () {
-    expect(grupos('galletitas de trigo con leche entera'),
-        containsAll(['trigo', 'leche']));
+    expect(
+      grupos('galletitas de trigo con leche entera'),
+      containsAll(['trigo', 'leche']),
+    );
   });
 
   test('"aceite de mani" no se confunde con "aceite de maiz"', () {
@@ -55,29 +57,31 @@ void main() {
     expect(analizar('sal marina gruesa').whereType<Coincidencia>(), isEmpty);
   });
 
-  test('en el resultado, la contención no se muestra como lectura aproximada',
-      () {
-    const celiaco = Perfil(
-      nombre: 'Celíaco',
-      restricciones: [
-        RestriccionPerfil(
-          grupoAlergenoId: 'trigo',
-          severidad: Severidad.moderada,
-        ),
-      ],
-    );
-    final resultado = Analizador(base).analizar(
-      const LecturaOcr([
-        LineaOcr(
-          texto: 'Ingredientes: harina de trigo tipo 000 enriquecida.',
-          confianza: 0.99,
-          indice: 0,
-        ),
-      ]),
-      perfilesActivos: const [celiaco],
-    );
-    final hallazgo = resultado.coincidencias.single;
-    expect(hallazgo.grupoAlergeno, 'cereales con gluten');
-    expect(hallazgo.difuso, isFalse);
-  });
+  test(
+    'en el resultado, la contención no se muestra como lectura aproximada',
+    () {
+      const celiaco = Perfil(
+        nombre: 'Celíaco',
+        restricciones: [
+          RestriccionPerfil(
+            grupoAlergenoId: 'trigo',
+            severidad: Severidad.moderada,
+          ),
+        ],
+      );
+      final resultado = Analizador(base).analizar(
+        const LecturaOcr([
+          LineaOcr(
+            texto: 'Ingredientes: harina de trigo tipo 000 enriquecida.',
+            confianza: 0.99,
+            indice: 0,
+          ),
+        ]),
+        perfilesActivos: const [celiaco],
+      );
+      final hallazgo = resultado.coincidencias.single;
+      expect(hallazgo.grupoAlergeno, 'cereales con gluten');
+      expect(hallazgo.difuso, isFalse);
+    },
+  );
 }

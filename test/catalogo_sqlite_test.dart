@@ -187,12 +187,15 @@ void main() {
       expect(r.coincidencias.single.tieneRestriccion, isFalse);
     });
 
-    test('algo que no se parece a nada es desconocido, sin sugerencia', () async {
-      final r = await repositorio.buscar('xyzqwv');
-      expect(r.estado, EstadoConsultaConocimiento.unknown);
-      expect(r.encontrado, isFalse);
-      expect(r.sugerencia, isNull);
-    });
+    test(
+      'algo que no se parece a nada es desconocido, sin sugerencia',
+      () async {
+        final r = await repositorio.buscar('xyzqwv');
+        expect(r.estado, EstadoConsultaConocimiento.unknown);
+        expect(r.encontrado, isFalse);
+        expect(r.sugerencia, isNull);
+      },
+    );
 
     test('la entrada vacía es desconocida', () async {
       final r = await repositorio.buscar('   ');

@@ -198,12 +198,13 @@ class Emparejador {
   /// Un match exacto manda: "manteca de cacao" es cacao (sin alérgeno), no
   /// "manteca" (leche), aunque contenga la palabra.
   List<ResultadoMatch> matchTodos(Iterable<ItemNormalizado> items) => [
-    for (final i in items) ...() {
-      final principal = match(i);
-      if (principal is Coincidencia && principal.porContencion) {
-        return _contenidosConAlergeno(i);
-      }
-      return [principal];
-    }(),
+    for (final i in items)
+      ...() {
+        final principal = match(i);
+        if (principal is Coincidencia && principal.porContencion) {
+          return _contenidosConAlergeno(i);
+        }
+        return [principal];
+      }(),
   ];
 }
