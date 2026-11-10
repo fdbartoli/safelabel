@@ -89,6 +89,34 @@ ThemeData _construir(
   );
 }
 
+/// Colores del semáforo por perfil (excepción a la regla 1.4, 2026-11-10).
+/// Fondo claro + color fuerte para íconos y texto: contraste suficiente para
+/// leerlo de un vistazo en el supermercado. Se usan solo en la sección del
+/// semáforo; el resto de la pantalla de resultado sigue neutra.
+class ColoresSemaforo {
+  const ColoresSemaforo._(this.fondo, this.fuerte, this.texto);
+
+  final Color fondo;
+  final Color fuerte;
+  final Color texto;
+
+  static const rojo = ColoresSemaforo._(
+    Color(0xFFFDE4E1),
+    Color(0xFFC62828),
+    Color(0xFF7F1D1D),
+  );
+  static const ambar = ColoresSemaforo._(
+    Color(0xFFFFF1D6),
+    Color(0xFFB26A00),
+    Color(0xFF5C3B00),
+  );
+  static const verde = ColoresSemaforo._(
+    Color(0xFFDDF3E3),
+    Color(0xFF2E7D32),
+    Color(0xFF14532D),
+  );
+}
+
 /// Verde pastel moderno: inicio, perfiles, captura, texto pegado.
 final ThemeData temaApp = _construir(colorSemillaMarca);
 

@@ -42,40 +42,45 @@ void main() {
       LineaOcr(texto: l[i].$1, confianza: l[i].$2, indice: i),
   ]);
 
-  testWidgets('muestra los tres bloques en orden y sin veredicto de aptitud', (
-    tester,
-  ) async {
-    await montar(
-      tester,
-      ocr([
-        ('Ingredientes: caseinato de sodio, quinotos, sal.', 0.95),
-        ('linea borrosa', 0.1),
-      ]),
-    );
+  testWidgets(
+    'muestra los tres bloques en orden; con coincidencias no hay íconos de aprobación',
+    (tester) async {
+      await montar(
+        tester,
+        ocr([
+          ('Ingredientes: caseinato de sodio, quinotos, sal.', 0.95),
+          ('linea borrosa', 0.1),
+        ]),
+      );
 
-    final tituloB1 = find.text('Coincidencias con el perfil');
-    final tituloB2 = find.text('No reconocidos');
-    final tituloB3 = find.text('No legibles');
-    expect(tituloB1, findsOneWidget);
-    expect(tituloB2, findsOneWidget);
-    expect(tituloB3, findsOneWidget);
-    expect(
-      find.textContaining('2 de 3 ingredientes analizados'),
-      findsOneWidget,
-    );
+      // Los tres bloques están dentro de "Ver análisis completo".
+      await tester.tap(find.text('Ver análisis completo'));
+      await tester.pumpAndSettle();
 
-    // Orden: bloque 1 arriba de 2, y 2 arriba de 3.
-    final y1 = tester.getTopLeft(tituloB1).dy;
-    final y2 = tester.getTopLeft(tituloB2).dy;
-    final y3 = tester.getTopLeft(tituloB3).dy;
-    expect(y1, lessThan(y2));
-    expect(y2, lessThan(y3));
+      final tituloB1 = find.text('Coincidencias con el perfil');
+      final tituloB2 = find.text('No reconocidos');
+      final tituloB3 = find.text('No legibles');
+      expect(tituloB1, findsOneWidget);
+      expect(tituloB2, findsOneWidget);
+      expect(tituloB3, findsOneWidget);
+      expect(
+        find.textContaining('2 de 3 ingredientes analizados'),
+        findsOneWidget,
+      );
 
-    // Regla 1.4: ningún ícono que comunique aprobación.
-    expect(find.byIcon(Icons.check_circle), findsNothing);
-    expect(find.byIcon(Icons.check_circle_outline), findsNothing);
-    expect(find.byIcon(Icons.verified), findsNothing);
-  });
+      // Orden: bloque 1 arriba de 2, y 2 arriba de 3.
+      final y1 = tester.getTopLeft(tituloB1).dy;
+      final y2 = tester.getTopLeft(tituloB2).dy;
+      final y3 = tester.getTopLeft(tituloB3).dy;
+      expect(y1, lessThan(y2));
+      expect(y2, lessThan(y3));
+
+      // El perfil tiene una coincidencia: nada en pantalla puede verse como aprobación.
+      expect(find.byIcon(Icons.check_circle), findsNothing);
+      expect(find.byIcon(Icons.check_circle_outline), findsNothing);
+      expect(find.byIcon(Icons.verified), findsNothing);
+    },
+  );
 
   testWidgets(
     'muestra los tres bloques aunque no haya coincidencias ni línea CONTIENE '
@@ -112,6 +117,10 @@ void main() {
           ),
         ),
       );
+
+      // Los tres bloques están dentro de "Ver análisis completo".
+      await tester.tap(find.text('Ver análisis completo'));
+      await tester.pumpAndSettle();
 
       expect(find.text('Coincidencias con el perfil'), findsOneWidget);
       expect(find.text('No reconocidos'), findsOneWidget);

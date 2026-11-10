@@ -6,6 +6,7 @@ import '../modelo/perfil.dart';
 import '../ocr/servicio_ocr.dart';
 import '../pipeline/analizador.dart';
 import '../sugerencias/gestor_reemplazos.dart';
+import '../sugerencias/info_ingrediente.dart';
 import 'pantalla_resultado.dart';
 
 /// Camino sin cámara: se pega el texto de la etiqueta (por ejemplo el texto
@@ -50,6 +51,8 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
         catalogo: widget.catalogo,
       ).analizar(lectura, perfilesActivos: widget.perfilesActivos);
       if (!mounted) return;
+      // Se crea una vez: guarda en memoria lo que ya respondió la IA.
+      final gestorInfo = GestorInfoIngredientes.desdeConfiguracion();
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => PantallaResultado(
@@ -58,6 +61,7 @@ class _PantallaAnalisisTextoState extends State<PantallaAnalisisTexto> {
               widget.base,
               widget.perfilesActivos,
             ),
+            gestorInfo: gestorInfo,
           ),
         ),
       );

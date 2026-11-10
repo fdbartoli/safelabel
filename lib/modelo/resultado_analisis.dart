@@ -1,6 +1,9 @@
 import '../pipeline/verificacion_cruzada.dart';
 import 'ingrediente.dart';
 import 'perfil.dart';
+import 'semaforo.dart';
+
+export 'semaforo.dart';
 
 /// De dónde salió un hallazgo del bloque 1.
 enum OrigenHallazgo {
@@ -132,10 +135,8 @@ class AvisoCruzado {
   final String? grupoAlergeno;
 }
 
-/// Resultado del análisis de una etiqueta.
-///
-/// Regla 1.4: NO existe un campo de aptitud, ni resumen, ni indicador verde.
-/// La app muestra hallazgos y deja la decisión en la persona.
+/// Resultado del análisis de una etiqueta: los tres bloques y, arriba, el
+/// semáforo de cada perfil (excepción a la regla 1.4, ver `semaforo.dart`).
 class ResultadoAnalisis {
   const ResultadoAnalisis({
     required this.versionBase,
@@ -150,7 +151,11 @@ class ResultadoAnalisis {
     required this.itemsAnalizados,
     required this.severidadMaxima,
     this.ingredientesLeidos = const [],
+    this.semaforos = const [],
   });
+
+  /// Semáforo de cada perfil activo, en el orden de los perfiles.
+  final List<SemaforoPerfil> semaforos;
 
   /// Todos los ingredientes leídos, normalizados y en orden. Es el texto que
   /// se manda al LLM para las sugerencias de reemplazo (sección 5.6).

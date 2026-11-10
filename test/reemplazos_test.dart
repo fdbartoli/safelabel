@@ -516,7 +516,9 @@ void main() {
           findsOneWidget,
         );
         expect(find.textContaining('Galletas de arroz'), findsOneWidget);
-        // Los tres bloques siguen ahí.
+        // Los tres bloques siguen ahí, dentro de "Ver análisis completo".
+        await tester.tap(find.text('Ver análisis completo'));
+        await tester.pumpAndSettle();
         expect(find.text('Coincidencias con el perfil'), findsOneWidget);
       },
     );
@@ -538,6 +540,9 @@ void main() {
         findsOneWidget,
       );
       expect(botonSugerir, findsOneWidget);
+      // Los tres bloques siguen ahí, dentro de "Ver análisis completo".
+      await tester.tap(find.text('Ver análisis completo'));
+      await tester.pumpAndSettle();
       expect(find.text('Coincidencias con el perfil'), findsOneWidget);
     });
 

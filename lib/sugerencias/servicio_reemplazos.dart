@@ -1,8 +1,7 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+
+import 'cliente_gemini.dart';
 
 /// Sugerencias de reemplazo por LLM (CLAUDE.md, sección 5.6).
 ///
@@ -64,54 +63,29 @@ abstract class ServicioReemplazos {
   Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud);
 }
 
-/// Llama a la API de Google Gemini (plan gratuito) por HTTP directo, con el
-/// método `generateContent` y salida JSON con esquema.
+/// Llama a la API de Google Gemini (plan gratuito) con [ClienteGemini], que
+/// maneja los modelos de respaldo y los errores.
 class ServicioReemplazosGemini implements ServicioReemplazos {
   ServicioReemplazosGemini({
-    required this.apiKey,
-    this.modelo = modeloDeCompilacion,
+    required String apiKey,
+    String modelo = modeloDeCompilacion,
     http.Client? cliente,
-    this.timeoutPorModelo = const Duration(seconds: 8),
-    this.timeoutTotal = const Duration(seconds: 20),
-  }) : _cliente = cliente ?? http.Client();
+    Duration timeoutPorModelo = const Duration(seconds: 8),
+    Duration timeoutTotal = const Duration(seconds: 20),
+  }) : _gemini = ClienteGemini(
+         apiKey: apiKey,
+         modelo: modelo,
+         cliente: cliente,
+         timeoutPorModelo: timeoutPorModelo,
+         timeoutTotal: timeoutTotal,
+         crearError: ErrorReemplazos.new,
+       );
 
-  /// Se inyecta en la compilación con `--dart-define=GEMINI_API_KEY=...`
-  /// (lo hace dev.ps1 desde la variable de entorno). Nunca se commitea.
-  static const apiKeyDeCompilacion = String.fromEnvironment('GEMINI_API_KEY');
+  static const apiKeyDeCompilacion = ClienteGemini.apiKeyDeCompilacion;
+  static const modeloDeCompilacion = ClienteGemini.modeloDeCompilacion;
+  static const modelos = ClienteGemini.modelos;
 
-  /// Modelo principal. Se puede cambiar sin tocar código con
-  /// `--dart-define=GEMINI_MODEL=...`; si se define, se intenta primero y no
-  /// se repite en la cadena de respaldo.
-  static const modeloDeCompilacion = String.fromEnvironment(
-    'GEMINI_MODEL',
-    defaultValue: 'gemini-3.1-flash-lite',
-  );
-
-  /// Orden de preferencia de los modelos. Solo se pasa al siguiente ante
-  /// HTTP 503 o timeout; los demás errores cortan la operación.
-  static const modelos = [
-    'gemini-3.1-flash-lite',
-    'gemini-3.6-flash',
-    'gemini-3.5-flash',
-    'gemini-3.5-flash-lite',
-    'gemini-3.8-flash',
-  ];
-
-  final String apiKey;
-  final String modelo;
-  final http.Client _cliente;
-  final Duration timeoutPorModelo;
-  final Duration timeoutTotal;
-
-  List<String> get _cadena {
-    final principal = modelo.trim();
-    if (principal.isEmpty) return modelos;
-    return [principal, ...modelos.where((m) => m != principal)];
-  }
-
-  Uri _url(String modelo) => Uri.parse(
-    'https://generativelanguage.googleapis.com/v1beta/models/$modelo:generateContent',
-  );
+  final ClienteGemini _gemini;
 
   static const _system =
       'Sos un asistente que sugiere alimentos sustitutos para una app '
@@ -165,131 +139,34 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
         'Lista completa de ingredientes: '
         '${s.ingredientesLeidos.join(', ')}',
       );
-    return {
-      'systemInstruction': {
-        'parts': [
-          {'text': _system},
-        ],
-      },
-      'contents': [
-        {
-          'role': 'user',
-          'parts': [
-            {'text': prompt.toString()},
-          ],
-        },
-      ],
-      'generationConfig': {
-        'responseMimeType': 'application/json',
-        'responseSchema': _esquema,
-      },
-    };
-  }
-
-  @visibleForTesting
-  static Map<String, String> construirHeaders(String apiKey) => {
-    'content-type': 'application/json',
-    'x-goog-api-key': apiKey,
-  };
-
-  @visibleForTesting
-  static RespuestaReemplazos parsearRespuesta(Map<String, dynamic> json) {
-    final bloqueo = (json['promptFeedback'] as Map?)?['blockReason'];
-    if (bloqueo != null) {
-      throw ErrorReemplazos('pedido bloqueado por el modelo: $bloqueo');
-    }
-    final candidatos = json['candidates'] as List<dynamic>? ?? const [];
-    if (candidatos.isEmpty) {
-      throw const ErrorReemplazos('el modelo no devolvió respuesta');
-    }
-    final candidato = candidatos.first as Map<String, dynamic>;
-    final fin = candidato['finishReason'] as String?;
-    if (fin == 'MAX_TOKENS') {
-      throw const ErrorReemplazos('respuesta incompleta');
-    }
-    if (fin != null && fin != 'STOP') {
-      throw ErrorReemplazos('el modelo cortó la respuesta: $fin');
-    }
-    final partes =
-        (candidato['content'] as Map?)?['parts'] as List<dynamic>? ?? const [];
-    final texto = [
-      for (final p in partes)
-        // Las partes con `thought: true` son razonamiento, no la respuesta.
-        if (p is Map && p['thought'] != true && p['text'] is String)
-          p['text'] as String,
-    ].join();
-    if (texto.trim().isEmpty) {
-      throw const ErrorReemplazos('respuesta vacía');
-    }
-    final datos = jsonDecode(texto) as Map<String, dynamic>;
-    return RespuestaReemplazos(
-      tipoProducto: datos['tipo_producto'] as String? ?? '',
-      sugerencias: [
-        for (final s in (datos['sugerencias'] as List<dynamic>? ?? const []))
-          SugerenciaReemplazo(
-            nombre: (s['nombre'] as String).trim(),
-            motivo: (s['motivo'] as String? ?? '').trim(),
-          ),
-      ],
+    return ClienteGemini.construirCuerpo(
+      sistema: _system,
+      mensaje: prompt.toString(),
+      esquema: _esquema,
     );
   }
 
+  @visibleForTesting
+  static Map<String, String> construirHeaders(String apiKey) =>
+      ClienteGemini.construirHeaders(apiKey);
+
+  @visibleForTesting
+  static RespuestaReemplazos parsearRespuesta(Map<String, dynamic> json) =>
+      _desdeDatos(ClienteGemini.extraerJson(json, ErrorReemplazos.new));
+
+  static RespuestaReemplazos _desdeDatos(Map<String, dynamic> datos) =>
+      RespuestaReemplazos(
+        tipoProducto: datos['tipo_producto'] as String? ?? '',
+        sugerencias: [
+          for (final s in (datos['sugerencias'] as List<dynamic>? ?? const []))
+            SugerenciaReemplazo(
+              nombre: (s['nombre'] as String).trim(),
+              motivo: (s['motivo'] as String? ?? '').trim(),
+            ),
+        ],
+      );
+
   @override
-  Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud) async {
-    final cuerpo = jsonEncode(construirCuerpo(solicitud));
-    final reloj = Stopwatch()..start();
-    final cadena = _cadena;
-    ErrorReemplazos? ultimoError;
-
-    for (var i = 0; i < cadena.length; i++) {
-      final modelo = cadena[i];
-      final restante = timeoutTotal - reloj.elapsed;
-      if (restante <= Duration.zero) {
-        debugPrint('Gemini: tiempo total de espera agotado');
-        throw const ErrorReemplazos('tiempo de espera agotado');
-      }
-      final espera = restante < timeoutPorModelo ? restante : timeoutPorModelo;
-      debugPrint(
-        'Gemini: intentando modelo $modelo (${i + 1}/${cadena.length})',
-      );
-
-      final http.Response respuesta;
-      try {
-        respuesta = await _cliente
-            .post(_url(modelo), headers: construirHeaders(apiKey), body: cuerpo)
-            .timeout(espera);
-      } on TimeoutException {
-        ultimoError = const ErrorReemplazos('tiempo de espera agotado');
-        debugPrint('Gemini: timeout en modelo $modelo');
-        continue;
-      } catch (e) {
-        // Un error de conexión no es un 503: no se prueba otro modelo.
-        debugPrint('Gemini: error de conexión en modelo $modelo');
-        throw ErrorReemplazos('sin conexión: $e');
-      }
-
-      if (respuesta.statusCode == 200) {
-        debugPrint('Gemini: respuesta válida de modelo $modelo');
-        final json = jsonDecode(utf8.decode(respuesta.bodyBytes));
-        return parsearRespuesta(json as Map<String, dynamic>);
-      }
-      if (respuesta.statusCode == 503) {
-        ultimoError = const ErrorReemplazos('HTTP 503');
-        debugPrint('Gemini: modelo $modelo no disponible (HTTP 503)');
-        continue;
-      }
-      if (respuesta.statusCode == 429) {
-        debugPrint(
-          'Gemini: límite del plan gratuito en modelo $modelo (HTTP 429)',
-        );
-        throw const ErrorReemplazos('límite del plan gratuito alcanzado');
-      }
-      debugPrint(
-        'Gemini HTTP ${respuesta.statusCode} en modelo $modelo: '
-        '${respuesta.body}',
-      );
-      throw ErrorReemplazos('HTTP ${respuesta.statusCode}');
-    }
-    throw ultimoError ?? const ErrorReemplazos('sin respuesta del modelo');
-  }
+  Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud) async =>
+      _desdeDatos(await _gemini.generar(construirCuerpo(solicitud)));
 }
