@@ -9,7 +9,8 @@
     "SRC-ARG-CAA-1383",
     "SRC-ANMAT-BPM-ALG",
     "SRC-HC-GLUTEN-EN",
-    "SRC-HC-GLUTEN-FR"
+    "SRC-HC-GLUTEN-FR",
+    "SRC-ARG-CAA-CAP-XIII"
   ],
   "relations": [
     {"concept_id": "CMP-GLUTEN", "match_type": "DIRECT"},
@@ -20,6 +21,9 @@
     {"concept_id": "CMP-SPELT", "match_type": "RELATED"},
     {"concept_id": "CMP-KAMUT", "match_type": "RELATED"},
     {"concept_id": "CMP-DURUM-WHEAT", "match_type": "RELATED"},
-    {"concept_id": "CMP-TRITICALE", "match_type": "RELATED"}
+    {"concept_id": "CMP-TRITICALE", "match_type": "RELATED"},
+    {"concept_id": "CMP-MALT", "match_type": "RELATED"},
+    {"concept_id": "CMP-MALT-EXTRACT", "match_type": "RELATED"},
+    {"concept_id": "CMP-COUSCOUS", "match_type": "RELATED"}
   ]
 }

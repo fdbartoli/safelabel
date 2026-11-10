@@ -389,5 +389,88 @@
       {"term": "carbonate de calcium", "language": "fr"},
       {"term": "carbonato de cálcio", "language": "pt"}
     ]
+  },
+  {
+    "id": "CMP-BUTTER",
+    "canonical_name": "manteca",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "manteca", "language": "es"},
+      {"term": "mantequilla", "language": "es"},
+      {"term": "butter", "language": "en"},
+      {"term": "beurre", "language": "fr"},
+      {"term": "manteiga", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CHEESE",
+    "canonical_name": "queso",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "queso", "language": "es"},
+      {"term": "cheese", "language": "en"},
+      {"term": "fromage", "language": "fr"},
+      {"term": "queijo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-YOGURT",
+    "canonical_name": "yogur",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "yogur", "language": "es"},
+      {"term": "yogurt", "language": "es"},
+      {"term": "yogurt", "language": "en"},
+      {"term": "yoghurt", "language": "en"},
+      {"term": "yaourt", "language": "fr"},
+      {"term": "yogourt", "language": "fr"},
+      {"term": "iogurte", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MILK-CREAM",
+    "canonical_name": "crema de leche",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "crema de leche", "language": "es"},
+      {"term": "milk cream", "language": "en"},
+      {"term": "cream", "language": "en"},
+      {"term": "crème de lait", "language": "fr"},
+      {"term": "crème", "language": "fr"},
+      {"term": "creme de leite", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MALT",
+    "canonical_name": "malta",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "malta", "language": "es"},
+      {"term": "malt", "language": "en"},
+      {"term": "malt", "language": "fr"},
+      {"term": "malte", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MALT-EXTRACT",
+    "canonical_name": "extracto de malta",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "extracto de malta", "language": "es"},
+      {"term": "malt extract", "language": "en"},
+      {"term": "extrait de malt", "language": "fr"},
+      {"term": "extrato de malte", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-COUSCOUS",
+    "canonical_name": "cuscús",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "cuscús", "language": "es"},
+      {"term": "couscous", "language": "es"},
+      {"term": "couscous", "language": "en"},
+      {"term": "couscous", "language": "fr"}
+    ]
   }
 ]

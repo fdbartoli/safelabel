@@ -8,7 +8,8 @@
     "SRC-ANMAT-ALERGENOS",
     "SRC-ANMAT-GESTION-ALERGENOS",
     "SRC-FDA-LABEL",
-    "SRC-HC-MILK"
+    "SRC-HC-MILK",
+    "SRC-CFIA-ALLERGEN-LABELLING"
   ],
   "relations": [
     {"concept_id": "CMP-MILK", "match_type": "DIRECT"},
@@ -29,6 +30,10 @@
     {"concept_id": "CMP-WHEY", "match_type": "RELATED"},
     {"concept_id": "CMP-WHEY-PROTEIN-CONCENTRATE", "match_type": "RELATED"},
     {"concept_id": "CMP-DEMINERALIZED-WHEY", "match_type": "RELATED"},
-    {"concept_id": "CMP-DELACTOSED-WHEY", "match_type": "RELATED"}
+    {"concept_id": "CMP-DELACTOSED-WHEY", "match_type": "RELATED"},
+    {"concept_id": "CMP-BUTTER", "match_type": "RELATED"},
+    {"concept_id": "CMP-CHEESE", "match_type": "RELATED"},
+    {"concept_id": "CMP-YOGURT", "match_type": "RELATED"},
+    {"concept_id": "CMP-MILK-CREAM", "match_type": "RELATED"}
   ]
 }

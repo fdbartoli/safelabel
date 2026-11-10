@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.10.1');
-    expect(catalogo.conceptos, hasLength(35));
+    expect(catalogo.version, '0.11.0');
+    expect(catalogo.conceptos, hasLength(42));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.10.1');
+      expect(resultado.versionBase, '0.11.0');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
