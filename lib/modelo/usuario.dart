@@ -11,6 +11,7 @@ class Usuario {
     required this.fechaAlta,
     this.versionTerminos,
     this.fechaAceptacionTerminos,
+    this.avatar = '',
   });
 
   final String id;
@@ -28,6 +29,10 @@ class Usuario {
   final String? versionTerminos;
   final DateTime? fechaAceptacionTerminos;
 
+  /// Semilla del avatar de la cuenta (ver `ui/avatar.dart`). Vacía en cuentas
+  /// creadas antes de que existieran los avatares: ahí se usa el nombre.
+  final String avatar;
+
   Usuario copiarCon({
     String? nombre,
     String? apellido,
@@ -35,6 +40,7 @@ class Usuario {
     DateTime? fechaNacimiento,
     String? hashContrasena,
     String? salt,
+    String? avatar,
   }) {
     return Usuario(
       id: id,
@@ -47,6 +53,7 @@ class Usuario {
       fechaAlta: fechaAlta,
       versionTerminos: versionTerminos,
       fechaAceptacionTerminos: fechaAceptacionTerminos,
+      avatar: avatar ?? this.avatar,
     );
   }
 
@@ -62,6 +69,7 @@ class Usuario {
       'fechaAlta': fechaAlta.toIso8601String(),
       'versionTerminos': versionTerminos,
       'fechaAceptacionTerminos': fechaAceptacionTerminos?.toIso8601String(),
+      'avatar': avatar,
     };
   }
 
@@ -77,6 +85,7 @@ class Usuario {
       fechaAlta: DateTime.parse(mapa['fechaAlta'] as String),
       versionTerminos: mapa['versionTerminos'] as String?,
       fechaAceptacionTerminos: _leerFecha(mapa['fechaAceptacionTerminos']),
+      avatar: mapa['avatar'] as String? ?? '',
     );
   }
 

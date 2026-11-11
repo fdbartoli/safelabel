@@ -174,7 +174,10 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
     _exigirSinId(perfil);
     final valido = validarPerfil(perfil, gruposValidos);
     return _db.transaction((txn) async {
-      final id = await txn.insert('perfil', {'nombre': valido.nombre});
+      final id = await txn.insert('perfil', {
+        'nombre': valido.nombre,
+        'avatar': valido.avatar,
+      });
       await _insertarRestricciones(txn, id, valido.restricciones);
       return valido.copiarCon(
         id: '$id',
@@ -190,7 +193,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
     return _db.transaction((txn) async {
       final filas = await txn.update(
         'perfil',
-        {'nombre': valido.nombre},
+        {'nombre': valido.nombre, 'avatar': valido.avatar},
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -251,7 +254,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
     // Un LEFT JOIN trae perfiles y restricciones en una sola consulta; el LEFT
     // es para que un perfil sin restricciones también aparezca.
     final filas = await _db.rawQuery('''
-      SELECT p.id, p.nombre, r.grupo_alergeno_id, r.severidad
+      SELECT p.id, p.nombre, p.avatar, r.grupo_alergeno_id, r.severidad
       FROM perfil p
       LEFT JOIN restriccion_perfil r ON r.perfil_id = p.id
       $filtro
@@ -260,9 +263,11 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
 
     final restriccionesPorId = <int, List<RestriccionPerfil>>{};
     final nombrePorId = <int, String>{};
+    final avatarPorId = <int, String>{};
     for (final f in filas) {
       final id = f['id'] as int;
       nombrePorId[id] = f['nombre'] as String;
+      avatarPorId[id] = f['avatar'] as String? ?? '';
       final lista = restriccionesPorId.putIfAbsent(id, () => []);
       final grupo = f['grupo_alergeno_id'] as String?;
       if (grupo != null) {
@@ -282,6 +287,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
         Perfil(
           id: '${e.key}',
           nombre: e.value,
+          avatar: avatarPorId[e.key]!,
           restricciones: List.unmodifiable(restriccionesPorId[e.key]!),
         ),
     ];

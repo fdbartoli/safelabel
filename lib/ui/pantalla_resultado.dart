@@ -46,7 +46,7 @@ class PantallaResultado extends StatelessWidget {
     // necesario para que _construirScaffold reciba un contexto posicionado
     // POR DEBAJO de este Theme (el de `build` está por arriba).
     return Theme(
-      data: temaResultado,
+      data: temaResultadoPara(context),
       child: Builder(builder: _construirScaffold),
     );
   }

@@ -7,6 +7,7 @@ import 'repositorio_perfiles.dart';
 const perfilesIniciales = <Perfil>[
   Perfil(
     nombre: 'Sofía (alergia a la leche)',
+    avatar: 'safelabel-3',
     restricciones: [
       RestriccionPerfil(
         grupoAlergenoId: 'leche',
@@ -16,6 +17,7 @@ const perfilesIniciales = <Perfil>[
   ),
   Perfil(
     nombre: 'Mateo (celíaco)',
+    avatar: 'safelabel-7',
     restricciones: [
       RestriccionPerfil(
         grupoAlergenoId: 'trigo',
@@ -25,6 +27,7 @@ const perfilesIniciales = <Perfil>[
   ),
   Perfil(
     nombre: 'Juli (frutos secos y maní)',
+    avatar: 'safelabel-1',
     restricciones: [
       RestriccionPerfil(
         grupoAlergenoId: 'frutos_secos',
@@ -38,6 +41,7 @@ const perfilesIniciales = <Perfil>[
   ),
   Perfil(
     nombre: 'Intolerancia a sulfitos',
+    avatar: 'safelabel-10',
     restricciones: [
       RestriccionPerfil(grupoAlergenoId: 'sulfitos', severidad: Severidad.leve),
     ],

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../cuenta/servicio_cuenta.dart';
+import 'avatar.dart';
 import 'componentes_cuenta.dart';
 import 'pantalla_terminos.dart';
 
@@ -23,6 +26,12 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
   final _contrasena = TextEditingController();
   final _confirmacion = TextEditingController();
   bool _aceptaTerminos = false;
+
+  /// Arranca con uno al azar de los sugeridos; se cambia tocándolo.
+  String _avatar = () {
+    final sugeridos = semillasSugeridas(0);
+    return sugeridos[Random().nextInt(sugeridos.length)];
+  }();
   bool _procesando = false;
   String? _error;
 
@@ -55,6 +64,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
         fechaNacimiento: widget.servicio.parsearFecha(_fechaNacimiento.text),
         contrasena: _contrasena.text,
         aceptaTerminos: _aceptaTerminos,
+        avatar: _avatar,
       );
       if (!mounted) return;
       // Queda la sesión iniciada: al volver a la PuertaDeSesion se ve la app.
@@ -79,6 +89,12 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SelectorAvatar(
+                semilla: _avatar,
+                titulo: 'Elegí tu avatar',
+                alCambiar: (s) => setState(() => _avatar = s),
+              ),
+              const SizedBox(height: 8),
               TextFormField(
                 key: const Key('registro_nombre'),
                 controller: _nombre,

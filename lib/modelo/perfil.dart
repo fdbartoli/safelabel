@@ -37,6 +37,7 @@ class Perfil {
     this.id = '',
     required this.nombre,
     required this.restricciones,
+    this.avatar = '',
   });
 
   /// Identificador que asigna el repositorio al guardar. Vacío mientras el
@@ -47,15 +48,24 @@ class Perfil {
   final String nombre;
   final List<RestriccionPerfil> restricciones;
 
+  /// Semilla del avatar (ver `ui/avatar.dart`). Vacía en perfiles creados
+  /// antes de que existieran los avatares: ahí se usa el nombre.
+  final String avatar;
+
+  /// La semilla con la que se dibuja el avatar.
+  String get semillaAvatar => avatar.isEmpty ? nombre : avatar;
+
   Perfil copiarCon({
     String? id,
     String? nombre,
     List<RestriccionPerfil>? restricciones,
+    String? avatar,
   }) {
     return Perfil(
       id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       restricciones: restricciones ?? this.restricciones,
+      avatar: avatar ?? this.avatar,
     );
   }
 

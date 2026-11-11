@@ -316,6 +316,7 @@ class Analizador {
     );
     return SemaforoPerfil(
       perfil: perfil.nombre,
+      avatar: perfil.semillaAvatar,
       restricciones: [for (final id in grupos) nombreGrupo(id)],
       color: color,
       motivos: motivos,

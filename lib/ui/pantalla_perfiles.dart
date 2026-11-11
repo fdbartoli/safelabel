@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../datos/base_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
+import 'avatar.dart';
 import 'editor_perfil.dart';
 
 /// Lista de perfiles guardados en el dispositivo, con alta, edición y borrado.
@@ -100,9 +101,11 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
     final texto = Theme.of(context).textTheme;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 4, 8),
+        padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
         child: Row(
           children: [
+            Avatar(semilla: p.semillaAvatar, tamano: 48),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
