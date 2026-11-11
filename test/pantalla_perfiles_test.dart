@@ -29,7 +29,10 @@ void main() {
   setUp(() async {
     sqfliteFfiInit();
 
-    repo = RepositorioPerfilesMemoria(gruposValidos: gruposValidos);
+    repo = RepositorioPerfilesMemoria(
+      gruposValidos: gruposValidos,
+      usuarioId: 'prueba',
+    );
 
     bdConocimiento = await databaseFactoryFfi.openDatabase(
       inMemoryDatabasePath,
@@ -100,6 +103,44 @@ void main() {
   });
 
   group('editor', () {
+    testWidgets('edita restricciones y conserva el nombre del perfil', (
+      tester,
+    ) async {
+      final perfil = await repo.crear(
+        const Perfil(nombre: 'Sofía', restricciones: []),
+      );
+      await montar(
+        tester,
+        EditorPerfil(repositorio: repo, base: base, perfil: perfil),
+      );
+      expect(find.text('Editar perfil'), findsOneWidget);
+      expect(find.text('Sofía'), findsOneWidget);
+      await elegirSeveridad(tester, 'leche', 'Anafilaxia');
+      await tester.ensureVisible(find.text('Guardar'));
+      await tester.tap(find.text('Guardar'));
+      await tester.pumpAndSettle();
+      final guardado = (await repo.obtenerTodos()).single;
+      expect(guardado.nombre, 'Sofía');
+      expect(guardado.severidadPara('leche'), Severidad.anafilaxia);
+    });
+
+    testWidgets('todos los perfiles ofrecen editar y eliminar', (tester) async {
+      await repo.crear(const Perfil(nombre: 'Familiar', restricciones: []));
+      await montar(
+        tester,
+        PantallaPerfiles(
+          repositorio: repo,
+          base: base,
+          nombrePropietario: 'Ana',
+          apellidoPropietario: 'Pérez',
+        ),
+      );
+      expect(find.text('Familiar'), findsOneWidget);
+      expect(find.byTooltip('Editar'), findsOneWidget);
+      expect(find.byTooltip('Eliminar'), findsOneWidget);
+      expect(find.byType(Checkbox), findsOneWidget);
+    });
+
     testWidgets('lista todos los grupos de la base, sin texto libre', (
       tester,
     ) async {
@@ -208,22 +249,34 @@ void main() {
       tester,
     ) async {
       await sembrarPerfilesIniciales(repo);
-      await montar(tester, PantallaPerfiles(repositorio: repo, base: base));
+      await montar(
+        tester,
+        PantallaPerfiles(
+          repositorio: repo,
+          base: base,
+          nombrePropietario: 'Ana',
+          apellidoPropietario: 'Pérez',
+        ),
+      );
 
-      final nombre = perfilesIniciales.first.nombre;
-      expect(find.text(nombre), findsOneWidget);
+      final nombre = (await repo.obtenerTodos())
+          .map((p) => p.nombre)
+          .toList()
+        ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+      final primero = nombre.first;
+      expect(find.text(primero), findsOneWidget);
 
       // Primer toque: pide confirmación, todavía no borra.
       await tester.tap(find.byTooltip('Eliminar').first);
       await tester.pumpAndSettle();
-      expect(find.textContaining('¿Eliminar "$nombre"?'), findsOneWidget);
+      expect(find.textContaining('¿Eliminar "$primero"?'), findsOneWidget);
       expect(find.byType(AlertDialog), findsNothing);
       expect(await repo.obtenerTodos(), hasLength(4));
 
       // Cancelar vuelve a la tarjeta normal.
       await tester.tap(find.text('Cancelar'));
       await tester.pumpAndSettle();
-      expect(find.text(nombre), findsOneWidget);
+      expect(find.text(primero), findsOneWidget);
       expect(await repo.obtenerTodos(), hasLength(4));
 
       // Confirmar borra.
@@ -231,7 +284,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Eliminar'));
       await tester.pumpAndSettle();
-      expect(find.text(nombre), findsNothing);
+      expect(find.text(primero), findsNothing);
       expect(await repo.obtenerTodos(), hasLength(3));
     });
 
@@ -247,7 +300,15 @@ void main() {
           ],
         ),
       );
-      await montar(tester, PantallaPerfiles(repositorio: repo, base: base));
+      await montar(
+        tester,
+        PantallaPerfiles(
+          repositorio: repo,
+          base: base,
+          nombrePropietario: 'Ana',
+          apellidoPropietario: 'Pérez',
+        ),
+      );
 
       expect(
         find.text('${base.grupo('trigo')!.nombre} (moderada)'),
@@ -259,7 +320,15 @@ void main() {
       tester,
     ) async {
       await repo.crear(const Perfil(nombre: 'Ana', restricciones: []));
-      await montar(tester, PantallaPerfiles(repositorio: repo, base: base));
+      await montar(
+        tester,
+        PantallaPerfiles(
+          repositorio: repo,
+          base: base,
+          nombrePropietario: 'Ana',
+          apellidoPropietario: 'Pérez',
+        ),
+      );
 
       await tester.tap(find.byTooltip('Editar'));
       await tester.pumpAndSettle();

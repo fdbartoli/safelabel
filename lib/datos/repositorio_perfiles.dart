@@ -21,6 +21,27 @@ class PerfilNoEncontrado implements Exception {
   String toString() => 'PerfilNoEncontrado: $id';
 }
 
+void _validarNuevo(Perfil perfil, String usuarioId) {
+  _exigirSinId(perfil);
+  if (perfil.usuarioId != null && perfil.usuarioId != usuarioId) {
+    throw ArgumentError.value(
+      perfil.usuarioId,
+      'perfil.usuarioId',
+      'El perfil pertenece a otra cuenta',
+    );
+  }
+}
+
+void _validarActualizacion(Perfil perfil, String usuarioId) {
+  if (perfil.usuarioId != null && perfil.usuarioId != usuarioId) {
+    throw ArgumentError.value(
+      perfil.usuarioId,
+      'perfil.usuarioId',
+      'El perfil pertenece a otra cuenta',
+    );
+  }
+}
+
 const largoMaximoNombre = 60;
 
 /// Reglas comunes a todas las implementaciones. Devuelve el perfil con el
@@ -62,19 +83,23 @@ Perfil validarPerfil(Perfil perfil, Set<String> gruposValidos) {
   return perfil.copiarCon(nombre: nombre);
 }
 
-/// Contrato de persistencia de perfiles (Etapa 3: varios perfiles en el mismo
-/// dispositivo, sin cuentas).
+/// Persistencia de perfiles limitada a una cuenta local. El propietario sale
+/// del contexto del repositorio, nunca de un formulario.
 ///
 /// La app usa [RepositorioPerfilesSqlite]; los tests de pantallas y del
 /// análisis pueden usar [RepositorioPerfilesMemoria]. Ambas pasan el mismo
 /// cuerpo de pruebas.
 abstract class RepositorioPerfiles {
-  /// Todos los perfiles, en orden de creación.
+  /// Los perfiles de esta cuenta, en orden de creación.
   Future<List<Perfil>> obtenerTodos();
 
   /// Guarda un perfil nuevo y lo devuelve con el id asignado. [perfil] debe
   /// venir sin id.
   Future<Perfil> crear(Perfil perfil);
+
+  /// Guarda todos los perfiles recibidos en una sola operación. Se usan para
+  /// importar un QR: no se activa ninguno y se valida todo antes de escribir.
+  Future<List<Perfil>> crearRecibidos(List<Perfil> perfiles);
 
   /// Reemplaza nombre y restricciones de un perfil ya guardado.
   Future<Perfil> actualizar(Perfil perfil);
@@ -92,26 +117,61 @@ abstract class RepositorioPerfiles {
 
 /// Implementación en memoria: sin I/O, para tests. No sobrevive al cierre de
 /// la app.
+class AlmacenPerfilesMemoria {
+  final _perfiles = <String, Perfil>{};
+  final _activos = <String>{};
+  var _ultimoId = 0;
+}
+
 class RepositorioPerfilesMemoria implements RepositorioPerfiles {
-  RepositorioPerfilesMemoria({required this.gruposValidos});
+  RepositorioPerfilesMemoria({
+    required this.gruposValidos,
+    required this.usuarioId,
+    AlmacenPerfilesMemoria? almacen,
+  }) : _almacen = almacen ?? AlmacenPerfilesMemoria() {
+    if (usuarioId.trim().isEmpty) throw ArgumentError('Falta usuarioId');
+  }
+
+  final String usuarioId;
+  final AlmacenPerfilesMemoria _almacen;
 
   /// Ver [validarPerfil].
   final Set<String> gruposValidos;
 
   // Map literal = LinkedHashMap: conserva el orden de inserción.
-  final _perfiles = <String, Perfil>{};
-  final _activos = <String>{};
-  // Igual que AUTOINCREMENT en SQLite: un id borrado no se reutiliza.
-  var _ultimoId = 0;
+  Map<String, Perfil> get _perfiles => _almacen._perfiles;
+  Set<String> get _activos => _almacen._activos;
 
   @override
-  Future<List<Perfil>> obtenerTodos() async => _perfiles.values.toList();
+  Future<List<Perfil>> obtenerTodos() async =>
+      _perfiles.values.where((p) => p.usuarioId == usuarioId).toList();
 
   @override
   Future<Perfil> crear(Perfil perfil) async {
-    _exigirSinId(perfil);
+    _validarNuevo(perfil, usuarioId);
     final valido = validarPerfil(perfil, gruposValidos);
-    final guardado = _congelar(valido.copiarCon(id: '${++_ultimoId}'));
+    return _guardarNuevo(valido);
+  }
+
+  @override
+  Future<List<Perfil>> crearRecibidos(List<Perfil> perfiles) async {
+    if (perfiles.isEmpty) {
+      throw const ErrorValidacionPerfil(
+        'El QR debe contener al menos un perfil.',
+      );
+    }
+    final validos = <Perfil>[];
+    for (final perfil in perfiles) {
+      _validarNuevo(perfil, usuarioId);
+      validos.add(validarPerfil(perfil, gruposValidos));
+    }
+    return [for (final perfil in validos) _guardarNuevo(perfil)];
+  }
+
+  Perfil _guardarNuevo(Perfil valido) {
+    final guardado = _congelar(
+      valido.copiarCon(id: '${++_almacen._ultimoId}', usuarioId: usuarioId),
+    );
     _perfiles[guardado.id] = guardado;
     return guardado;
   }
@@ -119,8 +179,9 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
   @override
   Future<Perfil> actualizar(Perfil perfil) async {
     final valido = validarPerfil(perfil, gruposValidos);
+    _validarActualizacion(perfil, usuarioId);
     _exigirExistente(perfil.id);
-    final guardado = _congelar(valido);
+    final guardado = _congelar(valido.copiarCon(usuarioId: usuarioId));
     _perfiles[guardado.id] = guardado;
     return guardado;
   }
@@ -135,17 +196,17 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
   @override
   Future<void> marcarActivos(Set<String> ids) async {
     ids.forEach(_exigirExistente);
-    _activos
-      ..clear()
-      ..addAll(ids);
+    _activos.removeWhere((id) => _perfiles[id]?.usuarioId == usuarioId);
+    _activos.addAll(ids);
   }
 
   @override
-  Future<List<Perfil>> obtenerActivos() async =>
-      _perfiles.values.where((p) => _activos.contains(p.id)).toList();
+  Future<List<Perfil>> obtenerActivos() async => _perfiles.values
+      .where((p) => p.usuarioId == usuarioId && _activos.contains(p.id))
+      .toList();
 
   void _exigirExistente(String id) {
-    if (!_perfiles.containsKey(id)) throw PerfilNoEncontrado(id);
+    if (_perfiles[id]?.usuarioId != usuarioId) throw PerfilNoEncontrado(id);
   }
 
   /// Copia inmodificable de las restricciones: si quien llamó después muta su
@@ -159,7 +220,15 @@ class RepositorioPerfilesMemoria implements RepositorioPerfiles {
 ///
 /// No cierra la base: la abre y la cierra quien la creó.
 class RepositorioPerfilesSqlite implements RepositorioPerfiles {
-  RepositorioPerfilesSqlite(this._db, {required this.gruposValidos});
+  RepositorioPerfilesSqlite(
+    this._db, {
+    required this.gruposValidos,
+    required this.usuarioId,
+  }) {
+    if (usuarioId.trim().isEmpty) throw ArgumentError('Falta usuarioId');
+  }
+
+  final String usuarioId;
 
   final Database _db;
 
@@ -171,28 +240,62 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
 
   @override
   Future<Perfil> crear(Perfil perfil) async {
-    _exigirSinId(perfil);
+    _validarNuevo(perfil, usuarioId);
     final valido = validarPerfil(perfil, gruposValidos);
-    return _db.transaction((txn) async {
-      final id = await txn.insert('perfil', {'nombre': valido.nombre});
-      await _insertarRestricciones(txn, id, valido.restricciones);
-      return valido.copiarCon(
-        id: '$id',
-        restricciones: List.unmodifiable(valido.restricciones),
+    return _db.transaction((txn) => _crearEn(txn, valido));
+  }
+
+  @override
+  Future<List<Perfil>> crearRecibidos(List<Perfil> perfiles) async {
+    if (perfiles.isEmpty) {
+      throw const ErrorValidacionPerfil(
+        'El QR debe contener al menos un perfil.',
       );
+    }
+    final validos = <Perfil>[];
+    for (final perfil in perfiles) {
+      _validarNuevo(perfil, usuarioId);
+      validos.add(validarPerfil(perfil, gruposValidos));
+    }
+    return _db.transaction((txn) async {
+      final guardados = <Perfil>[];
+      for (final perfil in validos) {
+        guardados.add(await _crearEn(txn, perfil));
+      }
+      return guardados;
     });
+  }
+
+  Future<Perfil> _crearEn(Transaction txn, Perfil valido) async {
+    final id = await txn.insert('perfil', {
+      'nombre': valido.nombre,
+      'usuario_id': usuarioId,
+    });
+    await _insertarRestricciones(txn, id, valido.restricciones);
+    return valido.copiarCon(
+      id: '$id',
+      usuarioId: usuarioId,
+      restricciones: List.unmodifiable(valido.restricciones),
+    );
   }
 
   @override
   Future<Perfil> actualizar(Perfil perfil) async {
     final valido = validarPerfil(perfil, gruposValidos);
+    _validarActualizacion(perfil, usuarioId);
     final id = _idNumerico(perfil.id);
     return _db.transaction((txn) async {
+      final filasAnteriores = await txn.query(
+        'perfil',
+        where: 'id = ? AND usuario_id = ?',
+        whereArgs: [id, usuarioId],
+      );
+      if (filasAnteriores.isEmpty) throw PerfilNoEncontrado(perfil.id);
       final filas = await txn.update(
         'perfil',
         {'nombre': valido.nombre},
-        where: 'id = ?',
-        whereArgs: [id],
+        where: 'id = ? AND usuario_id = ?',
+        whereArgs: [id, usuarioId],
       );
       if (filas == 0) throw PerfilNoEncontrado(perfil.id);
       // Reemplazo completo: más simple y seguro que calcular un diff, y la
@@ -205,6 +308,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
       );
       await _insertarRestricciones(txn, id, valido.restricciones);
       return valido.copiarCon(
+        usuarioId: usuarioId,
         restricciones: List.unmodifiable(valido.restricciones),
       );
     });
@@ -212,13 +316,19 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
 
   @override
   Future<void> eliminar(String id) async {
-    // Las restricciones y la marca de activo se van por ON DELETE CASCADE.
-    final filas = await _db.delete(
-      'perfil',
-      where: 'id = ?',
-      whereArgs: [_idNumerico(id)],
-    );
-    if (filas == 0) throw PerfilNoEncontrado(id);
+    await _db.transaction((txn) async {
+      final filas = await txn.query(
+        'perfil',
+        where: 'id = ? AND usuario_id = ?',
+        whereArgs: [_idNumerico(id), usuarioId],
+      );
+      if (filas.isEmpty) throw PerfilNoEncontrado(id);
+      await txn.delete(
+        'perfil',
+        where: 'id = ? AND usuario_id = ?',
+        whereArgs: [_idNumerico(id), usuarioId],
+      );
+    });
   }
 
   @override
@@ -229,12 +339,16 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
         final existe = await txn.query(
           'perfil',
           columns: ['id'],
-          where: 'id = ?',
-          whereArgs: [id],
+          where: 'id = ? AND usuario_id = ?',
+          whereArgs: [id, usuarioId],
         );
         if (existe.isEmpty) throw PerfilNoEncontrado('$id');
       }
-      await txn.delete('perfil_activo');
+      await txn.delete(
+        'perfil_activo',
+        where: 'perfil_id IN (SELECT id FROM perfil WHERE usuario_id = ?)',
+        whereArgs: [usuarioId],
+      );
       for (final id in numericos) {
         await txn.insert('perfil_activo', {'perfil_id': id});
       }
@@ -244,19 +358,25 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
   @override
   Future<List<Perfil>> obtenerActivos() => _leerPerfiles(soloActivos: true);
 
-  Future<List<Perfil>> _leerPerfiles({required bool soloActivos}) async {
+  Future<List<Perfil>> _leerPerfiles({
+    required bool soloActivos,
+    DatabaseExecutor? ejecutor,
+  }) async {
     final filtro = soloActivos
-        ? 'WHERE p.id IN (SELECT perfil_id FROM perfil_activo)'
+        ? 'AND p.id IN (SELECT perfil_id FROM perfil_activo)'
         : '';
     // Un LEFT JOIN trae perfiles y restricciones en una sola consulta; el LEFT
     // es para que un perfil sin restricciones también aparezca.
-    final filas = await _db.rawQuery('''
+    final filas = await (ejecutor ?? _db).rawQuery(
+      '''
       SELECT p.id, p.nombre, r.grupo_alergeno_id, r.severidad
       FROM perfil p
       LEFT JOIN restriccion_perfil r ON r.perfil_id = p.id
-      $filtro
+      WHERE p.usuario_id = ? $filtro
       ORDER BY p.id, r.rowid
-    ''');
+    ''',
+      [usuarioId],
+    );
 
     final restriccionesPorId = <int, List<RestriccionPerfil>>{};
     final nombrePorId = <int, String>{};
@@ -281,6 +401,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
       for (final e in nombrePorId.entries)
         Perfil(
           id: '${e.key}',
+          usuarioId: usuarioId,
           nombre: e.value,
           restricciones: List.unmodifiable(restriccionesPorId[e.key]!),
         ),

@@ -11,7 +11,7 @@ class BdLocal {
   BdLocal._();
 
   static const nombreArchivo = 'safelabel.db';
-  static const version = 1;
+  static const version = 3;
 
   /// Abre (o crea) la base.
   ///
@@ -39,6 +39,10 @@ class BdLocal {
           await _crear(db, version);
           alCrear?.call();
         },
+        onUpgrade: (db, anterior, nueva) async {
+          if (anterior < 2) await _agregarUsuarioId(db);
+          if (anterior < 3) await _migrarV3(db);
+        },
       ),
     );
   }
@@ -50,6 +54,83 @@ class BdLocal {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
+  /// Paso intermedio para bases v1. La v2 agregaba además la propiedad
+  /// personal; la v3 elimina esa columna.
+  static Future<void> _agregarUsuarioId(Database db) async {
+    await db.execute('ALTER TABLE perfil ADD COLUMN usuario_id TEXT');
+    await db.execute('CREATE INDEX perfil_usuario ON perfil(usuario_id)');
+    await db.execute('''CREATE TABLE IF NOT EXISTS migracion_perfiles (
+      clave TEXT PRIMARY KEY NOT NULL
+    )''');
+  }
+
+  /// Migración v2 → v3: elimina la noción de perfil personal y conserva
+  /// perfiles, restricciones y selección de activos.
+  ///
+  /// Se reconstruyen las tres tablas en vez de usar `ALTER TABLE DROP COLUMN`
+  /// para no depender de la versión de SQLite del dispositivo. Las bases v1
+  /// pasan por acá después de agregarles `usuario_id`.
+  static Future<void> _migrarV3(Database db) async {
+    for (final trigger in const [
+      'perfil_personal_con_usuario',
+      'perfil_personal_no_eliminar',
+      'perfil_identidad_inmutable',
+    ]) {
+      await db.execute('DROP TRIGGER IF EXISTS $trigger');
+    }
+    await db.execute('DROP INDEX IF EXISTS perfil_personal_unico');
+
+    await db.execute('''
+      CREATE TABLE perfil_nuevo (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        usuario_id TEXT
+      )
+    ''');
+    await db.execute('''
+      INSERT INTO perfil_nuevo (id, nombre, usuario_id)
+      SELECT id, nombre, usuario_id FROM perfil
+    ''');
+
+    await db.execute('''
+      CREATE TABLE restriccion_perfil_nuevo (
+        perfil_id INTEGER NOT NULL
+          REFERENCES perfil_nuevo(id) ON DELETE CASCADE,
+        grupo_alergeno_id TEXT NOT NULL,
+        severidad TEXT NOT NULL
+          CHECK (severidad IN ('leve', 'moderada', 'anafilaxia')),
+        PRIMARY KEY (perfil_id, grupo_alergeno_id)
+      )
+    ''');
+    await db.execute('''
+      INSERT INTO restriccion_perfil_nuevo
+        (perfil_id, grupo_alergeno_id, severidad)
+      SELECT perfil_id, grupo_alergeno_id, severidad FROM restriccion_perfil
+    ''');
+
+    await db.execute('''
+      CREATE TABLE perfil_activo_nuevo (
+        perfil_id INTEGER PRIMARY KEY
+          REFERENCES perfil_nuevo(id) ON DELETE CASCADE
+      )
+    ''');
+    await db.execute('''
+      INSERT INTO perfil_activo_nuevo (perfil_id)
+      SELECT perfil_id FROM perfil_activo
+    ''');
+
+    await db.execute('DROP TABLE restriccion_perfil');
+    await db.execute('DROP TABLE perfil_activo');
+    await db.execute('DROP TABLE perfil');
+    await db.execute('ALTER TABLE perfil_nuevo RENAME TO perfil');
+    await db.execute(
+      'ALTER TABLE restriccion_perfil_nuevo RENAME TO restriccion_perfil',
+    );
+    await db.execute('ALTER TABLE perfil_activo_nuevo RENAME TO perfil_activo');
+
+    await _crearIndicesYTriggers(db);
+  }
+
   static Future<void> _crear(Database db, int version) async {
     final lote = db.batch();
     // AUTOINCREMENT evita que SQLite reutilice el id de un perfil borrado: una
@@ -57,7 +138,8 @@ class BdLocal {
     lote.execute('''
       CREATE TABLE perfil (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT NOT NULL
+        nombre TEXT NOT NULL,
+        usuario_id TEXT
       )
     ''');
     lote.execute('''
@@ -76,6 +158,25 @@ class BdLocal {
           REFERENCES perfil(id) ON DELETE CASCADE
       )
     ''');
+    lote.execute('''
+      CREATE TABLE migracion_perfiles (
+        clave TEXT PRIMARY KEY NOT NULL
+      )
+    ''');
     await lote.commit(noResult: true);
+    await _crearIndicesYTriggers(db);
+  }
+
+  static Future<void> _crearIndicesYTriggers(Database db) async {
+    await db.execute('CREATE INDEX perfil_usuario ON perfil(usuario_id)');
+    await db.execute('''
+      CREATE TRIGGER perfil_usuario_inmutable
+      BEFORE UPDATE OF usuario_id ON perfil
+      WHEN OLD.usuario_id IS NOT NULL
+        AND NEW.usuario_id IS NOT OLD.usuario_id
+      BEGIN
+        SELECT RAISE(ABORT, 'No se puede cambiar el propietario del perfil');
+      END
+    ''');
   }
 }

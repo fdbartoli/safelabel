@@ -75,11 +75,14 @@ class _PantallaInicioState extends State<PantallaInicio> {
   }
 
   Future<void> _administrarPerfiles() async {
+    final cuenta = widget.servicioCuenta?.cuentaActual();
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => PantallaPerfiles(
           repositorio: widget.repositorio,
           base: widget.base,
+          nombrePropietario: cuenta?.nombre ?? '',
+          apellidoPropietario: cuenta?.apellido ?? '',
         ),
       ),
     );

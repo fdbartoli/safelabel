@@ -11,6 +11,7 @@ class Usuario {
     required this.fechaAlta,
     this.versionTerminos,
     this.fechaAceptacionTerminos,
+    this.incluirPerfilesDemostracion = false,
   });
 
   final String id;
@@ -23,6 +24,11 @@ class Usuario {
   final String hashContrasena;
   final String salt;
   final DateTime fechaAlta;
+
+  /// Intención persistida al registrar cuentas nuevas. Las cuentas anteriores
+  /// no tienen este campo y no reciben ejemplos retroactivamente. La carga
+  /// completada se registra por separado en SQLite y nunca se repite.
+  final bool incluirPerfilesDemostracion;
 
   /// Versión de los términos y condiciones aceptada al registrarse.
   final String? versionTerminos;
@@ -45,6 +51,7 @@ class Usuario {
       hashContrasena: hashContrasena ?? this.hashContrasena,
       salt: salt ?? this.salt,
       fechaAlta: fechaAlta,
+      incluirPerfilesDemostracion: incluirPerfilesDemostracion,
       versionTerminos: versionTerminos,
       fechaAceptacionTerminos: fechaAceptacionTerminos,
     );
@@ -60,6 +67,7 @@ class Usuario {
       'hashContrasena': hashContrasena,
       'salt': salt,
       'fechaAlta': fechaAlta.toIso8601String(),
+      'incluirPerfilesDemostracion': incluirPerfilesDemostracion,
       'versionTerminos': versionTerminos,
       'fechaAceptacionTerminos': fechaAceptacionTerminos?.toIso8601String(),
     };
@@ -75,6 +83,7 @@ class Usuario {
       hashContrasena: mapa['hashContrasena'] as String,
       salt: mapa['salt'] as String,
       fechaAlta: DateTime.parse(mapa['fechaAlta'] as String),
+      incluirPerfilesDemostracion: mapa['incluirPerfilesDemostracion'] == true,
       versionTerminos: mapa['versionTerminos'] as String?,
       fechaAceptacionTerminos: _leerFecha(mapa['fechaAceptacionTerminos']),
     );

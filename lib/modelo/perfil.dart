@@ -31,10 +31,11 @@ class RestriccionPerfil {
 }
 
 /// Un perfil alimentario. Se persiste en el SQLite del dispositivo a través de
-/// `RepositorioPerfiles` (Etapa 3); sin cuentas ni servidor.
+/// `RepositorioPerfiles`; la propiedad corresponde a una cuenta local.
 class Perfil {
   const Perfil({
     this.id = '',
+    this.usuarioId,
     required this.nombre,
     required this.restricciones,
   });
@@ -44,16 +45,21 @@ class Perfil {
   /// tests del análisis, no lo necesitan).
   final String id;
 
+  /// Null solo para perfiles heredados pendientes o valores aún no guardados.
+  final String? usuarioId;
+
   final String nombre;
   final List<RestriccionPerfil> restricciones;
 
   Perfil copiarCon({
     String? id,
+    String? usuarioId,
     String? nombre,
     List<RestriccionPerfil>? restricciones,
   }) {
     return Perfil(
       id: id ?? this.id,
+      usuarioId: usuarioId ?? this.usuarioId,
       nombre: nombre ?? this.nombre,
       restricciones: restricciones ?? this.restricciones,
     );
