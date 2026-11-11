@@ -26,6 +26,8 @@ Prohibido: "apto", "seguro", "podés consumirlo", semáforos verdes, tildes de a
 
 Las sugerencias de reemplazo (sección 5.6) están permitidas, presentadas como ideas para buscar, nunca como alimentos aptos. Se disparan por "hay coincidencias con el perfil", no por "el alimento no es válido".
 
+*Excepción (requisito del proyecto, 2026-11-10): semáforo por perfil.* Arriba del resultado, cada perfil activo tiene su semáforo: rojo ("No compatible") cuando una o más de sus restricciones coinciden, verde ("Compatible") cuando no. Condiciones en la sección 5.5.
+
 **1.5. Toda lectura parcial se declara.**
 Si el OCR no leyó una porción de la etiqueta con confianza suficiente, el resultado lo informa e indica qué parte falló.
 
@@ -231,7 +233,13 @@ Tres bloques, siempre, en este orden:
 2. **No reconocidos** — visibles, nunca ocultos, con conteo ("11 de 12 ingredientes analizados")
 3. **No legibles** — qué línea falló y sugerencia de recaptura
 
-Sin bloque de "apto". Sin resumen verde.
+Arriba de los tres bloques va el **semáforo por perfil** (excepción a la regla 1.4, 2026-11-10). Implementación: `lib/modelo/semaforo.dart` (lógica) y `lib/ui/seccion_semaforo.dart` (tarjeta por perfil con acordeón de ingredientes). Condiciones:
+
+- **Rojo** — una o más restricciones del perfil coinciden, sea por la lista de ingredientes o por la línea CONTIENE.
+- **Verde** — solo si, para ese perfil, no quedó nada sin verificar: ningún ingrediente no reconocido, ninguna línea ilegible, ninguna traza ("PUEDE CONTENER") de un alérgeno del perfil, y la base cubre todos sus alérgenos. Regla 1.3: lo no verificado nunca se pinta de verde.
+- **Ámbar** ("No pudimos verificarlo todo") — sin coincidencias, pero falló alguna de las condiciones del verde; dice cuál.
+- El acordeón lista cada ingrediente en rojo (choca, con qué restricción), verde (está en la base y no choca) o ámbar (no reconocido).
+- Orden de la pantalla: semáforos → "Sugerir sustitutos" (si hay coincidencias) → avisos de lectura parcial (siempre visibles, regla 1.5) → aviso informativo (sección 10) → **"Ver análisis completo"**, un acordeón cerrado con los tres bloques, las notas del CAA, la verificación cruzada y la declaración textual → versión de la base.
 
 ### 5.6. Sugerencias de reemplazo por LLM (requisito agregado 2026-10-09)
 
@@ -245,6 +253,16 @@ Cuando el bloque 1 tiene coincidencias, dentro de ese bloque, debajo de las coin
 - Sin conexión o si la llamada falla, se avisa y se puede reintentar; si la conexión con el LLM no está configurada, el botón lo avisa. El resultado en tres bloques nunca espera al LLM.
 - Las sugerencias no entran a la base de conocimiento (regla 1.6 sigue igual).
 - La clave de la API no se commitea al repositorio.
+
+### 5.7. "Más info" de un ingrediente por IA (requisito agregado 2026-11-10)
+
+En el acordeón de ingredientes de cada semáforo, cada ingrediente tiene un botón ✨ "Más info" que abre una hoja con una explicación de Gemini: qué es, de dónde sale y dónde aparece. Encaja en la regla 1.1: el LLM solo **redacta** sobre datos ya determinados.
+
+- Implementación: `lib/sugerencias/info_ingrediente.dart` (servicio, filtro, gestor) y `HojaInfoIngrediente` en `lib/ui/seccion_semaforo.dart`. La conexión con Gemini es compartida con la sección 5.6: `lib/sugerencias/cliente_gemini.dart`.
+- Al LLM se le manda solo texto: el ingrediente, las restricciones del perfil y lo que determinó la base (choca con X / no choca / no reconocido), como dato definitivo que no puede contradecir.
+- La hoja muestra primero el dictamen de la base y debajo la explicación, siempre marcada "Generado por IA". En un ingrediente no reconocido se aclara que es orientativa. La respuesta nunca cambia el color del ingrediente ni del semáforo.
+- Filtro determinista: se descartan las frases de la respuesta con veredictos de consumo o ausencia de alérgeno ("apto", "seguro", "libre de", "no contiene", "sin gluten", "podés consumirlo"…).
+- Se llama solo al tocar el botón; la respuesta se recuerda en memoria durante la sesión y nunca entra a la base (regla 1.6). Sin conexión o si falla, se avisa y se puede reintentar.
 
 ---
 
@@ -282,7 +300,7 @@ La calidad de la foto determina todo lo demás. Implementar guía activa, en pos
 - Colapsar `UNREADABLE` y `UNKNOWN` en un solo caso vacío.
 - Buscar la palabra "gluten" en etiquetas argentinas.
 - Match exacto por igualdad de strings. El OCR devuelve "caselnato de sodlo".
-- Un símbolo o color que comunique aprobación.
+- Un símbolo o color que comunique aprobación. (Excepción: el verde del semáforo por perfil, solo con las condiciones de la sección 5.5.)
 - Escribir sugerencias del LLM directamente en la base de conocimiento.
 - Cachear resultados de análisis por código de barras sin fecha de vigencia: las formulaciones cambian.
 - Depender del código de barras como única vía de entrada. Es la limitación de todos los competidores.

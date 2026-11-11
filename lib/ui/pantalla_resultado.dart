@@ -5,19 +5,26 @@ import '../modelo/perfil.dart';
 import '../modelo/resultado_analisis.dart';
 import '../ocr/guia_captura.dart';
 import '../sugerencias/gestor_reemplazos.dart';
+import '../sugerencias/info_ingrediente.dart';
 import 'aviso_informativo.dart';
 import 'seccion_reemplazos.dart';
+import 'seccion_semaforo.dart';
 import 'tema.dart';
 
-/// Resultado del análisis en tres bloques, siempre en este orden (sección 5.5):
-/// 1) coincidencias con el perfil, 2) no reconocidos, 3) no legibles.
-/// Sin bloque de "apto", sin resumen verde (regla 1.4).
+/// Resultado del análisis.
+///
+/// Arriba, siempre visible: el semáforo de cada perfil, "Sugerir sustitutos"
+/// (es una acción: escondida no se usa) y los avisos de lectura parcial
+/// (regla 1.5: la persona se entera sin abrir nada). Debajo, en "Ver análisis
+/// completo", los tres bloques en su orden (sección 5.5), las notas, la
+/// verificación cruzada y la declaración textual.
 class PantallaResultado extends StatelessWidget {
   const PantallaResultado({
     super.key,
     required this.resultado,
     this.sugerenciasCaptura = const [],
     this.gestorReemplazos,
+    this.gestorInfo,
   });
 
   final ResultadoAnalisis resultado;
@@ -25,16 +32,19 @@ class PantallaResultado extends StatelessWidget {
   /// Sugerencias de reemplazo por LLM (sección 5.6). `null` = no se muestran.
   final GestorReemplazos? gestorReemplazos;
 
+  /// "Más info" de cada ingrediente por IA (sección 5.7). `null` = sin botón.
+  final GestorInfoIngredientes? gestorInfo;
+
   /// Consejos de captura (sección 6). Se muestran como aviso no bloqueante: el
   /// resultado se ve igual, con una foto mejor puede completarse.
   final List<SugerenciaCaptura> sugerenciasCaptura;
 
   @override
   Widget build(BuildContext context) {
-    // Tema neutro propio, sin importar qué tema tenga el resto de la app
-    // (regla 1.4): acá nunca puede aparecer el verde pastel de la marca. El
-    // Builder es necesario para que _construirScaffold reciba un contexto
-    // posicionado POR DEBAJO de este Theme (el de `build` está por arriba).
+    // Tema neutro propio: el verde de la marca no tiñe la pantalla. Los
+    // colores del semáforo son explícitos (ver tema.dart). El Builder es
+    // necesario para que _construirScaffold reciba un contexto posicionado
+    // POR DEBAJO de este Theme (el de `build` está por arriba).
     return Theme(
       data: temaResultado,
       child: Builder(builder: _construirScaffold),
@@ -42,21 +52,36 @@ class PantallaResultado extends StatelessWidget {
   }
 
   Widget _construirScaffold(BuildContext context) {
+    final tema = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Hallazgos')),
+      appBar: AppBar(title: const Text('Resultado')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: [
-          const AvisoInformativo(compacto: true),
-          const SizedBox(height: 16),
+          // Semáforo por perfil (excepción a la regla 1.4, sección 5.5).
+          SeccionSemaforo(
+            semaforos: resultado.semaforos,
+            gestorInfo: gestorInfo,
+          ),
+
+          // Paso 11 (sección 5.6): solo si hay coincidencias.
+          if (gestorReemplazos != null && gestorReemplazos!.aplica(resultado))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: SeccionReemplazos(
+                gestor: gestorReemplazos!,
+                resultado: resultado,
+              ),
+            ),
 
           if (resultado.hayLecturaParcial)
             _Callout(
               icon: Icons.center_focus_weak_outlined,
               titulo: 'La lectura fue parcial',
               texto:
-                  'Algunas líneas no se leyeron con seguridad. Revisá el bloque '
-                  '"No legibles" más abajo y sacá otra foto de esa parte.',
+                  'Algunas líneas no se leyeron con seguridad. Sacá otra foto '
+                  'de esa parte; el detalle está en "No legibles", dentro de '
+                  '"Ver análisis completo".',
             ),
 
           if (sugerenciasCaptura.isNotEmpty)
@@ -66,88 +91,115 @@ class PantallaResultado extends StatelessWidget {
               texto: sugerenciasCaptura.map((s) => '• ${s.mensaje}').join('\n'),
             ),
 
-          _Bloque(
-            numero: 1,
-            titulo: 'Coincidencias con el perfil',
-            vacioTexto:
-                'Ninguna coincidencia entre lo que se pudo leer y los perfiles '
-                'activos. Esto no significa que el producto sea apto: revisá los '
-                'otros dos bloques y la etiqueta oficial.',
-            hijos: [
-              for (final h in resultado.coincidencias) _TarjetaHallazgo(h),
-              // Paso 11 (sección 5.6): junto a las coincidencias que hay que
-              // sustituir. Solo existe si hay coincidencias.
-              if (gestorReemplazos != null &&
-                  gestorReemplazos!.aplica(resultado))
-                SeccionReemplazos(
-                  gestor: gestorReemplazos!,
-                  resultado: resultado,
+          const AvisoInformativo(compacto: true),
+          const SizedBox(height: 12),
+
+          Material(
+            color: tema.colorScheme.surfaceContainerLow,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: tema.colorScheme.outlineVariant),
+            ),
+            child: Theme(
+              data: tema.copyWith(
+                dividerColor: Colors.transparent,
+                // Sin el fondo gris que el tema les da a las filas de lista.
+                listTileTheme: tema.listTileTheme.copyWith(
+                  tileColor: Colors.transparent,
                 ),
-            ],
-          ),
-
-          _Bloque(
-            numero: 2,
-            titulo: 'No reconocidos',
-            subtitulo: resultado.conteoAnalizados,
-            vacioTexto: 'Todos los ingredientes leídos están en la base.',
-            hijos: [
-              for (final n in resultado.noReconocidos) _TarjetaNoReconocido(n),
-            ],
-          ),
-
-          _Bloque(
-            numero: 3,
-            titulo: 'No legibles',
-            vacioTexto: 'No quedaron líneas sin leer.',
-            hijos: [for (final l in resultado.noLegibles) _TarjetaNoLegible(l)],
-          ),
-
-          if (resultado.notasExcepciones.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              'Notas (excepciones del CAA)',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            for (final n in resultado.notasExcepciones)
-              _Callout(
-                icon: Icons.rule_outlined,
-                titulo: '${n.textoLeido} — ${n.grupoAlergeno}',
-                texto: '${n.regla}\n\nFuente: ${n.fuente}',
               ),
-          ],
-
-          if (resultado.avisosCruce.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              'Verificación cruzada con la línea "CONTIENE"',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            for (final a in resultado.avisosCruce)
-              _Callout(
-                icon: a.prioridad == PrioridadCola.alta
-                    ? Icons.priority_high_outlined
-                    : Icons.compare_arrows_outlined,
-                titulo: a.grupoAlergeno == null
-                    ? 'Aviso'
-                    : 'Declara ${a.grupoAlergeno}',
-                texto: a.mensaje,
+              child: ExpansionTile(
+                backgroundColor: Colors.transparent,
+                collapsedBackgroundColor: Colors.transparent,
+                leading: const Icon(Icons.manage_search_outlined),
+                title: const Text('Ver análisis completo'),
+                subtitle: Text(
+                  '${resultado.coincidencias.length} coincidencias · '
+                  '${resultado.noReconocidos.length} no reconocidos · '
+                  '${resultado.noLegibles.length} no legibles',
+                  style: tema.textTheme.bodySmall,
+                ),
+                childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 16),
+                expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _detalle(context),
               ),
-          ],
-
-          const SizedBox(height: 16),
-          _DeclaracionTextual(resultado: resultado),
+            ),
+          ),
 
           const SizedBox(height: 24),
           Text(
             'Base de conocimiento usada: ${resultado.versionBase}\n'
             'Perfiles: ${resultado.perfilesActivos.join(", ")}',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: tema.textTheme.bodySmall,
           ),
         ],
       ),
     );
   }
+
+  /// Los tres bloques (sección 5.5), las notas, la verificación cruzada y la
+  /// declaración textual.
+  List<Widget> _detalle(BuildContext context) => [
+    _Bloque(
+      numero: 1,
+      titulo: 'Coincidencias con el perfil',
+      vacioTexto:
+          'Ninguna coincidencia entre lo que se pudo leer y los perfiles '
+          'activos.',
+      hijos: [for (final h in resultado.coincidencias) _TarjetaHallazgo(h)],
+    ),
+
+    _Bloque(
+      numero: 2,
+      titulo: 'No reconocidos',
+      subtitulo: resultado.conteoAnalizados,
+      vacioTexto: 'Todos los ingredientes leídos están en la base.',
+      hijos: [for (final n in resultado.noReconocidos) _TarjetaNoReconocido(n)],
+    ),
+
+    _Bloque(
+      numero: 3,
+      titulo: 'No legibles',
+      vacioTexto: 'No quedaron líneas sin leer.',
+      hijos: [for (final l in resultado.noLegibles) _TarjetaNoLegible(l)],
+    ),
+
+    if (resultado.notasExcepciones.isNotEmpty) ...[
+      const SizedBox(height: 8),
+      Text(
+        'Notas (excepciones del CAA)',
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      for (final n in resultado.notasExcepciones)
+        _Callout(
+          icon: Icons.rule_outlined,
+          titulo: '${n.textoLeido} — ${n.grupoAlergeno}',
+          texto: '${n.regla}\n\nFuente: ${n.fuente}',
+        ),
+    ],
+
+    if (resultado.avisosCruce.isNotEmpty) ...[
+      const SizedBox(height: 8),
+      Text(
+        'Verificación cruzada con la línea "CONTIENE"',
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      for (final a in resultado.avisosCruce)
+        _Callout(
+          icon: a.prioridad == PrioridadCola.alta
+              ? Icons.priority_high_outlined
+              : Icons.compare_arrows_outlined,
+          titulo: a.grupoAlergeno == null
+              ? 'Aviso'
+              : 'Declara ${a.grupoAlergeno}',
+          texto: a.mensaje,
+        ),
+    ],
+
+    const SizedBox(height: 16),
+    _DeclaracionTextual(resultado: resultado),
+  ];
 }
 
 class _Bloque extends StatelessWidget {

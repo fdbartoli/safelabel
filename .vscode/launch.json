@@ -1,0 +1,23 @@
+{
+  // Run/F5 de VS Code. Pasa gemini.env a Flutter para que las funciones de IA
+  // (Sugerir sustitutos y Más info) tengan la clave. gemini.env no se commitea:
+  // copiá gemini.env.example a gemini.env y poné tu clave.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SafeLabel",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "toolArgs": ["--dart-define-from-file=gemini.env"]
+    },
+    {
+      "name": "SafeLabel (Chrome)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "toolArgs": ["--dart-define-from-file=gemini.env"]
+    }
+  ]
+}
