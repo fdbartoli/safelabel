@@ -472,5 +472,104 @@
       {"term": "couscous", "language": "en"},
       {"term": "couscous", "language": "fr"}
     ]
+  },
+  {
+    "id": "CMP-EGG",
+    "canonical_name": "huevo",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "huevo", "language": "es"},
+      {"term": "egg", "language": "en"},
+      {"term": "œuf", "language": "fr"},
+      {"term": "oeuf", "language": "fr"},
+      {"term": "ovo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SOY",
+    "canonical_name": "soja",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "soja", "language": "es"},
+      {"term": "soy", "language": "en"},
+      {"term": "soybean", "language": "en"},
+      {"term": "soja", "language": "fr"},
+      {"term": "soya", "language": "fr"},
+      {"term": "soja", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-FERROUS-SULFATE",
+    "canonical_name": "sulfato ferroso",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "sulfato ferroso", "language": "es"},
+      {"term": "ferrous sulfate", "language": "en"},
+      {"term": "iron(II) sulfate", "language": "en"},
+      {"term": "sulfate ferreux", "language": "fr"},
+      {"term": "sulfate de fer(II)", "language": "fr"},
+      {"term": "sulfato ferroso", "language": "pt"},
+      {"term": "sulfato de ferro(II)", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-NIACIN",
+    "canonical_name": "niacina",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "niacina", "language": "es"},
+      {"term": "vitamina B3", "language": "es"},
+      {"term": "niacin", "language": "en"},
+      {"term": "vitamin B3", "language": "en"},
+      {"term": "niacine", "language": "fr"},
+      {"term": "vitamine B3", "language": "fr"},
+      {"term": "niacina", "language": "pt"},
+      {"term": "vitamina B3", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VITAMIN-B1",
+    "canonical_name": "vitamina B1",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "vitamina B1", "language": "es"},
+      {"term": "tiamina", "language": "es"},
+      {"term": "vitamin B1", "language": "en"},
+      {"term": "thiamine", "language": "en"},
+      {"term": "vitamine B1", "language": "fr"},
+      {"term": "thiamine", "language": "fr"},
+      {"term": "vitamina B1", "language": "pt"},
+      {"term": "tiamina", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-FOLIC-ACID",
+    "canonical_name": "ácido fólico",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ácido fólico", "language": "es"},
+      {"term": "vitamina B9", "language": "es"},
+      {"term": "folic acid", "language": "en"},
+      {"term": "vitamin B9", "language": "en"},
+      {"term": "acide folique", "language": "fr"},
+      {"term": "vitamine B9", "language": "fr"},
+      {"term": "ácido fólico", "language": "pt"},
+      {"term": "vitamina B9", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VITAMIN-B2",
+    "canonical_name": "vitamina B2",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "vitamina B2", "language": "es"},
+      {"term": "riboflavina", "language": "es"},
+      {"term": "vitamin B2", "language": "en"},
+      {"term": "riboflavin", "language": "en"},
+      {"term": "vitamine B2", "language": "fr"},
+      {"term": "riboflavine", "language": "fr"},
+      {"term": "vitamina B2", "language": "pt"},
+      {"term": "riboflavina", "language": "pt"}
+    ]
   }
 ]
