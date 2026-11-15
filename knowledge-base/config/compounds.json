@@ -5,9 +5,17 @@
     "type": "food_origin",
     "aliases": [
       {"term": "leche", "language": "es"},
+      {"term": "leche cultivada", "language": "es"},
+      {"term": "leche fermentada", "language": "es"},
       {"term": "milk", "language": "en"},
+      {"term": "cultured milk", "language": "en"},
+      {"term": "fermented milk", "language": "en"},
       {"term": "leite", "language": "pt"},
-      {"term": "lait", "language": "fr"}
+      {"term": "leite cultivado", "language": "pt"},
+      {"term": "leite fermentado", "language": "pt"},
+      {"term": "lait", "language": "fr"},
+      {"term": "lait cultivé", "language": "fr"},
+      {"term": "lait fermenté", "language": "fr"}
     ]
   },
   {
@@ -408,9 +416,29 @@
     "type": "ingredient",
     "aliases": [
       {"term": "queso", "language": "es"},
+      {"term": "queso duro", "language": "es"},
+      {"term": "queso semiduro", "language": "es"},
+      {"term": "queso semi-duro", "language": "es"},
+      {"term": "queso semiblando", "language": "es"},
+      {"term": "queso semi-blando", "language": "es"},
+      {"term": "queso blando", "language": "es"},
+      {"term": "queso cottage", "language": "es"},
       {"term": "cheese", "language": "en"},
+      {"term": "hard cheese", "language": "en"},
+      {"term": "semi-hard cheese", "language": "en"},
+      {"term": "semi-soft cheese", "language": "en"},
+      {"term": "soft cheese", "language": "en"},
+      {"term": "cottage cheese", "language": "en"},
       {"term": "fromage", "language": "fr"},
-      {"term": "queijo", "language": "pt"}
+      {"term": "fromage à pâte dure", "language": "fr"},
+      {"term": "fromage à pâte semi-dure", "language": "fr"},
+      {"term": "fromage à pâte molle", "language": "fr"},
+      {"term": "fromage cottage", "language": "fr"},
+      {"term": "queijo", "language": "pt"},
+      {"term": "queijo duro", "language": "pt"},
+      {"term": "queijo semiduro", "language": "pt"},
+      {"term": "queijo macio", "language": "pt"},
+      {"term": "queijo cottage", "language": "pt"}
     ]
   },
   {
@@ -420,11 +448,17 @@
     "aliases": [
       {"term": "yogur", "language": "es"},
       {"term": "yogurt", "language": "es"},
+      {"term": "yogur en polvo", "language": "es"},
+      {"term": "yogurt en polvo", "language": "es"},
       {"term": "yogurt", "language": "en"},
       {"term": "yoghurt", "language": "en"},
+      {"term": "yogurt powder", "language": "en"},
+      {"term": "yoghurt powder", "language": "en"},
       {"term": "yaourt", "language": "fr"},
       {"term": "yogourt", "language": "fr"},
-      {"term": "iogurte", "language": "pt"}
+      {"term": "yaourt en poudre", "language": "fr"},
+      {"term": "iogurte", "language": "pt"},
+      {"term": "iogurte em pó", "language": "pt"}
     ]
   },
   {
@@ -433,11 +467,56 @@
     "type": "ingredient",
     "aliases": [
       {"term": "crema de leche", "language": "es"},
+      {"term": "crema agria", "language": "es"},
       {"term": "milk cream", "language": "en"},
       {"term": "cream", "language": "en"},
+      {"term": "sour cream", "language": "en"},
       {"term": "crème de lait", "language": "fr"},
       {"term": "crème", "language": "fr"},
-      {"term": "creme de leite", "language": "pt"}
+      {"term": "crème aigre", "language": "fr"},
+      {"term": "creme de leite", "language": "pt"},
+      {"term": "creme azedo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-LACTOSE",
+    "canonical_name": "lactosa",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactosa", "language": "es"},
+      {"term": "lactosa monohidrato", "language": "es"},
+      {"term": "lactose", "language": "en"},
+      {"term": "lactose monohydrate", "language": "en"},
+      {"term": "lactose", "language": "fr"},
+      {"term": "lactose monohydraté", "language": "fr"},
+      {"term": "lactose", "language": "pt"},
+      {"term": "lactose monoidratada", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-KEFIR",
+    "canonical_name": "kéfir",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "kéfir", "language": "es"},
+      {"term": "kefir", "language": "es"},
+      {"term": "kefir", "language": "en"},
+      {"term": "kéfir", "language": "fr"},
+      {"term": "kefir", "language": "fr"},
+      {"term": "kefir", "language": "pt"},
+      {"term": "kéfir", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-RICOTTA",
+    "canonical_name": "ricota",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ricota", "language": "es"},
+      {"term": "ricotta", "language": "es"},
+      {"term": "ricotta", "language": "en"},
+      {"term": "ricotta", "language": "fr"},
+      {"term": "ricota", "language": "pt"}
     ]
   },
   {
@@ -460,6 +539,17 @@
       {"term": "malt extract", "language": "en"},
       {"term": "extrait de malt", "language": "fr"},
       {"term": "extrato de malte", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-LIQUID-MALT",
+    "canonical_name": "malta líquida",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "malta líquida", "language": "es"},
+      {"term": "liquid malt", "language": "en"},
+      {"term": "malt liquide", "language": "fr"},
+      {"term": "malte líquido", "language": "pt"}
     ]
   },
   {

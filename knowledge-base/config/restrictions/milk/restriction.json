@@ -34,6 +34,9 @@
     {"concept_id": "CMP-BUTTER", "match_type": "RELATED"},
     {"concept_id": "CMP-CHEESE", "match_type": "RELATED"},
     {"concept_id": "CMP-YOGURT", "match_type": "RELATED"},
-    {"concept_id": "CMP-MILK-CREAM", "match_type": "RELATED"}
+    {"concept_id": "CMP-MILK-CREAM", "match_type": "RELATED"},
+    {"concept_id": "CMP-LACTOSE", "match_type": "RELATED"},
+    {"concept_id": "CMP-KEFIR", "match_type": "RELATED"},
+    {"concept_id": "CMP-RICOTTA", "match_type": "RELATED"}
   ]
 }

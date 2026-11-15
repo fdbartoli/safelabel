@@ -24,6 +24,7 @@
     {"concept_id": "CMP-TRITICALE", "match_type": "RELATED"},
     {"concept_id": "CMP-MALT", "match_type": "RELATED"},
     {"concept_id": "CMP-MALT-EXTRACT", "match_type": "RELATED"},
+    {"concept_id": "CMP-LIQUID-MALT", "match_type": "RELATED"},
     {"concept_id": "CMP-COUSCOUS", "match_type": "RELATED"}
   ]
 }
