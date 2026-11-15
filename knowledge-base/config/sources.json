@@ -15,7 +15,8 @@
   "url": "data/manual/anmat-gestion-alergenos.pdf",
   "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
   "language": "es-AR",
-  "format": "pdf"
+  "format": "pdf",
+  "pdf_extraction": "flow"
 },
 {
   "id": "SRC-FDA-LABEL",
