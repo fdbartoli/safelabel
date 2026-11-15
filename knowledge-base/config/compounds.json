@@ -360,9 +360,13 @@
     "type": "ingredient",
     "aliases": [
       {"term": "cacao", "language": "es"},
+      {"term": "manteca de cacao", "language": "es"},
       {"term": "cocoa", "language": "en"},
+      {"term": "cocoa butter", "language": "en"},
       {"term": "cacao", "language": "fr"},
-      {"term": "cacau", "language": "pt"}
+      {"term": "beurre de cacao", "language": "fr"},
+      {"term": "cacau", "language": "pt"},
+      {"term": "manteiga de cacau", "language": "pt"}
     ]
   },
   {
@@ -589,6 +593,23 @@
     ]
   },
   {
+    "id": "CMP-PEANUT",
+    "canonical_name": "maní",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "maní", "language": "es"},
+      {"term": "maníes", "language": "es"},
+      {"term": "cacahuate", "language": "es"},
+      {"term": "cacahuete", "language": "es"},
+      {"term": "peanut", "language": "en"},
+      {"term": "peanuts", "language": "en"},
+      {"term": "arachide", "language": "fr"},
+      {"term": "arachides", "language": "fr"},
+      {"term": "amendoim", "language": "pt"},
+      {"term": "amendoins", "language": "pt"}
+    ]
+  },
+  {
     "id": "CMP-FERROUS-SULFATE",
     "canonical_name": "sulfato ferroso",
     "type": "ingredient",
@@ -660,6 +681,80 @@
       {"term": "riboflavine", "language": "fr"},
       {"term": "vitamina B2", "language": "pt"},
       {"term": "riboflavina", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CHOCOLATE",
+    "canonical_name": "chocolate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "chocolate", "language": "es"},
+      {"term": "chocolate", "language": "en"},
+      {"term": "chocolat", "language": "fr"},
+      {"term": "chocolate", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-LECITHIN",
+    "canonical_name": "lecitina",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lecitina", "language": "es"},
+      {"term": "lecithin", "language": "en"},
+      {"term": "lécithine", "language": "fr"},
+      {"term": "lecitina", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-PGPR",
+    "canonical_name": "PGPR",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "PGPR", "language": "es"},
+      {"term": "poliglicerol polirricinoleato", "language": "es"},
+      {"term": "PGPR", "language": "en"},
+      {"term": "polyglycerol polyricinoleate", "language": "en"},
+      {"term": "PGPR", "language": "fr"},
+      {"term": "polyricinoléate de polyglycérol", "language": "fr"},
+      {"term": "PGPR", "language": "pt"},
+      {"term": "polirricinoleato de poliglicerol", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-DEXTROSE",
+    "canonical_name": "dextrosa",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "dextrosa", "language": "es"},
+      {"term": "dextrose", "language": "en"},
+      {"term": "dextrose", "language": "fr"},
+      {"term": "dextrosa", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-TBHQ",
+    "canonical_name": "TBHQ",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "TBHQ", "language": "es"},
+      {"term": "terc-butilhidroquinona", "language": "es"},
+      {"term": "TBHQ", "language": "en"},
+      {"term": "tert-butylhydroquinone", "language": "en"},
+      {"term": "TBHQ", "language": "fr"},
+      {"term": "butylhydroquinone tertiaire", "language": "fr"},
+      {"term": "TBHQ", "language": "pt"},
+      {"term": "terc-butil-hidroquinona", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CITRIC-ACID",
+    "canonical_name": "ácido cítrico",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ácido cítrico", "language": "es"},
+      {"term": "citric acid", "language": "en"},
+      {"term": "acide citrique", "language": "fr"},
+      {"term": "ácido cítrico", "language": "pt"}
     ]
   }
 ]

@@ -62,5 +62,117 @@
     "mapping_type": "curated",
     "reviewed_by": "equipo-safelabel",
     "review_notes": "Variante sin la palabra tipo; mantiene explícito el origen trigo."
+  },
+  {
+    "term": "lecithin (soy)",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "soy lecithin",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "soya lecithin",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lecitina de soja",
+    "language": "es",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lécithine de soja",
+    "language": "fr",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lecitina de soja",
+    "language": "pt",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "manteca de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "mantequilla de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "crema de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "peanut butter",
+    "language": "en",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "beurre de cacahuète",
+    "language": "fr",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "beurre d'arachide",
+    "language": "fr",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "manteiga de amendoim",
+    "language": "pt",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "pasta de amendoim",
+    "language": "pt",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
   }
 ]

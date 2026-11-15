@@ -1,0 +1,16 @@
+{
+  "id": "RES-PEANUT",
+  "name": "Maní",
+  "display_name": "Maní",
+  "jurisdiction": "AR",
+  "target_concept_id": "CMP-PEANUT",
+  "source_ids": [
+    "SRC-ANMAT-ALERGENOS",
+    "SRC-ANMAT-GESTION-ALERGENOS",
+    "SRC-FDA-LABEL",
+    "SRC-CFIA-ALLERGEN-LABELLING"
+  ],
+  "relations": [
+    {"concept_id": "CMP-PEANUT", "match_type": "DIRECT"}
+  ]
+}

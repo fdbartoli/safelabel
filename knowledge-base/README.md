@@ -2,17 +2,23 @@
 
 Este directorio contiene el procedimiento para generar la SQLite utilizada por SafeLabel.
 
-La versión `0.12.0` contempla relaciones con dos restricciones alimentarias:
+La versión `0.13.0` contempla relaciones con tres restricciones alimentarias:
 
 - leche;
-- enfermedad celíaca / cereales con gluten.
+- enfermedad celíaca / cereales con gluten;
+- maní.
 
-La SQLite publicada contiene 53 conceptos, 39 relaciones, 300 denominaciones
-(8 curadas) y 105 evidencias. Además de las relaciones existentes, incorpora
-lactosa, kéfir, ricota y malta líquida, junto con nuevas variantes de leche,
-queso y yogur. El catálogo global también reconoce huevo, soja y los
-micronutrientes utilizados en harinas enriquecidas, aunque todavía no estén
-asociados a una restricción disponible.
+La SQLite publicada contiene 60 conceptos, 40 relaciones, 360 denominaciones
+(22 curadas) y 111 evidencias. La nueva restricción de maní reconoce sus
+denominaciones en español, inglés, francés y portugués. También incorpora
+variantes curadas como `manteca de maní` y `peanut butter`.
+
+El catálogo global reconoce además chocolate, lecitina, PGPR, dextrosa, TBHQ y
+ácido cítrico. Las denominaciones `manteca de cacao` y `cocoa butter` se
+resuelven explícitamente como cacao, evitando que la palabra `butter` produzca
+una coincidencia incorrecta con leche. La lecitina sin origen declarado se
+mantiene como ingrediente neutral; expresiones como `lecitina de soja` se
+resuelven como soja.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
@@ -160,6 +166,16 @@ python3 scripts/20_extract.py \
   --output data/candidates/celiac/candidates.json
 ```
 
+Maní:
+
+```bash
+python3 scripts/20_extract.py \
+  --manifest data/raw/manifest.json \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/peanut/restriction.json \
+  --output data/candidates/peanut/candidates.json
+```
+
 ## 4. Preparar la revisión
 
 Leche:
@@ -178,6 +194,15 @@ python3 scripts/30_prepare_review.py \
   --candidates data/candidates/celiac/candidates.json \
   --previous-reviewed data/reviewed/celiac/reviewed.json \
   --output data/reviewed/celiac/review.json
+```
+
+Maní:
+
+```bash
+python3 scripts/30_prepare_review.py \
+  --candidates data/candidates/peanut/candidates.json \
+  --previous-reviewed data/reviewed/peanut/reviewed.json \
+  --output data/reviewed/peanut/review.json
 ```
 
 En la primera ejecución de una restricción se omite `--previous-reviewed`.
@@ -202,6 +227,15 @@ Celiaquía:
 python3 scripts/40_review_sources.py \
   --input data/reviewed/celiac/review.json \
   --output data/reviewed/celiac/reviewed.json \
+  --reviewed-by "NOMBRE"
+```
+
+Maní:
+
+```bash
+python3 scripts/40_review_sources.py \
+  --input data/reviewed/peanut/review.json \
+  --output data/reviewed/peanut/reviewed.json \
   --reviewed-by "NOMBRE"
 ```
 
@@ -246,6 +280,16 @@ python3 scripts/60_build_knowledge.py \
   --output data/knowledge/celiac.json
 ```
 
+Maní:
+
+```bash
+python3 scripts/60_build_knowledge.py \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/peanut/restriction.json \
+  --reviewed data/reviewed/peanut/reviewed.json \
+  --output data/knowledge/peanut.json
+```
+
 ## 7. Consolidar el conocimiento
 
 ```bash
@@ -255,6 +299,7 @@ python3 scripts/70_consolidate_knowledge.py \
   --inputs \
     data/knowledge/milk.json \
     data/knowledge/celiac.json \
+    data/knowledge/peanut.json \
   --output data/knowledge/knowledge.json
 ```
 
@@ -276,7 +321,7 @@ global.
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.12.0
+  --version 0.13.0
 ```
 
 ## 9. Validar SQLite
@@ -305,16 +350,20 @@ python3 scripts/90_query_ingredient.py \
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "huevo"
+  "peanut butter"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "lecitina de soja"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
   "ingrediente inexistente"
 ```
 
-Los resultados esperados son, respectivamente, `MATCHED`, `RECOGNIZED` y
-`UNKNOWN`. Cuando corresponde, la respuesta incluye todas las restricciones
-relacionadas con la denominación consultada.
+Los resultados esperados son, respectivamente, `MATCHED`, `MATCHED`,
+`RECOGNIZED` y `UNKNOWN`. Cuando corresponde, la respuesta incluye todas las
+restricciones relacionadas con la denominación consultada.
 
 ## 11. Actualizar la base incluida en la aplicación
 
@@ -334,7 +383,7 @@ flutter test
 ```
 
 Al probar la aplicación, verificar que la pantalla de resultados informe la
-versión `0.12.0` de la base de conocimiento.
+versión `0.13.0` de la base de conocimiento.
 
 ## Smoke test
 
@@ -362,12 +411,13 @@ aplicación y debe actualizarse cuando se publica una nueva base.
 
 ## Alcance funcional actual
 
-De los perfiles de demostración actuales, la base `0.12.0` brinda soporte para:
+De los perfiles de demostración actuales, la base `0.13.0` brinda soporte para:
 
 - Sofía: leche;
-- Mateo: enfermedad celíaca / cereales con gluten.
+- Mateo: enfermedad celíaca / cereales con gluten;
+- Juli: maní. El componente de frutos secos de árbol todavía no está modelado.
 
-Todavía no contiene relaciones para los perfiles de frutos secos y maní ni de
-sulfitos. Tampoco están implementadas las restantes restricciones visibles en
-la pantalla de perfiles hasta que se incorporen sus fuentes, revisiones y
-relaciones correspondientes.
+Todavía no contiene relaciones para frutos secos de árbol ni sulfitos. Tampoco
+están implementadas las restantes restricciones visibles en la pantalla de
+perfiles hasta que se incorporen sus fuentes, revisiones y relaciones
+correspondientes.

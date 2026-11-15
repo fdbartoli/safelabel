@@ -4,3 +4,16 @@ Ingredientes: Harina de trigo tipo 000 enriquecida, sulfato ferroso, niacina, vi
 CONTIENE HUEVO Y DERIVADOS DE TRIGO. PUEDE CONTENER SOJA.
 
 --------------------------------------------------------------------------------
+
+CASO 002 - chocolate
+
+Ingredients: Milk chocolate (sugar, cocoa butter, chocolate, skim milk, milk fat, lactose, lecithin (soy), PGPR), peanuts, sugar, dextrose, salt, TBHQ, citric acid.
+
+--------------------------------------------------------------------------------
+
+CASO 002A - chocolate sin paréntesis
+
+Ingredients: Milk chocolate, sugar, cocoa butter, chocolate, skim milk, milk fat, lactose, lecithin, soy, PGPR, peanuts, sugar, dextrose, salt, TBHQ, citric acid.
+
+--------------------------------------------------------------------------------
+
