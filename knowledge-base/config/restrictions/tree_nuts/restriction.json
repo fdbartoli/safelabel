@@ -1,0 +1,27 @@
+{
+  "id": "RES-TREE-NUTS",
+  "name": "Frutas secas de árbol",
+  "display_name": "Frutas secas de árbol",
+  "jurisdiction": "AR",
+  "target_concept_id": "CMP-TREE-NUTS",
+  "source_ids": [
+    "SRC-ANMAT-ALERGENOS",
+    "SRC-ANMAT-GESTION-ALERGENOS",
+    "SRC-ANMAT-ALERGENOS-WEB",
+    "SRC-FDA-LABEL",
+    "SRC-CFIA-ALLERGEN-LABELLING"
+  ],
+  "relations": [
+    {"concept_id": "CMP-TREE-NUTS", "match_type": "DIRECT"},
+    {"concept_id": "CMP-ALMOND", "match_type": "RELATED"},
+    {"concept_id": "CMP-HAZELNUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-CHESTNUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-CASHEW", "match_type": "RELATED"},
+    {"concept_id": "CMP-BRAZIL-NUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-WALNUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-PECAN", "match_type": "RELATED"},
+    {"concept_id": "CMP-PISTACHIO", "match_type": "RELATED"},
+    {"concept_id": "CMP-PINE-NUT", "match_type": "RELATED"},
+    {"concept_id": "CMP-MACADAMIA", "match_type": "RELATED"}
+  ]
+}

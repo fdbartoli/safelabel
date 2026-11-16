@@ -7,15 +7,20 @@
       {"term": "leche", "language": "es"},
       {"term": "leche cultivada", "language": "es"},
       {"term": "leche fermentada", "language": "es"},
+      {"term": "leche en polvo", "language": "es"},
       {"term": "milk", "language": "en"},
       {"term": "cultured milk", "language": "en"},
       {"term": "fermented milk", "language": "en"},
+      {"term": "milk powder", "language": "en"},
+      {"term": "powdered milk", "language": "en"},
       {"term": "leite", "language": "pt"},
       {"term": "leite cultivado", "language": "pt"},
       {"term": "leite fermentado", "language": "pt"},
+      {"term": "leite em pó", "language": "pt"},
       {"term": "lait", "language": "fr"},
       {"term": "lait cultivé", "language": "fr"},
-      {"term": "lait fermenté", "language": "fr"}
+      {"term": "lait fermenté", "language": "fr"},
+      {"term": "lait en poudre", "language": "fr"}
     ]
   },
   {
@@ -179,9 +184,14 @@
     "aliases": [
       {"term": "lactosuero", "language": "es"},
       {"term": "suero de leche", "language": "es"},
+      {"term": "lactosuero en polvo", "language": "es"},
+      {"term": "suero de leche en polvo", "language": "es"},
       {"term": "whey", "language": "en"},
+      {"term": "whey powder", "language": "en"},
       {"term": "soro de leite", "language": "pt"},
-      {"term": "lactosérum", "language": "fr"}
+      {"term": "soro de leite em pó", "language": "pt"},
+      {"term": "lactosérum", "language": "fr"},
+      {"term": "lactosérum en poudre", "language": "fr"}
     ]
   },
   {
@@ -349,9 +359,184 @@
     "type": "food_origin",
     "aliases": [
       {"term": "almendra", "language": "es"},
+      {"term": "almendras", "language": "es"},
       {"term": "almond", "language": "en"},
+      {"term": "almonds", "language": "en"},
       {"term": "amande", "language": "fr"},
-      {"term": "amêndoa", "language": "pt"}
+      {"term": "amandes", "language": "fr"},
+      {"term": "amêndoa", "language": "pt"},
+      {"term": "amêndoas", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-TREE-NUTS",
+    "canonical_name": "frutas secas de árbol",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "frutas secas", "language": "es"},
+      {"term": "frutos secos", "language": "es"},
+      {"term": "frutas secas de árbol", "language": "es"},
+      {"term": "frutos secos de árbol", "language": "es"},
+      {"term": "tree nut", "language": "en"},
+      {"term": "tree nuts", "language": "en"},
+      {"term": "fruit à coque", "language": "fr"},
+      {"term": "fruits à coque", "language": "fr"},
+      {"term": "fruto de casca rija", "language": "pt"},
+      {"term": "frutos de casca rija", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-HAZELNUT",
+    "canonical_name": "avellana",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "avellana", "language": "es"},
+      {"term": "avellanas", "language": "es"},
+      {"term": "hazelnut", "language": "en"},
+      {"term": "hazelnuts", "language": "en"},
+      {"term": "noisette", "language": "fr"},
+      {"term": "noisettes", "language": "fr"},
+      {"term": "avelã", "language": "pt"},
+      {"term": "avelãs", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CHESTNUT",
+    "canonical_name": "castaña",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "castaña", "language": "es"},
+      {"term": "castañas", "language": "es"},
+      {"term": "chestnut", "language": "en"},
+      {"term": "chestnuts", "language": "en"},
+      {"term": "châtaigne", "language": "fr"},
+      {"term": "châtaignes", "language": "fr"},
+      {"term": "castanha", "language": "pt"},
+      {"term": "castanhas", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CASHEW",
+    "canonical_name": "castaña de cajú",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "castaña de cajú", "language": "es"},
+      {"term": "castañas de cajú", "language": "es"},
+      {"term": "anacardo", "language": "es"},
+      {"term": "anacardos", "language": "es"},
+      {"term": "nuez de la India", "language": "es"},
+      {"term": "nueces de la India", "language": "es"},
+      {"term": "cashew", "language": "en"},
+      {"term": "cashews", "language": "en"},
+      {"term": "noix de cajou", "language": "fr"},
+      {"term": "castanha de caju", "language": "pt"},
+      {"term": "castanhas de caju", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-BRAZIL-NUT",
+    "canonical_name": "castaña de Pará",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "castaña de Pará", "language": "es"},
+      {"term": "castañas de Pará", "language": "es"},
+      {"term": "nuez de Pará", "language": "es"},
+      {"term": "nueces de Pará", "language": "es"},
+      {"term": "nuez de Brasil", "language": "es"},
+      {"term": "nueces de Brasil", "language": "es"},
+      {"term": "bacurí", "language": "es"},
+      {"term": "coquito de Brasil", "language": "es"},
+      {"term": "coquitos de Brasil", "language": "es"},
+      {"term": "Brazil nut", "language": "en"},
+      {"term": "Brazil nuts", "language": "en"},
+      {"term": "noix du Brésil", "language": "fr"},
+      {"term": "castanha-do-pará", "language": "pt"},
+      {"term": "castanhas-do-pará", "language": "pt"},
+      {"term": "castanha-do-brasil", "language": "pt"},
+      {"term": "castanhas-do-brasil", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-WALNUT",
+    "canonical_name": "nuez",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "nuez", "language": "es"},
+      {"term": "nueces", "language": "es"},
+      {"term": "nuez de nogal", "language": "es"},
+      {"term": "nueces de nogal", "language": "es"},
+      {"term": "walnut", "language": "en"},
+      {"term": "walnuts", "language": "en"},
+      {"term": "noix", "language": "fr"},
+      {"term": "noz", "language": "pt"},
+      {"term": "nozes", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-PECAN",
+    "canonical_name": "nuez pecán",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "pecán", "language": "es"},
+      {"term": "pecanes", "language": "es"},
+      {"term": "nuez pecán", "language": "es"},
+      {"term": "nueces pecán", "language": "es"},
+      {"term": "nuez de pacana", "language": "es"},
+      {"term": "nueces de pacana", "language": "es"},
+      {"term": "pecan", "language": "en"},
+      {"term": "pecans", "language": "en"},
+      {"term": "noix de pécan", "language": "fr"},
+      {"term": "pecã", "language": "pt"},
+      {"term": "pecãs", "language": "pt"},
+      {"term": "noz-pecã", "language": "pt"},
+      {"term": "nozes-pecã", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-PISTACHIO",
+    "canonical_name": "pistacho",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "pistacho", "language": "es"},
+      {"term": "pistachos", "language": "es"},
+      {"term": "pistachio", "language": "en"},
+      {"term": "pistachios", "language": "en"},
+      {"term": "pistache", "language": "fr"},
+      {"term": "pistaches", "language": "fr"},
+      {"term": "pistache", "language": "pt"},
+      {"term": "pistaches", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-PINE-NUT",
+    "canonical_name": "piñón",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "piñón", "language": "es"},
+      {"term": "piñones", "language": "es"},
+      {"term": "pine nut", "language": "en"},
+      {"term": "pine nuts", "language": "en"},
+      {"term": "pignon", "language": "fr"},
+      {"term": "pignons", "language": "fr"},
+      {"term": "pinhão", "language": "pt"},
+      {"term": "pinhões", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MACADAMIA",
+    "canonical_name": "nuez de macadamia",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "macadamia", "language": "es"},
+      {"term": "nuez de macadamia", "language": "es"},
+      {"term": "nueces de macadamia", "language": "es"},
+      {"term": "macadamia", "language": "en"},
+      {"term": "macadamia nut", "language": "en"},
+      {"term": "macadamia nuts", "language": "en"},
+      {"term": "noix de macadamia", "language": "fr"},
+      {"term": "macadâmia", "language": "pt"},
+      {"term": "noz de macadâmia", "language": "pt"},
+      {"term": "nozes de macadâmia", "language": "pt"}
     ]
   },
   {
@@ -361,12 +546,16 @@
     "aliases": [
       {"term": "cacao", "language": "es"},
       {"term": "manteca de cacao", "language": "es"},
+      {"term": "cacao en polvo", "language": "es"},
       {"term": "cocoa", "language": "en"},
       {"term": "cocoa butter", "language": "en"},
+      {"term": "cocoa powder", "language": "en"},
       {"term": "cacao", "language": "fr"},
       {"term": "beurre de cacao", "language": "fr"},
+      {"term": "cacao en poudre", "language": "fr"},
       {"term": "cacau", "language": "pt"},
-      {"term": "manteiga de cacau", "language": "pt"}
+      {"term": "manteiga de cacau", "language": "pt"},
+      {"term": "cacau em pó", "language": "pt"}
     ]
   },
   {
@@ -427,22 +616,27 @@
       {"term": "queso semi-blando", "language": "es"},
       {"term": "queso blando", "language": "es"},
       {"term": "queso cottage", "language": "es"},
+      {"term": "queso en polvo", "language": "es"},
       {"term": "cheese", "language": "en"},
       {"term": "hard cheese", "language": "en"},
       {"term": "semi-hard cheese", "language": "en"},
       {"term": "semi-soft cheese", "language": "en"},
       {"term": "soft cheese", "language": "en"},
       {"term": "cottage cheese", "language": "en"},
+      {"term": "cheese powder", "language": "en"},
+      {"term": "powdered cheese", "language": "en"},
       {"term": "fromage", "language": "fr"},
       {"term": "fromage à pâte dure", "language": "fr"},
       {"term": "fromage à pâte semi-dure", "language": "fr"},
       {"term": "fromage à pâte molle", "language": "fr"},
       {"term": "fromage cottage", "language": "fr"},
+      {"term": "fromage en poudre", "language": "fr"},
       {"term": "queijo", "language": "pt"},
       {"term": "queijo duro", "language": "pt"},
       {"term": "queijo semiduro", "language": "pt"},
       {"term": "queijo macio", "language": "pt"},
-      {"term": "queijo cottage", "language": "pt"}
+      {"term": "queijo cottage", "language": "pt"},
+      {"term": "queijo em pó", "language": "pt"}
     ]
   },
   {
@@ -472,14 +666,18 @@
     "aliases": [
       {"term": "crema de leche", "language": "es"},
       {"term": "crema agria", "language": "es"},
+      {"term": "crema de leche en polvo", "language": "es"},
       {"term": "milk cream", "language": "en"},
       {"term": "cream", "language": "en"},
       {"term": "sour cream", "language": "en"},
+      {"term": "cream powder", "language": "en"},
       {"term": "crème de lait", "language": "fr"},
       {"term": "crème", "language": "fr"},
       {"term": "crème aigre", "language": "fr"},
+      {"term": "crème en poudre", "language": "fr"},
       {"term": "creme de leite", "language": "pt"},
-      {"term": "creme azedo", "language": "pt"}
+      {"term": "creme azedo", "language": "pt"},
+      {"term": "creme de leite em pó", "language": "pt"}
     ]
   },
   {
@@ -573,10 +771,16 @@
     "type": "food_origin",
     "aliases": [
       {"term": "huevo", "language": "es"},
+      {"term": "huevo en polvo", "language": "es"},
       {"term": "egg", "language": "en"},
+      {"term": "egg powder", "language": "en"},
+      {"term": "powdered egg", "language": "en"},
       {"term": "œuf", "language": "fr"},
       {"term": "oeuf", "language": "fr"},
-      {"term": "ovo", "language": "pt"}
+      {"term": "œuf en poudre", "language": "fr"},
+      {"term": "oeuf en poudre", "language": "fr"},
+      {"term": "ovo", "language": "pt"},
+      {"term": "ovo em pó", "language": "pt"}
     ]
   },
   {

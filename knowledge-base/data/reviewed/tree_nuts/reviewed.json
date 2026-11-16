@@ -1,0 +1,1161 @@
+{
+  "restriction": {
+    "id": "RES-TREE-NUTS",
+    "name": "Frutas secas de árbol"
+  },
+  "grouping": "restriction_id + concept_id + source_id",
+  "reviews": [
+    {
+      "id": "REV-0001",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-ALMOND",
+      "canonical_concept": "almendra",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 8,
+      "aliases": [
+        {
+          "term": "almendra",
+          "language": "es"
+        },
+        {
+          "term": "almendras",
+          "language": "es"
+        },
+        {
+          "term": "almonds",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "almendra",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0007"
+              ],
+              "representative_evidence": "DE PRODUCIR RE ACCIONE S ADVERSA S EN INDIVIDUOS SUSCEP TIBLE S   14\n\fSección 6 – ANEXO - EJEMPLOS\n\n\n\n\n      CONTIENE LECHE Y DERIVADOS DE SOJA. PUEDE CONTENER ALMENDRA Y\n      AVELLANA\n\n\n\n\n 3- CERVEZA DE TRIGO\n\n Ingredientes: Malta de trigo, malta de cebada, l evadura, lúpulo, extracto de lúpul o\n\n       CONTIENE DERIVADOS DE TRIGO Y CEBADA",
+              "representative_location": "character:22329"
+            },
+            {
+              "term": "almendras",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0004"
+              ],
+              "representative_evidence": "imadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirlas es eliminar a los alérgenos de la dieta de las personas",
+              "representative_location": "character:4526"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "almendra",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0054"
+              ],
+              "representative_evidence": "scado y productos derivados. Maní y productos derivados. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones a",
+              "representative_location": "character:1643"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "almendras",
+              "language": "es",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0012",
+                "CAND-0021",
+                "CAND-0027"
+              ],
+              "representative_evidence": "derivados cárnicos (salchichas, fiambres de cerdo, salamines,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapá",
+              "representative_location": "character:15819"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "almonds",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0043"
+              ],
+              "representative_evidence": "nderground, and are not tree nuts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread",
+              "representative_location": "character:2435"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-FDA-LABEL",
+          "source_title": "Have Food Allergies Read the Label",
+          "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "almonds",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0035"
+              ],
+              "representative_evidence": "t for the large majority of severe food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The law requires that food labels identify the food source of all major food allergens used to make the food. This requirement is",
+              "representative_location": "character:2479"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0002",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-BRAZIL-NUT",
+      "canonical_concept": "castaña de Pará",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 4,
+      "aliases": [
+        {
+          "term": "Brazil nuts",
+          "language": "en"
+        },
+        {
+          "term": "bacurí",
+          "language": "es"
+        },
+        {
+          "term": "nuez de Brasil",
+          "language": "es"
+        },
+        {
+          "term": "nuez de Pará",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "bacurí",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0061"
+              ],
+              "representative_evidence": ". Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán ser declarados son: Dióxido de azufre y sulfito",
+              "representative_location": "character:1726"
+            },
+            {
+              "term": "nuez de Brasil",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0060"
+              ],
+              "representative_evidence": "oductos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán ser declarados son: Dióxido de azufre",
+              "representative_location": "character:1709"
+            },
+            {
+              "term": "nuez de Pará",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0059"
+              ],
+              "representative_evidence": "dos. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán ser declarados son: Di",
+              "representative_location": "character:1695"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "Brazil nuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0044"
+              ],
+              "representative_evidence": "d, and are not tree nuts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods",
+              "representative_location": "character:2444"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0003",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-CASHEW",
+      "canonical_concept": "castaña de cajú",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 2,
+      "aliases": [
+        {
+          "term": "cashews",
+          "language": "en"
+        },
+        {
+          "term": "castaña de cajú",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "castaña de cajú",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0057"
+              ],
+              "representative_evidence": "s. Maní y productos derivados. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán",
+              "representative_location": "character:1669"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "cashews",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0045"
+              ],
+              "representative_evidence": "t tree nuts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals",
+              "representative_location": "character:2457"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0004",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-CHESTNUT",
+      "canonical_concept": "castaña",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 4,
+      "aliases": [
+        {
+          "term": "castaña",
+          "language": "es"
+        },
+        {
+          "term": "castañas",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "castaña",
+              "language": "es",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0056",
+                "CAND-0058"
+              ],
+              "representative_evidence": "derivados. Maní y productos derivados. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en indivi",
+              "representative_location": "character:1661"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "castañas",
+              "language": "es",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0015",
+                "CAND-0029"
+              ],
+              "representative_evidence": ", fiambres de cerdo, salamines,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendras, chocol",
+              "representative_location": "character:15849"
+            }
+          ],
+          "review_status": "rejected",
+          "reviewed_by": "Lucio",
+          "review_notes": "referencia especìficamente a 'castañas de cajú', son dos conceptos distintos CMP-CASHEW & CMP-CHESTNUT"
+        }
+      ]
+    },
+    {
+      "id": "REV-0005",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-HAZELNUT",
+      "canonical_concept": "avellana",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 8,
+      "aliases": [
+        {
+          "term": "avellana",
+          "language": "es"
+        },
+        {
+          "term": "avellanas",
+          "language": "es"
+        },
+        {
+          "term": "hazelnuts",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "avellana",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0008"
+              ],
+              "representative_evidence": "DE PRODUCIR RE ACCIONE S ADVERSA S EN INDIVIDUOS SUSCEP TIBLE S   14\n\fSección 6 – ANEXO - EJEMPLOS\n\n\n\n\n      CONTIENE LECHE Y DERIVADOS DE SOJA. PUEDE CONTENER ALMENDRA Y\n      AVELLANA\n\n\n\n\n 3- CERVEZA DE TRIGO\n\n Ingredientes: Malta de trigo, malta de cebada, l evadura, lúpulo, extracto de lúpul o\n\n       CONTIENE DERIVADOS DE TRIGO Y CEBADA\n\n\n       INCORRECTO:",
+              "representative_location": "character:22346"
+            },
+            {
+              "term": "avellanas",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0003"
+              ],
+              "representative_evidence": "vocan aproximadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirlas es eliminar a los alérgenos de la dieta de la",
+              "representative_location": "character:4515"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "avellana",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0055"
+              ],
+              "representative_evidence": "roductos derivados. Maní y productos derivados. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas e",
+              "representative_location": "character:1652"
+            },
+            {
+              "term": "avellanas",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0065"
+              ],
+              "representative_evidence": "rea separada físicamente, o bien, garantizarse una limpieza efectiva al finalizar la operación. Debe tenerse especial precaución con las cáscaras en suspensión (por ej. de nueces, avellanas, maníes), ya que, por sus características, podrían recorrer distancias considerables y depositarse sobre otros equipos, contaminándolos. Se recomienda evitar el uso de agua y aire",
+              "representative_location": "character:9023"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "avellanas",
+              "language": "es",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0013",
+                "CAND-0023",
+                "CAND-0028"
+              ],
+              "representative_evidence": "árnicos (salchichas, fiambres de cerdo, salamines,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de",
+              "representative_location": "character:15830"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "hazelnuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0046"
+              ],
+              "representative_evidence": "ts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and",
+              "representative_location": "character:2466"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0006",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-MACADAMIA",
+      "canonical_concept": "nuez de macadamia",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 2,
+      "aliases": [
+        {
+          "term": "macadamia",
+          "language": "es"
+        },
+        {
+          "term": "macadamia nuts",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "macadamia",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0019"
+              ],
+              "representative_evidence": "nesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendras, chocolate, golosinas, pesto, barras de granola, muslix,\nga",
+              "representative_location": "character:15900"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "macadamia nuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0047"
+              ],
+              "representative_evidence": "can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as",
+              "representative_location": "character:2477"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0007",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-PECAN",
+      "canonical_concept": "nuez pecán",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 6,
+      "aliases": [
+        {
+          "term": "nuez pecán",
+          "language": "es"
+        },
+        {
+          "term": "pecanes",
+          "language": "es"
+        },
+        {
+          "term": "pecans",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "nuez pecán",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0062"
+              ],
+              "representative_evidence": "y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán ser declarados son: Dióxido de azufre y sulfitos presentes",
+              "representative_location": "character:1733"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "pecanes",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0016"
+              ],
+              "representative_evidence": "o, salamines,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendras, chocolate, golosinas, p",
+              "representative_location": "character:15867"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "pecans",
+              "language": "en",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0038",
+                "CAND-0039",
+                "CAND-0048"
+              ],
+              "representative_evidence": "ns Within the ingredients list Ingredients: Apples, Pie crust [flour (wheat), shortening, liquid albumen (egg), salt], Sugar, Flour, Lemon juice, Whole milk, Cinnamon. May contain pecans. Using a contains statement Ingredients: Apples, Pie crust [flour, shortening, liquid albumen, salt], Sugar, Flour, Lemon juice, Whole milk, Cinnamon. Contains: Wheat, Egg, Milk.",
+              "representative_location": "character:817"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-FDA-LABEL",
+          "source_title": "Have Food Allergies Read the Label",
+          "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "pecans",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0036"
+              ],
+              "representative_evidence": "large majority of severe food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The law requires that food labels identify the food source of all major food allergens used to make the food. This requirement is met if",
+              "representative_location": "character:2488"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0008",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-PINE-NUT",
+      "canonical_concept": "piñón",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 2,
+      "aliases": [
+        {
+          "term": "pine nuts",
+          "language": "en"
+        },
+        {
+          "term": "piñones",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "piñones",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0031"
+              ],
+              "representative_evidence": "l derivados de aceites vegetales de soja; d) esteres de\nfitostanol derivados de fitosteroles de aceite de semilla de soja.\n(4)\nSe incluyen: almendras, avellanas, castañas, nueces, piñones, pistacho. Excepto: las frutas secas utilizadas para hacer destilados o alcohol etílico de origen\nagrícola para bebidas alcohólicas.\n(5)\nSe incluye: trigo, centeno, cebada, avena",
+              "representative_location": "character:69449"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "pine nuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0049"
+              ],
+              "representative_evidence": "in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk",
+              "representative_location": "character:2501"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0009",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-PISTACHIO",
+      "canonical_concept": "pistacho",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 4,
+      "aliases": [
+        {
+          "term": "pistachio",
+          "language": "en"
+        },
+        {
+          "term": "pistacho",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "pistacho",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0063"
+              ],
+              "representative_evidence": "s derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin ser alérgenos, las sustancias capaces de producir reacciones adversas en individuos que deberán ser declarados son: Dióxido de azufre y sulfitos presentes en conce",
+              "representative_location": "character:1744"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "pistachio",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0018"
+              ],
+              "representative_evidence": "etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendras, chocolate, golosinas, pesto, barras de granola,",
+              "representative_location": "character:15889"
+            },
+            {
+              "term": "pistacho",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0032"
+              ],
+              "representative_evidence": "os de aceites vegetales de soja; d) esteres de\nfitostanol derivados de fitosteroles de aceite de semilla de soja.\n(4)\nSe incluyen: almendras, avellanas, castañas, nueces, piñones, pistacho. Excepto: las frutas secas utilizadas para hacer destilados o alcohol etílico de origen\nagrícola para bebidas alcohólicas.\n(5)\nSe incluye: trigo, centeno, cebada, avena y sus vari",
+              "representative_location": "character:69458"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "pistachio",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0050"
+              ],
+              "representative_evidence": "ods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to",
+              "representative_location": "character:2512"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0010",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-TREE-NUTS",
+      "canonical_concept": "frutas secas de árbol",
+      "concept_type": "food_origin",
+      "match_type": "DIRECT",
+      "occurrence_count": 16,
+      "aliases": [
+        {
+          "term": "frutas secas",
+          "language": "es"
+        },
+        {
+          "term": "frutos secos",
+          "language": "es"
+        },
+        {
+          "term": "tree nuts",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "frutas secas",
+              "language": "es",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0001",
+                "CAND-0005",
+                "CAND-0006"
+              ],
+              "representative_evidence": "o ocho son\nlos que provocan aproximadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirlas es eliminar a los alérgeno",
+              "representative_location": "character:4493"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "frutas secas",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0053"
+              ],
+              "representative_evidence": "Crustáceos y productos derivados. Huevos y productos derivados. Pescado y productos derivados. Maní y productos derivados. Soja y productos derivados. Leche y productos derivados. Frutas secas, indicando la/s que corresponda/n de las siguientes: Almendra Avellana Castaña Castaña de Cajú Castaña o Nuez de Pará, Nuez de Brasil o Bacurí Nuez Pecán Pistacho Además, aún sin",
+              "representative_location": "character:1577"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 7,
+          "denominations": [
+            {
+              "term": "frutas secas",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0033"
+              ],
+              "representative_evidence": "de soja; d) esteres de\nfitostanol derivados de fitosteroles de aceite de semilla de soja.\n(4)\nSe incluyen: almendras, avellanas, castañas, nueces, piñones, pistacho. Excepto: las frutas secas utilizadas para hacer destilados o alcohol etílico de origen\nagrícola para bebidas alcohólicas.\n(5)\nSe incluye: trigo, centeno, cebada, avena y sus variedades híbridas y productos",
+              "representative_location": "character:69481"
+            },
+            {
+              "term": "frutos secos",
+              "language": "es",
+              "occurrence_count": 6,
+              "candidate_ids": [
+                "CAND-0009",
+                "CAND-0010",
+                "CAND-0011",
+                "CAND-0024",
+                "CAND-0025",
+                "CAND-0026"
+              ],
+              "representative_evidence": "ayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\nPara que se produzca una reacción alérgica, una\npersona debe primero haber sido sensibilizada a las\nproteínas alergénicas, lo cual ocurre en una pr",
+              "representative_location": "character:6652"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 4,
+          "denominations": [
+            {
+              "term": "tree nuts",
+              "language": "en",
+              "occurrence_count": 4,
+              "candidate_ids": [
+                "CAND-0040",
+                "CAND-0041",
+                "CAND-0042",
+                "CAND-0052"
+              ],
+              "representative_evidence": "he priority food allergen or gluten source. Know your common food allergies and related disorders in Canada Peanuts Peanuts are actually legumes that grow underground, and are not tree nuts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, ha",
+              "representative_location": "character:2279"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-FDA-LABEL",
+          "source_title": "Have Food Allergies Read the Label",
+          "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "tree nuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0034"
+              ],
+              "representative_evidence": "These foods account for the large majority of severe food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The law requires that food labels identify the food source of all major food allergens used to make the food. Th",
+              "representative_location": "character:2460"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0011",
+      "restriction_id": "RES-TREE-NUTS",
+      "concept_id": "CMP-WALNUT",
+      "canonical_concept": "nuez",
+      "concept_type": "food_origin",
+      "match_type": "RELATED",
+      "occurrence_count": 9,
+      "aliases": [
+        {
+          "term": "nueces",
+          "language": "es"
+        },
+        {
+          "term": "nuez",
+          "language": "es"
+        },
+        {
+          "term": "walnuts",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "nueces",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0002"
+              ],
+              "representative_evidence": "que provocan aproximadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirlas es eliminar a los alérgenos de la",
+              "representative_location": "character:4507"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS-WEB",
+          "source_title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+          "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+          "source_sha256": "96380dad8e0c01533b06242715507550972cdb6a3c940f75c6e1863d5b029a1e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "nueces",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0064"
+              ],
+              "representative_evidence": "en un área separada físicamente, o bien, garantizarse una limpieza efectiva al finalizar la operación. Debe tenerse especial precaución con las cáscaras en suspensión (por ej. de nueces, avellanas, maníes), ya que, por sus características, podrían recorrer distancias considerables y depositarse sobre otros equipos, contaminándolos. Se recomienda evitar el uso de",
+              "representative_location": "character:9015"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 5,
+          "denominations": [
+            {
+              "term": "nueces",
+              "language": "es",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0014",
+                "CAND-0022",
+                "CAND-0030"
+              ],
+              "representative_evidence": "lchichas, fiambres de cerdo, salamines,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendr",
+              "representative_location": "character:15841"
+            },
+            {
+              "term": "nuez",
+              "language": "es",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0017",
+                "CAND-0020"
+              ],
+              "representative_evidence": "nes,\nsalames, etc), milanesas de soja, productos a base de carne picada, aliños de\nensaladas, saborizantes.\n\nFrutos secos\n\nAlmendras, avellanas, nueces, castañas\nde cajú, pecanes, nuez Brasil, pistachio,\nmacadamia, etc.\n\nPasta de nuez, turrones, coberturas utilizadas en panificados y pastelería, nougaut,\nmazapán, pasta de almendras, chocolate, golosinas, pesto,",
+              "representative_location": "character:15876"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "walnuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0051"
+              ],
+              "representative_evidence": "s, spreads, sauces and snack foods such as trail mixes. Tree nuts Tree nuts include almonds, Brazil nuts, cashews, hazelnuts, macadamia nuts, pecans, pine nuts, pistachio nuts and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to make butter, chee",
+              "representative_location": "character:2531"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-FDA-LABEL",
+          "source_title": "Have Food Allergies Read the Label",
+          "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "walnuts",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0037"
+              ],
+              "representative_evidence": "rity of severe food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The law requires that food labels identify the food source of all major food allergens used to make the food. This requirement is met if the common o",
+              "representative_location": "character:2499"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    }
+  ]
+}

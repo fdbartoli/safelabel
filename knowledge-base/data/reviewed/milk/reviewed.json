@@ -114,11 +114,11 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0014",
+                "CAND-0013",
                 "CAND-0026"
               ],
-              "representative_evidence": "Leche fluida, leche en polvo, crema                  Todos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\n                   de leche, manteca, leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos)",
-              "representative_location": "character:22290"
+              "representative_evidence": "elera,\nflanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa",
+              "representative_location": "character:14654"
             }
           ],
           "review_status": "approved",
@@ -246,21 +246,21 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0021"
+                "CAND-0019"
               ],
-              "representative_evidence": "has, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní,",
-              "representative_location": "character:22713"
+              "representative_evidence": "Leche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema paste",
+              "representative_location": "character:14780"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -333,14 +333,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0022"
+                "CAND-0020"
               ],
-              "representative_evidence": "bres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de",
-              "representative_location": "character:22722"
+              "representative_evidence": "eche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helad",
+              "representative_location": "character:14789"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -399,10 +399,10 @@
               "occurrence_count": 2,
               "candidate_ids": [
                 "CAND-0008",
-                "CAND-0012"
+                "CAND-0024"
               ],
-              "representative_evidence": "en polvo.         flanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\n                                                                        buñuelos, queso elaborado con lisozima.\n Leche             Leche fluida, leche en polvo, crema                  Todos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), cre",
-              "representative_location": "character:22073"
+              "representative_evidence": "en polvo.\n\nPastas, merengue, mayonesa, pintado para productos horneados, crema pastelera,\nflanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en p",
+              "representative_location": "character:14570"
             }
           ],
           "review_status": "approved",
@@ -566,14 +566,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0017"
+                "CAND-0015"
               ],
-              "representative_evidence": "leche, manteca, leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas",
-              "representative_location": "character:22463"
+              "representative_evidence": "galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (ques",
+              "representative_location": "character:14704"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -631,14 +631,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0024"
+                "CAND-0022"
               ],
-              "representative_evidence": "lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de repostería, maní con chocolates, praliné, muslix",
-              "representative_location": "character:22768"
+              "representative_evidence": ", crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y flanes, chocolate",
+              "representative_location": "character:14816"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -774,14 +774,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0023"
+                "CAND-0021"
               ],
-              "representative_evidence": "do, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de repostería, man",
-              "representative_location": "character:22733"
+              "representative_evidence": ", leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y fl",
+              "representative_location": "character:14800"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -861,15 +861,15 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0025",
+                "CAND-0023",
                 "CAND-0032"
               ],
-              "representative_evidence": "tosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de repostería, maní con chocolates, praliné, muslix (mezcla",
-              "representative_location": "character:22785"
+              "representative_evidence": "manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, d",
+              "representative_location": "character:14833"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -1006,19 +1006,19 @@
                 "CAND-0009",
                 "CAND-0010",
                 "CAND-0011",
-                "CAND-0013",
-                "CAND-0015",
+                "CAND-0012",
+                "CAND-0025",
                 "CAND-0027",
                 "CAND-0029",
                 "CAND-0030",
                 "CAND-0031"
               ],
-              "representative_evidence": "de cada empresa.\nresponsables de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\n                                                         Objetivos de un “Programa\nPar",
-              "representative_location": "character:13381"
+              "representative_evidence": "son proteínas. Los alimentos\nresponsables de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\nPara que se produzca una reacción alérgica, una\npersona debe primero haber sido sensib",
+              "representative_location": "character:6598"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -1052,7 +1052,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 6,
           "denominations": [
             {
@@ -1337,14 +1337,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0018"
+                "CAND-0016"
               ],
-              "representative_evidence": "leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina,",
-              "representative_location": "character:22479"
+              "representative_evidence": "ueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-bl",
+              "representative_location": "character:14720"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         }
       ]
@@ -1382,19 +1382,19 @@
               "candidate_ids": [
                 "CAND-0028"
               ],
-              "representative_evidence": "para evitar confusiones (por ejemplo, “proteínas\nLos productos envasados son una de las fuentes más         lácteas” en lugar de “caseinato de sodio”). Además,\nseguras de alimentación para un consumidor alérgico,       en ingredientes o aditivos que puedan tener distinto\npor lo cual las empresas deben ser conscientes",
-              "representative_location": "character:77233"
+              "representative_evidence": "vo, en las\ndistintas normativas se ha contemplado la necesidad\nde mencionar el nombre del alimento de origen\npara evitar confusiones (por ejemplo, “proteínas\nlácteas” en lugar de “caseinato de sodio”). Además,\nen ingredientes o aditivos que puedan tener distinto\norigen, éste debe ser claramente especificado (por\nejemplo, “lecitina de huevo” o “lecitina de soja” en\nlugar de “l",
+              "representative_location": "character:53061"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -1467,23 +1467,23 @@
               "language": "es",
               "occurrence_count": 3,
               "candidate_ids": [
-                "CAND-0019",
-                "CAND-0020",
+                "CAND-0017",
+                "CAND-0018",
                 "CAND-0033"
               ],
-              "representative_evidence": "fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa",
-              "representative_location": "character:22602"
+              "representative_evidence": "albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, bland",
+              "representative_location": "character:14728"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 3,
           "denominations": [
             {
@@ -1597,10 +1597,10 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0016"
+                "CAND-0014"
               ],
-              "representative_evidence": "de leche, manteca, leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteí",
-              "representative_location": "character:22455"
+              "representative_evidence": "huelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de ques",
+              "representative_location": "character:14696"
             }
           ],
           "review_status": "approved",
