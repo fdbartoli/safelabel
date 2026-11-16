@@ -17,7 +17,10 @@ def source_fingerprint(source):
             denomination.get("language"),
             denomination.get("representative_evidence"),
         ))
-    return source.get("source_sha256"), tuple(sorted(denominations))
+    # La decisión revisa el fragmento que respalda la relación, no los bytes
+    # completos de una página web. Un cambio de SHA causado por navegación,
+    # scripts o metadatos no invalida la decisión si la evidencia es idéntica.
+    return source.get("source_url"), tuple(sorted(denominations))
 
 
 def previous_decisions(path):
