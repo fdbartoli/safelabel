@@ -2,15 +2,15 @@
 
 Este directorio contiene el procedimiento para generar la SQLite utilizada por SafeLabel.
 
-La versión `0.14.0` contempla relaciones con cuatro restricciones alimentarias:
+La versión `0.15.0` contempla relaciones con cuatro restricciones alimentarias:
 
 - leche;
 - enfermedad celíaca / cereales con gluten;
 - maní;
 - frutas secas de árbol.
 
-La SQLite publicada contiene 70 conceptos, 51 relaciones, 503 denominaciones
-(31 curadas) y 154 evidencias. La restricción de frutas secas de árbol incluye
+La SQLite publicada contiene 86 conceptos, 51 relaciones, 630 denominaciones
+(32 curadas) y 154 evidencias. La restricción de frutas secas de árbol incluye
 almendra, avellana, castaña, castaña de cajú, castaña o nuez de Brasil, nuez,
 pecán, pistacho, piñón y macadamia. Maní continúa modelado como una restricción
 independiente.
@@ -24,6 +24,28 @@ resuelven como soja. También se incorporan presentaciones en polvo de leche,
 lactosuero, crema, queso, yogur, huevo y cacao, además de términos curados como
 `leche de almendras`, `almond milk`, `pistachio nuts`, `pasta de nuez` y
 `pasta de almendras`.
+
+La versión `0.15.0` amplía el catálogo a partir de etiquetas de salsa barbacoa
+y de un producto de maní. Incorpora como conceptos reconocidos, sin agregar
+nuevas relaciones con restricciones: puré de tomate, vinagre, mostaza, jarabe
+de glucosa-fructosa, almidón modificado de maíz, ajo, colorante caramelo,
+sorbato potásico, benzoato sódico, aroma de humo, aromatizante artificial,
+aceite vegetal, aceite de palma, aceite de soja, aroma y aroma natural. También
+agrega variantes de maní tostado, leche entera en polvo y aceite de girasol
+alto oleico.
+
+La expresión observada `aroma a avellana`, declarada en la etiqueta como
+aromatizante artificial, se resuelve mediante un término curado como
+aromatizante artificial y no como avellana. Esta decisión evita inferir una
+relación con frutas secas únicamente por el texto del saborizante.
+
+Los términos genéricos `aroma`, `aromatizante`, `saborizante`, `esencia` y sus
+variantes naturales se reconocen como categorías válidas de rotulado, sin
+inferir una composición ni relacionarlas automáticamente con una restricción.
+Queda pendiente distinguir en el modelo los ingredientes reconocidos cuya
+composición no está especificada. Las expresiones que coordinan varios
+ingredientes mediante `y` no se agregan como denominaciones compuestas: su
+separación corresponde al normalizador de la aplicación.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
@@ -387,7 +409,7 @@ global.
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.14.0
+  --version 0.15.0
 ```
 
 ## 9. Validar SQLite
@@ -428,13 +450,23 @@ python3 scripts/90_query_ingredient.py \
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
+  "maní tostado"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "aroma a avellana"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
   "ingrediente inexistente"
 ```
 
 Los resultados esperados son, respectivamente, `MATCHED`, `MATCHED`, `MATCHED`,
-`RECOGNIZED` y `UNKNOWN`. `Leche de almendras` debe relacionarse solamente con
-frutas secas de árbol y no con leche. Cuando corresponde, la respuesta incluye
-todas las restricciones relacionadas con la denominación consultada.
+`RECOGNIZED`, `MATCHED`, `RECOGNIZED` y `UNKNOWN`. `Leche de almendras` debe
+relacionarse solamente con frutas secas de árbol y no con leche. `Aroma a
+avellana` debe reconocerse como aromatizante artificial y no debe relacionarse
+con frutas secas de árbol. Cuando corresponde, la respuesta incluye todas las
+restricciones relacionadas con la denominación consultada.
 
 ## 11. Actualizar la base incluida en la aplicación
 
@@ -454,7 +486,7 @@ flutter test
 ```
 
 Al probar la aplicación, verificar que la pantalla de resultados informe la
-versión `0.14.0` de la base de conocimiento.
+versión `0.15.0` de la base de conocimiento.
 
 ## Smoke test
 
@@ -482,7 +514,7 @@ aplicación y debe actualizarse cuando se publica una nueva base.
 
 ## Alcance funcional actual
 
-De los perfiles de demostración actuales, la base `0.14.0` brinda soporte para:
+De los perfiles de demostración actuales, la base `0.15.0` brinda soporte para:
 
 - Sofía: leche;
 - Mateo: enfermedad celíaca / cereales con gluten;
