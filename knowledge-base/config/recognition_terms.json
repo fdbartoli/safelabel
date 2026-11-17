@@ -30,5 +30,37 @@
     "mapping_type": "curated",
     "reviewed_by": "equipo-safelabel",
     "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "harina de trigo tipo 000 enriquecida",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante explícita de harina de trigo observada en rotulado argentino."
+  },
+  {
+    "term": "harina de trigo 000 enriquecida",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante sin la palabra tipo; mantiene explícito el origen trigo."
+  },
+  {
+    "term": "harina de trigo tipo 000",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación explícita de harina de trigo con clasificación argentina."
+  },
+  {
+    "term": "harina de trigo 000",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante sin la palabra tipo; mantiene explícito el origen trigo."
   }
 ]

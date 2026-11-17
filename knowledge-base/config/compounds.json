@@ -5,9 +5,17 @@
     "type": "food_origin",
     "aliases": [
       {"term": "leche", "language": "es"},
+      {"term": "leche cultivada", "language": "es"},
+      {"term": "leche fermentada", "language": "es"},
       {"term": "milk", "language": "en"},
+      {"term": "cultured milk", "language": "en"},
+      {"term": "fermented milk", "language": "en"},
       {"term": "leite", "language": "pt"},
-      {"term": "lait", "language": "fr"}
+      {"term": "leite cultivado", "language": "pt"},
+      {"term": "leite fermentado", "language": "pt"},
+      {"term": "lait", "language": "fr"},
+      {"term": "lait cultivé", "language": "fr"},
+      {"term": "lait fermenté", "language": "fr"}
     ]
   },
   {
@@ -408,9 +416,29 @@
     "type": "ingredient",
     "aliases": [
       {"term": "queso", "language": "es"},
+      {"term": "queso duro", "language": "es"},
+      {"term": "queso semiduro", "language": "es"},
+      {"term": "queso semi-duro", "language": "es"},
+      {"term": "queso semiblando", "language": "es"},
+      {"term": "queso semi-blando", "language": "es"},
+      {"term": "queso blando", "language": "es"},
+      {"term": "queso cottage", "language": "es"},
       {"term": "cheese", "language": "en"},
+      {"term": "hard cheese", "language": "en"},
+      {"term": "semi-hard cheese", "language": "en"},
+      {"term": "semi-soft cheese", "language": "en"},
+      {"term": "soft cheese", "language": "en"},
+      {"term": "cottage cheese", "language": "en"},
       {"term": "fromage", "language": "fr"},
-      {"term": "queijo", "language": "pt"}
+      {"term": "fromage à pâte dure", "language": "fr"},
+      {"term": "fromage à pâte semi-dure", "language": "fr"},
+      {"term": "fromage à pâte molle", "language": "fr"},
+      {"term": "fromage cottage", "language": "fr"},
+      {"term": "queijo", "language": "pt"},
+      {"term": "queijo duro", "language": "pt"},
+      {"term": "queijo semiduro", "language": "pt"},
+      {"term": "queijo macio", "language": "pt"},
+      {"term": "queijo cottage", "language": "pt"}
     ]
   },
   {
@@ -420,11 +448,17 @@
     "aliases": [
       {"term": "yogur", "language": "es"},
       {"term": "yogurt", "language": "es"},
+      {"term": "yogur en polvo", "language": "es"},
+      {"term": "yogurt en polvo", "language": "es"},
       {"term": "yogurt", "language": "en"},
       {"term": "yoghurt", "language": "en"},
+      {"term": "yogurt powder", "language": "en"},
+      {"term": "yoghurt powder", "language": "en"},
       {"term": "yaourt", "language": "fr"},
       {"term": "yogourt", "language": "fr"},
-      {"term": "iogurte", "language": "pt"}
+      {"term": "yaourt en poudre", "language": "fr"},
+      {"term": "iogurte", "language": "pt"},
+      {"term": "iogurte em pó", "language": "pt"}
     ]
   },
   {
@@ -433,11 +467,56 @@
     "type": "ingredient",
     "aliases": [
       {"term": "crema de leche", "language": "es"},
+      {"term": "crema agria", "language": "es"},
       {"term": "milk cream", "language": "en"},
       {"term": "cream", "language": "en"},
+      {"term": "sour cream", "language": "en"},
       {"term": "crème de lait", "language": "fr"},
       {"term": "crème", "language": "fr"},
-      {"term": "creme de leite", "language": "pt"}
+      {"term": "crème aigre", "language": "fr"},
+      {"term": "creme de leite", "language": "pt"},
+      {"term": "creme azedo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-LACTOSE",
+    "canonical_name": "lactosa",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "lactosa", "language": "es"},
+      {"term": "lactosa monohidrato", "language": "es"},
+      {"term": "lactose", "language": "en"},
+      {"term": "lactose monohydrate", "language": "en"},
+      {"term": "lactose", "language": "fr"},
+      {"term": "lactose monohydraté", "language": "fr"},
+      {"term": "lactose", "language": "pt"},
+      {"term": "lactose monoidratada", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-KEFIR",
+    "canonical_name": "kéfir",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "kéfir", "language": "es"},
+      {"term": "kefir", "language": "es"},
+      {"term": "kefir", "language": "en"},
+      {"term": "kéfir", "language": "fr"},
+      {"term": "kefir", "language": "fr"},
+      {"term": "kefir", "language": "pt"},
+      {"term": "kéfir", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-RICOTTA",
+    "canonical_name": "ricota",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ricota", "language": "es"},
+      {"term": "ricotta", "language": "es"},
+      {"term": "ricotta", "language": "en"},
+      {"term": "ricotta", "language": "fr"},
+      {"term": "ricota", "language": "pt"}
     ]
   },
   {
@@ -463,6 +542,17 @@
     ]
   },
   {
+    "id": "CMP-LIQUID-MALT",
+    "canonical_name": "malta líquida",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "malta líquida", "language": "es"},
+      {"term": "liquid malt", "language": "en"},
+      {"term": "malt liquide", "language": "fr"},
+      {"term": "malte líquido", "language": "pt"}
+    ]
+  },
+  {
     "id": "CMP-COUSCOUS",
     "canonical_name": "cuscús",
     "type": "ingredient",
@@ -471,6 +561,105 @@
       {"term": "couscous", "language": "es"},
       {"term": "couscous", "language": "en"},
       {"term": "couscous", "language": "fr"}
+    ]
+  },
+  {
+    "id": "CMP-EGG",
+    "canonical_name": "huevo",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "huevo", "language": "es"},
+      {"term": "egg", "language": "en"},
+      {"term": "œuf", "language": "fr"},
+      {"term": "oeuf", "language": "fr"},
+      {"term": "ovo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SOY",
+    "canonical_name": "soja",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "soja", "language": "es"},
+      {"term": "soy", "language": "en"},
+      {"term": "soybean", "language": "en"},
+      {"term": "soja", "language": "fr"},
+      {"term": "soya", "language": "fr"},
+      {"term": "soja", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-FERROUS-SULFATE",
+    "canonical_name": "sulfato ferroso",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "sulfato ferroso", "language": "es"},
+      {"term": "ferrous sulfate", "language": "en"},
+      {"term": "iron(II) sulfate", "language": "en"},
+      {"term": "sulfate ferreux", "language": "fr"},
+      {"term": "sulfate de fer(II)", "language": "fr"},
+      {"term": "sulfato ferroso", "language": "pt"},
+      {"term": "sulfato de ferro(II)", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-NIACIN",
+    "canonical_name": "niacina",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "niacina", "language": "es"},
+      {"term": "vitamina B3", "language": "es"},
+      {"term": "niacin", "language": "en"},
+      {"term": "vitamin B3", "language": "en"},
+      {"term": "niacine", "language": "fr"},
+      {"term": "vitamine B3", "language": "fr"},
+      {"term": "niacina", "language": "pt"},
+      {"term": "vitamina B3", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VITAMIN-B1",
+    "canonical_name": "vitamina B1",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "vitamina B1", "language": "es"},
+      {"term": "tiamina", "language": "es"},
+      {"term": "vitamin B1", "language": "en"},
+      {"term": "thiamine", "language": "en"},
+      {"term": "vitamine B1", "language": "fr"},
+      {"term": "thiamine", "language": "fr"},
+      {"term": "vitamina B1", "language": "pt"},
+      {"term": "tiamina", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-FOLIC-ACID",
+    "canonical_name": "ácido fólico",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "ácido fólico", "language": "es"},
+      {"term": "vitamina B9", "language": "es"},
+      {"term": "folic acid", "language": "en"},
+      {"term": "vitamin B9", "language": "en"},
+      {"term": "acide folique", "language": "fr"},
+      {"term": "vitamine B9", "language": "fr"},
+      {"term": "ácido fólico", "language": "pt"},
+      {"term": "vitamina B9", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VITAMIN-B2",
+    "canonical_name": "vitamina B2",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "vitamina B2", "language": "es"},
+      {"term": "riboflavina", "language": "es"},
+      {"term": "vitamin B2", "language": "en"},
+      {"term": "riboflavin", "language": "en"},
+      {"term": "vitamine B2", "language": "fr"},
+      {"term": "riboflavine", "language": "fr"},
+      {"term": "vitamina B2", "language": "pt"},
+      {"term": "riboflavina", "language": "pt"}
     ]
   }
 ]

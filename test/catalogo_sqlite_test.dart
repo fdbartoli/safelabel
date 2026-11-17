@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.11.0');
-    expect(catalogo.conceptos, hasLength(42));
+    expect(catalogo.version, '0.12.0');
+    expect(catalogo.conceptos, hasLength(53));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.11.0');
+      expect(resultado.versionBase, '0.12.0');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
@@ -158,12 +158,14 @@ void main() {
     });
 
     test('un nombre largo que contiene un término con restricción', () async {
-      final r = await repositorio.buscar('Harina de trigo tipo 000');
+      final r = await repositorio.buscar(
+        'Harina de trigo tipo 000 enriquecida con hierro',
+      );
       expect(r.estado, EstadoConsultaConocimiento.matched);
       final c = r.coincidencias.single;
       expect(c.restriccion, 'Enfermedad celíaca');
       expect(c.coincidencia, TipoCoincidenciaConsulta.contiene);
-      expect(c.denominacion, 'harina de trigo');
+      expect(c.denominacion, 'harina de trigo tipo 000 enriquecida');
     });
 
     test('un error de escritura coincide de forma aproximada', () async {

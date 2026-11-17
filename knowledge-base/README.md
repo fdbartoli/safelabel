@@ -2,10 +2,17 @@
 
 Este directorio contiene el procedimiento para generar la SQLite utilizada por SafeLabel.
 
-La versión `0.10.1` contempla relaciones con dos restricciones alimentarias:
+La versión `0.12.0` contempla relaciones con dos restricciones alimentarias:
 
 - leche;
 - enfermedad celíaca / cereales con gluten.
+
+La SQLite publicada contiene 53 conceptos, 39 relaciones, 300 denominaciones
+(8 curadas) y 105 evidencias. Además de las relaciones existentes, incorpora
+lactosa, kéfir, ricota y malta líquida, junto con nuevas variantes de leche,
+queso y yogur. El catálogo global también reconoce huevo, soja y los
+micronutrientes utilizados en harinas enriquecidas, aunque todavía no estén
+asociados a una restricción disponible.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
@@ -105,6 +112,20 @@ Descargar desde el navegador y guardar con el nombre indicado:
    data/manual/health-canada-gluten-fr.html
    ```
 
+8. [Etiquetado de alérgenos — Canadian Food Inspection Agency](https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling)
+
+   Guardar la página como HTML:
+
+   ```text
+   data/manual/cfia-food-allergen-labelling.html
+   ```
+
+9. [Código Alimentario Argentino — Capítulo XIII: Bebidas fermentadas](https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf)
+
+   ```text
+   data/manual/arg-caa-capitulo-xiii.pdf
+   ```
+
 La definición completa se encuentra en `config/sources.json`. La fuente de FDA se descarga automáticamente.
 
 ## 2. Preparar las fuentes
@@ -195,6 +216,12 @@ Si `reviewed.json` existe, el script incorpora el nuevo `review.json` y conserva
 las decisiones en curso que correspondan exactamente a evidencias sin cambios.
 Solo solicita las vinculaciones pendientes.
 
+El idioma registrado para una denominación proviene del alias del catálogo; no
+se detecta automáticamente a partir del fragmento. Si una misma escritura
+existe en varios idiomas y queda atribuida al idioma incorrecto, se rechaza esa
+vinculación concreta. Esto no elimina el alias ni invalida las demás fuentes
+aprobadas para el concepto.
+
 ## 6. Construir el conocimiento de cada restricción
 
 Leche:
@@ -249,7 +276,7 @@ global.
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.10.1
+  --version 0.12.0
 ```
 
 ## 9. Validar SQLite
@@ -274,11 +301,11 @@ como `RECOGNIZED`.
 ```bash
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "caseinato de sodio"
+  "lactosa"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "carbonato de calcio"
+  "huevo"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
@@ -307,7 +334,7 @@ flutter test
 ```
 
 Al probar la aplicación, verificar que la pantalla de resultados informe la
-versión `0.10.1` de la base de conocimiento.
+versión `0.12.0` de la base de conocimiento.
 
 ## Smoke test
 
@@ -335,7 +362,7 @@ aplicación y debe actualizarse cuando se publica una nueva base.
 
 ## Alcance funcional actual
 
-De los perfiles de demostración actuales, la base `0.10.1` brinda soporte para:
+De los perfiles de demostración actuales, la base `0.12.0` brinda soporte para:
 
 - Sofía: leche;
 - Mateo: enfermedad celíaca / cereales con gluten.
