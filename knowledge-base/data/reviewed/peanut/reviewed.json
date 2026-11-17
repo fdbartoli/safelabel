@@ -81,8 +81,8 @@
                 "CAND-0017",
                 "CAND-0018"
               ],
-              "representative_evidence": "grandes ocho” y son: la leche de vaca, el huevo,\n                                                                           el pescado, los crustáceos, el maní, la soja, los\n                                                                           frutos secos, el trigo y todos los derivados de estos\n     Presencia no intencionada",
-              "representative_location": "character:18160"
+              "representative_evidence": "s\nde más del 90 % de los casos que ocurren en todo\nel mundo. Estos se conocen con el nombre de “los\ngrandes ocho” y son: la leche de vaca, el huevo,\nel pescado, los crustáceos, el maní, la soja, los\nfrutos secos, el trigo y todos los derivados de estos\nalimentos que conserven las proteínas alergénicas.\nAdemás de las reacciones alérgicas a los “grandes\nocho”, exi",
+              "representative_location": "character:12617"
             },
             {
               "term": "maníes",
@@ -93,13 +93,13 @@
                 "CAND-0013",
                 "CAND-0015"
               ],
-              "representative_evidence": "de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\n                                                         Objetivos de un “Programa\nPara que se produzca una reacción alérgica, un",
-              "representative_location": "character:13423"
+              "representative_evidence": "de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\nPara que se produzca una reacción alérgica, una\npersona debe primero haber sido sensibilizada a las\nproteínas alergénicas, lo cua",
+              "representative_location": "character:6640"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
-          "review_notes": "een el texto del pdf original dice textual \"Los alimentos responsables de la gran mayoría de este tipo de reacción adversa están incluidos en lo que se denomina el grupo de los 'grandes 8', que comprende a la leche, la soja, los huevos, el trigo, los maníes, los frutos secos, los crustáceos y los pescados\""
+          "reviewed_by": "Lucio",
+          "review_notes": null
         },
         {
           "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
@@ -129,7 +129,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 5,
           "denominations": [
             {

@@ -2,23 +2,28 @@
 
 Este directorio contiene el procedimiento para generar la SQLite utilizada por SafeLabel.
 
-La versión `0.13.0` contempla relaciones con tres restricciones alimentarias:
+La versión `0.14.0` contempla relaciones con cuatro restricciones alimentarias:
 
 - leche;
 - enfermedad celíaca / cereales con gluten;
-- maní.
+- maní;
+- frutas secas de árbol.
 
-La SQLite publicada contiene 60 conceptos, 40 relaciones, 360 denominaciones
-(22 curadas) y 111 evidencias. La nueva restricción de maní reconoce sus
-denominaciones en español, inglés, francés y portugués. También incorpora
-variantes curadas como `manteca de maní` y `peanut butter`.
+La SQLite publicada contiene 70 conceptos, 51 relaciones, 503 denominaciones
+(31 curadas) y 154 evidencias. La restricción de frutas secas de árbol incluye
+almendra, avellana, castaña, castaña de cajú, castaña o nuez de Brasil, nuez,
+pecán, pistacho, piñón y macadamia. Maní continúa modelado como una restricción
+independiente.
 
 El catálogo global reconoce además chocolate, lecitina, PGPR, dextrosa, TBHQ y
 ácido cítrico. Las denominaciones `manteca de cacao` y `cocoa butter` se
 resuelven explícitamente como cacao, evitando que la palabra `butter` produzca
 una coincidencia incorrecta con leche. La lecitina sin origen declarado se
 mantiene como ingrediente neutral; expresiones como `lecitina de soja` se
-resuelven como soja.
+resuelven como soja. También se incorporan presentaciones en polvo de leche,
+lactosuero, crema, queso, yogur, huevo y cacao, además de términos curados como
+`leche de almendras`, `almond milk`, `pistachio nuts`, `pasta de nuez` y
+`pasta de almendras`.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
@@ -132,7 +137,12 @@ Descargar desde el navegador y guardar con el nombre indicado:
    data/manual/arg-caa-capitulo-xiii.pdf
    ```
 
-La definición completa se encuentra en `config/sources.json`. La fuente de FDA se descarga automáticamente.
+Además, el pipeline descarga automáticamente:
+
+- [Have Food Allergies? Read the Label — FDA](https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label);
+- [Elaboradores de alimentos — alérgenos de declaración obligatoria — ANMAT](https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos).
+
+La definición completa se encuentra en `config/sources.json`.
 
 ## 2. Preparar las fuentes
 
@@ -142,7 +152,21 @@ python3 scripts/10_download.py \
   --raw-dir data/raw
 ```
 
-Genera las fuentes procesables y `data/raw/manifest.json`.
+Genera las fuentes procesables y `data/raw/manifest.json`. Las fuentes HTTP que
+ya tienen una copia válida en `data/raw` se reutilizan para que una regeneración
+sea reproducible. Para solicitar explícitamente una nueva descarga se agrega:
+
+```bash
+python3 scripts/10_download.py \
+  --sources config/sources.json \
+  --raw-dir data/raw \
+  --refresh
+```
+
+Los PDF usan extracción con conservación de disposición (`layout`) por defecto.
+Una fuente multicolumna puede declarar `"pdf_extraction": "flow"` en
+`config/sources.json`; actualmente se aplica a la Guía para la Gestión de
+Alérgenos en la Industria de ANMAT.
 
 ## 3. Extraer candidatos
 
@@ -176,6 +200,16 @@ python3 scripts/20_extract.py \
   --output data/candidates/peanut/candidates.json
 ```
 
+Frutas secas de árbol:
+
+```bash
+python3 scripts/20_extract.py \
+  --manifest data/raw/manifest.json \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/tree_nuts/restriction.json \
+  --output data/candidates/tree_nuts/candidates.json
+```
+
 ## 4. Preparar la revisión
 
 Leche:
@@ -205,10 +239,22 @@ python3 scripts/30_prepare_review.py \
   --output data/reviewed/peanut/review.json
 ```
 
+Frutas secas de árbol:
+
+```bash
+python3 scripts/30_prepare_review.py \
+  --candidates data/candidates/tree_nuts/candidates.json \
+  --previous-reviewed data/reviewed/tree_nuts/reviewed.json \
+  --output data/reviewed/tree_nuts/review.json
+```
+
 En la primera ejecución de una restricción se omite `--previous-reviewed`.
 Cuando existe una revisión anterior, el script conserva las decisiones cuya
-restricción, concepto, fuente y evidencia no cambiaron. Las vinculaciones
-nuevas o modificadas quedan pendientes.
+restricción, concepto, fuente, denominaciones y fragmentos de evidencia no
+cambiaron. Una variación exclusiva del SHA del documento completo no obliga a
+revisar nuevamente una evidencia idéntica; la nueva huella igualmente queda
+registrada para trazabilidad. Las vinculaciones nuevas o con evidencia
+modificada quedan pendientes.
 
 ## 5. Revisar las vinculaciones
 
@@ -236,6 +282,15 @@ Maní:
 python3 scripts/40_review_sources.py \
   --input data/reviewed/peanut/review.json \
   --output data/reviewed/peanut/reviewed.json \
+  --reviewed-by "NOMBRE"
+```
+
+Frutas secas de árbol:
+
+```bash
+python3 scripts/40_review_sources.py \
+  --input data/reviewed/tree_nuts/review.json \
+  --output data/reviewed/tree_nuts/reviewed.json \
   --reviewed-by "NOMBRE"
 ```
 
@@ -290,6 +345,16 @@ python3 scripts/60_build_knowledge.py \
   --output data/knowledge/peanut.json
 ```
 
+Frutas secas de árbol:
+
+```bash
+python3 scripts/60_build_knowledge.py \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/tree_nuts/restriction.json \
+  --reviewed data/reviewed/tree_nuts/reviewed.json \
+  --output data/knowledge/tree_nuts.json
+```
+
 ## 7. Consolidar el conocimiento
 
 ```bash
@@ -300,6 +365,7 @@ python3 scripts/70_consolidate_knowledge.py \
     data/knowledge/milk.json \
     data/knowledge/celiac.json \
     data/knowledge/peanut.json \
+    data/knowledge/tree_nuts.json \
   --output data/knowledge/knowledge.json
 ```
 
@@ -321,7 +387,7 @@ global.
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.13.0
+  --version 0.14.0
 ```
 
 ## 9. Validar SQLite
@@ -350,20 +416,25 @@ python3 scripts/90_query_ingredient.py \
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "peanut butter"
+  "leche de almendras"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "lecitina de soja"
+  "pistachio nuts"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "huevo en polvo"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
   "ingrediente inexistente"
 ```
 
-Los resultados esperados son, respectivamente, `MATCHED`, `MATCHED`,
-`RECOGNIZED` y `UNKNOWN`. Cuando corresponde, la respuesta incluye todas las
-restricciones relacionadas con la denominación consultada.
+Los resultados esperados son, respectivamente, `MATCHED`, `MATCHED`, `MATCHED`,
+`RECOGNIZED` y `UNKNOWN`. `Leche de almendras` debe relacionarse solamente con
+frutas secas de árbol y no con leche. Cuando corresponde, la respuesta incluye
+todas las restricciones relacionadas con la denominación consultada.
 
 ## 11. Actualizar la base incluida en la aplicación
 
@@ -383,7 +454,7 @@ flutter test
 ```
 
 Al probar la aplicación, verificar que la pantalla de resultados informe la
-versión `0.13.0` de la base de conocimiento.
+versión `0.14.0` de la base de conocimiento.
 
 ## Smoke test
 
@@ -411,13 +482,12 @@ aplicación y debe actualizarse cuando se publica una nueva base.
 
 ## Alcance funcional actual
 
-De los perfiles de demostración actuales, la base `0.13.0` brinda soporte para:
+De los perfiles de demostración actuales, la base `0.14.0` brinda soporte para:
 
 - Sofía: leche;
 - Mateo: enfermedad celíaca / cereales con gluten;
-- Juli: maní. El componente de frutos secos de árbol todavía no está modelado.
+- Juli: maní y frutas secas de árbol.
 
-Todavía no contiene relaciones para frutos secos de árbol ni sulfitos. Tampoco
-están implementadas las restantes restricciones visibles en la pantalla de
-perfiles hasta que se incorporen sus fuentes, revisiones y relaciones
-correspondientes.
+Todavía no contiene relaciones para sulfitos. Tampoco están implementadas las
+restantes restricciones visibles en la pantalla de perfiles hasta que se
+incorporen sus fuentes, revisiones y relaciones correspondientes.

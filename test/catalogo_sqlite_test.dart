@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.13.0');
-    expect(catalogo.conceptos, hasLength(60));
+    expect(catalogo.version, '0.14.0');
+    expect(catalogo.conceptos, hasLength(70));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.13.0');
+      expect(resultado.versionBase, '0.14.0');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
@@ -126,8 +126,9 @@ void main() {
     expect(harina.estado, EstadoConsultaConocimiento.matched);
     expect(harina.coincidencias.single.restriccion, 'Enfermedad celíaca');
 
-    expect(almendras.estado, EstadoConsultaConocimiento.recognized);
-    expect(almendras.coincidencias.single.tieneRestriccion, isFalse);
+    expect(almendras.estado, EstadoConsultaConocimiento.matched);
+    expect(almendras.coincidencias.single.tieneRestriccion, isTrue);
+    expect(almendras.coincidencias.single.restriccion, 'Frutas secas de árbol');
 
     expect(cacao.estado, EstadoConsultaConocimiento.recognized);
     expect(cacao.coincidencias.single.tieneRestriccion, isFalse);
@@ -184,7 +185,7 @@ void main() {
     });
 
     test('un término sin relación no se presenta como desconocido', () async {
-      final r = await repositorio.buscar('Almendra');
+      final r = await repositorio.buscar('Huevo');
       expect(r.estado, EstadoConsultaConocimiento.recognized);
       expect(r.coincidencias.single.tieneRestriccion, isFalse);
     });

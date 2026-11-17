@@ -8,10 +8,22 @@ import subprocess
 import tempfile
 
 
-def extract_text(path: pathlib.Path, fmt: str) -> str:
+def extract_text(
+    path: pathlib.Path,
+    fmt: str,
+    pdf_extraction: str = "layout",
+) -> str:
     if fmt == "pdf":
+        if pdf_extraction not in {"layout", "flow"}:
+            raise ValueError(
+                f"Modo de extracción PDF no soportado: {pdf_extraction}"
+            )
         with tempfile.NamedTemporaryFile(suffix=".txt") as tmp:
-            subprocess.run(["pdftotext", "-layout", str(path), tmp.name], check=True)
+            command = ["pdftotext"]
+            if pdf_extraction == "layout":
+                command.append("-layout")
+            command.extend([str(path), tmp.name])
+            subprocess.run(command, check=True)
             return pathlib.Path(tmp.name).read_text(encoding="utf-8", errors="replace")
     text = path.read_text(encoding="utf-8", errors="replace")
     if fmt == "html":
@@ -79,7 +91,11 @@ def main():
     candidates = []
 
     for source in manifest:
-        text = extract_text(raw_dir / source["local_file"], source["format"])
+        text = extract_text(
+            raw_dir / source["local_file"],
+            source["format"],
+            source.get("pdf_extraction", "layout"),
+        )
         folded = text.casefold()
         source_language = source.get("language", "").split("-")[0].lower()
         occurrences = []
