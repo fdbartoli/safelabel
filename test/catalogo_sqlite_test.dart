@@ -35,7 +35,7 @@ void main() {
     final catalogo = await repositorio.cargarCatalogo();
 
     expect(catalogo.version, '0.15.0');
-    expect(catalogo.conceptos, hasLength(84));
+    expect(catalogo.conceptos, hasLength(86));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -138,8 +138,16 @@ void main() {
     final agua = await repositorio.buscar('agua');
     final aceite = await repositorio.buscar('aceite de girasol');
     final carbonato = await repositorio.buscar('carbonato de calcio');
+    final aroma = await repositorio.buscar('aroma');
+    final aromaNatural = await repositorio.buscar('aroma natural');
 
-    for (final resultado in [agua, aceite, carbonato]) {
+    for (final resultado in [
+      agua,
+      aceite,
+      carbonato,
+      aroma,
+      aromaNatural,
+    ]) {
       expect(resultado.estado, EstadoConsultaConocimiento.recognized);
       expect(resultado.coincidencias.single.tieneRestriccion, isFalse);
     }
