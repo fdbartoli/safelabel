@@ -4,6 +4,7 @@
 const idPerfilPorRestriccion = <String, String>{
   'RES-MILK': 'leche',
   'RES-CELIAC': 'trigo',
+  'RES-PEANUT': 'mani',
 };
 
 String idPerfilParaRestriccion(String restrictionId) =>

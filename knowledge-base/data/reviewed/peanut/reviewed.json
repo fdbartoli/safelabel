@@ -1,0 +1,166 @@
+{
+  "restriction": {
+    "id": "RES-PEANUT",
+    "name": "Maní"
+  },
+  "grouping": "restriction_id + concept_id + source_id",
+  "reviews": [
+    {
+      "id": "REV-0001",
+      "restriction_id": "RES-PEANUT",
+      "concept_id": "CMP-PEANUT",
+      "canonical_concept": "maní",
+      "concept_type": "food_origin",
+      "match_type": "DIRECT",
+      "occurrence_count": 26,
+      "aliases": [
+        {
+          "term": "maní",
+          "language": "es"
+        },
+        {
+          "term": "maníes",
+          "language": "es"
+        },
+        {
+          "term": "peanut",
+          "language": "en"
+        },
+        {
+          "term": "peanuts",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 4,
+          "denominations": [
+            {
+              "term": "maní",
+              "language": "es",
+              "occurrence_count": 4,
+              "candidate_ids": [
+                "CAND-0001",
+                "CAND-0002",
+                "CAND-0003",
+                "CAND-0004"
+              ],
+              "representative_evidence": "co, sin embargo, sólo ocho son\nlos que provocan aproximadamente el 90% de las reacciones. A este grupo se los conoce\ncomo los “grandes 8”, y son: leche, huevo, pescados, mariscos, maní, soja, trigo y frutas secas\n(nueces, avellanas, almendras, etc.).\n\nTeniendo en cuenta que hasta el momento no existe cura para estas alergias, la única manera\neficaz de prevenirla",
+              "representative_location": "character:4473"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 14,
+          "denominations": [
+            {
+              "term": "maní",
+              "language": "es",
+              "occurrence_count": 11,
+              "candidate_ids": [
+                "CAND-0006",
+                "CAND-0007",
+                "CAND-0008",
+                "CAND-0009",
+                "CAND-0010",
+                "CAND-0011",
+                "CAND-0012",
+                "CAND-0014",
+                "CAND-0016",
+                "CAND-0017",
+                "CAND-0018"
+              ],
+              "representative_evidence": "grandes ocho” y son: la leche de vaca, el huevo,\n                                                                           el pescado, los crustáceos, el maní, la soja, los\n                                                                           frutos secos, el trigo y todos los derivados de estos\n     Presencia no intencionada",
+              "representative_location": "character:18160"
+            },
+            {
+              "term": "maníes",
+              "language": "es",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0005",
+                "CAND-0013",
+                "CAND-0015"
+              ],
+              "representative_evidence": "de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\n                                                         Objetivos de un “Programa\nPara que se produzca una reacción alérgica, un",
+              "representative_location": "character:13423"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": "een el texto del pdf original dice textual \"Los alimentos responsables de la gran mayoría de este tipo de reacción adversa están incluidos en lo que se denomina el grupo de los 'grandes 8', que comprende a la leche, la soja, los huevos, el trigo, los maníes, los frutos secos, los crustáceos y los pescados\""
+        },
+        {
+          "source_id": "SRC-CFIA-ALLERGEN-LABELLING",
+          "source_title": "Industry resource: food allergen labelling",
+          "source_url": "https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling",
+          "source_sha256": "9bc42d5100d5985c4be4b4b4bcc0ac02b60b91a758bad454d43783d4eb8568a7",
+          "occurrence_count": 3,
+          "denominations": [
+            {
+              "term": "peanuts",
+              "language": "en",
+              "occurrence_count": 3,
+              "candidate_ids": [
+                "CAND-0024",
+                "CAND-0025",
+                "CAND-0026"
+              ],
+              "representative_evidence": "nary) statements use the wording \"May contain [X]\" where [X] refers to the priority food allergen or gluten source. Know your common food allergies and related disorders in Canada Peanuts Peanuts are actually legumes that grow underground, and are not tree nuts. Peanuts can sometimes be found in baked goods, cereals, glazes, spreads, sauces and snack foods such as",
+              "representative_location": "character:2207"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-FDA-LABEL",
+          "source_title": "Have Food Allergies Read the Label",
+          "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
+          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "occurrence_count": 5,
+          "denominations": [
+            {
+              "term": "peanut",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0020"
+              ],
+              "representative_evidence": "on a food label, it must include the food source names of all major food allergens used as ingredients. For example, if “whey,” “egg yolks,” and a “natural flavor” that contained peanut proteins are listed as ingredients, the “Contains” statement must identify the words “milk,” “egg,” and “peanuts.” Some manufacturers voluntarily include a separate advisory state",
+              "representative_location": "character:5622"
+            },
+            {
+              "term": "peanuts",
+              "language": "en",
+              "occurrence_count": 4,
+              "candidate_ids": [
+                "CAND-0019",
+                "CAND-0021",
+                "CAND-0022",
+                "CAND-0023"
+              ],
+              "representative_evidence": "food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The law requires that food labels identify the food source of all major food allergens used to make the food. This requirement is met if the common or usual name o",
+              "representative_location": "character:2513"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        }
+      ]
+    }
+  ]
+}

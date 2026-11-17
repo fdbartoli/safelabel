@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.12.0');
-    expect(catalogo.conceptos, hasLength(53));
+    expect(catalogo.version, '0.13.0');
+    expect(catalogo.conceptos, hasLength(60));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.12.0');
+      expect(resultado.versionBase, '0.13.0');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
@@ -203,6 +203,19 @@ void main() {
       final r = await repositorio.buscar('   ');
       expect(r.estado, EstadoConsultaConocimiento.unknown);
       expect(r.coincidencias, isEmpty);
+    });
+
+    test('resuelve peanuts y lo mapea al perfil de maní', () async {
+      final catalogo = await repositorio.cargarCatalogo();
+      final concepto = catalogo.matchExacto('peanuts');
+
+      expect(concepto, isNotNull);
+      expect(concepto!.nombreCanonico, 'maní');
+
+      final relacion = concepto.relaciones.single;
+      expect(relacion.restriccionId, 'RES-PEANUT');
+      expect(relacion.perfilId, 'mani');
+      expect(relacion.evidencias, isNotEmpty);
     });
   });
 }
