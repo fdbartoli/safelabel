@@ -147,7 +147,7 @@ void main() {
         'aroma de humo',
       ]);
       expect(resultado.totalItems, 8);
-      expect(resultado.noReconocidos.map((e) => e.texto), ['aroma']);
+      expect(resultado.noReconocidos, isEmpty);
     },
   );
 
@@ -178,13 +178,7 @@ void main() {
     final aroma = await repositorio.buscar('aroma');
     final aromaNatural = await repositorio.buscar('aroma natural');
 
-    for (final resultado in [
-      agua,
-      aceite,
-      carbonato,
-      aroma,
-      aromaNatural,
-    ]) {
+    for (final resultado in [agua, aceite, carbonato, aroma, aromaNatural]) {
       expect(resultado.estado, EstadoConsultaConocimiento.recognized);
       expect(resultado.coincidencias.single.tieneRestriccion, isFalse);
     }
