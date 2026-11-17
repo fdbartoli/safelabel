@@ -11,6 +11,8 @@
 /// Todo determinista: se testea con casos fijos de entrada y salida esperada.
 library;
 
+typedef ExisteTerminoExacto = bool Function(String terminoNormalizado);
+
 /// Un ingrediente ya separado y normalizado, listo para el matcher.
 class ItemNormalizado {
   const ItemNormalizado({
@@ -92,6 +94,13 @@ class Normalizador {
     r'^(?:ins|e)?\s*([0-9]{3,4}[a-z]?(?:\([a-z0-9]+\))?)$',
   );
 
+  /// Referencias regulatorias impresas dentro de la lista de ingredientes.
+  /// Se elimina la referencia, pero no el contenido que pueda seguir entre
+  /// paréntesis: `Ley N° 25.630 (sulfato ferroso: ...)`.
+  static final RegExp _referenciaNormativa = RegExp(
+    r'\bley\s+n(?:ro\.?|[.º°o])?\s*[0-9]+(?:[.\-/][0-9]+)*',
+  );
+
   /// minúsculas + sin acentos + espacios colapsados. Para nombres sueltos.
   String normalizarTexto(String entrada) {
     final buffer = StringBuffer();
@@ -103,7 +112,10 @@ class Normalizador {
   }
 
   /// Pipeline completo: de texto crudo del OCR a lista de [ItemNormalizado].
-  List<ItemNormalizado> separarIngredientes(String textoCrudo) {
+  List<ItemNormalizado> separarIngredientes(
+    String textoCrudo, {
+    ExisteTerminoExacto? existeTerminoExacto,
+  }) {
     // 1. minúsculas + sin acentos, conservando saltos de línea.
     final sinAcentos = _quitarAcentos(textoCrudo.toLowerCase());
 
@@ -111,14 +123,19 @@ class Normalizador {
     final soloIngredientes = _recortarBloques(sinAcentos);
 
     // 3. quitar un encabezado tipo "ingredientes:" si está.
-    final cuerpo = soloIngredientes.replaceFirst(
+    var cuerpo = soloIngredientes.replaceFirst(
       RegExp(r'^[\s\S]*?ingredientes?\s*:\s*', caseSensitive: false),
       '',
     );
 
-    // 4. parsear respetando paréntesis.
+    // 4. quitar referencias normativas y recomponer cantidades que el OCR
+    // cortó después de `:` por el salto visual de la etiqueta.
+    cuerpo = cuerpo.replaceAll(_referenciaNormativa, '');
+    cuerpo = cuerpo.replaceAll(RegExp(r':\s*\n\s*(?=[0-9])'), ': ');
+
+    // 5. parsear respetando paréntesis.
     final items = <ItemNormalizado>[];
-    _parsear(cuerpo, null, items);
+    _parsear(cuerpo, null, items, existeTerminoExacto);
     return items;
   }
 
@@ -160,14 +177,19 @@ class Normalizador {
   /// Parser recursivo. Separa por `,` `;` y saltos de línea a nivel de
   /// paréntesis 0; para cada segmento con forma `nombre (contenido)` emite el
   /// nombre y recurre en el contenido marcando el padre.
-  void _parsear(String texto, String? padre, List<ItemNormalizado> acc) {
+  void _parsear(
+    String texto,
+    String? padre,
+    List<ItemNormalizado> acc,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
     for (final segmento in _dividirNivel0(texto)) {
       final seg = segmento.trim();
       if (seg.isEmpty) continue;
 
       final apertura = seg.indexOf('(');
       if (apertura == -1) {
-        _emitir(seg, padre, acc);
+        _emitir(seg, padre, acc, existeTerminoExacto);
         continue;
       }
 
@@ -181,25 +203,48 @@ class Normalizador {
           : seg.substring(cierre + 1).trim();
 
       if (nombre.isNotEmpty) {
-        _emitir(nombre, padre, acc);
+        _emitir(nombre, padre, acc, existeTerminoExacto);
       }
       final nombreNorm = nombre.isNotEmpty ? _limpiar(nombre) : padre;
-      if (contenido.isNotEmpty) {
-        _parsear(contenido, nombreNorm, acc);
+      if (contenido.isNotEmpty && !_esPorcentaje(contenido)) {
+        _parsear(contenido, nombreNorm, acc, existeTerminoExacto);
       }
       if (resto.isNotEmpty) {
-        _parsear(resto, padre, acc);
+        _parsear(resto, padre, acc, existeTerminoExacto);
       }
     }
   }
 
-  void _emitir(String bruto, String? padre, List<ItemNormalizado> acc) {
+  void _emitir(
+    String bruto,
+    String? padre,
+    List<ItemNormalizado> acc,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
     final limpio = _limpiar(bruto);
-    if (limpio.isEmpty) return;
+    if (limpio.isEmpty || _esCantidadAislada(limpio)) return;
+
+    final partes = _separarConjunciones(limpio, existeTerminoExacto);
+    if (partes.length > 1) {
+      for (final parte in partes) {
+        _agregarItem(parte, parte, padre, acc);
+      }
+      return;
+    }
+
+    _agregarItem(bruto, limpio, padre, acc);
+  }
+
+  void _agregarItem(
+    String original,
+    String limpio,
+    String? padre,
+    List<ItemNormalizado> acc,
+  ) {
     final ins = _detectarIns(limpio);
     acc.add(
       ItemNormalizado(
-        textoOriginal: bruto.replaceAll(RegExp(r'\s+'), ' ').trim(),
+        textoOriginal: original.replaceAll(RegExp(r'\s+'), ' ').trim(),
         textoNormalizado: ins ?? limpio,
         padre: padre,
         ins: ins,
@@ -207,13 +252,86 @@ class Normalizador {
     );
   }
 
+  /// Conserva primero una denominación completa exacta. Solo si no existe,
+  /// evalúa ` y ` como separador y nunca usa similitud ni contención.
+  List<String> _separarConjunciones(
+    String texto,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
+    if (existeTerminoExacto == null || existeTerminoExacto(texto)) {
+      return [texto];
+    }
+
+    final indice = texto.indexOf(' y ');
+    if (indice == -1) return [texto];
+
+    final izquierda = texto.substring(0, indice).trim();
+    final derecha = texto.substring(indice + 3).trim();
+    if (!_debeSepararConjuncion(izquierda, derecha, existeTerminoExacto)) {
+      return [texto];
+    }
+
+    return [
+      ..._separarConjunciones(izquierda, existeTerminoExacto),
+      ..._separarConjunciones(derecha, existeTerminoExacto),
+    ];
+  }
+
+  bool _debeSepararConjuncion(
+    String izquierda,
+    String derecha,
+    ExisteTerminoExacto existeTerminoExacto,
+  ) {
+    if (!_esPartePlausible(izquierda) || !_esPartePlausible(derecha)) {
+      return false;
+    }
+
+    final izquierdaExacta = existeTerminoExacto(izquierda);
+    final derechaExacta = existeTerminoExacto(derecha);
+    // Un lado conocido alcanza para separar el otro como candidato, aunque sea
+    // una única palabra todavía desconocida: `aroma y cacao`.
+    return izquierdaExacta || derechaExacta;
+  }
+
+  bool _esPartePlausible(String texto) =>
+      texto.length >= 3 && RegExp(r'[a-z]').hasMatch(texto);
+
+  /// Los porcentajes aislados describen al ingrediente padre y no constituyen
+  /// un ingrediente adicional: `maní tostado (40%)`.
+  bool _esPorcentaje(String texto) =>
+      RegExp(r'^\s*[0-9]+(?:[.,][0-9]+)?\s*(?:%|por ciento)\s*$')
+          .hasMatch(texto);
+
+  /// Una cantidad suelta describe composición o concentración, no un
+  /// ingrediente independiente.
+  bool _esCantidadAislada(String texto) => RegExp(
+    r'^\s*[0-9]+(?:[.,][0-9]+)?\s*'
+    r'(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l)'
+    r'(?:\s*/\s*(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l))?'
+    r'(?:\s*[-–—]?\s*como\b.*)?\s*$',
+  ).hasMatch(texto);
+
   /// Colapsa espacios, quita signos de puntuación de borde y descarta un
   /// prefijo de categoría tipo "colorante:", "estabilizante:".
   String _limpiar(String entrada) {
     var s = entrada.replaceAll(RegExp(r'\s+'), ' ').trim();
-    final m = RegExp(r'^([a-z ]{1,24}):\s*(.+)$').firstMatch(s);
-    if (m != null && m.group(2)!.trim().length >= 3) {
-      s = m.group(2)!.trim();
+
+    // En una declaración cuantificada, conserva el ingrediente y descarta la
+    // cantidad: `vitamina B1: 6.3 mg/kg` → `vitamina B1`.
+    final cuantificado = RegExp(
+      r'^(.+?)(?::\s*|\s+)'
+      r'[0-9]+(?:[.,][0-9]+)?\s*'
+      r'(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l)'
+      r'(?:\s*/\s*(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l))?'
+      r'(?:\s*[-–—]?\s*como\b.*)?$',
+    ).firstMatch(s);
+    if (cuantificado != null) {
+      s = cuantificado.group(1)!.trim();
+    } else {
+      final categoria = RegExp(r'^([a-z ]{1,24}):\s*(.+)$').firstMatch(s);
+      if (categoria != null && categoria.group(2)!.trim().length >= 3) {
+        s = categoria.group(2)!.trim();
+      }
     }
     s = s.replaceAll(RegExp(r'^[\s.,;·*-]+'), '');
     s = s.replaceAll(RegExp(r'[\s.,;·*-]+$'), '');

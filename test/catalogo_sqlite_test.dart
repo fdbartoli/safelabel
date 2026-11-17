@@ -35,7 +35,7 @@ void main() {
     final catalogo = await repositorio.cargarCatalogo();
 
     expect(catalogo.version, '0.15.0');
-    expect(catalogo.conceptos, hasLength(84));
+    expect(catalogo.conceptos, hasLength(86));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -114,6 +114,43 @@ void main() {
     expect(resultado.itemsAnalizados, 1);
   });
 
+  test(
+    'el analizador separa conjunciones con el catálogo y descarta porcentajes',
+    () async {
+      final catalogo = await repositorio.cargarCatalogo();
+      final analizador = Analizador(baseMinima(), catalogo: catalogo);
+
+      final resultado = analizador.analizar(
+        const LecturaOcr([
+          LineaOcr(
+            texto:
+                'Ingredientes: maní tostado (40%), '
+                'aceite de palma interesterificado y fraccionado, '
+                'sorbato potásico y benzoato sódico, '
+                'aceite de girasol alto oleico y aceite de soja totalmente '
+                'hidrogenado, aroma y aroma de humo.',
+            confianza: 0.99,
+            indice: 0,
+          ),
+        ]),
+        perfilesActivos: const [],
+      );
+
+      expect(resultado.ingredientesLeidos, [
+        'mani tostado',
+        'aceite de palma interesterificado y fraccionado',
+        'sorbato potasico',
+        'benzoato sodico',
+        'aceite de girasol alto oleico',
+        'aceite de soja totalmente hidrogenado',
+        'aroma',
+        'aroma de humo',
+      ]);
+      expect(resultado.totalItems, 8);
+      expect(resultado.noReconocidos, isEmpty);
+    },
+  );
+
   test('resuelve términos de reconocimiento curados', () async {
     final lecheEntera = await repositorio.buscar('leche entera');
     final harina = await repositorio.buscar('harina enriquecida de trigo');
@@ -138,8 +175,10 @@ void main() {
     final agua = await repositorio.buscar('agua');
     final aceite = await repositorio.buscar('aceite de girasol');
     final carbonato = await repositorio.buscar('carbonato de calcio');
+    final aroma = await repositorio.buscar('aroma');
+    final aromaNatural = await repositorio.buscar('aroma natural');
 
-    for (final resultado in [agua, aceite, carbonato]) {
+    for (final resultado in [agua, aceite, carbonato, aroma, aromaNatural]) {
       expect(resultado.estado, EstadoConsultaConocimiento.recognized);
       expect(resultado.coincidencias.single.tieneRestriccion, isFalse);
     }
