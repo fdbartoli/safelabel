@@ -1089,6 +1089,46 @@
     ]
   },
   {
+    "id": "CMP-FLAVOR",
+    "canonical_name": "aroma",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aroma", "language": "es"},
+      {"term": "aromatizante", "language": "es"},
+      {"term": "saborizante", "language": "es"},
+      {"term": "esencia", "language": "es"},
+      {"term": "flavor", "language": "en"},
+      {"term": "flavour", "language": "en"},
+      {"term": "flavoring", "language": "en"},
+      {"term": "flavouring", "language": "en"},
+      {"term": "arôme", "language": "fr"},
+      {"term": "aromatisant", "language": "fr"},
+      {"term": "aroma", "language": "pt"},
+      {"term": "aromatizante", "language": "pt"},
+      {"term": "saborizante", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-NATURAL-FLAVOR",
+    "canonical_name": "aroma natural",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aroma natural", "language": "es"},
+      {"term": "aromatizante natural", "language": "es"},
+      {"term": "saborizante natural", "language": "es"},
+      {"term": "esencia natural", "language": "es"},
+      {"term": "natural flavor", "language": "en"},
+      {"term": "natural flavour", "language": "en"},
+      {"term": "natural flavoring", "language": "en"},
+      {"term": "natural flavouring", "language": "en"},
+      {"term": "arôme naturel", "language": "fr"},
+      {"term": "aromatisant naturel", "language": "fr"},
+      {"term": "aroma natural", "language": "pt"},
+      {"term": "aromatizante natural", "language": "pt"},
+      {"term": "saborizante natural", "language": "pt"}
+    ]
+  },
+  {
     "id": "CMP-SMOKE-FLAVOR",
     "canonical_name": "aroma de humo",
     "type": "ingredient",

@@ -9,7 +9,7 @@ La versión `0.15.0` contempla relaciones con cuatro restricciones alimentarias:
 - maní;
 - frutas secas de árbol.
 
-La SQLite publicada contiene 84 conceptos, 51 relaciones, 604 denominaciones
+La SQLite publicada contiene 86 conceptos, 51 relaciones, 630 denominaciones
 (32 curadas) y 154 evidencias. La restricción de frutas secas de árbol incluye
 almendra, avellana, castaña, castaña de cajú, castaña o nuez de Brasil, nuez,
 pecán, pistacho, piñón y macadamia. Maní continúa modelado como una restricción
@@ -30,18 +30,22 @@ y de un producto de maní. Incorpora como conceptos reconocidos, sin agregar
 nuevas relaciones con restricciones: puré de tomate, vinagre, mostaza, jarabe
 de glucosa-fructosa, almidón modificado de maíz, ajo, colorante caramelo,
 sorbato potásico, benzoato sódico, aroma de humo, aromatizante artificial,
-aceite vegetal, aceite de palma y aceite de soja. También agrega variantes de
-maní tostado, leche entera en polvo y aceite de girasol alto oleico.
+aceite vegetal, aceite de palma, aceite de soja, aroma y aroma natural. También
+agrega variantes de maní tostado, leche entera en polvo y aceite de girasol
+alto oleico.
 
 La expresión observada `aroma a avellana`, declarada en la etiqueta como
 aromatizante artificial, se resuelve mediante un término curado como
 aromatizante artificial y no como avellana. Esta decisión evita inferir una
 relación con frutas secas únicamente por el texto del saborizante.
 
-Los términos genéricos `aroma` y `aroma natural` permanecen como `UNKNOWN`
-porque no informan una composición concreta. Las expresiones que coordinan
-varios ingredientes mediante `y` no se agregan como denominaciones compuestas:
-su separación corresponde al normalizador de la aplicación.
+Los términos genéricos `aroma`, `aromatizante`, `saborizante`, `esencia` y sus
+variantes naturales se reconocen como categorías válidas de rotulado, sin
+inferir una composición ni relacionarlas automáticamente con una restricción.
+Queda pendiente distinguir en el modelo los ingredientes reconocidos cuya
+composición no está especificada. Las expresiones que coordinan varios
+ingredientes mediante `y` no se agregan como denominaciones compuestas: su
+separación corresponde al normalizador de la aplicación.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
