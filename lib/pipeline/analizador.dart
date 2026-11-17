@@ -49,7 +49,10 @@ class Analizador {
     final declaracion = _verificacion.analizar(t.textoLegible);
 
     // Paso 4: normalización de la lista de ingredientes.
-    final items = _normalizador.separarIngredientes(t.textoLegible);
+    final items = _normalizador.separarIngredientes(
+      t.textoLegible,
+      existeTerminoExacto: (termino) => catalogo.matchExacto(termino) != null,
+    );
 
     // Paso 5: match.
     final matches = _matcher.matchTodos(items);

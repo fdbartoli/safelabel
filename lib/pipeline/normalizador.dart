@@ -11,6 +11,8 @@
 /// Todo determinista: se testea con casos fijos de entrada y salida esperada.
 library;
 
+typedef ExisteTerminoExacto = bool Function(String terminoNormalizado);
+
 /// Un ingrediente ya separado y normalizado, listo para el matcher.
 class ItemNormalizado {
   const ItemNormalizado({
@@ -103,7 +105,10 @@ class Normalizador {
   }
 
   /// Pipeline completo: de texto crudo del OCR a lista de [ItemNormalizado].
-  List<ItemNormalizado> separarIngredientes(String textoCrudo) {
+  List<ItemNormalizado> separarIngredientes(
+    String textoCrudo, {
+    ExisteTerminoExacto? existeTerminoExacto,
+  }) {
     // 1. minúsculas + sin acentos, conservando saltos de línea.
     final sinAcentos = _quitarAcentos(textoCrudo.toLowerCase());
 
@@ -118,7 +123,7 @@ class Normalizador {
 
     // 4. parsear respetando paréntesis.
     final items = <ItemNormalizado>[];
-    _parsear(cuerpo, null, items);
+    _parsear(cuerpo, null, items, existeTerminoExacto);
     return items;
   }
 
@@ -160,14 +165,19 @@ class Normalizador {
   /// Parser recursivo. Separa por `,` `;` y saltos de línea a nivel de
   /// paréntesis 0; para cada segmento con forma `nombre (contenido)` emite el
   /// nombre y recurre en el contenido marcando el padre.
-  void _parsear(String texto, String? padre, List<ItemNormalizado> acc) {
+  void _parsear(
+    String texto,
+    String? padre,
+    List<ItemNormalizado> acc,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
     for (final segmento in _dividirNivel0(texto)) {
       final seg = segmento.trim();
       if (seg.isEmpty) continue;
 
       final apertura = seg.indexOf('(');
       if (apertura == -1) {
-        _emitir(seg, padre, acc);
+        _emitir(seg, padre, acc, existeTerminoExacto);
         continue;
       }
 
@@ -181,31 +191,104 @@ class Normalizador {
           : seg.substring(cierre + 1).trim();
 
       if (nombre.isNotEmpty) {
-        _emitir(nombre, padre, acc);
+        _emitir(nombre, padre, acc, existeTerminoExacto);
       }
       final nombreNorm = nombre.isNotEmpty ? _limpiar(nombre) : padre;
-      if (contenido.isNotEmpty) {
-        _parsear(contenido, nombreNorm, acc);
+      if (contenido.isNotEmpty && !_esPorcentaje(contenido)) {
+        _parsear(contenido, nombreNorm, acc, existeTerminoExacto);
       }
       if (resto.isNotEmpty) {
-        _parsear(resto, padre, acc);
+        _parsear(resto, padre, acc, existeTerminoExacto);
       }
     }
   }
 
-  void _emitir(String bruto, String? padre, List<ItemNormalizado> acc) {
+  void _emitir(
+    String bruto,
+    String? padre,
+    List<ItemNormalizado> acc,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
     final limpio = _limpiar(bruto);
     if (limpio.isEmpty) return;
+
+    final partes = _separarConjunciones(limpio, existeTerminoExacto);
+    if (partes.length > 1) {
+      for (final parte in partes) {
+        _agregarItem(parte, parte, padre, acc);
+      }
+      return;
+    }
+
+    _agregarItem(bruto, limpio, padre, acc);
+  }
+
+  void _agregarItem(
+    String original,
+    String limpio,
+    String? padre,
+    List<ItemNormalizado> acc,
+  ) {
     final ins = _detectarIns(limpio);
     acc.add(
       ItemNormalizado(
-        textoOriginal: bruto.replaceAll(RegExp(r'\s+'), ' ').trim(),
+        textoOriginal: original.replaceAll(RegExp(r'\s+'), ' ').trim(),
         textoNormalizado: ins ?? limpio,
         padre: padre,
         ins: ins,
       ),
     );
   }
+
+  /// Conserva primero una denominación completa exacta. Solo si no existe,
+  /// evalúa ` y ` como separador y nunca usa similitud ni contención.
+  List<String> _separarConjunciones(
+    String texto,
+    ExisteTerminoExacto? existeTerminoExacto,
+  ) {
+    if (existeTerminoExacto == null || existeTerminoExacto(texto)) {
+      return [texto];
+    }
+
+    final indice = texto.indexOf(' y ');
+    if (indice == -1) return [texto];
+
+    final izquierda = texto.substring(0, indice).trim();
+    final derecha = texto.substring(indice + 3).trim();
+    if (!_debeSepararConjuncion(izquierda, derecha, existeTerminoExacto)) {
+      return [texto];
+    }
+
+    return [
+      ..._separarConjunciones(izquierda, existeTerminoExacto),
+      ..._separarConjunciones(derecha, existeTerminoExacto),
+    ];
+  }
+
+  bool _debeSepararConjuncion(
+    String izquierda,
+    String derecha,
+    ExisteTerminoExacto existeTerminoExacto,
+  ) {
+    if (!_esPartePlausible(izquierda) || !_esPartePlausible(derecha)) {
+      return false;
+    }
+
+    final izquierdaExacta = existeTerminoExacto(izquierda);
+    final derechaExacta = existeTerminoExacto(derecha);
+    // Un lado conocido alcanza para separar el otro como candidato, aunque sea
+    // una única palabra todavía desconocida: `aroma y cacao`.
+    return izquierdaExacta || derechaExacta;
+  }
+
+  bool _esPartePlausible(String texto) =>
+      texto.length >= 3 && RegExp(r'[a-z]').hasMatch(texto);
+
+  /// Los porcentajes aislados describen al ingrediente padre y no constituyen
+  /// un ingrediente adicional: `maní tostado (40%)`.
+  bool _esPorcentaje(String texto) =>
+      RegExp(r'^\s*[0-9]+(?:[.,][0-9]+)?\s*(?:%|por ciento)\s*$')
+          .hasMatch(texto);
 
   /// Colapsa espacios, quita signos de puntuación de borde y descarta un
   /// prefijo de categoría tipo "colorante:", "estabilizante:".

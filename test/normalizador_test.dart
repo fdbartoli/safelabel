@@ -119,5 +119,110 @@ void main() {
         containsAll(['mezcla', 'leche', 'soja']),
       );
     });
+
+    test('descarta un porcentaje aislado dentro de paréntesis', () {
+      final items = n.separarIngredientes('maní tostado (40%)');
+      expect(items.map((e) => e.textoNormalizado), ['mani tostado']);
+    });
+
+    group('separa conjunciones usando solo coincidencias exactas', () {
+      final terminosExactos = {
+        'agua',
+        'cacao',
+        'sorbato potasico',
+        'benzoato sodico',
+        'aroma de humo',
+        'aceite de palma interesterificado y fraccionado',
+        'aceite de girasol alto oleico',
+        'aceite de soja totalmente hidrogenado',
+      };
+
+      bool existeExacto(String termino) => terminosExactos.contains(termino);
+
+      test('conserva primero un término completo exacto', () {
+        final items = n.separarIngredientes(
+          'aceite de palma interesterificado y fraccionado',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'aceite de palma interesterificado y fraccionado',
+        ]);
+      });
+
+      test('separa dos términos exactos', () {
+        final items = n.separarIngredientes(
+          'sorbato potásico y benzoato sódico',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'sorbato potasico',
+          'benzoato sodico',
+        ]);
+      });
+
+      test('separa aceites que son términos exactos independientes', () {
+        final items = n.separarIngredientes(
+          'aceite de girasol alto oleico y aceite de soja totalmente hidrogenado',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'aceite de girasol alto oleico',
+          'aceite de soja totalmente hidrogenado',
+        ]);
+      });
+
+      test('separa un núcleo repetido aunque un lado siga desconocido', () {
+        final items = n.separarIngredientes(
+          'aroma y aroma de humo',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'aroma',
+          'aroma de humo',
+        ]);
+      });
+
+      test('separa un término exacto de otro ingrediente compuesto', () {
+        final items = n.separarIngredientes(
+          'agua y esencia natural',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'agua',
+          'esencia natural',
+        ]);
+      });
+
+      test('separa una palabra desconocida junto a un término exacto', () {
+        for (final entrada in ['aroma y cacao', 'cacao y aroma']) {
+          final items = n.separarIngredientes(
+            entrada,
+            existeTerminoExacto: existeExacto,
+          );
+          expect(items.map((e) => e.textoNormalizado).toSet(), {
+            'aroma',
+            'cacao',
+          }, reason: entrada);
+        }
+      });
+
+      test('no separa dos modificadores desconocidos', () {
+        final items = n.separarIngredientes(
+          'interesterificado y fraccionado',
+          existeTerminoExacto: existeExacto,
+        );
+        expect(items.map((e) => e.textoNormalizado), [
+          'interesterificado y fraccionado',
+        ]);
+      });
+
+      test('no expande abreviaturas coordinadas fuera del alcance', () {
+        final items = n.separarIngredientes(
+          'vitamina a y d',
+          existeTerminoExacto: (termino) => termino == 'vitamina a',
+        );
+        expect(items.map((e) => e.textoNormalizado), ['vitamina a y d']);
+      });
+    });
   });
 }

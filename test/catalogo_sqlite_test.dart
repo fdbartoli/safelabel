@@ -114,6 +114,43 @@ void main() {
     expect(resultado.itemsAnalizados, 1);
   });
 
+  test(
+    'el analizador separa conjunciones con el catálogo y descarta porcentajes',
+    () async {
+      final catalogo = await repositorio.cargarCatalogo();
+      final analizador = Analizador(baseMinima(), catalogo: catalogo);
+
+      final resultado = analizador.analizar(
+        const LecturaOcr([
+          LineaOcr(
+            texto:
+                'Ingredientes: maní tostado (40%), '
+                'aceite de palma interesterificado y fraccionado, '
+                'sorbato potásico y benzoato sódico, '
+                'aceite de girasol alto oleico y aceite de soja totalmente '
+                'hidrogenado, aroma y aroma de humo.',
+            confianza: 0.99,
+            indice: 0,
+          ),
+        ]),
+        perfilesActivos: const [],
+      );
+
+      expect(resultado.ingredientesLeidos, [
+        'mani tostado',
+        'aceite de palma interesterificado y fraccionado',
+        'sorbato potasico',
+        'benzoato sodico',
+        'aceite de girasol alto oleico',
+        'aceite de soja totalmente hidrogenado',
+        'aroma',
+        'aroma de humo',
+      ]);
+      expect(resultado.totalItems, 8);
+      expect(resultado.noReconocidos.map((e) => e.texto), ['aroma']);
+    },
+  );
+
   test('resuelve términos de reconocimiento curados', () async {
     final lecheEntera = await repositorio.buscar('leche entera');
     final harina = await repositorio.buscar('harina enriquecida de trigo');
