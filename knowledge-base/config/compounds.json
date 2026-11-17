@@ -8,19 +8,23 @@
       {"term": "leche cultivada", "language": "es"},
       {"term": "leche fermentada", "language": "es"},
       {"term": "leche en polvo", "language": "es"},
+      {"term": "leche entera en polvo", "language": "es"},
       {"term": "milk", "language": "en"},
       {"term": "cultured milk", "language": "en"},
       {"term": "fermented milk", "language": "en"},
       {"term": "milk powder", "language": "en"},
       {"term": "powdered milk", "language": "en"},
+      {"term": "whole milk powder", "language": "en"},
       {"term": "leite", "language": "pt"},
       {"term": "leite cultivado", "language": "pt"},
       {"term": "leite fermentado", "language": "pt"},
       {"term": "leite em pó", "language": "pt"},
+      {"term": "leite integral em pó", "language": "pt"},
       {"term": "lait", "language": "fr"},
       {"term": "lait cultivé", "language": "fr"},
       {"term": "lait fermenté", "language": "fr"},
-      {"term": "lait en poudre", "language": "fr"}
+      {"term": "lait en poudre", "language": "fr"},
+      {"term": "lait entier en poudre", "language": "fr"}
     ]
   },
   {
@@ -575,9 +579,13 @@
     "type": "ingredient",
     "aliases": [
       {"term": "aceite de girasol", "language": "es"},
+      {"term": "aceite de girasol alto oleico", "language": "es"},
       {"term": "sunflower oil", "language": "en"},
+      {"term": "high oleic sunflower oil", "language": "en"},
       {"term": "huile de tournesol", "language": "fr"},
-      {"term": "óleo de girassol", "language": "pt"}
+      {"term": "huile de tournesol à haute teneur en acide oléique", "language": "fr"},
+      {"term": "óleo de girassol", "language": "pt"},
+      {"term": "óleo de girassol alto oleico", "language": "pt"}
     ]
   },
   {
@@ -803,14 +811,18 @@
     "aliases": [
       {"term": "maní", "language": "es"},
       {"term": "maníes", "language": "es"},
+      {"term": "maní tostado", "language": "es"},
       {"term": "cacahuate", "language": "es"},
       {"term": "cacahuete", "language": "es"},
       {"term": "peanut", "language": "en"},
       {"term": "peanuts", "language": "en"},
+      {"term": "roasted peanuts", "language": "en"},
       {"term": "arachide", "language": "fr"},
       {"term": "arachides", "language": "fr"},
+      {"term": "arachides grillées", "language": "fr"},
       {"term": "amendoim", "language": "pt"},
-      {"term": "amendoins", "language": "pt"}
+      {"term": "amendoins", "language": "pt"},
+      {"term": "amendoim torrado", "language": "pt"}
     ]
   },
   {
@@ -959,6 +971,192 @@
       {"term": "citric acid", "language": "en"},
       {"term": "acide citrique", "language": "fr"},
       {"term": "ácido cítrico", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-TOMATO-PUREE",
+    "canonical_name": "puré de tomate",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "puré de tomate", "language": "es"},
+      {"term": "pure de tomate", "language": "es"},
+      {"term": "tomato puree", "language": "en"},
+      {"term": "purée de tomates", "language": "fr"},
+      {"term": "purê de tomate", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VINEGAR",
+    "canonical_name": "vinagre",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "vinagre", "language": "es"},
+      {"term": "vinagre de alcohol", "language": "es"},
+      {"term": "vinegar", "language": "en"},
+      {"term": "spirit vinegar", "language": "en"},
+      {"term": "vinaigre", "language": "fr"},
+      {"term": "vinaigre d'alcool", "language": "fr"},
+      {"term": "vinagre", "language": "pt"},
+      {"term": "vinagre de álcool", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MUSTARD",
+    "canonical_name": "mostaza",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "mostaza", "language": "es"},
+      {"term": "grano de mostaza", "language": "es"},
+      {"term": "semilla de mostaza", "language": "es"},
+      {"term": "mustard", "language": "en"},
+      {"term": "mustard seed", "language": "en"},
+      {"term": "moutarde", "language": "fr"},
+      {"term": "graine de moutarde", "language": "fr"},
+      {"term": "mostarda", "language": "pt"},
+      {"term": "semente de mostarda", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-GLUCOSE-FRUCTOSE-SYRUP",
+    "canonical_name": "jarabe de glucosa-fructosa",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "jarabe de glucosa-fructosa", "language": "es"},
+      {"term": "jarabe de glucosa fructosa", "language": "es"},
+      {"term": "glucose-fructose syrup", "language": "en"},
+      {"term": "glucose fructose syrup", "language": "en"},
+      {"term": "sirop de glucose-fructose", "language": "fr"},
+      {"term": "xarope de glicose-frutose", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-MODIFIED-CORN-STARCH",
+    "canonical_name": "almidón modificado de maíz",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "almidón modificado de maíz", "language": "es"},
+      {"term": "modified corn starch", "language": "en"},
+      {"term": "modified maize starch", "language": "en"},
+      {"term": "amidon de maïs modifié", "language": "fr"},
+      {"term": "amido de milho modificado", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-GARLIC",
+    "canonical_name": "ajo",
+    "type": "food_origin",
+    "aliases": [
+      {"term": "ajo", "language": "es"},
+      {"term": "garlic", "language": "en"},
+      {"term": "ail", "language": "fr"},
+      {"term": "alho", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-CARAMEL-COLOR",
+    "canonical_name": "colorante caramelo",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "colorante caramelo", "language": "es"},
+      {"term": "caramel color", "language": "en"},
+      {"term": "caramel colour", "language": "en"},
+      {"term": "colorant caramel", "language": "fr"},
+      {"term": "corante caramelo", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-POTASSIUM-SORBATE",
+    "canonical_name": "sorbato potásico",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "sorbato potásico", "language": "es"},
+      {"term": "sorbato de potasio", "language": "es"},
+      {"term": "potassium sorbate", "language": "en"},
+      {"term": "sorbate de potassium", "language": "fr"},
+      {"term": "sorbato de potássio", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SODIUM-BENZOATE",
+    "canonical_name": "benzoato sódico",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "benzoato sódico", "language": "es"},
+      {"term": "benzoato de sodio", "language": "es"},
+      {"term": "sodium benzoate", "language": "en"},
+      {"term": "benzoate de sodium", "language": "fr"},
+      {"term": "benzoato de sódio", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SMOKE-FLAVOR",
+    "canonical_name": "aroma de humo",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aroma de humo", "language": "es"},
+      {"term": "smoke flavor", "language": "en"},
+      {"term": "smoke flavour", "language": "en"},
+      {"term": "arôme de fumée", "language": "fr"},
+      {"term": "aroma de fumaça", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-ARTIFICIAL-FLAVOR",
+    "canonical_name": "aromatizante artificial",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aromatizante artificial", "language": "es"},
+      {"term": "aroma artificial", "language": "es"},
+      {"term": "artificial flavor", "language": "en"},
+      {"term": "artificial flavour", "language": "en"},
+      {"term": "arôme artificiel", "language": "fr"},
+      {"term": "aromatizante artificial", "language": "pt"},
+      {"term": "aroma artificial", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-VEGETABLE-OIL",
+    "canonical_name": "aceite vegetal",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aceite vegetal", "language": "es"},
+      {"term": "aceites vegetales", "language": "es"},
+      {"term": "vegetable oil", "language": "en"},
+      {"term": "vegetable oils", "language": "en"},
+      {"term": "huile végétale", "language": "fr"},
+      {"term": "huiles végétales", "language": "fr"},
+      {"term": "óleo vegetal", "language": "pt"},
+      {"term": "óleos vegetais", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-PALM-OIL",
+    "canonical_name": "aceite de palma",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aceite de palma", "language": "es"},
+      {"term": "aceite de palma interesterificado y fraccionado", "language": "es"},
+      {"term": "palm oil", "language": "en"},
+      {"term": "interesterified and fractionated palm oil", "language": "en"},
+      {"term": "huile de palme", "language": "fr"},
+      {"term": "huile de palme interestérifiée et fractionnée", "language": "fr"},
+      {"term": "óleo de palma", "language": "pt"},
+      {"term": "óleo de palma interesterificado e fracionado", "language": "pt"}
+    ]
+  },
+  {
+    "id": "CMP-SOYBEAN-OIL",
+    "canonical_name": "aceite de soja",
+    "type": "ingredient",
+    "aliases": [
+      {"term": "aceite de soja", "language": "es"},
+      {"term": "aceite de soja totalmente hidrogenado", "language": "es"},
+      {"term": "soybean oil", "language": "en"},
+      {"term": "fully hydrogenated soybean oil", "language": "en"},
+      {"term": "huile de soja", "language": "fr"},
+      {"term": "huile de soja totalement hydrogénée", "language": "fr"},
+      {"term": "óleo de soja", "language": "pt"},
+      {"term": "óleo de soja totalmente hidrogenado", "language": "pt"}
     ]
   }
 ]

@@ -246,5 +246,13 @@
     "mapping_type": "curated",
     "reviewed_by": "equipo-safelabel",
     "review_notes": "Denominación observada en una fuente revisada; identifica explícitamente almendra."
+  },
+  {
+    "term": "aroma a avellana",
+    "language": "es",
+    "concept_id": "CMP-ARTIFICIAL-FLAVOR",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Texto observado bajo la categoría aromatizante artificial. Se reconoce como aroma sin inferir presencia de avellana."
   }
 ]
