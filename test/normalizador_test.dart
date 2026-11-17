@@ -125,6 +125,41 @@ void main() {
       expect(items.map((e) => e.textoNormalizado), ['mani tostado']);
     });
 
+    test('descarta ley y cantidades sin borrar números del ingrediente', () {
+      final texto =
+          'INGREDIENTES:\n'
+          'Harina de trigo tipo 000 enriquecida\n'
+          'Ley N° 25.630 (sulfato ferroso:\n'
+          '30 mg/kg -como hierro-, niacina:\n'
+          '13 mg/kg, vitamina B1: 6.3 mg/kg,\n'
+          'ácido fólico: 2.2 mg/kg, vitamina B2:\n'
+          '1.3 mg/kg), huevo.\n'
+          'CONTIENE HUEVO Y DERIVADOS DE TRIGO.';
+
+      final items = n.separarIngredientes(texto);
+
+      expect(items.map((e) => e.textoNormalizado), [
+        'harina de trigo tipo 000 enriquecida',
+        'sulfato ferroso',
+        'niacina',
+        'vitamina b1',
+        'acido folico',
+        'vitamina b2',
+        'huevo',
+      ]);
+    });
+
+    test('conserva números semánticos y descarta una cantidad suelta', () {
+      final items = n.separarIngredientes(
+        'harina tipo 000, vitamina B1, INS 322, 30 mg/kg',
+      );
+      expect(items.map((e) => e.textoNormalizado), [
+        'harina tipo 000',
+        'vitamina b1',
+        'ins 322',
+      ]);
+    });
+
     group('separa conjunciones usando solo coincidencias exactas', () {
       final terminosExactos = {
         'agua',

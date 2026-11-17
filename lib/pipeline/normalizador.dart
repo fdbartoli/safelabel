@@ -94,6 +94,13 @@ class Normalizador {
     r'^(?:ins|e)?\s*([0-9]{3,4}[a-z]?(?:\([a-z0-9]+\))?)$',
   );
 
+  /// Referencias regulatorias impresas dentro de la lista de ingredientes.
+  /// Se elimina la referencia, pero no el contenido que pueda seguir entre
+  /// paréntesis: `Ley N° 25.630 (sulfato ferroso: ...)`.
+  static final RegExp _referenciaNormativa = RegExp(
+    r'\bley\s+n(?:ro\.?|[.º°o])?\s*[0-9]+(?:[.\-/][0-9]+)*',
+  );
+
   /// minúsculas + sin acentos + espacios colapsados. Para nombres sueltos.
   String normalizarTexto(String entrada) {
     final buffer = StringBuffer();
@@ -116,12 +123,17 @@ class Normalizador {
     final soloIngredientes = _recortarBloques(sinAcentos);
 
     // 3. quitar un encabezado tipo "ingredientes:" si está.
-    final cuerpo = soloIngredientes.replaceFirst(
+    var cuerpo = soloIngredientes.replaceFirst(
       RegExp(r'^[\s\S]*?ingredientes?\s*:\s*', caseSensitive: false),
       '',
     );
 
-    // 4. parsear respetando paréntesis.
+    // 4. quitar referencias normativas y recomponer cantidades que el OCR
+    // cortó después de `:` por el salto visual de la etiqueta.
+    cuerpo = cuerpo.replaceAll(_referenciaNormativa, '');
+    cuerpo = cuerpo.replaceAll(RegExp(r':\s*\n\s*(?=[0-9])'), ': ');
+
+    // 5. parsear respetando paréntesis.
     final items = <ItemNormalizado>[];
     _parsear(cuerpo, null, items, existeTerminoExacto);
     return items;
@@ -210,7 +222,7 @@ class Normalizador {
     ExisteTerminoExacto? existeTerminoExacto,
   ) {
     final limpio = _limpiar(bruto);
-    if (limpio.isEmpty) return;
+    if (limpio.isEmpty || _esCantidadAislada(limpio)) return;
 
     final partes = _separarConjunciones(limpio, existeTerminoExacto);
     if (partes.length > 1) {
@@ -290,13 +302,36 @@ class Normalizador {
       RegExp(r'^\s*[0-9]+(?:[.,][0-9]+)?\s*(?:%|por ciento)\s*$')
           .hasMatch(texto);
 
+  /// Una cantidad suelta describe composición o concentración, no un
+  /// ingrediente independiente.
+  bool _esCantidadAislada(String texto) => RegExp(
+    r'^\s*[0-9]+(?:[.,][0-9]+)?\s*'
+    r'(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l)'
+    r'(?:\s*/\s*(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l))?'
+    r'(?:\s*[-–—]?\s*como\b.*)?\s*$',
+  ).hasMatch(texto);
+
   /// Colapsa espacios, quita signos de puntuación de borde y descarta un
   /// prefijo de categoría tipo "colorante:", "estabilizante:".
   String _limpiar(String entrada) {
     var s = entrada.replaceAll(RegExp(r'\s+'), ' ').trim();
-    final m = RegExp(r'^([a-z ]{1,24}):\s*(.+)$').firstMatch(s);
-    if (m != null && m.group(2)!.trim().length >= 3) {
-      s = m.group(2)!.trim();
+
+    // En una declaración cuantificada, conserva el ingrediente y descarta la
+    // cantidad: `vitamina B1: 6.3 mg/kg` → `vitamina B1`.
+    final cuantificado = RegExp(
+      r'^(.+?)(?::\s*|\s+)'
+      r'[0-9]+(?:[.,][0-9]+)?\s*'
+      r'(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l)'
+      r'(?:\s*/\s*(?:mcg|ug|µg|mg|kg|g|ml|cl|dl|l))?'
+      r'(?:\s*[-–—]?\s*como\b.*)?$',
+    ).firstMatch(s);
+    if (cuantificado != null) {
+      s = cuantificado.group(1)!.trim();
+    } else {
+      final categoria = RegExp(r'^([a-z ]{1,24}):\s*(.+)$').firstMatch(s);
+      if (categoria != null && categoria.group(2)!.trim().length >= 3) {
+        s = categoria.group(2)!.trim();
+      }
     }
     s = s.replaceAll(RegExp(r'^[\s.,;·*-]+'), '');
     s = s.replaceAll(RegExp(r'[\s.,;·*-]+$'), '');
