@@ -74,6 +74,8 @@ if ($flutterArgs.Count -ge 1 -and ($flutterArgs[0] -eq 'run' -or $flutterArgs[0]
     }
     if ($env:GEMINI_API_KEY) { $flutterArgs += "--dart-define=GEMINI_API_KEY=$env:GEMINI_API_KEY" }
     if ($env:GEMINI_MODEL)   { $flutterArgs += "--dart-define=GEMINI_MODEL=$env:GEMINI_MODEL" }
+    if ($env:ANTHROPIC_API_KEY) { $flutterArgs += "--dart-define=ANTHROPIC_API_KEY=$env:ANTHROPIC_API_KEY" }
+    if ($env:CLAUDE_MODEL)      { $flutterArgs += "--dart-define=CLAUDE_MODEL=$env:CLAUDE_MODEL" }
 }
 
 & $FlutterExe @flutterArgs

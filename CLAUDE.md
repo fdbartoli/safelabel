@@ -98,7 +98,7 @@ Debe funcionar completo sin conexión. El supermercado es el lugar de uso y el l
 | OCR | `google_mlkit_text_recognition` | Apple Vision en iOS, ML Kit en Android, todo en dispositivo |
 | Código de barras | `mobile_scanner` | Solo como atajo, nunca como única vía |
 | Base local | SQLite (`drift`) | Única base de conocimiento; se compila desde el archivo curado y se empaqueta con la app |
-| Sugerencias de reemplazo | Google Gemini (plan gratuito) vía API | Solo texto, solo con conexión (sección 5.6) |
+| IA (sustitutos y "Más info") | Claude Haiku 5.5 (API de Anthropic) y, si falla, Google Gemini (plan gratuito) | Solo texto, solo con conexión (secciones 5.6 y 5.7) |
 | Scripts de Flujo A | Python | Importación, normalización (`unidecode`), similitud difusa (`rapidfuzz`) para dedupe, llamadas al LLM en batch, compilación a SQLite |
 
 Sin backend: no hay servidor propio, ni Postgres, ni Supabase. Perfiles y base de
@@ -248,7 +248,7 @@ Arriba de los tres bloques va el **semáforo por perfil** (excepción a la regla
 Cuando el bloque 1 tiene coincidencias, dentro de ese bloque, debajo de las coincidencias, aparece el botón "Sugerir sustitutos" (en el verde pastel de la marca: es una acción, no un hallazgo). El LLM se llama recién cuando la persona lo toca. Es la excepción a las reglas 1.1 y 1.4 y a la sección 2, con estas condiciones:
 
 - Al LLM se le manda solo texto: los grupos de alérgenos de los perfiles activos, los ingredientes que chocaron y la lista de ingredientes leída (para que infiera el tipo de producto). Nunca la imagen (la regla 1.2 sigue igual).
-- Implementación: `lib/sugerencias/` (servicio, filtro, gestor) y `lib/ui/seccion_reemplazos.dart`. Proveedor: Google Gemini, plan gratuito (decisión 2026-10-10), modelo `gemini-3.8-flash` vía `generateContent` por HTTP directo, salida JSON con esquema. La clave se inyecta en la compilación con `--dart-define=GEMINI_API_KEY` (lo hace `dev.ps1` desde la variable de entorno; el modelo se puede cambiar con `GEMINI_MODEL`). Se puede extraer de un APK: aceptable para la demo, no para producción. En el plan gratuito Google puede usar lo enviado para mejorar sus productos: solo viajan ingredientes y grupos de alérgenos, nunca datos personales ni la foto.
+- Implementación: `lib/sugerencias/` (servicio, filtro, gestor) y `lib/ui/seccion_reemplazos.dart`. Proveedores (decisión 2026-11-18): **Claude primero, Gemini de respaldo** (`generador_ia.dart`). Claude: `claude-haiku-5-5` por la API de Anthropic (`cliente_claude.dart`, HTTP directo porque no hay SDK oficial para Dart), esfuerzo `low`, salida JSON con esquema, límite de 8 s. Si Claude da error, rechaza, se pasa de tiempo o llega al límite de uso, se usa Gemini (`cliente_gemini.dart`, plan gratuito, cadena de modelos propia). Las claves (`ANTHROPIC_API_KEY`, `GEMINI_API_KEY`) y los modelos opcionales (`CLAUDE_MODEL`, `GEMINI_MODEL`) van en `gemini.env` (sin commitear; ver `gemini.env.example`), que `dev.ps1` y VS Code pasan con `--dart-define-from-file`. Con una sola clave se usa ese proveedor solo. Las claves se pueden extraer de un APK: aceptable para la demo, no para producción (poner un límite de gasto en la consola de Anthropic). Solo viajan ingredientes y grupos de alérgenos, nunca datos personales ni la foto; en el plan gratuito de Gemini, Google puede usar lo enviado para mejorar sus productos.
 - La respuesta son categorías genéricas ("bebida de avena"), no marcas: la base no puede verificar los ingredientes de una marca.
 - Filtro determinista: cada sugerencia pasa por el matcher local y se descarta si choca con alguna restricción de un perfil activo.
 - Se muestran en el bloque 1, debajo de las coincidencias, como sustitutos para buscar, con el aviso "escaneá la etiqueta del sustituto antes de consumirlo". Nunca como apto. Las tarjetas de hallazgos no llevan verde.
@@ -258,9 +258,9 @@ Cuando el bloque 1 tiene coincidencias, dentro de ese bloque, debajo de las coin
 
 ### 5.7. "Más info" de un ingrediente por IA (requisito agregado 2026-11-10)
 
-En el acordeón de ingredientes de cada semáforo, cada ingrediente tiene un botón ✨ "Más info" que abre una hoja con una explicación de Gemini: qué es, de dónde sale y dónde aparece. Encaja en la regla 1.1: el LLM solo **redacta** sobre datos ya determinados.
+En el acordeón de ingredientes de cada semáforo, cada ingrediente tiene un botón ✨ "Más info" que abre una hoja con una explicación de la IA (Claude, o Gemini si Claude falla): qué es, de dónde sale y dónde aparece. Encaja en la regla 1.1: el LLM solo **redacta** sobre datos ya determinados.
 
-- Implementación: `lib/sugerencias/info_ingrediente.dart` (servicio, filtro, gestor) y `HojaInfoIngrediente` en `lib/ui/seccion_semaforo.dart`. La conexión con Gemini es compartida con la sección 5.6: `lib/sugerencias/cliente_gemini.dart`.
+- Implementación: `lib/sugerencias/info_ingrediente.dart` (servicio, filtro, gestor) y `HojaInfoIngrediente` en `lib/ui/seccion_semaforo.dart`. Usa los mismos proveedores que la sección 5.6 (`generador_ia.dart`). La respuesta se muestra completa, no a medida que llega: el filtro de veredictos necesita el texto entero antes de mostrarlo.
 - Al LLM se le manda solo texto: el ingrediente, las restricciones del perfil y lo que determinó la base (choca con X / no choca / no reconocido), como dato definitivo que no puede contradecir.
 - La hoja muestra primero el dictamen de la base y debajo la explicación, siempre marcada "Generado por IA". En un ingrediente no reconocido se aclara que es orientativa. La respuesta nunca cambia el color del ingrediente ni del semáforo.
 - Filtro determinista: se descartan las frases de la respuesta con veredictos de consumo o ausencia de alérgeno ("apto", "seguro", "libre de", "no contiene", "sin gluten", "podés consumirlo"…).

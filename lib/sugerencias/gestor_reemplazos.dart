@@ -2,6 +2,7 @@ import '../datos/base_conocimiento.dart';
 import '../modelo/perfil.dart';
 import '../modelo/resultado_analisis.dart';
 import 'filtro_reemplazos.dart';
+import 'generador_ia.dart';
 import 'servicio_reemplazos.dart';
 
 class ResultadoReemplazos {
@@ -29,18 +30,20 @@ class GestorReemplazos {
     required this.servicio,
   }) : _filtro = FiltroReemplazos(base, perfilesActivos);
 
-  /// Con la clave inyectada en la compilación. Si no hay clave, [servicio] es
-  /// `null` y la pantalla de resultado avisa que la función no está
-  /// configurada.
+  /// Con las claves inyectadas en la compilación: Claude primero y Gemini si
+  /// falla. Sin ninguna clave, [servicio] es `null` y la pantalla de resultado
+  /// avisa que la función no está configurada.
   factory GestorReemplazos.desdeConfiguracion(
     BaseConocimiento base,
     List<Perfil> perfilesActivos,
   ) {
-    const clave = ServicioReemplazosGemini.apiKeyDeCompilacion;
+    final generador = GeneradorIA.desdeConfiguracion(ErrorReemplazos.new);
     return GestorReemplazos(
       base: base,
       perfilesActivos: perfilesActivos,
-      servicio: clave.isEmpty ? null : ServicioReemplazosGemini(apiKey: clave),
+      servicio: generador == null
+          ? null
+          : ServicioReemplazosIA.conGenerador(generador),
     );
   }
 

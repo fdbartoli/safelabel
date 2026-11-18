@@ -4,14 +4,17 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-/// Conexión con Google Gemini (plan gratuito) por HTTP directo, compartida por
+import 'generador_ia.dart';
+
+/// Conexión con Google Gemini (plan gratuito) por HTTP directo. Es el respaldo
+/// de Claude (ver `generador_ia.dart`), compartida por
 /// las funciones de IA de la app: sugerencias de reemplazo (sección 5.6) y
 /// "Más info" de un ingrediente (sección 5.7). Solo viaja texto (regla 1.2).
 ///
 /// Prueba los modelos en orden y pasa al siguiente solo ante HTTP 503 o
 /// timeout. Los errores se lanzan con [crearError], para que cada función
 /// tenga su propio tipo de error.
-class ClienteGemini {
+class ClienteGemini implements GeneradorIA {
   ClienteGemini({
     required this.apiKey,
     required this.crearError,
@@ -120,6 +123,15 @@ class ClienteGemini {
     if (texto.trim().isEmpty) throw crearError('respuesta vacía');
     return jsonDecode(texto) as Map<String, dynamic>;
   }
+
+  @override
+  Future<Map<String, dynamic>> generarJson({
+    required String sistema,
+    required String mensaje,
+    required Map<String, dynamic> esquema,
+  }) => generar(
+    construirCuerpo(sistema: sistema, mensaje: mensaje, esquema: esquema),
+  );
 
   /// Envía [cuerpo] y devuelve el JSON generado por el modelo.
   Future<Map<String, dynamic>> generar(Map<String, dynamic> cuerpo) async {

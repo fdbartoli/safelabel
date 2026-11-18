@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import '../modelo/semaforo.dart';
 import 'cliente_gemini.dart';
+import 'generador_ia.dart';
 
 /// "Más info" de un ingrediente por IA (CLAUDE.md, sección 5.7).
 ///
@@ -63,19 +64,24 @@ abstract class ServicioInfoIngrediente {
   Future<InfoIngrediente> explicar(SolicitudInfoIngrediente solicitud);
 }
 
-class ServicioInfoIngredienteGemini implements ServicioInfoIngrediente {
-  ServicioInfoIngredienteGemini({
+/// Pide la explicación a un [GeneradorIA]: en la app, Claude primero y Gemini
+/// si falla (`GeneradorIA.desdeConfiguracion`). El constructor por defecto usa
+/// solo Gemini; [ServicioInfoIngredienteIA.conGenerador] recibe cualquiera.
+class ServicioInfoIngredienteIA implements ServicioInfoIngrediente {
+  ServicioInfoIngredienteIA({
     required String apiKey,
     String modelo = ClienteGemini.modeloDeCompilacion,
     http.Client? cliente,
-  }) : _gemini = ClienteGemini(
+  }) : _generador = ClienteGemini(
          apiKey: apiKey,
          modelo: modelo,
          cliente: cliente,
          crearError: ErrorInfoIngrediente.new,
        );
 
-  final ClienteGemini _gemini;
+  ServicioInfoIngredienteIA.conGenerador(this._generador);
+
+  final GeneradorIA _generador;
 
   static const _sistema =
       'Sos un asistente de una app argentina que lee etiquetas de alimentos. '
@@ -111,8 +117,7 @@ class ServicioInfoIngredienteGemini implements ServicioInfoIngrediente {
     'required': ['que_es', 'origen', 'donde_aparece'],
   };
 
-  @visibleForTesting
-  static Map<String, dynamic> construirCuerpo(SolicitudInfoIngrediente s) {
+  static String _mensaje(SolicitudInfoIngrediente s) {
     final determinacion = switch (s.estado) {
       EstadoIngrediente.choca =>
         'La base de la app determinó que CHOCA con: ${s.chocaCon}.',
@@ -129,12 +134,17 @@ class ServicioInfoIngredienteGemini implements ServicioInfoIngrediente {
         'Restricciones de la persona: ${s.restriccionesPerfil.join(', ')}',
       )
       ..writeln(determinacion);
-    return ClienteGemini.construirCuerpo(
-      sistema: _sistema,
-      mensaje: mensaje.toString(),
-      esquema: _esquema,
-    );
+    return mensaje.toString();
   }
+
+  /// Cuerpo del pedido a Gemini (para los tests de esa conexión).
+  @visibleForTesting
+  static Map<String, dynamic> construirCuerpo(SolicitudInfoIngrediente s) =>
+      ClienteGemini.construirCuerpo(
+        sistema: _sistema,
+        mensaje: _mensaje(s),
+        esquema: _esquema,
+      );
 
   @visibleForTesting
   static InfoIngrediente desdeDatos(Map<String, dynamic> datos) =>
@@ -148,7 +158,13 @@ class ServicioInfoIngredienteGemini implements ServicioInfoIngrediente {
 
   @override
   Future<InfoIngrediente> explicar(SolicitudInfoIngrediente solicitud) async {
-    final info = desdeDatos(await _gemini.generar(construirCuerpo(solicitud)));
+    final info = desdeDatos(
+      await _generador.generarJson(
+        sistema: _sistema,
+        mensaje: _mensaje(solicitud),
+        esquema: _esquema,
+      ),
+    );
     if (info.vacia) {
       throw const ErrorInfoIngrediente('la respuesta no tenía información');
     }
@@ -186,12 +202,14 @@ class FiltroInfoIngrediente {
 class GestorInfoIngredientes {
   GestorInfoIngredientes(this.servicio);
 
-  /// Con la clave inyectada en la compilación; sin clave, [servicio] es
-  /// `null` y la hoja avisa que la función no está configurada.
+  /// Con las claves inyectadas en la compilación (Claude y/o Gemini); sin
+  /// ninguna, [servicio] es `null` y la hoja avisa que no está configurada.
   factory GestorInfoIngredientes.desdeConfiguracion() {
-    const clave = ClienteGemini.apiKeyDeCompilacion;
+    final generador = GeneradorIA.desdeConfiguracion(ErrorInfoIngrediente.new);
     return GestorInfoIngredientes(
-      clave.isEmpty ? null : ServicioInfoIngredienteGemini(apiKey: clave),
+      generador == null
+          ? null
+          : ServicioInfoIngredienteIA.conGenerador(generador),
     );
   }
 
@@ -218,3 +236,6 @@ class GestorInfoIngredientes {
     });
   }
 }
+
+/// Nombre anterior, de cuando el único proveedor era Gemini.
+typedef ServicioInfoIngredienteGemini = ServicioInfoIngredienteIA;

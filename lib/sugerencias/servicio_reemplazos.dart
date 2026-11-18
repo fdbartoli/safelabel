@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'cliente_gemini.dart';
+import 'generador_ia.dart';
 
 /// Sugerencias de reemplazo por LLM (CLAUDE.md, sección 5.6).
 ///
@@ -63,16 +64,20 @@ abstract class ServicioReemplazos {
   Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud);
 }
 
-/// Llama a la API de Google Gemini (plan gratuito) con [ClienteGemini], que
-/// maneja los modelos de respaldo y los errores.
-class ServicioReemplazosGemini implements ServicioReemplazos {
-  ServicioReemplazosGemini({
+/// Pide los sustitutos a un [GeneradorIA]: en la app, Claude primero y Gemini
+/// si falla (`GeneradorIA.desdeConfiguracion`).
+///
+/// El constructor por defecto usa solo Gemini (lo usan los tests de la
+/// conexión con Gemini); [ServicioReemplazosIA.conGenerador] recibe cualquier
+/// generador.
+class ServicioReemplazosIA implements ServicioReemplazos {
+  ServicioReemplazosIA({
     required String apiKey,
     String modelo = modeloDeCompilacion,
     http.Client? cliente,
     Duration timeoutPorModelo = const Duration(seconds: 8),
     Duration timeoutTotal = const Duration(seconds: 20),
-  }) : _gemini = ClienteGemini(
+  }) : _generador = ClienteGemini(
          apiKey: apiKey,
          modelo: modelo,
          cliente: cliente,
@@ -81,11 +86,13 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
          crearError: ErrorReemplazos.new,
        );
 
+  ServicioReemplazosIA.conGenerador(this._generador);
+
   static const apiKeyDeCompilacion = ClienteGemini.apiKeyDeCompilacion;
   static const modeloDeCompilacion = ClienteGemini.modeloDeCompilacion;
   static const modelos = ClienteGemini.modelos;
 
-  final ClienteGemini _gemini;
+  final GeneradorIA _generador;
 
   static const _system =
       'Sos un asistente que sugiere alimentos sustitutos para una app '
@@ -128,8 +135,7 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
     'required': ['tipo_producto', 'sugerencias'],
   };
 
-  @visibleForTesting
-  static Map<String, dynamic> construirCuerpo(SolicitudReemplazo s) {
+  static String _mensaje(SolicitudReemplazo s) {
     final prompt = StringBuffer()
       ..writeln('Grupos restringidos: ${s.gruposRestringidos.join(', ')}')
       ..writeln(
@@ -139,12 +145,17 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
         'Lista completa de ingredientes: '
         '${s.ingredientesLeidos.join(', ')}',
       );
-    return ClienteGemini.construirCuerpo(
-      sistema: _system,
-      mensaje: prompt.toString(),
-      esquema: _esquema,
-    );
+    return prompt.toString();
   }
+
+  /// Cuerpo del pedido a Gemini (para los tests de esa conexión).
+  @visibleForTesting
+  static Map<String, dynamic> construirCuerpo(SolicitudReemplazo s) =>
+      ClienteGemini.construirCuerpo(
+        sistema: _system,
+        mensaje: _mensaje(s),
+        esquema: _esquema,
+      );
 
   @visibleForTesting
   static Map<String, String> construirHeaders(String apiKey) =>
@@ -168,5 +179,14 @@ class ServicioReemplazosGemini implements ServicioReemplazos {
 
   @override
   Future<RespuestaReemplazos> sugerir(SolicitudReemplazo solicitud) async =>
-      _desdeDatos(await _gemini.generar(construirCuerpo(solicitud)));
+      _desdeDatos(
+        await _generador.generarJson(
+          sistema: _system,
+          mensaje: _mensaje(solicitud),
+          esquema: _esquema,
+        ),
+      );
 }
+
+/// Nombre anterior, de cuando el único proveedor era Gemini.
+typedef ServicioReemplazosGemini = ServicioReemplazosIA;
