@@ -50,13 +50,20 @@ void main() {
   final implementaciones = [
     Implementacion(
       'memoria',
-      () async => RepositorioPerfilesMemoria(gruposValidos: gruposValidos),
+      () async => RepositorioPerfilesMemoria(
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      ),
     ),
     Implementacion(
       'SQLite',
       () async {
         bd = await BdLocal.abrir(fabrica: fabrica, ruta: inMemoryDatabasePath);
-        return RepositorioPerfilesSqlite(bd!, gruposValidos: gruposValidos);
+        return RepositorioPerfilesSqlite(
+          bd!,
+          gruposValidos: gruposValidos,
+          usuarioId: 'prueba',
+        );
       },
       liberar: () async {
         await bd?.close();
@@ -404,7 +411,11 @@ void main() {
       final ruta = p.join(temporal.path, BdLocal.nombreArchivo);
 
       var bd = await BdLocal.abrir(fabrica: fabrica, ruta: ruta);
-      var repo = RepositorioPerfilesSqlite(bd, gruposValidos: gruposValidos);
+      var repo = RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      );
       final sofia = await repo.crear(
         const Perfil(nombre: 'Sofía', restricciones: [leche, mani]),
       );
@@ -413,7 +424,11 @@ void main() {
       await bd.close();
 
       bd = await BdLocal.abrir(fabrica: fabrica, ruta: ruta);
-      repo = RepositorioPerfilesSqlite(bd, gruposValidos: gruposValidos);
+      repo = RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      );
       final todos = await repo.obtenerTodos();
       final activos = await repo.obtenerActivos();
       await bd.close();
@@ -432,7 +447,11 @@ void main() {
         fabrica: fabrica,
         ruta: inMemoryDatabasePath,
       );
-      final repo = RepositorioPerfilesSqlite(bd, gruposValidos: gruposValidos);
+      final repo = RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: gruposValidos,
+        usuarioId: 'prueba',
+      );
       final a = await repo.crear(
         const Perfil(nombre: 'A', restricciones: [leche, trigo]),
       );

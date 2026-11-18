@@ -5,22 +5,36 @@ import 'package:safelabel/cuenta/reglas_usuario.dart';
 import 'package:safelabel/cuenta/servicio_cuenta.dart';
 import 'package:safelabel/cuenta/terminos_condiciones.dart';
 import 'package:safelabel/datos/almacen_local.dart';
+import 'package:safelabel/datos/preparador_perfiles.dart';
 import 'package:safelabel/datos/repositorio_usuarios.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Crea un servicio con un almacenamiento local en memoria.
+late PreparadorPerfilesMemoria preparadorPrueba;
+
 Future<ServicioCuenta> crearServicio([
   Map<String, Object> valoresIniciales = const {},
 ]) async {
   SharedPreferences.setMockInitialValues(valoresIniciales);
   final almacen = await AlmacenLocal.abrir();
-  return ServicioCuenta(RepositorioUsuarios(almacen));
+  preparadorPrueba = PreparadorPerfilesMemoria();
+  final servicio = ServicioCuenta(
+    RepositorioUsuarios(almacen),
+    preparador: preparadorPrueba,
+  );
+  await servicio.restaurarSesion();
+  return servicio;
 }
 
 /// Simula cerrar y volver a abrir la app sobre el mismo almacenamiento.
 Future<ServicioCuenta> reabrirApp() async {
   final almacen = await AlmacenLocal.abrir();
-  return ServicioCuenta(RepositorioUsuarios(almacen));
+  final servicio = ServicioCuenta(
+    RepositorioUsuarios(almacen),
+    preparador: preparadorPrueba,
+  );
+  await servicio.restaurarSesion();
+  return servicio;
 }
 
 /// Registra una cuenta válida; cada prueba cambia solo lo que le interesa.

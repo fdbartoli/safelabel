@@ -16,10 +16,14 @@ class AlmacenLocal {
   String? leerTexto(String clave) => _preferencias.getString(clave);
 
   Future<void> guardarTexto(String clave, String valor) async {
-    await _preferencias.setString(clave, valor);
+    if (!await _preferencias.setString(clave, valor)) {
+      throw StateError('No se pudo guardar en el almacenamiento local.');
+    }
   }
 
   Future<void> borrar(String clave) async {
-    await _preferencias.remove(clave);
+    if (!await _preferencias.remove(clave)) {
+      throw StateError('No se pudo borrar del almacenamiento local.');
+    }
   }
 }

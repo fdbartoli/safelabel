@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:safelabel/cuenta/servicio_cuenta.dart';
 import 'package:safelabel/datos/almacen_local.dart';
 import 'package:safelabel/datos/bd_local.dart';
+import 'package:safelabel/datos/preparador_perfiles.dart';
 import 'package:safelabel/datos/repositorio_perfiles.dart';
 import 'package:safelabel/datos/repositorio_usuarios.dart';
 import 'package:safelabel/modelo/perfil.dart';
@@ -42,7 +43,11 @@ void main() {
         ruta: inMemoryDatabasePath,
       );
       addTearDown(bd.close);
-      final repo = RepositorioPerfilesSqlite(bd, gruposValidos: grupos);
+      final repo = RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: grupos,
+        usuarioId: 'ana',
+      );
 
       final creado = await repo.crear(
         const Perfil(
@@ -96,9 +101,13 @@ void main() {
 
       final bd = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
       addTearDown(bd.close);
+      // Los perfiles viejos no tienen dueño hasta que el preparador de la
+      // cuenta los asigna; acá se asignan a mano.
+      await bd.update('perfil', {'usuario_id': 'ana'});
       final perfiles = await RepositorioPerfilesSqlite(
         bd,
         gruposValidos: grupos,
+        usuarioId: 'ana',
       ).obtenerTodos();
 
       expect(perfiles.single.nombre, 'Mateo');
@@ -106,12 +115,100 @@ void main() {
       expect(perfiles.single.avatar, '');
       expect(perfiles.single.semillaAvatar, 'Mateo');
     });
+
+    // La versión 2 de la base existió con dos sentidos: con avatar (main) y
+    // con propietario (perfiles por usuario). Las dos tienen que llegar a la
+    // versión actual sin perder nada.
+    Future<Database> abrirDesde(
+      String ruta,
+      int version,
+      String columnasPerfil,
+      Map<String, Object?> fila,
+    ) async {
+      final vieja = await databaseFactoryFfi.openDatabase(
+        ruta,
+        options: OpenDatabaseOptions(
+          version: version,
+          onCreate: (db, _) async {
+            await db.execute(
+              'CREATE TABLE perfil (id INTEGER PRIMARY KEY AUTOINCREMENT, '
+              'nombre TEXT NOT NULL, $columnasPerfil)',
+            );
+            await db.execute(
+              'CREATE TABLE restriccion_perfil (perfil_id INTEGER NOT NULL '
+              'REFERENCES perfil(id) ON DELETE CASCADE, grupo_alergeno_id '
+              'TEXT NOT NULL, severidad TEXT NOT NULL, PRIMARY KEY '
+              '(perfil_id, grupo_alergeno_id))',
+            );
+            await db.execute(
+              'CREATE TABLE perfil_activo (perfil_id INTEGER PRIMARY KEY '
+              'REFERENCES perfil(id) ON DELETE CASCADE)',
+            );
+          },
+        ),
+      );
+      await vieja.insert('perfil', fila);
+      await vieja.insert('perfil_activo', {'perfil_id': 1});
+      await vieja.close();
+      final bd = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
+      addTearDown(bd.close);
+      return bd;
+    }
+
+    test(
+      'una base v2 con avatar conserva el avatar y gana propietario',
+      () async {
+        final dir = await Directory.systemTemp.createTemp('safelabel_avatar');
+        addTearDown(() => dir.delete(recursive: true));
+        final bd = await abrirDesde(
+          p.join(dir.path, 'v2.db'),
+          2,
+          "avatar TEXT NOT NULL DEFAULT ''",
+          {'nombre': 'Mateo', 'avatar': 'safelabel-7'},
+        );
+        await bd.update('perfil', {'usuario_id': 'ana'});
+        final repo = RepositorioPerfilesSqlite(
+          bd,
+          gruposValidos: grupos,
+          usuarioId: 'ana',
+        );
+        final perfil = (await repo.obtenerTodos()).single;
+        expect(perfil.avatar, 'safelabel-7');
+        expect((await repo.obtenerActivos()).single.nombre, 'Mateo');
+      },
+    );
+
+    test('una base v3 con propietario gana la columna avatar', () async {
+      final dir = await Directory.systemTemp.createTemp('safelabel_avatar');
+      addTearDown(() => dir.delete(recursive: true));
+      final bd = await abrirDesde(
+        p.join(dir.path, 'v3.db'),
+        3,
+        'usuario_id TEXT',
+        {'nombre': 'Mateo', 'usuario_id': 'ana'},
+      );
+      final repo = RepositorioPerfilesSqlite(
+        bd,
+        gruposValidos: grupos,
+        usuarioId: 'ana',
+      );
+      final perfil = (await repo.obtenerTodos()).single;
+      expect(perfil.avatar, '');
+      expect(perfil.semillaAvatar, 'Mateo');
+      final creado = await repo.crear(
+        const Perfil(nombre: 'Sofía', restricciones: [], avatar: 'x'),
+      );
+      expect(creado.avatar, 'x');
+    });
   });
 
   group('cuenta', () {
     Future<ServicioCuenta> servicio() async {
       SharedPreferences.setMockInitialValues({});
-      return ServicioCuenta(RepositorioUsuarios(await AlmacenLocal.abrir()));
+      return ServicioCuenta(
+        RepositorioUsuarios(await AlmacenLocal.abrir()),
+        preparador: PreparadorPerfilesMemoria(),
+      );
     }
 
     test('el avatar se elige al registrarse y se puede cambiar', () async {
@@ -161,7 +258,10 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      final repo = RepositorioPerfilesMemoria(gruposValidos: grupos);
+      final repo = RepositorioPerfilesMemoria(
+        gruposValidos: grupos,
+        usuarioId: 'ana',
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: EditorPerfil(repositorio: repo, base: base),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:safelabel/cuenta/servicio_cuenta.dart';
 import 'package:safelabel/datos/almacen_local.dart';
+import 'package:safelabel/datos/preparador_perfiles.dart';
 import 'package:safelabel/datos/repositorio_usuarios.dart';
 import 'package:safelabel/ui/pantalla_mi_cuenta.dart';
 import 'package:safelabel/ui/puerta_de_sesion.dart';
@@ -10,7 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<ServicioCuenta> crearServicio() async {
   SharedPreferences.setMockInitialValues({});
   final almacen = await AlmacenLocal.abrir();
-  return ServicioCuenta(RepositorioUsuarios(almacen));
+  final servicio = ServicioCuenta(
+    RepositorioUsuarios(almacen),
+    preparador: PreparadorPerfilesMemoria(),
+  );
+  await servicio.restaurarSesion();
+  return servicio;
 }
 
 /// La app de prueba usa una pantalla principal mínima en lugar de la real,
@@ -81,6 +87,70 @@ Future<void> completarRegistro(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets('cambiar o cerrar sesión descarta las rutas privadas anteriores', (
+    tester,
+  ) async {
+    final servicio = await crearServicio();
+    await registrarCuentaDePrueba(servicio);
+    final idA = servicio.cuentaActual()!.id;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PuertaDeSesion(
+          servicio: servicio,
+          construirPrincipal: (context) => Scaffold(
+            body: Column(
+              children: [
+                Text('Cuenta ${servicio.cuentaActual()!.id}'),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          const Scaffold(body: Text('Ruta privada')),
+                    ),
+                  ),
+                  child: const Text('Abrir privado'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tocar(tester, find.text('Abrir privado'));
+    expect(find.text('Ruta privada'), findsOneWidget);
+    // El navegador por sesión también debe respetar el botón Atrás de Android.
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Ruta privada'), findsNothing);
+    expect(find.text('Cuenta $idA'), findsOneWidget);
+    await tocar(tester, find.text('Abrir privado'));
+    await servicio.registrar(
+      nombre: 'Beto',
+      apellido: 'Pérez',
+      email: 'beto@mail.com',
+      fechaNacimiento: DateTime(1990),
+      contrasena: 'secreta123',
+      aceptaTerminos: true,
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Ruta privada'), findsNothing);
+    expect(find.text('Cuenta $idA'), findsNothing);
+    expect(find.text('Cuenta ${servicio.cuentaActual()!.id}'), findsOneWidget);
+    await tocar(tester, find.text('Abrir privado'));
+    await servicio.cerrarSesion();
+    await tester.pumpAndSettle();
+    expect(find.text('Ruta privada'), findsNothing);
+    expect(find.text('Iniciar sesión'), findsOneWidget);
+    await servicio.iniciarSesion(
+      email: 'ana@mail.com',
+      contrasena: 'secreta123',
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Cuenta $idA'), findsOneWidget);
+    expect(find.text('Ruta privada'), findsNothing);
+  });
+
   testWidgets('sin sesión se abre el ingreso', (tester) async {
     final servicio = await crearServicio();
     await tester.pumpWidget(appDePrueba(servicio));
