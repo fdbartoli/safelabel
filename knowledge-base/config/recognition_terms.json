@@ -30,5 +30,229 @@
     "mapping_type": "curated",
     "reviewed_by": "equipo-safelabel",
     "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "leche de almendra",
+    "language": "es",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "almond milk",
+    "language": "en",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "lait d'amande",
+    "language": "fr",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "lait d’amande",
+    "language": "fr",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante con apóstrofo tipográfico; se resuelve a almendra y no a leche."
+  },
+  {
+    "term": "leite de amêndoa",
+    "language": "pt",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "leite de amêndoas",
+    "language": "pt",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Se resuelve a almendra y no al concepto leche."
+  },
+  {
+    "term": "harina de trigo tipo 000 enriquecida",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante explícita de harina de trigo observada en rotulado argentino."
+  },
+  {
+    "term": "harina de trigo 000 enriquecida",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante sin la palabra tipo; mantiene explícito el origen trigo."
+  },
+  {
+    "term": "harina de trigo tipo 000",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación explícita de harina de trigo con clasificación argentina."
+  },
+  {
+    "term": "harina de trigo 000",
+    "language": "es",
+    "concept_id": "CMP-WHEAT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Variante sin la palabra tipo; mantiene explícito el origen trigo."
+  },
+  {
+    "term": "lecithin (soy)",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "soy lecithin",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "soya lecithin",
+    "language": "en",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lecitina de soja",
+    "language": "es",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lécithine de soja",
+    "language": "fr",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "lecitina de soja",
+    "language": "pt",
+    "concept_id": "CMP-SOY",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen soja de la lecitina."
+  },
+  {
+    "term": "manteca de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "mantequilla de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "crema de maní",
+    "language": "es",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "peanut butter",
+    "language": "en",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "beurre de cacahuète",
+    "language": "fr",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "beurre d'arachide",
+    "language": "fr",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "manteiga de amendoim",
+    "language": "pt",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "pasta de amendoim",
+    "language": "pt",
+    "concept_id": "CMP-PEANUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "La denominación declara explícitamente el origen maní del producto."
+  },
+  {
+    "term": "pistachio nuts",
+    "language": "en",
+    "concept_id": "CMP-PISTACHIO",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación observada en una fuente revisada; identifica explícitamente pistacho."
+  },
+  {
+    "term": "pasta de nuez",
+    "language": "es",
+    "concept_id": "CMP-WALNUT",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación observada en una fuente revisada; identifica explícitamente nuez."
+  },
+  {
+    "term": "pasta de almendras",
+    "language": "es",
+    "concept_id": "CMP-ALMOND",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Denominación observada en una fuente revisada; identifica explícitamente almendra."
+  },
+  {
+    "term": "aroma a avellana",
+    "language": "es",
+    "concept_id": "CMP-ARTIFICIAL-FLAVOR",
+    "mapping_type": "curated",
+    "reviewed_by": "equipo-safelabel",
+    "review_notes": "Texto observado bajo la categoría aromatizante artificial. Se reconoce como aroma sin inferir presencia de avellana."
   }
 ]

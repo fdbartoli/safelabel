@@ -32,7 +32,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0082"
+                "CAND-0094"
               ],
               "representative_evidence": "However, if you have a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactof",
               "representative_location": "character:7262"
@@ -71,7 +71,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0078"
+                "CAND-0090"
               ],
               "representative_evidence": "food allergens, gluten sources and added sulphites. However, if you have a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed",
               "representative_location": "character:7210"
@@ -88,7 +88,7 @@
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-BUTTER",
       "canonical_concept": "manteca",
-      "concept_type": "food_product",
+      "concept_type": "ingredient",
       "match_type": "RELATED",
       "occurrence_count": 9,
       "aliases": [
@@ -115,10 +115,10 @@
               "occurrence_count": 2,
               "candidate_ids": [
                 "CAND-0013",
-                "CAND-0022"
+                "CAND-0026"
               ],
-              "representative_evidence": "Leche fluida, leche en polvo, crema                  Todos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\n                   de leche, manteca, leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos)",
-              "representative_location": "character:22290"
+              "representative_evidence": "elera,\nflanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa",
+              "representative_location": "character:14654"
             }
           ],
           "review_status": "approved",
@@ -137,7 +137,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0124"
+                "CAND-0137"
               ],
               "representative_evidence": "and walnuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to make butter, cheese, cream and yogurt, among other products. Milk is also present in many baked goods, glazes, soups, and sauces. Egg Both the egg yolk and the egg white can cause an allergic",
               "representative_location": "character:2706"
@@ -159,12 +159,12 @@
               "language": "en",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0096",
-                "CAND-0100",
-                "CAND-0106",
-                "CAND-0107",
                 "CAND-0108",
-                "CAND-0115"
+                "CAND-0112",
+                "CAND-0119",
+                "CAND-0120",
+                "CAND-0121",
+                "CAND-0128"
               ],
               "representative_evidence": "actoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or of",
               "representative_location": "character:7635"
@@ -203,7 +203,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0083"
+                "CAND-0095"
               ],
               "representative_evidence": "a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobuli",
               "representative_location": "character:7282"
@@ -246,21 +246,21 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0018"
+                "CAND-0019"
               ],
-              "representative_evidence": "has, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní,",
-              "representative_location": "character:22713"
+              "representative_evidence": "Leche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema paste",
+              "representative_location": "character:14780"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -268,7 +268,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0033"
+                "CAND-0038"
               ],
               "representative_evidence": "oo.” There are many different ingredients that contain the same major food allergen, but sometimes the ingredients’ names do not indicate their specific food sources. For example, casein, sodium caseinate, and whey are all milk proteins. Although the same allergen can be present in multiple ingredients, its “food source name” (for example, milk) must appear in the",
               "representative_location": "character:4059"
@@ -290,7 +290,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0079"
+                "CAND-0091"
               ],
               "representative_evidence": "ten sources and added sulphites. However, if you have a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein",
               "representative_location": "character:7229"
@@ -333,14 +333,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0019"
+                "CAND-0020"
               ],
-              "representative_evidence": "bres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de",
-              "representative_location": "character:22722"
+              "representative_evidence": "eche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helad",
+              "representative_location": "character:14789"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -355,7 +355,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0081"
+                "CAND-0093"
               ],
               "representative_evidence": "sulphites. However, if you have a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbu",
               "representative_location": "character:7251"
@@ -372,7 +372,7 @@
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-CHEESE",
       "canonical_concept": "queso",
-      "concept_type": "food_product",
+      "concept_type": "ingredient",
       "match_type": "RELATED",
       "occurrence_count": 6,
       "aliases": [
@@ -398,11 +398,11 @@
               "language": "es",
               "occurrence_count": 2,
               "candidate_ids": [
-                "CAND-0007",
-                "CAND-0011"
+                "CAND-0008",
+                "CAND-0024"
               ],
-              "representative_evidence": "en polvo.         flanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\n                                                                        buñuelos, queso elaborado con lisozima.\n Leche             Leche fluida, leche en polvo, crema                  Todos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), cre",
-              "representative_location": "character:22073"
+              "representative_evidence": "en polvo.\n\nPastas, merengue, mayonesa, pintado para productos horneados, crema pastelera,\nflanes, productos rebozados, bizcochuelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en p",
+              "representative_location": "character:14570"
             }
           ],
           "review_status": "approved",
@@ -421,7 +421,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0125"
+                "CAND-0138"
               ],
               "representative_evidence": "nuts. Tree nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to make butter, cheese, cream and yogurt, among other products. Milk is also present in many baked goods, glazes, soups, and sauces. Egg Both the egg yolk and the egg white can cause an allergic reactio",
               "representative_location": "character:2714"
@@ -443,9 +443,9 @@
               "language": "en",
               "occurrence_count": 3,
               "candidate_ids": [
-                "CAND-0097",
-                "CAND-0110",
-                "CAND-0118"
+                "CAND-0109",
+                "CAND-0123",
+                "CAND-0131"
               ],
               "representative_evidence": "obulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk In",
               "representative_location": "character:7654"
@@ -484,7 +484,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0087"
+                "CAND-0099"
               ],
               "representative_evidence": "ot eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list an",
               "representative_location": "character:7379"
@@ -523,7 +523,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0088"
+                "CAND-0100"
               ],
               "representative_evidence": "toglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels ever",
               "representative_location": "character:7398"
@@ -537,6 +537,71 @@
     },
     {
       "id": "REV-0010",
+      "restriction_id": "RES-MILK",
+      "concept_id": "CMP-KEFIR",
+      "canonical_concept": "kéfir",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 2,
+      "aliases": [
+        {
+          "term": "kefir",
+          "language": "en"
+        },
+        {
+          "term": "kefir",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "kefir",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0015"
+              ],
+              "representative_evidence": "galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (ques",
+              "representative_location": "character:14704"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-MILK",
+          "source_title": "Milk a priority food allergen",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
+          "source_sha256": "96029500f78d074223284999318e23960696343a7e4aa227e69b58a7a3c3213a",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "kefir",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0113"
+              ],
+              "representative_evidence": "and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk Infant baby cereals Infant formula, follow-up formul",
+              "representative_location": "character:7705"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0011",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTALBUMIN",
       "canonical_concept": "lactoalbúmina",
@@ -566,14 +631,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0021"
+                "CAND-0022"
               ],
-              "representative_evidence": "lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de repostería, maní con chocolates, praliné, muslix",
-              "representative_location": "character:22768"
+              "representative_evidence": ", crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y flanes, chocolate",
+              "representative_location": "character:14816"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -588,7 +653,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0089"
+                "CAND-0101"
               ],
               "representative_evidence": "rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you s",
               "representative_location": "character:7416"
@@ -601,7 +666,7 @@
       ]
     },
     {
-      "id": "REV-0011",
+      "id": "REV-0012",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTALBUMIN-PHOSPHATE",
       "canonical_concept": "lactalbumin phosphate",
@@ -627,7 +692,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0090"
+                "CAND-0102"
               ],
               "representative_evidence": "aseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of mil",
               "representative_location": "character:7432"
@@ -640,7 +705,7 @@
       ]
     },
     {
-      "id": "REV-0012",
+      "id": "REV-0013",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTOFERRIN",
       "canonical_concept": "lactoferrin",
@@ -666,7 +731,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0091"
+                "CAND-0103"
               ],
               "representative_evidence": "einate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Bu",
               "representative_location": "character:7454"
@@ -679,7 +744,7 @@
       ]
     },
     {
-      "id": "REV-0013",
+      "id": "REV-0014",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-LACTOGLOBULIN",
       "canonical_concept": "lactoglobulin",
@@ -709,14 +774,14 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0020"
+                "CAND-0021"
               ],
-              "representative_evidence": "do, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa (azúcar láctea).\n\n Maní              Maní salado, aceite de maní (no aplicable en         Manteca de maní, rellenos de repostería, man",
-              "representative_location": "character:22733"
+              "representative_evidence": ", leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y fl",
+              "representative_location": "character:14800"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -731,7 +796,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0092"
+                "CAND-0104"
               ],
               "representative_evidence": "um caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese",
               "representative_location": "character:7467"
@@ -744,7 +809,101 @@
       ]
     },
     {
-      "id": "REV-0014",
+      "id": "REV-0015",
+      "restriction_id": "RES-MILK",
+      "concept_id": "CMP-LACTOSE",
+      "canonical_concept": "lactosa",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 10,
+      "aliases": [
+        {
+          "term": "lactosa",
+          "language": "es"
+        },
+        {
+          "term": "lactose",
+          "language": "en"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-ALERGENOS",
+          "source_title": "Directrices para el rotulado de alérgenos",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos_directrices_final.pdf",
+          "source_sha256": "944b779d471d2d886345b84b234cfe26e1f05bf751120b8ead97af8610b5633a",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "lactose",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0005"
+              ],
+              "representative_evidence": "IA NACIONAL DE VIGIL NCIA SANITÁRIA, RESOLUÇÃO DA DIRETORIA COLEGIADA\n– RDC N° 136, DE 08 DE FEVEREIRO DE 2017: Estabelece os requisitos para declaração\nobrigatória da presença de lactose nos rótulos dos alimentos.\n\n\n                               DIRECTRICES PARA EL ROTULADO DE ALÉRGENOS Y SUSTANCIAS CAPACES\n                               DE PRODUCIR RE ACCIONE S",
+              "representative_location": "character:26017"
+            }
+          ],
+          "review_status": "rejected",
+          "reviewed_by": "lucio",
+          "review_notes": "La evidencia está en portugués, pero el extractor atribuyó la denominación al alias inglés."
+        },
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 2,
+          "denominations": [
+            {
+              "term": "lactosa",
+              "language": "es",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0023",
+                "CAND-0032"
+              ],
+              "representative_evidence": "manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, blandos, cottages, etc.), crema\nchantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, d",
+              "representative_location": "character:14833"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        },
+        {
+          "source_id": "SRC-HC-MILK",
+          "source_title": "Milk a priority food allergen",
+          "source_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/reports-publications/food-safety/milk-priority-food-allergen.html",
+          "source_sha256": "96029500f78d074223284999318e23960696343a7e4aa227e69b58a7a3c3213a",
+          "occurrence_count": 7,
+          "denominations": [
+            {
+              "term": "lactose",
+              "language": "en",
+              "occurrence_count": 7,
+              "candidate_ids": [
+                "CAND-0065",
+                "CAND-0068",
+                "CAND-0069",
+                "CAND-0071",
+                "CAND-0072",
+                "CAND-0074",
+                "CAND-0076"
+              ],
+              "representative_evidence": "the product completely cooked throughout). Please consult with your allergist before consuming any baked products containing milk. What is the difference between milk allergy and lactose intolerance? A milk allergy occurs when a person's immune system reacts abnormally to milk proteins; it can be life-threatening. Lactose intolerance occurs when a person cannot di",
+              "representative_location": "character:5249"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0016",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-MAGNESIUM-CASEINATE",
       "canonical_concept": "magnesium caseinate",
@@ -770,7 +929,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0084"
+                "CAND-0096"
               ],
               "representative_evidence": "see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey prote",
               "representative_location": "character:7301"
@@ -783,7 +942,7 @@
       ]
     },
     {
-      "id": "REV-0015",
+      "id": "REV-0017",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-MILK",
       "canonical_concept": "leche",
@@ -791,6 +950,10 @@
       "match_type": "DIRECT",
       "occurrence_count": 73,
       "aliases": [
+        {
+          "term": "fermented milk",
+          "language": "en"
+        },
         {
           "term": "leche",
           "language": "es"
@@ -838,24 +1001,24 @@
               "language": "es",
               "occurrence_count": 11,
               "candidate_ids": [
-                "CAND-0005",
                 "CAND-0006",
-                "CAND-0008",
+                "CAND-0007",
                 "CAND-0009",
                 "CAND-0010",
+                "CAND-0011",
                 "CAND-0012",
-                "CAND-0014",
-                "CAND-0023",
                 "CAND-0025",
-                "CAND-0026",
-                "CAND-0027"
+                "CAND-0027",
+                "CAND-0029",
+                "CAND-0030",
+                "CAND-0031"
               ],
-              "representative_evidence": "de cada empresa.\nresponsables de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\n                                                         Objetivos de un “Programa\nPar",
-              "representative_location": "character:13381"
+              "representative_evidence": "son proteínas. Los alimentos\nresponsables de la gran mayoría de este tipo de\nreacción adversa están incluidos en lo que se\ndenomina el grupo de los “grandes 8”, que comprende\na la leche, la soja, los huevos, el trigo, los maníes,\nlos frutos secos, los crustáceos y los pescados.\nPara que se produzca una reacción alérgica, una\npersona debe primero haber sido sensib",
+              "representative_location": "character:6598"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
@@ -870,12 +1033,12 @@
               "language": "en",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0119",
-                "CAND-0120",
-                "CAND-0121",
-                "CAND-0122",
-                "CAND-0123",
-                "CAND-0128"
+                "CAND-0132",
+                "CAND-0133",
+                "CAND-0134",
+                "CAND-0135",
+                "CAND-0136",
+                "CAND-0141"
               ],
               "representative_evidence": "elling. How to label allergens Within the ingredients list Ingredients: Apples, Pie crust [flour (wheat), shortening, liquid albumen (egg), salt], Sugar, Flour, Lemon juice, Whole milk, Cinnamon. May contain pecans. Using a contains statement Ingredients: Apples, Pie crust [flour, shortening, liquid albumen, salt], Sugar, Flour, Lemon juice, Whole milk, Cinnamon",
               "representative_location": "character:789"
@@ -889,7 +1052,7 @@
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 6,
           "denominations": [
             {
@@ -897,12 +1060,12 @@
               "language": "en",
               "occurrence_count": 6,
               "candidate_ids": [
-                "CAND-0029",
-                "CAND-0031",
-                "CAND-0032",
+                "CAND-0034",
                 "CAND-0036",
                 "CAND-0037",
-                "CAND-0039"
+                "CAND-0041",
+                "CAND-0042",
+                "CAND-0044"
               ],
               "representative_evidence": "llergen.” Nine foods, and ingredients containing their proteins, are defined as major food allergens. These foods account for the large majority of severe food allergic reactions: milk egg fish, such as bass, flounder, or cod Crustacean shellfish, such as crab, lobster, or shrimp tree nuts, such as almonds, pecans, or walnuts wheat peanuts soybeans sesame The la",
               "representative_location": "character:2359"
@@ -920,15 +1083,20 @@
           "occurrence_count": 46,
           "denominations": [
             {
+              "term": "fermented milk",
+              "language": "en",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0115"
+              ],
+              "representative_evidence": "ave an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk Infant baby cereals Infant formula, follow-up formula, nutrition supplements for toddler",
+              "representative_location": "character:7732"
+            },
+            {
               "term": "milk",
               "language": "en",
-              "occurrence_count": 46,
+              "occurrence_count": 45,
               "candidate_ids": [
-                "CAND-0040",
-                "CAND-0041",
-                "CAND-0042",
-                "CAND-0043",
-                "CAND-0044",
                 "CAND-0045",
                 "CAND-0046",
                 "CAND-0047",
@@ -949,27 +1117,31 @@
                 "CAND-0062",
                 "CAND-0063",
                 "CAND-0064",
-                "CAND-0065",
                 "CAND-0066",
                 "CAND-0067",
-                "CAND-0068",
-                "CAND-0069",
                 "CAND-0070",
-                "CAND-0071",
-                "CAND-0072",
                 "CAND-0073",
-                "CAND-0074",
                 "CAND-0075",
-                "CAND-0076",
                 "CAND-0077",
-                "CAND-0095",
-                "CAND-0101",
-                "CAND-0102",
-                "CAND-0105",
-                "CAND-0111",
-                "CAND-0113",
+                "CAND-0078",
+                "CAND-0079",
+                "CAND-0080",
+                "CAND-0081",
+                "CAND-0082",
+                "CAND-0083",
+                "CAND-0084",
+                "CAND-0085",
+                "CAND-0086",
+                "CAND-0087",
+                "CAND-0088",
+                "CAND-0089",
+                "CAND-0107",
                 "CAND-0114",
-                "CAND-0117"
+                "CAND-0118",
+                "CAND-0124",
+                "CAND-0126",
+                "CAND-0127",
+                "CAND-0130"
               ],
               "representative_evidence": "Milk - A priority food allergen - Canada.ca Skip to main content Skip to \"About government\" Language selection Français fr / Gouvernement du Canada Search Search Canada.ca Search Menu",
               "representative_location": "character:0"
@@ -977,21 +1149,25 @@
           ],
           "review_status": "approved",
           "reviewed_by": "lucio",
-          "review_notes": "Aprobado considerando el contexto completo del documento sobre leche y sus derivados."
+          "review_notes": null
         }
       ]
     },
     {
-      "id": "REV-0016",
+      "id": "REV-0018",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-MILK-CREAM",
       "canonical_concept": "crema de leche",
-      "concept_type": "food_product",
+      "concept_type": "ingredient",
       "match_type": "RELATED",
       "occurrence_count": 7,
       "aliases": [
         {
           "term": "cream",
+          "language": "en"
+        },
+        {
+          "term": "sour cream",
           "language": "en"
         }
       ],
@@ -1008,7 +1184,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0126"
+                "CAND-0139"
               ],
               "representative_evidence": "ee nuts must be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to make butter, cheese, cream and yogurt, among other products. Milk is also present in many baked goods, glazes, soups, and sauces. Egg Both the egg yolk and the egg white can cause an allergic reaction. Egg",
               "representative_location": "character:2722"
@@ -1028,27 +1204,36 @@
             {
               "term": "cream",
               "language": "en",
-              "occurrence_count": 6,
+              "occurrence_count": 4,
               "candidate_ids": [
-                "CAND-0098",
-                "CAND-0099",
-                "CAND-0103",
-                "CAND-0109",
-                "CAND-0112",
-                "CAND-0116"
+                "CAND-0110",
+                "CAND-0111",
+                "CAND-0122",
+                "CAND-0129"
               ],
               "representative_evidence": "d whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk Infant baby cer",
               "representative_location": "character:7668"
+            },
+            {
+              "term": "sour cream",
+              "language": "en",
+              "occurrence_count": 2,
+              "candidate_ids": [
+                "CAND-0116",
+                "CAND-0125"
+              ],
+              "representative_evidence": "and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk Infant baby cereals Infant formula, follow-up formula, nutrition supplements for toddlers and children Art",
+              "representative_location": "character:7754"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "Lucio",
+          "reviewed_by": "lucio",
           "review_notes": null
         }
       ]
     },
     {
-      "id": "REV-0017",
+      "id": "REV-0019",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-POTASSIUM-CASEINATE",
       "canonical_concept": "potassium caseinate",
@@ -1074,7 +1259,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0085"
+                "CAND-0097"
               ],
               "representative_evidence": "wing in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid",
               "representative_location": "character:7322"
@@ -1087,7 +1272,7 @@
       ]
     },
     {
-      "id": "REV-0018",
+      "id": "REV-0020",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-RENNET-CASEIN",
       "canonical_concept": "rennet casein",
@@ -1113,7 +1298,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0080"
+                "CAND-0092"
               ],
               "representative_evidence": "ces and added sulphites. However, if you have a milk allergy and see one of the following in the list of ingredients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin an",
               "representative_location": "character:7237"
@@ -1126,7 +1311,46 @@
       ]
     },
     {
-      "id": "REV-0019",
+      "id": "REV-0021",
+      "restriction_id": "RES-MILK",
+      "concept_id": "CMP-RICOTTA",
+      "canonical_concept": "ricota",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 1,
+      "aliases": [
+        {
+          "term": "ricota",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ANMAT-GESTION-ALERGENOS",
+          "source_title": "Guía para la Gestión de Alérgenos en la Industria",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
+          "source_sha256": "3c7bdd028c648743032adca146efb6d6f039303a283c617cc71733df495c2f75",
+          "occurrence_count": 1,
+          "denominations": [
+            {
+              "term": "ricota",
+              "language": "es",
+              "occurrence_count": 1,
+              "candidate_ids": [
+                "CAND-0016"
+              ],
+              "representative_evidence": "ueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-bl",
+              "representative_location": "character:14720"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "Lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0022",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-SODIUM-CASEINATE",
       "canonical_concept": "caseinato de sodio",
@@ -1156,21 +1380,21 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0024"
+                "CAND-0028"
               ],
-              "representative_evidence": "para evitar confusiones (por ejemplo, “proteínas\nLos productos envasados son una de las fuentes más         lácteas” en lugar de “caseinato de sodio”). Además,\nseguras de alimentación para un consumidor alérgico,       en ingredientes o aditivos que puedan tener distinto\npor lo cual las empresas deben ser conscientes",
-              "representative_location": "character:77233"
+              "representative_evidence": "vo, en las\ndistintas normativas se ha contemplado la necesidad\nde mencionar el nombre del alimento de origen\npara evitar confusiones (por ejemplo, “proteínas\nlácteas” en lugar de “caseinato de sodio”). Además,\nen ingredientes o aditivos que puedan tener distinto\norigen, éste debe ser claramente especificado (por\nejemplo, “lecitina de huevo” o “lecitina de soja” en\nlugar de “l",
+              "representative_location": "character:53061"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 1,
           "denominations": [
             {
@@ -1178,7 +1402,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0034"
+                "CAND-0039"
               ],
               "representative_evidence": "re are many different ingredients that contain the same major food allergen, but sometimes the ingredients’ names do not indicate their specific food sources. For example, casein, sodium caseinate, and whey are all milk proteins. Although the same allergen can be present in multiple ingredients, its “food source name” (for example, milk) must appear in the ingredient list j",
               "representative_location": "character:4067"
@@ -1200,7 +1424,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0086"
+                "CAND-0098"
               ],
               "representative_evidence": "dients on a product you should not eat it. Beta-lactoglobulin Casein, rennet casein Caseinate (ammonium caseinate, calcium caseinate, magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that",
               "representative_location": "character:7347"
@@ -1213,7 +1437,7 @@
       ]
     },
     {
-      "id": "REV-0020",
+      "id": "REV-0023",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-WHEY",
       "canonical_concept": "lactosuero",
@@ -1243,23 +1467,23 @@
               "language": "es",
               "occurrence_count": 3,
               "candidate_ids": [
-                "CAND-0016",
                 "CAND-0017",
-                "CAND-0028"
+                "CAND-0018",
+                "CAND-0033"
               ],
-              "representative_evidence": "fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteínas           margarina, salsas y aderezos.\n                   lácteas (caseína, caseinato, lactoglobulina,\n                   lactoalbúmina) y lactosa",
-              "representative_location": "character:22602"
+              "representative_evidence": "albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de queso (quesos duros, semi-blandos, bland",
+              "representative_location": "character:14728"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "lucio",
+          "reviewed_by": "Lucio",
           "review_notes": null
         },
         {
           "source_id": "SRC-FDA-LABEL",
           "source_title": "Have Food Allergies Read the Label",
           "source_url": "https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label",
-          "source_sha256": "26dd23919d6c2da941dbafad6dcd0ca3cb8233ef99a2d8a0309e9377ffb2579c",
+          "source_sha256": "952fd2d43a4f0a4ef9b63284b220cdc5d8b9139ecbaeef4d8f0a37142b79ce6e",
           "occurrence_count": 3,
           "denominations": [
             {
@@ -1267,9 +1491,9 @@
               "language": "en",
               "occurrence_count": 3,
               "candidate_ids": [
-                "CAND-0030",
                 "CAND-0035",
-                "CAND-0038"
+                "CAND-0040",
+                "CAND-0043"
               ],
               "representative_evidence": "ne of two ways. The name of the food source of a major allergen must appear: In parentheses following the name of the ingredient. Examples: \"lecithin (soy),\" \"flour (wheat),\" and \"whey (milk)\" -OR- Immediately after or next to the list of ingredients in a \"contains\" statement. Example: \"Contains Wheat, Milk, and Soy.\" The “Contains” statement, if present, must l",
               "representative_location": "character:3066"
@@ -1291,7 +1515,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0093"
+                "CAND-0105"
               ],
               "representative_evidence": "magnesium caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, cur",
               "representative_location": "character:7481"
@@ -1304,7 +1528,7 @@
       ]
     },
     {
-      "id": "REV-0021",
+      "id": "REV-0024",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-WHEY-PROTEIN-CONCENTRATE",
       "canonical_concept": "whey protein concentrate",
@@ -1330,7 +1554,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0094"
+                "CAND-0106"
               ],
               "representative_evidence": "caseinate, potassium caseinate, and sodium caseinate) Delactosed or demineralized whey Hydrolyzed casein Lactalbumin and lactalbumin phosphate Lactoferrin, lactoglobulin Whey and whey protein concentrate Avoid food and products that do not have an ingredient list and read labels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and",
               "representative_location": "character:7490"
@@ -1343,11 +1567,11 @@
       ]
     },
     {
-      "id": "REV-0022",
+      "id": "REV-0025",
       "restriction_id": "RES-MILK",
       "concept_id": "CMP-YOGURT",
       "canonical_concept": "yogur",
-      "concept_type": "food_product",
+      "concept_type": "ingredient",
       "match_type": "RELATED",
       "occurrence_count": 3,
       "aliases": [
@@ -1373,10 +1597,10 @@
               "language": "es",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0015"
+                "CAND-0014"
               ],
-              "representative_evidence": "de leche, manteca, leches cultivadas y               chantilly, crema pastelera, helados, postres y flanes, chocolate, nougat, dulce de leche,\n                   fermentadas (yogurt, kefir, quesos), ricota,         diferentes derivados cárnicos (salchichas, fiambres de cerdo, salamines, salames, etc),\n                   lactosuero, lactosuero en polvo, proteí",
-              "representative_location": "character:22455"
+              "representative_evidence": "huelos, galletitas, panqueques, albóndigas,\nbuñuelos, queso elaborado con lisozima.\n\nLeche\n\nLeche fluida, leche en polvo, crema\nde leche, manteca, leches cultivadas y\nfermentadas (yogurt, kefir, quesos), ricota,\nlactosuero, lactosuero en polvo, proteínas\nlácteas (caseína, caseinato, lactoglobulina,\nlactoalbúmina) y lactosa (azúcar láctea).\n\nTodos los tipos de ques",
+              "representative_location": "character:14696"
             }
           ],
           "review_status": "approved",
@@ -1395,7 +1619,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0127"
+                "CAND-0140"
               ],
               "representative_evidence": "st be declared using these names. Sesame Sesame is often used in bread, baked goods, cereals, dips, and spreads such as hummus. Milk Milk is used to make butter, cheese, cream and yogurt, among other products. Milk is also present in many baked goods, glazes, soups, and sauces. Egg Both the egg yolk and the egg white can cause an allergic reaction. Egg is often us",
               "representative_location": "character:2732"
@@ -1417,7 +1641,7 @@
               "language": "en",
               "occurrence_count": 1,
               "candidate_ids": [
-                "CAND-0104"
+                "CAND-0117"
               ],
               "representative_evidence": "abels every time you shop. Common sources of milk Butter, Buttermilk Cheese, curds Cream, ice cream Ghee and butter fat Kefir (milk drink) Kumiss (fermented milk drink) Sour cream Yogurt Examples of foods and products that contain or often contain milk Infant baby cereals Infant formula, follow-up formula, nutrition supplements for toddlers and children Artificial",
               "representative_location": "character:7765"

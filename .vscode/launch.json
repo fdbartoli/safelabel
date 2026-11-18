@@ -1,0 +1,19 @@
+{
+  // La clave de Gemini la agrega .vscode/settings.json a cualquier ejecución.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SafeLabel",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart"
+    },
+    {
+      "name": "SafeLabel (Chrome)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome"
+    }
+  ]
+}

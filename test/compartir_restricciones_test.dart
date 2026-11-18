@@ -112,7 +112,10 @@ void main() {
           .convert(documento())
           .replaceFirst('leche', r'\u006ceche');
       final recibido = codec.decodificar(texto);
-      expect(recibido.perfiles.first.restricciones.first.grupoAlergenoId, 'leche');
+      expect(
+        recibido.perfiles.first.restricciones.first.grupoAlergenoId,
+        'leche',
+      );
       expect(recibido.nombreCompleto, 'Ana Pérez');
     });
 
@@ -180,10 +183,7 @@ void main() {
         ],
       'nombre de perfil vacío': documento()
         ..['perfiles'] = [
-          {
-            'nombre': ' ',
-            'restricciones': [],
-          },
+          {'nombre': ' ', 'restricciones': []},
         ],
       'restricciones nulas': documento()
         ..['perfiles'] = [
@@ -365,7 +365,8 @@ void main() {
 
     test('informa cuando la selección supera 2048 bytes', () {
       final muchos = [
-        for (var i = 0; i < 50; i++) Perfil(nombre: 'Perfil $i', restricciones: [leche, mani, trigo]),
+        for (var i = 0; i < 50; i++)
+          Perfil(nombre: 'Perfil $i', restricciones: [leche, mani, trigo]),
       ];
       expect(
         () => codec.codificar(muchos, nombre: 'Ana', apellido: 'Pérez'),
@@ -432,22 +433,25 @@ void main() {
       });
       tearDown(() async => db?.close());
 
-      test('exporta los perfiles elegidos, sin IDs ni datos de cuenta', () async {
-        final propios = [
-          await emisor.crear(perfiles[0]),
-          await emisor.crear(perfiles[1]),
-        ];
-        final excluido = await emisor.crear(
-          const Perfil(nombre: 'No exportar', restricciones: [trigo]),
-        );
-        final texto = await servicioEmisor.generarQr(propios);
-        final recibido = servicioEmisor.leerQr(texto);
-        expect(recibido.perfiles.map((p) => p.nombre), ['Sofía', 'Mateo']);
-        expect(texto, isNot(contains(excluido.nombre)));
-        expect(texto, isNot(contains('usuario_id')));
-        expect(texto, isNot(contains('es_personal')));
-        expect(recibido.perfiles.first.restricciones, hasLength(2));
-      });
+      test(
+        'exporta los perfiles elegidos, sin IDs ni datos de cuenta',
+        () async {
+          final propios = [
+            await emisor.crear(perfiles[0]),
+            await emisor.crear(perfiles[1]),
+          ];
+          final excluido = await emisor.crear(
+            const Perfil(nombre: 'No exportar', restricciones: [trigo]),
+          );
+          final texto = await servicioEmisor.generarQr(propios);
+          final recibido = servicioEmisor.leerQr(texto);
+          expect(recibido.perfiles.map((p) => p.nombre), ['Sofía', 'Mateo']);
+          expect(texto, isNot(contains(excluido.nombre)));
+          expect(texto, isNot(contains('usuario_id')));
+          expect(texto, isNot(contains('es_personal')));
+          expect(recibido.perfiles.first.restricciones, hasLength(2));
+        },
+      );
 
       test('el receptor importa todos en una sola operación, inactivos y con sus nombres', () async {
         final originales = [
@@ -465,23 +469,26 @@ void main() {
         expect(todos.last.severidadPara('trigo'), Severidad.leve);
       });
 
-      test('importar no modifica los perfiles ni la selección existentes', () async {
-        final previo = await receptor.crear(
-          const Perfil(nombre: 'Beto', restricciones: [leche]),
-        );
-        await receptor.marcarActivos({previo.id});
-        final texto = await servicioEmisor.generarQr([
-          await emisor.crear(perfiles[0]),
-        ]);
-        await servicioReceptor.guardarCopias(texto);
-        expect((await receptor.obtenerActivos()).single.id, previo.id);
-        expect(
-          (await receptor.obtenerTodos())
-              .firstWhere((p) => p.id == previo.id)
-              .restricciones,
-          hasLength(1),
-        );
-      });
+      test(
+        'importar no modifica los perfiles ni la selección existentes',
+        () async {
+          final previo = await receptor.crear(
+            const Perfil(nombre: 'Beto', restricciones: [leche]),
+          );
+          await receptor.marcarActivos({previo.id});
+          final texto = await servicioEmisor.generarQr([
+            await emisor.crear(perfiles[0]),
+          ]);
+          await servicioReceptor.guardarCopias(texto);
+          expect((await receptor.obtenerActivos()).single.id, previo.id);
+          expect(
+            (await receptor.obtenerTodos())
+                .firstWhere((p) => p.id == previo.id)
+                .restricciones,
+            hasLength(1),
+          );
+        },
+      );
 
       test('acepta perfiles sin restricciones', () async {
         final texto = await servicioEmisor.generarQr([
@@ -547,113 +554,124 @@ void main() {
     });
   }
 
-  test('un fallo SQLite al insertar restricciones revierte todos los perfiles', () async {
-    final db = await BdLocal.abrir(
-      fabrica: databaseFactoryFfi,
-      ruta: inMemoryDatabasePath,
-    );
-    addTearDown(db.close);
-    final repo = RepositorioPerfilesSqlite(
-      db,
-      usuarioId: 'r',
-      gruposValidos: grupos,
-    );
-    final previo = await repo.crear(
-      const Perfil(nombre: 'Previo', restricciones: [leche]),
-    );
-    await repo.marcarActivos({previo.id});
-    final antes = await db.query('perfil');
-    await db.execute(
-      '''CREATE TRIGGER fallo_importar BEFORE INSERT ON restriccion_perfil
+  test(
+    'un fallo SQLite al insertar restricciones revierte todos los perfiles',
+    () async {
+      final db = await BdLocal.abrir(
+        fabrica: databaseFactoryFfi,
+        ruta: inMemoryDatabasePath,
+      );
+      addTearDown(db.close);
+      final repo = RepositorioPerfilesSqlite(
+        db,
+        usuarioId: 'r',
+        gruposValidos: grupos,
+      );
+      final previo = await repo.crear(
+        const Perfil(nombre: 'Previo', restricciones: [leche]),
+      );
+      await repo.marcarActivos({previo.id});
+      final antes = await db.query('perfil');
+      await db.execute(
+        '''CREATE TRIGGER fallo_importar BEFORE INSERT ON restriccion_perfil
       WHEN NEW.grupo_alergeno_id = 'mani'
       BEGIN SELECT RAISE(ABORT, 'fallo simulado'); END''',
-    );
-    final servicio = ServicioCompartirRestricciones(
-      repositorio: repo,
-      gruposValidos: grupos,
-      nombrePropietario: 'Ana',
-      apellidoPropietario: 'Pérez',
-    );
-    final textoConMani = servicio.codec.codificar(
-      [
-        const Perfil(nombre: 'Con leche', restricciones: [leche]),
-        const Perfil(nombre: 'Con maní', restricciones: [mani]),
-      ],
-      nombre: 'Ana',
-      apellido: 'Pérez',
-    );
-    await expectLater(
-      servicio.guardarCopias(textoConMani),
-      throwsA(isA<DatabaseException>()),
-    );
-    expect(await db.query('perfil'), antes);
-    expect((await repo.obtenerActivos()).single.id, previo.id);
-    expect(await db.query('restriccion_perfil'), hasLength(1));
-  });
+      );
+      final servicio = ServicioCompartirRestricciones(
+        repositorio: repo,
+        gruposValidos: grupos,
+        nombrePropietario: 'Ana',
+        apellidoPropietario: 'Pérez',
+      );
+      final textoConMani = servicio.codec.codificar(
+        [
+          const Perfil(nombre: 'Con leche', restricciones: [leche]),
+          const Perfil(nombre: 'Con maní', restricciones: [mani]),
+        ],
+        nombre: 'Ana',
+        apellido: 'Pérez',
+      );
+      await expectLater(
+        servicio.guardarCopias(textoConMani),
+        throwsA(isA<DatabaseException>()),
+      );
+      expect(await db.query('perfil'), antes);
+      expect((await repo.obtenerActivos()).single.id, previo.id);
+      expect(await db.query('restriccion_perfil'), hasLength(1));
+    },
+  );
 
-  test('un grupo heredado desconocido impide exportar, no se omite del QR', () async {
-    final db = await BdLocal.abrir(
-      fabrica: databaseFactoryFfi,
-      ruta: inMemoryDatabasePath,
-    );
-    addTearDown(db.close);
-    final repo = RepositorioPerfilesSqlite(
-      db,
-      usuarioId: 'r',
-      gruposValidos: grupos,
-    );
-    final perfil = await repo.crear(
-      const Perfil(nombre: 'Heredado', restricciones: [leche]),
-    );
-    await db.insert('restriccion_perfil', {
-      'perfil_id': int.parse(perfil.id),
-      'grupo_alergeno_id': 'grupo_heredado',
-      'severidad': 'anafilaxia',
-    });
-    final servicio = ServicioCompartirRestricciones(
-      repositorio: repo,
-      gruposValidos: grupos,
-      nombrePropietario: 'Ana',
-      apellidoPropietario: 'Pérez',
-    );
-    final conHeredado = (await repo.obtenerTodos()).single;
-    await expectLater(
-      servicio.generarQr([conHeredado]),
-      throwsA(isA<ErrorRestriccionesCompartidas>()),
-    );
-    expect(conHeredado.restricciones, hasLength(2));
-  });
+  test(
+    'un grupo heredado desconocido impide exportar, no se omite del QR',
+    () async {
+      final db = await BdLocal.abrir(
+        fabrica: databaseFactoryFfi,
+        ruta: inMemoryDatabasePath,
+      );
+      addTearDown(db.close);
+      final repo = RepositorioPerfilesSqlite(
+        db,
+        usuarioId: 'r',
+        gruposValidos: grupos,
+      );
+      final perfil = await repo.crear(
+        const Perfil(nombre: 'Heredado', restricciones: [leche]),
+      );
+      await db.insert('restriccion_perfil', {
+        'perfil_id': int.parse(perfil.id),
+        'grupo_alergeno_id': 'grupo_heredado',
+        'severidad': 'anafilaxia',
+      });
+      final servicio = ServicioCompartirRestricciones(
+        repositorio: repo,
+        gruposValidos: grupos,
+        nombrePropietario: 'Ana',
+        apellidoPropietario: 'Pérez',
+      );
+      final conHeredado = (await repo.obtenerTodos()).single;
+      await expectLater(
+        servicio.generarQr([conHeredado]),
+        throwsA(isA<ErrorRestriccionesCompartidas>()),
+      );
+      expect(conHeredado.restricciones, hasLength(2));
+    },
+  );
 
-  test('los perfiles importados persisten tras cerrar y reabrir SQLite', () async {
-    final temporal = Directory.systemTemp.createTempSync('safelabel_compartir_');
-    addTearDown(() => temporal.deleteSync(recursive: true));
-    final ruta = p.join(temporal.path, 'perfiles.db');
-    var db = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
-    var repo = RepositorioPerfilesSqlite(
-      db,
-      usuarioId: 'r',
-      gruposValidos: grupos,
-    );
-    final servicio = ServicioCompartirRestricciones(
-      repositorio: repo,
-      gruposValidos: grupos,
-      nombrePropietario: 'Ana',
-      apellidoPropietario: 'Pérez',
-    );
-    final creados = await servicio.guardarCopias(qr);
-    await db.close();
-    db = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
-    addTearDown(db.close);
-    repo = RepositorioPerfilesSqlite(
-      db,
-      usuarioId: 'r',
-      gruposValidos: grupos,
-    );
-    expect(await db.getVersion(), 3);
-    expect(
-      (await repo.obtenerTodos()).map((p) => p.id),
-      creados.map((p) => p.id),
-    );
-    expect(await repo.obtenerActivos(), isEmpty);
-  });
+  test(
+    'los perfiles importados persisten tras cerrar y reabrir SQLite',
+    () async {
+      final temporal = Directory.systemTemp.createTempSync(
+        'safelabel_compartir_',
+      );
+      addTearDown(() => temporal.deleteSync(recursive: true));
+      final ruta = p.join(temporal.path, 'perfiles.db');
+      var db = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
+      var repo = RepositorioPerfilesSqlite(
+        db,
+        usuarioId: 'r',
+        gruposValidos: grupos,
+      );
+      final servicio = ServicioCompartirRestricciones(
+        repositorio: repo,
+        gruposValidos: grupos,
+        nombrePropietario: 'Ana',
+        apellidoPropietario: 'Pérez',
+      );
+      final creados = await servicio.guardarCopias(qr);
+      await db.close();
+      db = await BdLocal.abrir(fabrica: databaseFactoryFfi, ruta: ruta);
+      addTearDown(db.close);
+      repo = RepositorioPerfilesSqlite(
+        db,
+        usuarioId: 'r',
+        gruposValidos: grupos,
+      );
+      expect(await db.getVersion(), BdLocal.version);
+      expect(
+        (await repo.obtenerTodos()).map((p) => p.id),
+        creados.map((p) => p.id),
+      );
+      expect(await repo.obtenerActivos(), isEmpty);
+    },
+  );
 }

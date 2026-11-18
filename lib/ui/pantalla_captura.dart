@@ -10,6 +10,7 @@ import '../ocr/servicio_ocr_mlkit.dart';
 import '../ocr/triage_confianza.dart';
 import '../pipeline/analizador.dart';
 import '../sugerencias/gestor_reemplazos.dart';
+import '../sugerencias/info_ingrediente.dart';
 import 'pantalla_resultado.dart';
 
 /// Paso 1 del Flujo B: cámara con guía activa de captura.
@@ -111,6 +112,8 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
       // bloqueante, y quedan también en el overlay para una eventual recaptura.
       setState(() => _sugerencias = sugerencias);
 
+      // Se crea una vez: guarda en memoria lo que ya respondió la IA.
+      final gestorInfo = GestorInfoIngredientes.desdeConfiguracion();
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => PantallaResultado(
@@ -120,6 +123,7 @@ class _PantallaCapturaState extends State<PantallaCaptura> {
               widget.base,
               widget.perfilesActivos,
             ),
+            gestorInfo: gestorInfo,
           ),
         ),
       );

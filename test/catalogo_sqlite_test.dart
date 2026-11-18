@@ -34,8 +34,8 @@ void main() {
   test('carga la versión y los conceptos de la SQLite', () async {
     final catalogo = await repositorio.cargarCatalogo();
 
-    expect(catalogo.version, '0.11.0');
-    expect(catalogo.conceptos, hasLength(42));
+    expect(catalogo.version, '0.15.0');
+    expect(catalogo.conceptos, hasLength(86));
   });
 
   test('resuelve denominaciones y mapea la restricción al perfil', () async {
@@ -75,7 +75,7 @@ void main() {
         perfilesActivos: const [perfil],
       );
 
-      expect(resultado.versionBase, '0.11.0');
+      expect(resultado.versionBase, '0.15.0');
       expect(resultado.coincidencias, hasLength(1));
       expect(resultado.coincidencias.single.nombreEnBase, 'caseinato de sodio');
       expect(resultado.coincidencias.single.grupoAlergeno, 'leche');
@@ -114,6 +114,43 @@ void main() {
     expect(resultado.itemsAnalizados, 1);
   });
 
+  test(
+    'el analizador separa conjunciones con el catálogo y descarta porcentajes',
+    () async {
+      final catalogo = await repositorio.cargarCatalogo();
+      final analizador = Analizador(baseMinima(), catalogo: catalogo);
+
+      final resultado = analizador.analizar(
+        const LecturaOcr([
+          LineaOcr(
+            texto:
+                'Ingredientes: maní tostado (40%), '
+                'aceite de palma interesterificado y fraccionado, '
+                'sorbato potásico y benzoato sódico, '
+                'aceite de girasol alto oleico y aceite de soja totalmente '
+                'hidrogenado, aroma y aroma de humo.',
+            confianza: 0.99,
+            indice: 0,
+          ),
+        ]),
+        perfilesActivos: const [],
+      );
+
+      expect(resultado.ingredientesLeidos, [
+        'mani tostado',
+        'aceite de palma interesterificado y fraccionado',
+        'sorbato potasico',
+        'benzoato sodico',
+        'aceite de girasol alto oleico',
+        'aceite de soja totalmente hidrogenado',
+        'aroma',
+        'aroma de humo',
+      ]);
+      expect(resultado.totalItems, 8);
+      expect(resultado.noReconocidos, isEmpty);
+    },
+  );
+
   test('resuelve términos de reconocimiento curados', () async {
     final lecheEntera = await repositorio.buscar('leche entera');
     final harina = await repositorio.buscar('harina enriquecida de trigo');
@@ -126,8 +163,9 @@ void main() {
     expect(harina.estado, EstadoConsultaConocimiento.matched);
     expect(harina.coincidencias.single.restriccion, 'Enfermedad celíaca');
 
-    expect(almendras.estado, EstadoConsultaConocimiento.recognized);
-    expect(almendras.coincidencias.single.tieneRestriccion, isFalse);
+    expect(almendras.estado, EstadoConsultaConocimiento.matched);
+    expect(almendras.coincidencias.single.tieneRestriccion, isTrue);
+    expect(almendras.coincidencias.single.restriccion, 'Frutas secas de árbol');
 
     expect(cacao.estado, EstadoConsultaConocimiento.recognized);
     expect(cacao.coincidencias.single.tieneRestriccion, isFalse);
@@ -137,8 +175,10 @@ void main() {
     final agua = await repositorio.buscar('agua');
     final aceite = await repositorio.buscar('aceite de girasol');
     final carbonato = await repositorio.buscar('carbonato de calcio');
+    final aroma = await repositorio.buscar('aroma');
+    final aromaNatural = await repositorio.buscar('aroma natural');
 
-    for (final resultado in [agua, aceite, carbonato]) {
+    for (final resultado in [agua, aceite, carbonato, aroma, aromaNatural]) {
       expect(resultado.estado, EstadoConsultaConocimiento.recognized);
       expect(resultado.coincidencias.single.tieneRestriccion, isFalse);
     }
@@ -158,12 +198,14 @@ void main() {
     });
 
     test('un nombre largo que contiene un término con restricción', () async {
-      final r = await repositorio.buscar('Harina de trigo tipo 000');
+      final r = await repositorio.buscar(
+        'Harina de trigo tipo 000 enriquecida con hierro',
+      );
       expect(r.estado, EstadoConsultaConocimiento.matched);
       final c = r.coincidencias.single;
       expect(c.restriccion, 'Enfermedad celíaca');
       expect(c.coincidencia, TipoCoincidenciaConsulta.contiene);
-      expect(c.denominacion, 'harina de trigo');
+      expect(c.denominacion, 'harina de trigo tipo 000 enriquecida');
     });
 
     test('un error de escritura coincide de forma aproximada', () async {
@@ -182,7 +224,7 @@ void main() {
     });
 
     test('un término sin relación no se presenta como desconocido', () async {
-      final r = await repositorio.buscar('Almendra');
+      final r = await repositorio.buscar('Huevo');
       expect(r.estado, EstadoConsultaConocimiento.recognized);
       expect(r.coincidencias.single.tieneRestriccion, isFalse);
     });
@@ -201,6 +243,19 @@ void main() {
       final r = await repositorio.buscar('   ');
       expect(r.estado, EstadoConsultaConocimiento.unknown);
       expect(r.coincidencias, isEmpty);
+    });
+
+    test('resuelve peanuts y lo mapea al perfil de maní', () async {
+      final catalogo = await repositorio.cargarCatalogo();
+      final concepto = catalogo.matchExacto('peanuts');
+
+      expect(concepto, isNotNull);
+      expect(concepto!.nombreCanonico, 'maní');
+
+      final relacion = concepto.relaciones.single;
+      expect(relacion.restriccionId, 'RES-PEANUT');
+      expect(relacion.perfilId, 'mani');
+      expect(relacion.evidencias, isNotEmpty);
     });
   });
 }

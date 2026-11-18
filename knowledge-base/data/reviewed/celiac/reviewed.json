@@ -219,7 +219,7 @@
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-COUSCOUS",
       "canonical_concept": "cuscús",
-      "concept_type": "food_product",
+      "concept_type": "ingredient",
       "match_type": "RELATED",
       "occurrence_count": 2,
       "aliases": [
@@ -1044,11 +1044,56 @@
     {
       "id": "REV-0006",
       "restriction_id": "RES-CELIAC",
+      "concept_id": "CMP-LIQUID-MALT",
+      "canonical_concept": "malta líquida",
+      "concept_type": "ingredient",
+      "match_type": "RELATED",
+      "occurrence_count": 7,
+      "aliases": [
+        {
+          "term": "malta líquida",
+          "language": "es"
+        }
+      ],
+      "sources": [
+        {
+          "source_id": "SRC-ARG-CAA-CAP-XIII",
+          "source_title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
+          "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
+          "source_sha256": "e63afb5443981142404af8c744a0ee1fa6d18472f61f055bf86a101327233780",
+          "occurrence_count": 7,
+          "denominations": [
+            {
+              "term": "malta líquida",
+              "language": "es",
+              "occurrence_count": 7,
+              "candidate_ids": [
+                "CAND-0633",
+                "CAND-0634",
+                "CAND-0662",
+                "CAND-0664",
+                "CAND-0668",
+                "CAND-0669",
+                "CAND-0671"
+              ],
+              "representative_evidence": "o de malta podrá ser reemplazada por adjuntos cerveceros.\nLa cerveza negra podrá ser azucarada.\nLa cerveza podrá ser adicionada de colorantes, saborizantes y aromatizantes.\n\n1.1.2 Malta Líquida\nSe entiende por malta líquida la bebida no alcohólica, resultante del mosto de cebada\nmalteada o de extracto de malta y agua potable, sometido previamente a un proceso\nde cocción,",
+              "representative_location": "character:668"
+            }
+          ],
+          "review_status": "approved",
+          "reviewed_by": "lucio",
+          "review_notes": null
+        }
+      ]
+    },
+    {
+      "id": "REV-0007",
+      "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-MALT",
       "canonical_concept": "malta",
       "concept_type": "ingredient",
       "match_type": "RELATED",
-      "occurrence_count": 29,
+      "occurrence_count": 22,
       "aliases": [
         {
           "term": "malt",
@@ -1092,15 +1137,13 @@
           "source_title": "Código Alimentario Argentino - Capítulo XIII: Bebidas fermentadas",
           "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
           "source_sha256": "e63afb5443981142404af8c744a0ee1fa6d18472f61f055bf86a101327233780",
-          "occurrence_count": 23,
+          "occurrence_count": 16,
           "denominations": [
             {
               "term": "malta",
               "language": "es",
-              "occurrence_count": 23,
+              "occurrence_count": 16,
               "candidate_ids": [
-                "CAND-0633",
-                "CAND-0634",
                 "CAND-0640",
                 "CAND-0642",
                 "CAND-0644",
@@ -1114,21 +1157,16 @@
                 "CAND-0659",
                 "CAND-0660",
                 "CAND-0661",
-                "CAND-0662",
                 "CAND-0663",
-                "CAND-0664",
                 "CAND-0665",
-                "CAND-0668",
-                "CAND-0669",
-                "CAND-0670",
-                "CAND-0671"
+                "CAND-0670"
               ],
-              "representative_evidence": "o de malta podrá ser reemplazada por adjuntos cerveceros.\nLa cerveza negra podrá ser azucarada.\nLa cerveza podrá ser adicionada de colorantes, saborizantes y aromatizantes.\n\n1.1.2 Malta Líquida\nSe entiende por malta líquida la bebida no alcohólica, resultante del mosto de cebada\nmalteada o de extracto de malta y agua potable, sometido previamente a un proceso\nde",
-              "representative_location": "character:668"
+              "representative_evidence": "reada o no con colorante caramelo,\ncarbonatada o no. Una parte de la cebada malteada o de extracto de malta podrá ser\nreemplazada por adjuntos cerveceros.\n\n1.1.3 Cebada Malteada o Malta\nSe entiende exclusivamente por cebada malteada o malta al grano de cebada\ncervecera sometido a germinación parcial y posterior deshidratación y/o tostado en\ncondiciones tecnológic",
+              "representative_location": "character:1074"
             }
           ],
           "review_status": "approved",
-          "reviewed_by": "Lucio",
+          "reviewed_by": "lucio",
           "review_notes": null
         },
         {
@@ -1180,7 +1218,7 @@
       ]
     },
     {
-      "id": "REV-0007",
+      "id": "REV-0008",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-MALT-EXTRACT",
       "canonical_concept": "extracto de malta",
@@ -1226,7 +1264,7 @@
       ]
     },
     {
-      "id": "REV-0008",
+      "id": "REV-0009",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-OATS",
       "canonical_concept": "avena",
@@ -1399,7 +1437,7 @@
       ]
     },
     {
-      "id": "REV-0009",
+      "id": "REV-0010",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-RYE",
       "canonical_concept": "centeno",
@@ -1572,7 +1610,7 @@
       ]
     },
     {
-      "id": "REV-0010",
+      "id": "REV-0011",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-SPELT",
       "canonical_concept": "espelta",
@@ -1763,7 +1801,7 @@
       ]
     },
     {
-      "id": "REV-0011",
+      "id": "REV-0012",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-TRITICALE",
       "canonical_concept": "triticale",
@@ -1840,7 +1878,7 @@
       ]
     },
     {
-      "id": "REV-0012",
+      "id": "REV-0013",
       "restriction_id": "RES-CELIAC",
       "concept_id": "CMP-WHEAT",
       "canonical_concept": "trigo",

@@ -31,6 +31,13 @@ class Analizador {
   final VerificacionCruzada _verificacion;
   static const _normalizador = Normalizador();
 
+  /// Grupos sobre los que la base tiene al menos un ingrediente relacionado.
+  /// Un perfil con otro grupo nunca puede dar verde: la base no lo detecta.
+  late final Set<String> _gruposCubiertos = {
+    for (final c in catalogo.conceptos)
+      for (final r in c.relaciones) r.perfilId,
+  };
+
   ResultadoAnalisis analizar(
     LecturaOcr lectura, {
     required List<Perfil> perfilesActivos,
@@ -42,7 +49,10 @@ class Analizador {
     final declaracion = _verificacion.analizar(t.textoLegible);
 
     // Paso 4: normalización de la lista de ingredientes.
-    final items = _normalizador.separarIngredientes(t.textoLegible);
+    final items = _normalizador.separarIngredientes(
+      t.textoLegible,
+      existeTerminoExacto: (termino) => catalogo.matchExacto(termino) != null,
+    );
 
     // Paso 5: match.
     final matches = _matcher.matchTodos(items);
@@ -204,7 +214,20 @@ class Analizador {
 
     final itemsAnalizados = items.length - noReconocidos.length;
 
+    final semaforos = [
+      for (final p in perfilesActivos)
+        _semaforoDe(
+          p,
+          items: items,
+          coincidencias: coincidencias,
+          noReconocidos: noReconocidos,
+          noLegibles: noLegibles.length,
+          declaracion: declaracion,
+        ),
+    ];
+
     return ResultadoAnalisis(
+      semaforos: semaforos,
       versionBase: catalogo.version,
       perfilesActivos: [for (final p in perfilesActivos) p.nombre],
       coincidencias: coincidencias,
@@ -217,6 +240,90 @@ class Analizador {
       itemsAnalizados: itemsAnalizados < 0 ? 0 : itemsAnalizados,
       severidadMaxima: severidadMaxima,
       ingredientesLeidos: [for (final i in items) i.textoNormalizado],
+    );
+  }
+
+  /// Semáforo de un perfil: rojo si alguna restricción del perfil coincide;
+  /// verde solo si no quedó nada sin verificar para ese perfil; si no, ámbar.
+  SemaforoPerfil _semaforoDe(
+    Perfil perfil, {
+    required List<ItemNormalizado> items,
+    required List<HallazgoPerfil> coincidencias,
+    required List<ItemNoReconocido> noReconocidos,
+    required int noLegibles,
+    required DeclaracionAlergenos declaracion,
+  }) {
+    String nombreGrupo(String id) => base.grupo(id)?.nombre ?? id;
+    final propios = [
+      for (final h in coincidencias)
+        if (h.perfilesAfectados.contains(perfil.nombre)) h,
+    ];
+    final textosNoReconocidos = {for (final n in noReconocidos) n.texto};
+
+    // Detalle: cada ingrediente leído, con su estado para este perfil.
+    final ingredientes = <IngredienteSemaforo>[
+      for (final i in items)
+        () {
+          final choques = [
+            for (final h in propios)
+              if (h.origen != OrigenHallazgo.lineaContiene &&
+                  h.textoLeido == i.textoOriginal)
+                h.grupoAlergeno,
+          ];
+          if (choques.isNotEmpty) {
+            return IngredienteSemaforo(
+              texto: i.textoNormalizado,
+              estado: EstadoIngrediente.choca,
+              motivo: choques.toSet().join(', '),
+            );
+          }
+          return IngredienteSemaforo(
+            texto: i.textoNormalizado,
+            estado: textosNoReconocidos.contains(i.textoOriginal)
+                ? EstadoIngrediente.noReconocido
+                : EstadoIngrediente.noChoca,
+          );
+        }(),
+      // Lo que solo declara la línea CONTIENE también choca (sección 5.3).
+      for (final h in propios)
+        if (h.origen == OrigenHallazgo.lineaContiene)
+          IngredienteSemaforo(
+            texto: 'Declarado en la etiqueta: contiene ${h.grupoAlergeno}',
+            estado: EstadoIngrediente.choca,
+            motivo: h.grupoAlergeno,
+            declarado: true,
+          ),
+    ];
+
+    final grupos = [for (final r in perfil.restricciones) r.grupoAlergenoId];
+    final (color, motivos) = SemaforoPerfil.decidir(
+      perfil: perfil.nombre,
+      choques: [
+        for (final i in ingredientes)
+          if (i.estado == EstadoIngrediente.choca) i,
+      ],
+      noReconocidos: [
+        for (final i in ingredientes)
+          if (i.estado == EstadoIngrediente.noReconocido) i.texto,
+      ],
+      noLegibles: noLegibles,
+      totalItems: items.length,
+      trazas: [
+        for (final id in grupos)
+          if (declaracion.puedeContener.contains(id)) nombreGrupo(id),
+      ],
+      sinCobertura: [
+        for (final id in grupos)
+          if (!_gruposCubiertos.contains(id)) nombreGrupo(id),
+      ],
+    );
+    return SemaforoPerfil(
+      perfil: perfil.nombre,
+      avatar: perfil.semillaAvatar,
+      restricciones: [for (final id in grupos) nombreGrupo(id)],
+      color: color,
+      motivos: motivos,
+      ingredientes: ingredientes,
     );
   }
 

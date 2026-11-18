@@ -2,10 +2,50 @@
 
 Este directorio contiene el procedimiento para generar la SQLite utilizada por SafeLabel.
 
-La versión `0.10.1` contempla relaciones con dos restricciones alimentarias:
+La versión `0.15.0` contempla relaciones con cuatro restricciones alimentarias:
 
 - leche;
-- enfermedad celíaca / cereales con gluten.
+- enfermedad celíaca / cereales con gluten;
+- maní;
+- frutas secas de árbol.
+
+La SQLite publicada contiene 86 conceptos, 51 relaciones, 630 denominaciones
+(32 curadas) y 154 evidencias. La restricción de frutas secas de árbol incluye
+almendra, avellana, castaña, castaña de cajú, castaña o nuez de Brasil, nuez,
+pecán, pistacho, piñón y macadamia. Maní continúa modelado como una restricción
+independiente.
+
+El catálogo global reconoce además chocolate, lecitina, PGPR, dextrosa, TBHQ y
+ácido cítrico. Las denominaciones `manteca de cacao` y `cocoa butter` se
+resuelven explícitamente como cacao, evitando que la palabra `butter` produzca
+una coincidencia incorrecta con leche. La lecitina sin origen declarado se
+mantiene como ingrediente neutral; expresiones como `lecitina de soja` se
+resuelven como soja. También se incorporan presentaciones en polvo de leche,
+lactosuero, crema, queso, yogur, huevo y cacao, además de términos curados como
+`leche de almendras`, `almond milk`, `pistachio nuts`, `pasta de nuez` y
+`pasta de almendras`.
+
+La versión `0.15.0` amplía el catálogo a partir de etiquetas de salsa barbacoa
+y de un producto de maní. Incorpora como conceptos reconocidos, sin agregar
+nuevas relaciones con restricciones: puré de tomate, vinagre, mostaza, jarabe
+de glucosa-fructosa, almidón modificado de maíz, ajo, colorante caramelo,
+sorbato potásico, benzoato sódico, aroma de humo, aromatizante artificial,
+aceite vegetal, aceite de palma, aceite de soja, aroma y aroma natural. También
+agrega variantes de maní tostado, leche entera en polvo y aceite de girasol
+alto oleico.
+
+La expresión observada `aroma a avellana`, declarada en la etiqueta como
+aromatizante artificial, se resuelve mediante un término curado como
+aromatizante artificial y no como avellana. Esta decisión evita inferir una
+relación con frutas secas únicamente por el texto del saborizante.
+
+Los términos genéricos `aroma`, `aromatizante`, `saborizante`, `esencia` y sus
+variantes naturales se reconocen como categorías válidas de rotulado, sin
+inferir una composición ni relacionarlas automáticamente con una restricción.
+Queda pendiente distinguir en el modelo los ingredientes reconocidos cuya
+composición no está especificada. Las expresiones que coordinan varios
+ingredientes mediante `y` no se agregan como denominaciones compuestas: su
+separación corresponde al normalizador de la aplicación.
 
 Además, el catálogo puede contener ingredientes conocidos que todavía no están
 relacionados con una restricción. Esto permite distinguir tres resultados:
@@ -105,7 +145,26 @@ Descargar desde el navegador y guardar con el nombre indicado:
    data/manual/health-canada-gluten-fr.html
    ```
 
-La definición completa se encuentra en `config/sources.json`. La fuente de FDA se descarga automáticamente.
+8. [Etiquetado de alérgenos — Canadian Food Inspection Agency](https://inspection.canada.ca/en/food-labels/labelling/industry/food-allergen-labelling)
+
+   Guardar la página como HTML:
+
+   ```text
+   data/manual/cfia-food-allergen-labelling.html
+   ```
+
+9. [Código Alimentario Argentino — Capítulo XIII: Bebidas fermentadas](https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf)
+
+   ```text
+   data/manual/arg-caa-capitulo-xiii.pdf
+   ```
+
+Además, el pipeline descarga automáticamente:
+
+- [Have Food Allergies? Read the Label — FDA](https://www.fda.gov/consumers/consumer-updates/have-food-allergies-read-label);
+- [Elaboradores de alimentos — alérgenos de declaración obligatoria — ANMAT](https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos).
+
+La definición completa se encuentra en `config/sources.json`.
 
 ## 2. Preparar las fuentes
 
@@ -115,7 +174,21 @@ python3 scripts/10_download.py \
   --raw-dir data/raw
 ```
 
-Genera las fuentes procesables y `data/raw/manifest.json`.
+Genera las fuentes procesables y `data/raw/manifest.json`. Las fuentes HTTP que
+ya tienen una copia válida en `data/raw` se reutilizan para que una regeneración
+sea reproducible. Para solicitar explícitamente una nueva descarga se agrega:
+
+```bash
+python3 scripts/10_download.py \
+  --sources config/sources.json \
+  --raw-dir data/raw \
+  --refresh
+```
+
+Los PDF usan extracción con conservación de disposición (`layout`) por defecto.
+Una fuente multicolumna puede declarar `"pdf_extraction": "flow"` en
+`config/sources.json`; actualmente se aplica a la Guía para la Gestión de
+Alérgenos en la Industria de ANMAT.
 
 ## 3. Extraer candidatos
 
@@ -139,6 +212,26 @@ python3 scripts/20_extract.py \
   --output data/candidates/celiac/candidates.json
 ```
 
+Maní:
+
+```bash
+python3 scripts/20_extract.py \
+  --manifest data/raw/manifest.json \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/peanut/restriction.json \
+  --output data/candidates/peanut/candidates.json
+```
+
+Frutas secas de árbol:
+
+```bash
+python3 scripts/20_extract.py \
+  --manifest data/raw/manifest.json \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/tree_nuts/restriction.json \
+  --output data/candidates/tree_nuts/candidates.json
+```
+
 ## 4. Preparar la revisión
 
 Leche:
@@ -159,10 +252,31 @@ python3 scripts/30_prepare_review.py \
   --output data/reviewed/celiac/review.json
 ```
 
+Maní:
+
+```bash
+python3 scripts/30_prepare_review.py \
+  --candidates data/candidates/peanut/candidates.json \
+  --previous-reviewed data/reviewed/peanut/reviewed.json \
+  --output data/reviewed/peanut/review.json
+```
+
+Frutas secas de árbol:
+
+```bash
+python3 scripts/30_prepare_review.py \
+  --candidates data/candidates/tree_nuts/candidates.json \
+  --previous-reviewed data/reviewed/tree_nuts/reviewed.json \
+  --output data/reviewed/tree_nuts/review.json
+```
+
 En la primera ejecución de una restricción se omite `--previous-reviewed`.
 Cuando existe una revisión anterior, el script conserva las decisiones cuya
-restricción, concepto, fuente y evidencia no cambiaron. Las vinculaciones
-nuevas o modificadas quedan pendientes.
+restricción, concepto, fuente, denominaciones y fragmentos de evidencia no
+cambiaron. Una variación exclusiva del SHA del documento completo no obliga a
+revisar nuevamente una evidencia idéntica; la nueva huella igualmente queda
+registrada para trazabilidad. Las vinculaciones nuevas o con evidencia
+modificada quedan pendientes.
 
 ## 5. Revisar las vinculaciones
 
@@ -184,6 +298,24 @@ python3 scripts/40_review_sources.py \
   --reviewed-by "NOMBRE"
 ```
 
+Maní:
+
+```bash
+python3 scripts/40_review_sources.py \
+  --input data/reviewed/peanut/review.json \
+  --output data/reviewed/peanut/reviewed.json \
+  --reviewed-by "NOMBRE"
+```
+
+Frutas secas de árbol:
+
+```bash
+python3 scripts/40_review_sources.py \
+  --input data/reviewed/tree_nuts/review.json \
+  --output data/reviewed/tree_nuts/reviewed.json \
+  --reviewed-by "NOMBRE"
+```
+
 Opciones:
 
 - `a`: aprobar.
@@ -194,6 +326,12 @@ Opciones:
 Si `reviewed.json` existe, el script incorpora el nuevo `review.json` y conserva
 las decisiones en curso que correspondan exactamente a evidencias sin cambios.
 Solo solicita las vinculaciones pendientes.
+
+El idioma registrado para una denominación proviene del alias del catálogo; no
+se detecta automáticamente a partir del fragmento. Si una misma escritura
+existe en varios idiomas y queda atribuida al idioma incorrecto, se rechaza esa
+vinculación concreta. Esto no elimina el alias ni invalida las demás fuentes
+aprobadas para el concepto.
 
 ## 6. Construir el conocimiento de cada restricción
 
@@ -219,6 +357,26 @@ python3 scripts/60_build_knowledge.py \
   --output data/knowledge/celiac.json
 ```
 
+Maní:
+
+```bash
+python3 scripts/60_build_knowledge.py \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/peanut/restriction.json \
+  --reviewed data/reviewed/peanut/reviewed.json \
+  --output data/knowledge/peanut.json
+```
+
+Frutas secas de árbol:
+
+```bash
+python3 scripts/60_build_knowledge.py \
+  --compounds config/compounds.json \
+  --restriction config/restrictions/tree_nuts/restriction.json \
+  --reviewed data/reviewed/tree_nuts/reviewed.json \
+  --output data/knowledge/tree_nuts.json
+```
+
 ## 7. Consolidar el conocimiento
 
 ```bash
@@ -228,6 +386,8 @@ python3 scripts/70_consolidate_knowledge.py \
   --inputs \
     data/knowledge/milk.json \
     data/knowledge/celiac.json \
+    data/knowledge/peanut.json \
+    data/knowledge/tree_nuts.json \
   --output data/knowledge/knowledge.json
 ```
 
@@ -249,7 +409,7 @@ global.
 python3 scripts/80_build_sqlite.py \
   --knowledge data/knowledge/knowledge.json \
   --output data/output/safelabel.sqlite \
-  --version 0.10.1
+  --version 0.15.0
 ```
 
 ## 9. Validar SQLite
@@ -274,20 +434,39 @@ como `RECOGNIZED`.
 ```bash
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "caseinato de sodio"
+  "lactosa"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
-  "carbonato de calcio"
+  "leche de almendras"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "pistachio nuts"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "huevo en polvo"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "maní tostado"
+
+python3 scripts/90_query_ingredient.py \
+  data/output/safelabel.sqlite \
+  "aroma a avellana"
 
 python3 scripts/90_query_ingredient.py \
   data/output/safelabel.sqlite \
   "ingrediente inexistente"
 ```
 
-Los resultados esperados son, respectivamente, `MATCHED`, `RECOGNIZED` y
-`UNKNOWN`. Cuando corresponde, la respuesta incluye todas las restricciones
-relacionadas con la denominación consultada.
+Los resultados esperados son, respectivamente, `MATCHED`, `MATCHED`, `MATCHED`,
+`RECOGNIZED`, `MATCHED`, `RECOGNIZED` y `UNKNOWN`. `Leche de almendras` debe
+relacionarse solamente con frutas secas de árbol y no con leche. `Aroma a
+avellana` debe reconocerse como aromatizante artificial y no debe relacionarse
+con frutas secas de árbol. Cuando corresponde, la respuesta incluye todas las
+restricciones relacionadas con la denominación consultada.
 
 ## 11. Actualizar la base incluida en la aplicación
 
@@ -307,7 +486,7 @@ flutter test
 ```
 
 Al probar la aplicación, verificar que la pantalla de resultados informe la
-versión `0.10.1` de la base de conocimiento.
+versión `0.15.0` de la base de conocimiento.
 
 ## Smoke test
 
@@ -335,12 +514,12 @@ aplicación y debe actualizarse cuando se publica una nueva base.
 
 ## Alcance funcional actual
 
-De los perfiles de demostración actuales, la base `0.10.1` brinda soporte para:
+De los perfiles de demostración actuales, la base `0.15.0` brinda soporte para:
 
 - Sofía: leche;
-- Mateo: enfermedad celíaca / cereales con gluten.
+- Mateo: enfermedad celíaca / cereales con gluten;
+- Juli: maní y frutas secas de árbol.
 
-Todavía no contiene relaciones para los perfiles de frutos secos y maní ni de
-sulfitos. Tampoco están implementadas las restantes restricciones visibles en
-la pantalla de perfiles hasta que se incorporen sus fuentes, revisiones y
-relaciones correspondientes.
+Todavía no contiene relaciones para sulfitos. Tampoco están implementadas las
+restantes restricciones visibles en la pantalla de perfiles hasta que se
+incorporen sus fuentes, revisiones y relaciones correspondientes.

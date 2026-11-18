@@ -11,7 +11,11 @@ class BdLocal {
   BdLocal._();
 
   static const nombreArchivo = 'safelabel.db';
-  static const version = 3;
+
+  /// 1: perfiles y restricciones. 2: avatar del perfil, o bien propietario
+  /// (`usuario_id`) con perfil personal — la v2 existió con los dos sentidos
+  /// en ramas distintas. 3: sin perfil personal. 4: propietario y avatar.
+  static const version = 4;
 
   /// Abre (o crea) la base.
   ///
@@ -39,10 +43,7 @@ class BdLocal {
           await _crear(db, version);
           alCrear?.call();
         },
-        onUpgrade: (db, anterior, nueva) async {
-          if (anterior < 2) await _agregarUsuarioId(db);
-          if (anterior < 3) await _migrarV3(db);
-        },
+        onUpgrade: _migrar,
       ),
     );
   }
@@ -54,8 +55,29 @@ class BdLocal {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  /// Paso intermedio para bases v1. La v2 agregaba además la propiedad
-  /// personal; la v3 elimina esa columna.
+  /// Migraciones de instalaciones existentes, sin perder los perfiles.
+  ///
+  /// Se miran las columnas que hay y no solo el número de versión: una base
+  /// v2 puede tener `avatar` o `usuario_id` según qué versión de la app la
+  /// creó.
+  static Future<void> _migrar(Database db, int anterior, int nueva) async {
+    final columnas = {
+      for (final c in await db.rawQuery('PRAGMA table_info(perfil)'))
+        c['name'] as String,
+    };
+    if (!columnas.contains('avatar')) {
+      // Los perfiles existentes quedan con avatar vacío: se dibuja a partir
+      // del nombre (ver Perfil.semillaAvatar).
+      await db.execute(
+        "ALTER TABLE perfil ADD COLUMN avatar TEXT NOT NULL DEFAULT ''",
+      );
+    }
+    if (!columnas.contains('usuario_id')) await _agregarUsuarioId(db);
+    if (anterior < 3) await _migrarV3(db);
+  }
+
+  /// Paso intermedio para bases sin propietario (v1, o la v2 con avatar). La
+  /// v2 con propietario agregaba además el perfil personal; la v3 lo elimina.
   static Future<void> _agregarUsuarioId(Database db) async {
     await db.execute('ALTER TABLE perfil ADD COLUMN usuario_id TEXT');
     await db.execute('CREATE INDEX perfil_usuario ON perfil(usuario_id)');
@@ -84,12 +106,13 @@ class BdLocal {
       CREATE TABLE perfil_nuevo (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nombre TEXT NOT NULL,
-        usuario_id TEXT
+        usuario_id TEXT,
+        avatar TEXT NOT NULL DEFAULT ''
       )
     ''');
     await db.execute('''
-      INSERT INTO perfil_nuevo (id, nombre, usuario_id)
-      SELECT id, nombre, usuario_id FROM perfil
+      INSERT INTO perfil_nuevo (id, nombre, usuario_id, avatar)
+      SELECT id, nombre, usuario_id, avatar FROM perfil
     ''');
 
     await db.execute('''
@@ -139,7 +162,8 @@ class BdLocal {
       CREATE TABLE perfil (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nombre TEXT NOT NULL,
-        usuario_id TEXT
+        usuario_id TEXT,
+        avatar TEXT NOT NULL DEFAULT ''
       )
     ''');
     lote.execute('''

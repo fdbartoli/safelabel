@@ -12,13 +12,17 @@ import 'datos/preparador_perfiles.dart';
 import 'datos/repositorio_conocimiento.dart';
 import 'datos/repositorio_perfiles.dart';
 import 'datos/repositorio_usuarios.dart';
+import 'ui/controlador_tema.dart';
 import 'ui/pantalla_inicio.dart';
 import 'ui/puerta_de_sesion.dart';
 import 'ui/tema.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SafeLabelApp());
+  final almacen = await AlmacenLocal.abrir();
+  // Modo claro u oscuro elegido por la persona (o el del teléfono).
+  final controladorTema = ControladorTema(almacen);
+  runApp(SafeLabelApp(almacen: almacen, controladorTema: controladorTema));
 }
 
 class _Servicios {
@@ -39,8 +43,7 @@ class _Servicios {
   final CatalogoConocimiento catalogo;
 }
 
-Future<_Servicios> _arrancar() async {
-  final almacen = await AlmacenLocal.abrir();
+Future<_Servicios> _arrancar(AlmacenLocal almacen) async {
   final base = await BaseConocimiento.cargarDesdeAssets();
   final fabrica = fabricaBdPlataforma() ?? databaseFactory;
   final bd = await BdLocal.abrir(fabrica: fabrica);
@@ -67,14 +70,19 @@ Future<_Servicios> _arrancar() async {
 }
 
 class SafeLabelApp extends StatefulWidget {
-  const SafeLabelApp({super.key});
+  const SafeLabelApp({super.key, required this.almacen, this.controladorTema});
+
+  final AlmacenLocal almacen;
+
+  /// `null` = sigue el modo del teléfono, sin botón para cambiarlo.
+  final ControladorTema? controladorTema;
 
   @override
   State<SafeLabelApp> createState() => _SafeLabelAppState();
 }
 
 class _SafeLabelAppState extends State<SafeLabelApp> {
-  late Future<_Servicios> _servicios = _arrancar();
+  late Future<_Servicios> _servicios = _arrancar(widget.almacen);
 
   @override
   void dispose() {
@@ -87,10 +95,23 @@ class _SafeLabelAppState extends State<SafeLabelApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) {
+    final controlador = widget.controladorTema;
+    if (controlador == null) return _app(ThemeMode.system);
+    return ListenableBuilder(
+      listenable: controlador,
+      builder: (context, _) => _app(controlador.modo),
+    );
+  }
+
+  Widget _app(ThemeMode modo) => MaterialApp(
     title: 'SafeLabel',
     debugShowCheckedModeBanner: false,
+    // Verde pastel para el chrome general, claro u oscuro. La pantalla de
+    // resultado usa su propio tema neutro — ver lib/ui/tema.dart.
     theme: temaApp,
+    darkTheme: temaAppOscuro,
+    themeMode: modo,
     home: FutureBuilder<_Servicios>(
       future: _servicios,
       builder: (context, snapshot) {
@@ -114,7 +135,7 @@ class _SafeLabelAppState extends State<SafeLabelApp> {
                     const SizedBox(height: 16),
                     FilledButton(
                       onPressed: () => setState(() {
-                        _servicios = _arrancar();
+                        _servicios = _arrancar(widget.almacen);
                       }),
                       child: const Text('Reintentar'),
                     ),
@@ -142,6 +163,7 @@ class _SafeLabelAppState extends State<SafeLabelApp> {
             conocimiento: s.conocimiento,
             catalogo: s.catalogo,
             servicioCuenta: s.cuenta,
+            controladorTema: widget.controladorTema,
           ),
         );
       },

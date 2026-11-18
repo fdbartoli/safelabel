@@ -105,8 +105,7 @@ void main() {
 
   IconButton botonCompartir(WidgetTester tester) => tester.widget<IconButton>(
     find.byWidgetPredicate(
-      (w) =>
-          w is IconButton && w.tooltip == 'Compartir perfiles seleccionados',
+      (w) => w is IconButton && w.tooltip == 'Compartir perfiles seleccionados',
     ),
   );
 
@@ -239,32 +238,33 @@ void main() {
     expect(await repo.obtenerTodos(), hasLength(2));
   });
 
-  testWidgets('la cámara procesa una sola lectura y cancelar permite reintentar', (
-    tester,
-  ) async {
-    await montar(
-      tester,
-      PantallaEscanearRestricciones(
-        servicio: servicio,
-        base: base,
-        construirCamara: (alLeer) => TextButton(
-          onPressed: () {
-            alLeer(qr);
-            alLeer(qr);
-          },
-          child: const Text('Simular cámara'),
+  testWidgets(
+    'la cámara procesa una sola lectura y cancelar permite reintentar',
+    (tester) async {
+      await montar(
+        tester,
+        PantallaEscanearRestricciones(
+          servicio: servicio,
+          base: base,
+          construirCamara: (alLeer) => TextButton(
+            onPressed: () {
+              alLeer(qr);
+              alLeer(qr);
+            },
+            child: const Text('Simular cámara'),
+          ),
         ),
-      ),
-    );
-    await tocar(tester, find.text('Simular cámara'));
-    expect(find.byType(PantallaImportarRestricciones), findsOneWidget);
-    expect(await repo.obtenerTodos(), isEmpty);
-    await tocar(tester, find.text('Cancelar'));
-    expect(find.text('Simular cámara'), findsOneWidget);
-    expect(resultado, isNull);
-    await tocar(tester, find.text('Simular cámara'));
-    await tocar(tester, find.text('Guardar 2 perfiles'));
-    expect(resultado, isTrue);
-    expect(await repo.obtenerTodos(), hasLength(2));
-  });
+      );
+      await tocar(tester, find.text('Simular cámara'));
+      expect(find.byType(PantallaImportarRestricciones), findsOneWidget);
+      expect(await repo.obtenerTodos(), isEmpty);
+      await tocar(tester, find.text('Cancelar'));
+      expect(find.text('Simular cámara'), findsOneWidget);
+      expect(resultado, isNull);
+      await tocar(tester, find.text('Simular cámara'));
+      await tocar(tester, find.text('Guardar 2 perfiles'));
+      expect(resultado, isTrue);
+      expect(await repo.obtenerTodos(), hasLength(2));
+    },
+  );
 }

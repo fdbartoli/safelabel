@@ -273,7 +273,7 @@ void main() {
         await db.close();
         db = await abrir();
         await PreparadorPerfilesSqlite(db).preparar({'a'});
-        expect(await db.getVersion(), 3);
+        expect(await db.getVersion(), BdLocal.version);
         expect(await repo(db, 'a').obtenerTodos(), hasLength(2));
         await db.close();
       },
@@ -283,7 +283,7 @@ void main() {
       'una cuenta recibe los heredados sin alterar restricciones ni selección',
       () async {
         var db = await abrir();
-        expect(await db.getVersion(), 3);
+        expect(await db.getVersion(), BdLocal.version);
         await PreparadorPerfilesSqlite(db).preparar({'a'});
         final todos = await repo(db, 'a').obtenerTodos();
         expect(todos.map((p) => p.nombre), ['Familiar', 'Otro perfil']);
@@ -376,9 +376,11 @@ void main() {
           await expectLater(db.execute(sql), throwsA(isA<DatabaseException>()));
         }
         expect(
-          (await db.query('perfil', where: 'usuario_id = ?', whereArgs: [
-            'a',
-          ])).map((p) => p['id']),
+          (await db.query(
+            'perfil',
+            where: 'usuario_id = ?',
+            whereArgs: ['a'],
+          )).map((p) => p['id']),
           [7, 12],
         );
         expect(await db.query('restriccion_perfil'), restricciones);

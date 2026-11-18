@@ -259,9 +259,7 @@ void main() {
         ),
       );
 
-      final nombre = (await repo.obtenerTodos())
-          .map((p) => p.nombre)
-          .toList()
+      final nombre = (await repo.obtenerTodos()).map((p) => p.nombre).toList()
         ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
       final primero = nombre.first;
       expect(find.text(primero), findsOneWidget);

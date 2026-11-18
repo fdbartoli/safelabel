@@ -4,6 +4,7 @@ import '../compartir/servicio_compartir_restricciones.dart';
 import '../datos/base_conocimiento.dart';
 import '../datos/repositorio_perfiles.dart';
 import '../modelo/perfil.dart';
+import 'avatar.dart';
 import 'editor_perfil.dart';
 import 'pantalla_compartir_restricciones.dart';
 import 'pantalla_escanear_restricciones.dart';
@@ -220,6 +221,8 @@ class _PantallaPerfilesState extends State<PantallaPerfiles> {
               onChanged: (_) => _alternarSeleccion(p),
               semanticLabel: 'Seleccionar ${p.nombre} para compartir',
             ),
+            Avatar(semilla: p.semillaAvatar, tamano: 48),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

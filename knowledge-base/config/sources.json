@@ -15,7 +15,8 @@
   "url": "data/manual/anmat-gestion-alergenos.pdf",
   "source_url": "https://www.argentina.gob.ar/sites/default/files/alergenos.pdf",
   "language": "es-AR",
-  "format": "pdf"
+  "format": "pdf",
+  "pdf_extraction": "flow"
 },
 {
   "id": "SRC-FDA-LABEL",
@@ -88,5 +89,14 @@
   "source_url": "https://www.argentina.gob.ar/sites/default/files/capitulo_xiii_beb_fermentadasactualiz_2025-04.pdf",
   "language": "es-AR",
   "format": "pdf"
+  },
+  {
+    "id": "SRC-ANMAT-ALERGENOS-WEB",
+    "organization": "ANMAT",
+    "title": "Elaboradores de alimentos — alérgenos de declaración obligatoria",
+    "url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+    "source_url": "https://www.argentina.gob.ar/anmat/regulados/alimentos/alergenos-alimentarios/elaboradores-de-alimentos",
+    "language": "es-AR",
+    "format": "html"
 }
 ]

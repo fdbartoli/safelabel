@@ -56,7 +56,7 @@ class _SeccionReemplazosState extends State<SeccionReemplazos> {
 
     // El botón es una acción, no un hallazgo: lleva el verde pastel de la
     // marca. Las tarjetas de hallazgos siguen sin verde (regla 1.4).
-    final marca = temaApp.colorScheme;
+    final marca = marcaPara(context);
     final boton = SizedBox(
       width: double.infinity,
       child: FilledButton.icon(

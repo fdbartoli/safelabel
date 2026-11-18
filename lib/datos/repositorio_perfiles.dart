@@ -270,6 +270,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
     final id = await txn.insert('perfil', {
       'nombre': valido.nombre,
       'usuario_id': usuarioId,
+      'avatar': valido.avatar,
     });
     await _insertarRestricciones(txn, id, valido.restricciones);
     return valido.copiarCon(
@@ -293,7 +294,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
       if (filasAnteriores.isEmpty) throw PerfilNoEncontrado(perfil.id);
       final filas = await txn.update(
         'perfil',
-        {'nombre': valido.nombre},
+        {'nombre': valido.nombre, 'avatar': valido.avatar},
         where: 'id = ? AND usuario_id = ?',
         whereArgs: [id, usuarioId],
       );
@@ -369,7 +370,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
     // es para que un perfil sin restricciones también aparezca.
     final filas = await (ejecutor ?? _db).rawQuery(
       '''
-      SELECT p.id, p.nombre, r.grupo_alergeno_id, r.severidad
+      SELECT p.id, p.nombre, p.avatar, r.grupo_alergeno_id, r.severidad
       FROM perfil p
       LEFT JOIN restriccion_perfil r ON r.perfil_id = p.id
       WHERE p.usuario_id = ? $filtro
@@ -380,9 +381,11 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
 
     final restriccionesPorId = <int, List<RestriccionPerfil>>{};
     final nombrePorId = <int, String>{};
+    final avatarPorId = <int, String>{};
     for (final f in filas) {
       final id = f['id'] as int;
       nombrePorId[id] = f['nombre'] as String;
+      avatarPorId[id] = f['avatar'] as String? ?? '';
       final lista = restriccionesPorId.putIfAbsent(id, () => []);
       final grupo = f['grupo_alergeno_id'] as String?;
       if (grupo != null) {
@@ -403,6 +406,7 @@ class RepositorioPerfilesSqlite implements RepositorioPerfiles {
           id: '${e.key}',
           usuarioId: usuarioId,
           nombre: e.value,
+          avatar: avatarPorId[e.key]!,
           restricciones: List.unmodifiable(restriccionesPorId[e.key]!),
         ),
     ];

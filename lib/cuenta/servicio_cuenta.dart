@@ -21,6 +21,7 @@ class CuentaUsuario {
     required this.fechaAlta,
     required this.versionTerminos,
     required this.fechaAceptacionTerminos,
+    this.avatar = '',
   });
 
   final String id;
@@ -32,7 +33,13 @@ class CuentaUsuario {
   final String? versionTerminos;
   final DateTime? fechaAceptacionTerminos;
 
+  /// Semilla del avatar; vacía en cuentas anteriores a los avatares.
+  final String avatar;
+
   String get nombreCompleto => '$nombre $apellido'.trim();
+
+  /// La semilla con la que se dibuja el avatar.
+  String get semillaAvatar => avatar.isEmpty ? nombreCompleto : avatar;
 }
 
 /// Error de negocio con un mensaje listo para mostrar en pantalla.
@@ -145,6 +152,7 @@ class ServicioCuenta extends ChangeNotifier {
     required DateTime? fechaNacimiento,
     required String contrasena,
     required bool aceptaTerminos,
+    String avatar = '',
   }) => _serializarSesion(() async {
     _exigir(ReglasUsuario.validarNombre(nombre));
     _exigir(ReglasUsuario.validarApellido(apellido));
@@ -172,6 +180,7 @@ class ServicioCuenta extends ChangeNotifier {
       incluirPerfilesDemostracion: true,
       versionTerminos: TerminosCondiciones.version,
       fechaAceptacionTerminos: ahora,
+      avatar: avatar.trim(),
     );
     // Fija la asignación de heredados ANTES de agregar una cuenta nueva.
     await _prepararPerfiles();
@@ -263,6 +272,14 @@ class ServicioCuenta extends ChangeNotifier {
     );
   }
 
+  /// Cambia el avatar de la cuenta en sesión.
+  Future<CuentaUsuario> cambiarAvatar(String avatar) async {
+    final actualizado = _usuarioEnSesion().copiarCon(avatar: avatar.trim());
+    await _repositorio.guardar(actualizado);
+    notifyListeners();
+    return _aCuenta(actualizado);
+  }
+
   /// HU05: cierra la sesión activa.
   Future<void> cerrarSesion() => _serializarSesion(() async {
     try {
@@ -301,6 +318,7 @@ class ServicioCuenta extends ChangeNotifier {
       fechaAlta: usuario.fechaAlta,
       versionTerminos: usuario.versionTerminos,
       fechaAceptacionTerminos: usuario.fechaAceptacionTerminos,
+      avatar: usuario.avatar,
     );
   }
 }

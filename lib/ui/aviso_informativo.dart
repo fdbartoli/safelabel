@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Posicionamiento obligatorio en la interfaz (sección 10): la app es
 /// informativa, no reemplaza la etiqueta oficial ni la indicación de un
-/// profesional de la salud, y no emite veredicto de aptitud (regla 1.4).
+/// profesional de la salud, y el semáforo depende de lo que se pudo leer.
 class AvisoInformativo extends StatelessWidget {
   const AvisoInformativo({super.key, this.compacto = false});
 
@@ -26,14 +26,14 @@ class AvisoInformativo extends StatelessWidget {
           Expanded(
             child: Text(
               compacto
-                  ? 'Herramienta informativa. No dice si un producto es apto: '
-                        'muestra hallazgos para que decidas vos. Siempre revisá la '
-                        'etiqueta oficial.'
+                  ? 'Herramienta informativa: el semáforo se basa en lo que se '
+                        'pudo leer y en la base local. Siempre revisá la etiqueta '
+                        'oficial.'
                   : 'SafeLabel es una herramienta informativa. No reemplaza la '
                         'etiqueta oficial del producto ni la indicación de un '
-                        'profesional de la salud, y no dice si un alimento es apto '
-                        'o seguro: te muestra los hallazgos y la decisión es tuya. '
-                        'Un ingrediente que no aparece no significa que esté ausente.',
+                        'profesional de la salud. El resultado se basa en lo que '
+                        'se pudo leer de la etiqueta y en la base local: un '
+                        'ingrediente que no aparece no significa que esté ausente.',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
